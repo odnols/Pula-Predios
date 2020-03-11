@@ -1,2 +1,2 @@
 # PulaPredios
- Game in JS, JQuery, HTML & CSS, work in progress, always check the latest version ;) 
+ Game in JS, HTML & CSS, work in progress, always check the latest version ;) 
