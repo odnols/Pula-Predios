@@ -1,0 +1,115 @@
+/* telas entre 1367 e 1700 */
+@media only screen and (min-width: 1367px) and (max-width: 1920px){
+	canvas{
+		width: 1376px;
+		height: 625px;
+		position: absolute;
+	}
+	#bandeira{
+		display: none;
+	}
+	.botao{
+		top: 3%;
+	}
+	h3#tempo_cro{
+		position: absolute;
+		left: 3.5%;
+		font-size: 18px;
+		top: 160%;
+	}
+	#botoes_menu{
+		top: 75%;
+		width: 100%;
+		position: fixed;
+	}
+	#fechador_loja{
+		top: 15%;
+	}
+	#configuracoes{
+		top: 25%;
+		width: 70%;
+		height: 50%;
+	}
+	#opcoes{
+		left: 20%;
+		top: 25%;
+		width: 60%;
+    	height: 50%;
+	}
+	#estatistic{
+		left: 25%;
+		top: 25%;
+		width: 50%;
+		height: 50%;
+	}
+	#controles{
+		top: 25%;
+		left: 15%;
+		width: 70%;
+    	height: 50%;
+	}
+	.marcador{
+		width: 826px;
+		bottom: 6.5%;
+		left: 60px;
+	}
+	#alerta_teclas{
+		position: absolute;
+		bottom: 4%;
+		left: 15%;
+	}
+}
+/* telas entre 768px e 1366px */
+@media only screen and (min-width: 721px) and (max-width: 1366px){
+	#bandeira{
+		display: block;
+	}
+	#fechador_loja{
+		top: 24%;
+	}
+	.marcador{
+		width: 473px;
+		height: 165px;
+		bottom: 25px;
+		left: 35px;
+	}
+	#estatistic{
+		left: 25%;
+		top: 10%;
+		width: 50%;
+		height: 80%;
+	}
+	#configuracoes{
+		left: 10%;
+		top: 10%;
+		width: 80%;
+		height: 85%;
+	}
+	#alerta_teclas{
+		position: absolute;
+		bottom: 5px;
+		left: 5%;
+	}
+}
+/* telas com largura entre 0px e 767px  980 Celulares */ 
+@media only screen and (min-width: 0px) and (max-width: 720px){
+	canvas{
+		position: absolute;
+		left: 0px;
+		bottom: 0px;
+	}
+	#fimdejogo{
+		font-size: 20px;
+	}
+	._estatistic_dead{
+		font-size: 15px;
+	}
+	#stats_dead{
+		right: 5%; 
+		width: 250px;
+	}
+	#stats_dead2{
+		left: 5%;
+		width: 250px;
+	}
+}

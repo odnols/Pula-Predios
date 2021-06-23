@@ -1,0 +1,34 @@
+@font-face{
+    font-family: Minecraft;
+    src: url('../Fontes/Minecraft.ttf');
+}
+@font-face{
+    font-family: Minecraftia;
+    src: url('../Fontes/Minecraftia.ttf');
+}
+#img_log{
+    z-index: 0;
+    top: 0px;
+    width: 1366px;
+    height: 149px;
+    box-shadow: 0px 0px 15px black;
+}
+h2#log_text{
+    font-family: "Minecraftia";
+    position: absolute;
+    z-index: 2;
+    color: white;
+    left: 2%;
+    top: 90px;
+    text-shadow: 2px 2px grey;
+}
+#destaques{
+    font-family: "Minecraftia";
+    font-weight: 900;
+    text-align: center;
+}
+#centraliza{
+    left: 20%;
+    width: 60%;
+    position: absolute;
+}
