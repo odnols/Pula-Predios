@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>Pula Prédios</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="Imagens/Icones/Icone.gif">
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="css/anima.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="css/responsividade.css">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"  crossorigin="anonymous">
+    
+    <script src="JS/jquery.js"></script>
+    <script src="JS/sprite.js"></script>
+    <script src="JS/dados.js"></script>
+    <script src="JS/sons.js"></script>
+    <script src="JS/controles.js"></script>
+    <script src="JS/desenha.js"></script>
+    <script src="JS/desenhaChao.js"></script>
+    <script src="JS/motor_grafico.js"></script>
+    <script src="JS/insere.js"></script>
+    <script src="JS/engine.js"></script>
+    <script src="JS/funcoes.js"></script>
+    <script src="JS/Ajustes.js"></script>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+
+</head>
+<body>
+
+<canvas id="canvas">
+    Seu Navegador está desatualizado, atualize ele para poder desfrutar do Pula Prédios!
+</canvas>
+
+<!-- Sprites para o tema Noturno -->
+<div id="sprites_imgs">
+    <img class="sprite_noite" id="ceu_noite" src="imagens/Sprites/Cidade/ceu_noite.png">
+    <img class="sprite_noite" id="cidade_noite" src="imagens/Sprites/Cidade/cidade_noite.png">
+    <img class="sprite_noite" id="agua_noite" src="imagens/Sprites/Cidade/agua_noite.png">
+    <img class="sprite_noite" id="chao_noite" src="imagens/Sprites/Cidade/chao_noite.png">
+    <img class="sprite_noite" id="montanhas_noite" src="Imagens/Sprites/Cidade/montanhas_noite.png">
+    <img class="sprite_noite" id="nuvens1_noite" src="Imagens/Sprites/Cidade/nuvens1_noite.png">
+    <img class="sprite_noite" id="nuvens2_noite" src="Imagens/Sprites/Cidade/nuvens2_noite.png">
+    <img class="sprite_noite" id="nuvens1_2_noite" src="Imagens/Sprites/Cidade/nuvens1_2_noite.png">
+    <img class="sprite_noite" id="nuvens2_2_noite" src="Imagens/Sprites/Cidade/nuvens2_2_noite.png">
+
+    <img class="sprite_noite" id="jogador_noite" src="Imagens/Sprites/Jogador/jogador_noite.png">
+    <img class="sprite_noite" id="predio1_1" src="Imagens/Sprites/Cidade/Predio1_1.png">
+    <img class="sprite_noite" id="predio1_2" src="Imagens/Sprites/Cidade/Predio1_2.png">
+    <img class="sprite_noite" id="predio2_1" src="Imagens/Sprites/Cidade/Predio2_1.png">
+    <img class="sprite_noite" id="predio2_2" src="Imagens/Sprites/Cidade/Predio2_2.png">
+    <img class="sprite_noite" id="predio3" src="Imagens/Sprites/Cidade/Predio3.png">
+    <img class="sprite_noite" id="pisao_noite" src="Imagens/Sprites/Cidade/Pisao_noite.png">
+
+    <img class="sprite_noite" id="arvore1" src="Imagens/Sprites/Cidade/Arvore1.png">
+    <img class="sprite_noite" id="arvore2" src="Imagens/Sprites/Cidade/Arvore2.png">
+    <img class="sprite_noite" id="arvore_frutifera" src="Imagens/Sprites/Cidade/ArvoreFrutifera.png">
+    <img class="sprite_noite" id="arbusto" src="Imagens/Sprites/Cidade/Arbusto.png">
+</div>
+
+<!-- Áudios do game -->
+<div id="audios_game">
+    <audio id="musicas"></audio>
+    <audio id="ambiente"></audio>
+    <audio id="pisoes"></audio>
+    <audio id="efeitos"></audio>
+    <audio id="efeitos2"></audio>
+</div>
+
+<!-- Tela Secundária com sensibilidade a cliques, também utilizada para fazer transições entre dia e noite -->
+<div id="filtro"></div>
+
+<div id="comandos"><br>
+    <h1 class="texto">Controles</h1><hr> 
+    <p class="texto"> Espaço / W -> Pular <br>
+        Enter / D -> Especial <br>
+        <br>
+    </p><hr>
+
+    <h4 class="texto" style="color: red; text-align: center; font-weight: 900;">
+         Bater em outros prédios com o <br> {!} Especial ativo diminui seus pontos {!}
+    </h4>
+</div>
+
+<div id="estatistic"><br>
+    <h1 class="texto">Estatísticas</h1><hr>
+    <p class="texto _estatistic">
+        Distância Percorrida: <a class="estat" id="distancia_percorrida">0</a> pixels<br>
+        Especiais Utilizados: <a class="estat" id="quantidade_especiais">0</a><br>
+        N° de Pulos: <a class="estat" id="quantidade_pulos">0</a><br>
+        N° de Pisões: <a class="estat" id="quantidade_pisoes">0</a><br>
+        N° de Batidas: <a class="estat" id="quantidade_batidas">0</a><br>
+
+        Pontos Ganhos: <a class="estat" id="quantidade_pontos">0</a><br>
+        Melhor Partida: <a class="estat" id="record">0</a> Ponto(s)<br>
+    </p><hr>
+
+    <h3 style="color: red; text-align: center; font-weight: 900;">
+        {!} Estes dados são excluídos junto com o histórico {!}
+    </h3>
+
+    <button class="botao" onclick="apagaDados()">Excluir Dados</button>
+</div>
+
+<div id="configuracoes"><br>
+    <h1 class="texto">Configurações</h1><hr>
+
+    <h2 class="texto">Volume do Jogo</h2>
+    
+    <fieldset id="controle_som">
+        <label class="slidecontainer">Música
+            <input type="range" min="0" max="100" id="volume_musica" oninput="alteraVolume(this.value, 1)" onchange="alteraVolume(this.value, 1, 1)">
+        
+        Efeitos
+            <input type="range" min="0" max="100" value="carrega_sons(2)" id="volume_efeitos" oninput="alteraVolume(this.value, 2)" onchange="alteraVolume(this.value, 2, 1)">
+        </label>
+    </fieldset>
+</div>
+
+<!-- Tela atrás do canvas, troca a cor dependendo do tema -->
+<div id="fundo"></div>
+
+<!-- Log de Mudanças e Apresentações -->
+<div id="boas_vindas">
+    <div id="pag1"><br>
+        <h1>Olá! Bem-vindo(a)</h1><hr>
+        <p>Esta é a 2.0 Beta!
+
+            <center>
+                <img id="ibagem" src="Imagens/Atualiza/Bullshit.gif"><br><br>
+            </center>
+
+        Cuidado com os bugs! <br>Não esperamos, mas pode acontecer :P</p>
+        <strong style="color: red">Sons do jogo ativados! Abaixe o volume ;)</strong>
+        <button class="botao_a" style="position: absolute; top: 240px; right: 50px;" onclick="troca_pagina(2)">>></button>
+        <button class="botao_a" onclick="boasVindas()">Beleuza!</button>
+    </div>
+    <div id="pag2"><br>
+        <h1>Novidades</h1><hr>
+        <p>Olá! Nesta Versão focamos em corrigir vários bugs ;D</p>
+
+        <center>
+            <img id="ibagem_2" src="Imagens/Atualiza/wtc.jpg">
+        </center><br>
+
+        <p>Em Homenagem as vítimas dos atentados do 11/09 recriamos as torres no mapa!</p>
+
+        <button class="botao_a" style="position: absolute; top: 240px; right: 50px;" onclick="troca_pagina(3)">>></button>
+        <button class="botao_a" style="position: absolute; top: 240px; left: 50px;" onclick="troca_pagina(1)"><<</button><br>
+
+        <button class="botao_a" onclick="boasVindas()">Beleuza!</button>
+    </div>
+    <div id="pag3"><br>
+        <h1>Novidades</h1><hr>
+        <p>Também Adicionamos diversos sons novos e controles de volume ao game!</p>
+
+            <center>
+                <img id="ibagem_3" src="Imagens/Atualiza/sons.png">
+            </center><br>
+        <p>Agora as partidas ficaram mais emocionantes do que nunca antes visto :P</p>
+        <button class="botao_a" style="position: absolute; top: 240px; right: 50px;" onclick="troca_pagina(4)">>></button>
+        <button class="botao_a" style="position: absolute; top: 240px; left: 50px;" onclick="troca_pagina(2)"><<</button><br>
+
+    </div>
+    <div id="pag4"><br>
+        <h1>Novidades</h1><hr>
+        <p>Confira o Log completo de alterações desta versão clicando <a onclick="abrir_arquivo()" id="link">< aqui ></a> </p>
+
+            <center>
+                <img id="ibagem_3" src="Imagens/Atualiza/log2.png">
+            </center>
+        <button class="botao_a" style="position: absolute; top: 240px; left: 50px;" onclick="troca_pagina(3)"><<</button><br>
+        <p>Caso um bug lhe aconteça, me avise no twitter! @slondotk</p>
+        <button class="botao_a" onclick="boasVindas()">Beleuza!</button>
+    </div>
+</div>
+
+<!-- Usado para notificar o jogador sobre eventos -->
+<div id="notificacoes"></div>
+
+<div class="barra_topo">
+    <div id="pontuador">Pontuação
+        <h3 id="pontuacao">0</h3>
+    </div> 
+
+    <div id="especial">Especial
+        <h3 id="timer_especial"></h3>
+        <h3 id="estado_especial">Seg</h3>
+        <h3 id="carregando">+++</h3>
+    </div>
+
+    <div id="velocidade">Velocidade
+        <h3 id="velocity"></h3>
+        <h3 id="metros_s">M/s</h3>
+    </div>
+
+    <div id="temporizador">Tempo
+        <h3 id="cronometro">26</h3>
+        <h3 id="tempo_cro">Seg</h3>
+    </div>
+
+    <div id="versao">2.0 Beta
+        <h3 id="pulos">Pulos</h3>
+        <h3 id="qtdPulos">3</h3>
+    </div>
+</div>
+
+<!-- Barra de Loading dos Eventos -->
+<div id="barra_loading">
+    <div id="completa_timer"></div>
+</div>
+
+<div id="menu_inicial">
+    <center>
+        <h3 id="iniciar_" onclick="clique()">Iniciar ( W )</h3>
+        <h3 id="controles_" onclick="botoes(67)">Controles ( C ) </h3>
+    </center>
+
+    <div id="botoes_menu">
+        <h3 id="log_" onclick="botoes(76)">Log ( L )</h3>
+        <h3 id="estatic_button" onclick="botoes(101)">Estatísticas ( E )</h3>
+        <h3 id="configura_button" onclick="botoes(81)">Configurações ( Q )</h3>
+        <h3 id="reload_button" onclick="clique(114)">Recarregar Página ( R )</h3>
+    </div>
+</div>
+
+<div id="moedas">
+    <div id="notifica_moeda">$0</div>
+    <div id="moeda_img"></div>
+</div>
+
+<!-- Menus da Loja -->
+<!-- <p id="puxador_loja" onclick="abre_loja()"><<</p>
+<div id="loja"><br>
+
+    <p id="fechador_loja" onclick="abre_loja()"> >> Ou Aperte X</p>
+    <h1 id="titu_lolja"><em>Bem Vindo(a) a Loja!</em></h1>
+
+    <div id="quadro_novidades_loja">
+        <fieldset id="colore_loja"></fieldset>
+    </div>
+
+    <div id="quadros_loja"><p id="text_quadro_loja" onclick="catalogo_lolja(0)">Skins</p></div>
+    <div id="quadros_loja"><p id="text_quadro_loja" onclick="catalogo_lolja(1)">Especiais</p></div>
+    <div id="quadros_loja"><p id="text_quadro_loja" onclick="catalogo_lolja(2)">Bônus</p></div>
+</div> -->
+
+<!-- Inicia a Engine a Animação da Moeda & controles de volume -->
+<script language="javascript"> main(); animaMoeda(); aleatorizaProp(); </script>
+
+</body>
+</html>

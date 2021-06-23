@@ -1,0 +1,27 @@
+/* telas entre 1367 e 1700 */
+@media only screen and (min-width: 1367px) and (max-width: 2200px){
+canvas{
+	width: 1376px;
+	height: 625px;
+	position: absolute;
+}
+h3#tempo_cro{
+    position: absolute;
+    left: 3.5%;
+    font-size: 18px;
+    top: 160%;
+}
+#botoes_menu{
+	top: 75%;
+	width: 100%;
+	position: fixed;
+}
+}
+/* telas entre 768px e 1366px */
+@media only screen and (min-width: 721px) and (max-width: 1366px){
+
+}
+/* telas com largura entre 0px e 767px  980 */
+@media only screen and (min-width: 0px) and (max-width: 720px){
+
+}

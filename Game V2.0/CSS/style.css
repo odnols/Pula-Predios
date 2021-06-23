@@ -1,0 +1,595 @@
+body{
+    -webkit-user-select: none; /* Safari */        
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* IE10+/Edge */
+    user-select: none; /* Standard */
+    overflow-x: hidden;
+    overflow-y: hidden;
+}
+hr{
+    height: 5px;
+    background-color: white;
+}
+
+canvas{
+    position: absolute;
+    top: 0px;
+    bottom: 0px;
+    left: 0px;
+    right: 0px;
+    margin: auto;
+}
+.sprite_noite{
+    display: none;
+}
+#filtro{
+    z-index: 3;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+}
+.slidecontainer{
+    width: 30%;
+}
+
+@font-face{
+    font-family: Minecraft;
+    src: url('../Fontes/Minecraft.ttf');
+}
+@font-face{
+    font-family: Minecraftia;
+    src: url('../Fontes/Minecraftia.ttf');
+}
+a#log_click{
+    color: yellow;
+    text-decoration: none;
+    transition: color 1s;
+}
+a#log_click:hover{
+    color: grey;
+}
+a.estat:hover{
+    color: yellow;
+    text-decoration: none;
+}
+a.estat{
+    color: white;
+}
+.botao{
+    position: absolute;
+    color: black;
+    left: 60%;
+    top: 5%;
+    border-radius: 15px;
+    height: 25px;
+    transition: .5s transform;
+}
+.botao:hover{
+    transform: scale(1.1);
+}
+.botao_a{
+    z-index: 5;
+    color: black;
+    border-radius: 15px;
+    height: 25px;
+    transition: .5s transform;
+}
+.botao_a:hover{
+    transform: scale(1.1);
+}
+#menu_inicial{
+    z-index: 4;
+    position: absolute;
+    font-family: "Minecraftia";
+    width: 100%;
+    top: 60%;
+    color: white;
+    animation: move_sombra .5s;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, .7);
+    height: 40%;
+}
+#iniciar_{
+    font-size: 50px;
+    top: 10%;
+    animation: iniciar 3s infinite;
+}
+#controles_{
+    font-size: 30px;
+    transition: .5s transform;
+    width: 300px;
+    height: 25px;
+}
+#controles_:hover{
+    color: yellow;
+    transform: scale(1.2);
+}
+#log_{
+    position: absolute;
+    top: 150px;
+    right: 3%;
+    display: none;
+    transition: .5s transform;
+}
+#log_:hover{
+    color: yellow;
+    transform: scale(1.2);
+}
+#estatic_button{
+    position: fixed;
+    bottom: 10px;
+    right: 3%;
+    transition: .5s transform;
+}
+#estatic_button:hover{
+    color: yellow;
+    transform: scale(1.2);
+}
+#configura_button{
+    position: absolute;
+    top: 150px;
+    left: 3%;
+    transition: .5s transform;
+}
+#configura_button:hover{
+    color: yellow;
+    transform: scale(1.2);
+}
+#reload_button{
+    position: fixed;
+    bottom: 10px;
+    left: 3%;
+    transition: 1s transform;
+}
+#reload_button:hover{
+    color: yellow;
+    transform: scale(1.2);
+}
+#moedas{
+    z-index: 7;
+    right: 14%;
+    top: 7%;
+    position: absolute;
+    width: auto;
+    height: 44px;
+}
+#moeda_img{
+    width: 115px;
+    height: 115px;
+    left: 20%;
+    top: -100%;
+    float: right;
+    background: url('../imagens/Icones/moeda.png') 0px 0px;
+    transform: scale(.3);
+    position: relative;
+}
+#notifica_moeda{
+    top: 6%;
+    right: 50%;
+    position: absolute;
+    float: left;
+    font-size: 25px;
+    color: #fec341;
+    text-shadow: 1px 1px 2px #26253a;
+    font-family: "Minecraftia";
+    animation: moedas .5s;
+}
+#puxador_loja{
+    font-family: "Minecraftia";
+    z-index: 5;
+    top: 50%;
+    right: 0%;
+    position: fixed;
+    width: 40px;
+    border-bottom-left-radius: 25px;
+    border-top-left-radius: 25px;
+    height: 180px;
+    color: black;
+    color: white;
+    background-color: rgba(0, 0, 0, .6);
+}
+#fechador_loja{
+    z-index: 5;
+    top: 24%;
+    right: 0%;
+    position: fixed;
+    width: 150px;
+    border-bottom-left-radius: 25px;
+    border-top-left-radius: 25px;
+    height: 40px;
+    color: black;
+    color: white;
+    background-color: rgba(0, 0, 0, .6);
+}
+#loja{
+    font-family: "Minecraftia";
+    color: white;
+    display: none;
+    z-index: 6;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    background-color: #7a3907;
+    animation: abre_lolja .5s;
+}
+#titu_loja{
+    left: 3%;
+    position: absolute;
+    text-shadow: 1px 1px 2px black;
+    animation: aparece_texto 1s;
+    color: white;
+}
+#quadro_novidades_loja{
+    width: 95%;
+    float: right;
+    border-top-left-radius: 25px;
+    border-bottom-left-radius: 25px;
+    height: 120px;
+    background: url("../Imagens/Fundo/Quadrantes.png");
+    animation: move_img_lolja 30s infinite;
+    overflow: hidden;
+}
+#colore_loja{
+    box-shadow: inset 0px 0px 25px black;
+    animation: muda_cor_loja 20s infinite;
+    width: 120%;
+    height: 100%;
+}
+#quadros_loja{
+    position: static;
+    margin: 4%;
+    float: left;
+    width: 25%;
+    height: 400px;
+    background: url("../Imagens/Fundo/Quadrantes.png");
+    box-shadow: inset 0px 0px 15px black;
+    border-radius: 25px;
+    color: white;
+    font-size: 80px;
+    transition: transform .5s, border-radius .5s, box-shadow .2s;
+    overflow: hidden;
+}
+#quadros_loja:hover{
+    border-radius: 10px;
+    transform: scale(1.1);
+    box-shadow: inset 0px 0px 25px white;
+}
+#text_quadro_loja{
+    padding-top: 50%;
+    width: 130%;
+    transform: rotate(45deg);
+    text-align: center;
+    transition: transform .5s, text-shadow .2s;
+    text-shadow: 1px 1px 5px black;
+}
+#text_quadro_loja:hover{
+    transform: scale(1.5) rotate(45deg);
+    text-shadow: 1px 1px 5px yellow;
+}
+#notificacoes{
+    position: fixed;
+    width: 100%;
+    left: 0px;
+    height: 50px;
+    font-size: 50px;
+    color: white;
+    text-shadow: 1px 1px 2px grey;
+    font-family: "Minecraftia";
+    z-index: 3;
+    text-align: center;
+    top: 30%;
+    display: none;
+    animation: desliza_letras 2s;
+}
+.barra_topo{
+    position: fixed;
+    color: white;
+    font-family: "Minecraftia";
+    z-index: 3;
+    top: 3.3%;
+    left: 4%;
+    font-size: 20px;
+    text-shadow: 2px 2px 3px rgba(0, 0, 0, .7);
+    width: 100%;
+    animation: move_sombra .5s;
+}
+#pontuacao{
+    position: absolute;
+    top: 60%;
+    left: 1.24%;
+    font-family: "Minecraft";
+    font-size: 50px;
+}
+#especial{
+    top: 1%;
+    position: absolute;
+    left: 13%;
+}
+h3#timer_especial{
+    font-family: "Minecraft";
+    font-size: 50px;
+    top: 60%;
+    position: absolute;
+}
+h3#estado_especial{
+    top: 160%;
+    font-size: 18px;
+    position: absolute;
+    left: 40%;
+}
+h3#carregando{
+    color: Cyan;
+    font-size: 15px;
+    position: absolute;
+    left: 40%;
+    top: 90%;
+    display: none;
+}
+#velocidade{
+    top: 1%;
+    position: absolute;
+    left: 24%;
+}
+h3#velocity{
+    font-family: "Minecraft";
+    font-size: 50px;
+    top: 60%;
+    position: absolute;
+}
+h3#metros_s{
+    font-size: 30px;
+    position: absolute;
+    left: 48%;
+    top: 135%;
+}
+#temporizador{
+    display: none;
+    position: absolute;
+    top: 1%;
+    left: 38%;
+    width: 100%;
+}
+h3#cronometro{
+    position: absolute;
+    top: 60%;
+    left: 0%;
+    width: 100%;
+    font-family: "Minecraft";
+    font-size: 50px;
+}
+h3#tempo_cro{
+    position: absolute;
+    left: 4.5%;
+    font-size: 18px;
+    top: 160%;
+}
+#barra_loading{
+    width: 75%;
+    left: 13.5%;
+    top: 15%;
+    height: 25px;
+    border-radius: 15px;
+    z-index: 4;
+    background-color: rgba(0, 0, 0, .7);
+    box-shadow: black 0px 0px 15px;
+    position: absolute;
+    display: none;
+}
+#completa_timer{
+    position: absolute;
+    z-index: 5;
+    height: 100%;
+    border-radius: 15px;
+}
+#versao{
+    position: absolute;
+    right: 10%;
+    top: 1%;
+    font-size: 25px;
+}
+h3#pulos{
+    position: absolute;
+    top: 95%;
+    left: 10%;
+    font-size: 20px;
+}
+h3#qtdPulos{
+    position: absolute;
+    top: 95%;
+    left: 75%;
+    font-size: 22px;
+}
+#comandos{
+    z-index: 5;
+    display: none;
+    position: absolute;
+    left: 25%;
+    top: 10%;
+    width: 50%;
+    background-color: rgba(0, 0, 0, .7);
+    border-radius: 20px;
+    animation: aparece_bloco .5s;
+    color: white;
+    font-family: Minecraftia;
+    font-size: 25px;
+}
+#filecontents{
+    color: white;
+}
+.texto{
+    padding-left: 5%;
+    font-family: Minecraftia;
+}
+#repositorio{   
+    color: white;
+    width: 6%;
+    left: 2px;
+    height: 600px;
+    overflow-y: auto;
+    position: absolute;
+    display: none;
+}
+canvas{
+    z-index: 2;
+}
+#boas_vindas{
+    display: none;
+    z-index: 5;
+    text-align: center;
+    position: absolute;
+    left: 25%;
+    top: 10%;
+    width: 50%;
+    height: auto;
+    background-color: rgba(0, 0, 0, .8);
+    border-radius: 20px;
+    color: white;
+    font-family: Minecraftia;
+    font-size: 25px;
+}
+#pag1{
+    display: block;
+}
+#pag2{
+    display: none;
+}
+#pag3{
+    display: none;
+}
+#pag4{
+    display: none;
+}
+#ibagem{
+    width: 150px;
+    height: 150px;
+    box-shadow: 5px 5px 15px black;
+}
+#link{
+    color: yellow;
+    transition: color 1s;
+}
+#link:hover{
+    transform: scale(1.2);
+    color: grey;
+}
+#ibagem_2{
+    width: 350px;
+    height: 200px;
+    transition: 1s transform;
+    z-index: 6;
+    box-shadow: 5px 5px 15px black;
+}
+#ibagem_3{
+    width: 350px;
+    height: 100px;
+    transition: 1s transform;
+    z-index: 6;
+    box-shadow: 5px 5px 15px black;
+}
+#ibagem_2:hover{
+    transform: scale(2.5);
+}
+#ibagem_3:hover{
+    transform: scale(1.2);
+}
+#estatistic{
+    z-index: 5;
+    display: none;
+    position: absolute;
+    left: 25%;
+    top: 10%;
+    width: 50%;
+    height: 80%;
+    background-color: rgba(0, 0, 0, .7);
+    border-radius: 20px;
+    color: white;
+    font-family: Minecraftia;
+    font-size: 25px;
+}
+#configuracoes{
+    z-index: 5;
+    display: none;
+    position: absolute;
+    left: 10%;
+    top: 10%;
+    width: 80%;
+    height: 80%;
+    background-color: rgba(0, 0, 0, .7);
+    border-radius: 20px;
+    animation: aparece_bloco .5s;
+    color: white;
+    font-family: Minecraftia;
+    font-size: 25px;
+}
+#controle_som{
+    left: 4%;
+    position: relative;
+}
+/* The container */
+.container {
+    display: block;
+    position: relative;
+    padding-left: 35px;
+    margin-bottom: 12px;
+    cursor: pointer;
+    font-size: 22px;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+/* Hide the browser's default radio button */
+.container input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 10%;
+    height: 25px;
+    width: 25px;
+    background-color: #eee;
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container:hover input ~ .checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container input:checked ~ .checkmark {
+    background-color: #2196F3;
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container input:checked ~ .checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container .checkmark:after {
+    top: 9px;
+    left: 9px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: white;
+}
+#fundo{
+    width: 100%;
+    height: 100%;
+    background-color: rgb(0, 153, 204);
+    position: absolute;
+}
