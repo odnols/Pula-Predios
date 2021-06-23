@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>Pula Prédios</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="imagens/Icone.gif">
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="css/log.css">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    
+</head>
+<body>
+
+<h2 id="log_text">Pula Prédios 1.0B</h2>
+<img src="imagens/log.png" id="img_log"><hr>
+
+<center>Nesta versão focamos em corrigir alguns bugs e adicionar outros ;D</center>
+<h3 id="destaques">Mudanças na 1.0 Beta</h3>
+
+<div id="centraliza">
+    <ul><h3>Eventos</h3>
+        <li>3 Novíssimos eventos!</li>
+        <li>Aparecem de forma aleatória entre 12 e 27 segundos.</li>
+        
+        <br><h4>Área Densa</h4>
+            <li>Prédios são inseridos em frequências exorbitantes!</li>
+            <li>Suas únicas opções aqui são pular sem parar ou usar o especial.</li>
+            <li>Pode durar de 15 até 30 segundos!</li>
+            <li>Também altera as árvores de fundo para confundir sua visão ;)</li>    
+        
+        <br><h4>Água</h4>
+            <li>Não tem nada muito especial(ou será que sim?).</li>
+            <li>Não usar o especial aqui é uma péssima ideia!</li>
+            <li>Não dá pontos para você.</li>
+            <li>Prédios não nadam!</li>
+
+        <br><h4>Parque</h4>
+            <li>É o oposto da Água!</li>
+            <li>Lar de muitas Construções Abandonadas</li>
+            <li>Não tem como morrer aqui, eu acho</li>
+            <li>Pode durar até 25 segundos!</li>
+    </ul>
+
+    <ul><h3>Pisões</h3>
+        <li>Nova construção! (abandonada)</li>
+        <li>São raros, ou até chegar o evento do parque.</li>
+        <li>Dão 3 Pontos por cada Pisada!</li>
+    </ul>
+
+    <ul><h3>Temas Novos</h3>
+        <li>Duplicamos a meta!</li>
+        <li>Agora são 4 temas disponíveis em um espaço de 24 horas.</li>
+        <li>Amanhecer e Entardecer ficam ligados entre a Noite e o Dia.</li>
+    </ul>
+
+    <ul><h3>Texturas & Fontes</h3>
+        <li>Muitas Mudanças</li>
+        <li>Olhos clínicos requeridos!</li>
+        <li>Separamos as texturas em vários Sprites</li>
+        <li>Sombras novas, Luzes Novas, (quase) Tudo novo ;)</li>
+        <li>Efeito de Profundidade adicionado a cidade.</li>
+        <li>Montanhas também fazer parte do cenário agora.</li>
+        <li>Sério que tem uma 3° camada de chão? UUAAAIIIIII</li>
+        <li>Novas Nuvens, elas variam conforme o tema atual!</li>
+        <li>Maior parte dos textos fora do canvas, isso resulta em +Definição, Sombras & Efeitos!</li>
+        <li>Dezenas de mensagens aleatórias para quando você perder ;D</li>
+    </ul>
+
+    <ul><h3>Sons</h3>
+        <li>Finalmente adicionados!</li>
+        <li>Alguém vai jogar com eles?</li>
+        <li>Ao todo são 18 sons diferentes, para qualquer momento de tensão.</li>
+        <li>Eles também ganharam aleatorizadores.</li>
+    </ul>
+
+    <ul><h3>Estatísticas!</h3>
+        <li>Quem não gosta de ver uns número?</li>
+        <li>Adicionado vários números para você ficar louco!</li>
+        <li>Eles são atualizados toda vez que você bate as fundações.</li>
+        <li>Os dados ficam no cache do navegador até você limpar o histórico, ou manualmente.</li>
+        <li style="text-decoration: line-through black;">Pode ser uma porta de entrada para conquistas, opa spoilers, ignorem</li>
+    </ul><br>
+
+<h3 id="destaques">Mudanças de Jogabilidade</h3>
+    <ul><h3>As vezes o bug vence :v</h3>
+        <li>Sistema de Pause retirado.</li>
+        <li>Não é mais possível acionar o especial se estiver no chão.</li>
+        <li>Ao Bater em pisões, o jogador irá pular automaticamente.</li>
+        <li>Se cair na água sem o especial, irá afundar!</li>
+        <li>Porém se cair com o especial ainda carregando, será poupado ;)</li>
+        <li>Agora é possível iniciar o game apertando W</li>
+    </ul><br>
+
+<h3 id="destaques">Refatoração</h3>
+    <ul><h3>Foram muitos!</h3>
+        <li>Desvinculação da Engine do jogo com a página jogo.html</li>
+        <li>Funções de Desenho de Objetos agora estão separadas num arquivo sozinhas.</li>
+        <li>Aleatorizadores de sons foram re-escritos para ocupar apenas 19 linhas.</li>
+        <li>Funções de Preenchimento do timer e contagem estão em arquivos fora da Engine.</li>
+        <li>ctx.fillText está sendo utilizado somente para mostrar 2 frases agora.</li>
+        <li>Notificações de Eventos foram transferidas para métodos JQuery.</li>
+        <li>Sistema de Níveis foi reformulado para um Sistema de Velocidade.</li>
+    </ul><br>
+
+<h3 id="destaques">Correções de Bugs</h3>
+    <li>Chamadas de telas de Controles e Estatísticas se sobrepõem.</li>
+    <li>Capslock não é reconhecido pelas funções principais.</li>
+    <li>Ao perder, a velocidade reseta instantaneamente.</li>
+    <li>Funções com Intervalo não se encerram como esperado.</li>
+    <li>Barra de Evento enche mais do que o permitido.</li>
+    <li>Intervalo do atualizador de Cenário não funciona.</li>
+    <li>Velocidade não aumenta conforme a Pontuação.</li>
+    <li>Ao perder, relógio de eventos não é interrompido.</li>
+    <li>Ao perder, eventos se iniciam e o cronometro começa a contar.</li>
+    <li>Troca de chão para água é instantânea.</li>
+    <li>Log de Alterações não abre ao apertar L.</li>
+    <li>Sombra do jogador e dos prédios ficam atrás da 3° fileira de chão.</li>
+    <li>Ao ativar o especial sem pular com o evento de água ativo, o jogador perde milhares de vezes.</li>
+</div>
+</body>
+</html>
