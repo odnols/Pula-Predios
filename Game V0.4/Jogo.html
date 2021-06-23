@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <title>Pula Prédios</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="imagens/Icone.gif">
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+    
+    <script src="sprite.js"></script>
+    
+    <style>
+        canvas{
+            position: absolute;
+            top: 0px;
+            bottom: 0px;
+            left: 0px;
+            right: 0px;
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div id="comandos">
+    <h1 class="texto">Controles</h1><hr>
+    <p class="texto"> Espaço / W -> Pular <Br><br>
+        Enter / D -> Habilidade Especial <br><br>
+        P / A -> Pause<br><br><br><br>
+    </p><hr>
+    <h3 class="texto">
+        (!) Dica: Bater em outros prédios com a Habilidade Especial ativada diminui seus pontos!
+    </h3>
+</div>
+
+<div id="estatistic">
+    <h1 class="texto">Estatisticas</h1><hr>
+    <p class="texto">
+        Quantidade de Pulos: <script> document.write(localStorage.getItem("qtdPulos")); </script><br>
+        N° de Batidas: <br>
+        Distância Viajada: <br>
+        Pontos Ganhos: <br>
+        Melhor Partida: <script> document.write(localStorage.getItem("record")); </script> Pontos<br>
+    </p>
+</div>
+
+<div id="configuracoes"></div>
+
+<div id="fundo"></div>
+<div id="pausado">PAUSADO</div>
+
+<script language="javascript">
+    
+    // Mudar o HTML
+    const controles = document.querySelector("#comandos");
+    const pausado = document.querySelector("#pausado");
+    const fundo = document.querySelector("#fundo");
+    // const configura = document.querySelector("#configuracoes");
+    const estatistic = document.querySelector("#estatistic");
+
+    // Variáveis utilizadas no game
+    var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 10, estadoAtual, record, img, especial = 0, timer_especial = 5, var_timer_especial, estado_pause = 0, dev_op = 0, show_commands = 0, show_estatistic = 0, show_config = 0, contador_batidas = 0, data = new Date(), hora = data.getHours(),
+
+    // pontosParaNovoNivel = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20],
+    pontosParaNovoNivel = [5, 10, 20, 30, 45, 60, 75, 90, 105, 120, 135, 150, 165, 180, 200, 220, 240, 260, 280, 300, 350],
+    pontosAtuais = 0,
+    
+    labelNovoNivel = {
+        texto: "",
+        opacidade: 0.0,
+
+        fadeIn: function(dt){
+            var fadeInId = setInterval(function(){
+                if(labelNovoNivel.opacidade < 1.0)
+                    labelNovoNivel.opacidade += 0.1;
+                else
+                    clearInterval(fadeInId);
+            }, 10 * dt);
+        },
+
+        fadeOut: function(dt){
+            var fadeOutId = setInterval(function(){
+                if(labelNovoNivel.opacidade > 0.0)
+                    labelNovoNivel.opacidade -= 0.1;
+                else
+                    clearInterval(fadeOutId);
+            }, 10 * dt);
+        }
+    },
+
+    estados = {
+        jogar: 0,
+        jogando: 1,
+        perdeu: 2
+    },
+
+    background_predios = {
+        x: 0,
+
+        atualiza: function(){
+            this.x -= velocidade_obs * 0.2;
+            
+            if(this.x <= -1200)
+                this.x = 0;
+        },
+
+        desenha: function(){
+            spriteCidade.desenha(this.x, 380);
+            spriteCidade.desenha(this.x + 1200, 380);
+        }
+    },
+
+    background_ceu = {
+        desenha: function(){
+            spriteCeu.desenha(0, 0);
+        }
+    },
+
+    background_nuvens = {
+        x: 0,
+        x2: 0,
+
+        atualiza: function(){
+            this.x -= velocidade_obs * 0.03;
+            this.x2 -= velocidade_obs * 0.04;
+
+            if(this.x <= -1200)
+                this.x = 0;
+            
+            if(this.x2 <= -1200)
+                this.x2 = 0
+            },
+
+        desenha: function(){
+            spriteNuvens.desenha(this.x, 300);
+            spriteNuvens.desenha(this.x + 1200, 300);
+
+            spriteNuvens2.desenha(this.x2, 330);
+            spriteNuvens2.desenha(this.x2 + 1200, 330);
+        },
+    },
+
+    chao = {
+        y: 555,
+        x: 0,
+        x2: 0,
+        altura: 50,
+
+        atualiza: function(){
+            this.x -= velocidade_obs;
+            this.x2 -= velocidade_obs * 0.8;
+
+            if(this.x <= -1200)
+                this.x = 0;
+            
+            if(this.x2 <= -1200)
+                this.x2 = 0;
+        },
+        desenha: function(){
+            spriteChao2.desenha(this.x2, this.y - 10);
+            spriteChao2.desenha(this.x2 + 1200, this.y - 10);
+        },
+
+        desenha2: function(){
+            spriteChao.desenha(this.x, this.y + 2);
+            spriteChao.desenha(this.x + 1200, this.y + 2);
+        }
+    },
+
+    jogo = {
+        Cenarios: 0,
+        velocity: 0,
+
+        botoes: function(tecla){
+            switch(tecla){
+                case 99:
+                    if(show_commands == 0){
+			            controles.style.display = "block";
+                        show_commands = 1;
+                    }else{
+                        controles.style.display = "none";
+                        show_commands = 0;
+                    }
+                break;
+                case 101:
+                    if(show_estatistic == 0){
+			            estatistic.style.display = "block";
+                        show_estatistic = 1;
+                    }else{
+                        estatistic.style.display = "none";
+                        show_estatistic = 0;
+                    }
+                break;
+            }
+        },
+
+        pause: function(){
+            if(estado_pause == 0){
+                // Salvando a velocidade do game
+                this.velocity = velocidade_obs;
+
+                velocidade_obs = 0;
+                estado_pause = 1;
+                pausado.style.display = "block";
+            }else{
+                pausado.style.display = "none";
+                velocidade_obs = this.velocity;
+                estado_pause = 0;
+            }
+        },
+
+        recarrega_timer: function(){
+            var_timer_recarrega = setInterval( function(){
+                if(timer_especial < 5 && especial == 0){
+                    timer_especial++;
+                }else{
+                    clearInterval(var_timer_recarrega);
+                }
+            }, 2000);
+        },
+
+        operador: function(){
+            if(dev_op == 0){
+                especial = 1;
+                dev_op = 1;
+            }else{
+                especial = 0;
+                dev_op = 0;
+            }
+        },
+
+        cenario: function(){
+
+            img = new Image();
+
+            if(this.Cenarios == 0){
+                if(hora >= 18 || hora < 8){
+                    img.src = "imagens/1_sheet_noite.png";
+                    fundo.style.backgroundColor = "#09111c";
+                }else
+                    img.src = "imagens/1_sheet_dia.png";
+             }
+            //  else if(this.Cenarios == 1){
+            //     if(hora >= 18 || hora < 8){
+            //         img.src = "imagens/2_sheet_noite.png";
+            //         fundo.style.backgroundColor = "#09111c";
+            //     }else
+            //         img.src = "imagens/2_sheet_dia.png";
+            // }
+        }
+    },
+
+    jogador = {
+        x: 50,
+        y: -200,
+        altura: spriteJogador.Altura-15,
+        largura: 30,
+        velocidade: 0,
+        forcaDoPulo: 23.6,
+        qtdPulos: 3,
+        pulos_dados: 0,
+        score: 0,
+        
+        atualiza: function(){
+            this.velocidade += gravidade;
+            this.y += this.velocidade;
+
+            if(this.y > chao.y - this.altura && estadoAtual != estados.perdeu){
+                this.y = chao.y - this.altura;
+                this.qtdPulos = 3;
+                this.velocidade = 0;
+            }
+        },
+
+        pula: function(){
+            if(this.qtdPulos > 0 && especial != 1){
+                this.velocidade = -this.forcaDoPulo;
+                this.qtdPulos--;
+                this.pulos_dados++;
+            }
+        },
+
+        especial: function(){
+        	if(estadoAtual == estados.jogando && timer_especial != 0){
+        	    especial = 1;
+                jogador.timer();
+        	}
+        },
+        
+        timer: function(){
+            var_timer_especial = setInterval( function(){
+                if(timer_especial > 0 && especial == 1){
+                    timer_especial--;
+                    jogador.flutua();
+                }else{
+                // Hack life p/ voar infinitamente, comente a linha abaixo \/
+                    especial = 0;
+                    clearInterval(var_timer_especial);
+                    this.velocidade = 0;
+                    jogo.recarrega_timer();
+                }
+            }, 1000);
+        },
+
+        flutua: function(){
+            if(timer_especial % 1 == 0 && timer_especial % 3 == 0 )
+                this.y += 6;
+            else
+                this.y -= 3;
+        },
+
+        reset: function(){
+            this.velocidade = 0;
+            this.y = 0;
+
+            if(this.score > record){
+                localStorage.setItem("record", this.score);
+                record = this.score;
+            }
+            this.score = 0;
+
+            // this.pulos_dados += pulos_dados_hist;
+
+            localStorage.setItem("qtdPulos", this.pulos_dados);
+
+            pontosAtuais = 0;
+            
+            for(var k = velocidade_obs; k > 10; k--){
+                velocidade_obs -= 2;
+                k--;
+            }
+        },
+
+        desenha: function(){
+            if(estadoAtual == estados.jogando || estadoAtual == estados.jogar)
+            spriteSombraJogador.desenha(this.x - 10, 1000 - this.y);
+            else
+                spriteSombraJogador.desenha(this.x - 19, this.y + 135);
+
+            spriteJogador.desenha(this.x, this.y + 15);  
+        },
+    },
+
+    obstaculos = {
+        _obs: [],
+        _obsfundo: [],
+        _scored: false,
+        tempoInsere: 0,
+        y: 120,
+        velocidade: 0,
+
+        insere: function(){
+            if(estadoAtual != estados.jogar && estadoAtual != estados.perdeu && estado_pause != 1){
+
+                this._obs.push({
+                    x: Largura,
+                    largura: 46,
+                    altura: 15 + Math.floor(120 * Math.random()),
+                });
+            }else{
+                this._obs.push({
+                    x: Largura,
+                    largura: 10,
+                    altura: 0 + Math.floor(55 * Math.random()),
+                });
+            }
+
+            this._obsfundo.push({
+                x: Largura,
+                largura: 10,
+                altura: 0 + Math.floor(55 * Math.random()),
+            });
+
+            // Aleatorizador de Cenário
+            probabilidade = 10 + Math.floor(40 * Math.random());
+
+            if(probabilidade > 0 && probabilidade < 47)
+                if(estadoAtual == estados.jogando)
+                    this.tempoInsere = 30;
+                else
+                    this.tempoInsere = 15;
+            else
+                if(estadoAtual == estados.jogando)
+                    this.tempoInsere = 90;
+                else
+                    this.tempoInsere = 45;
+
+        },
+
+        atualiza: function(){
+        
+        if(estado_pause != 1){
+            if(this.tempoInsere == 0)
+                this.insere();
+            else
+                this.tempoInsere--;
+
+            for(var i = 0, tam = this._obs.length; i < tam; i++){
+                var obs = this._obs[i];
+
+                obs.x -= velocidade_obs;
+
+                if(jogador.x < obs.x + obs.largura && jogador.x + jogador.largura >= obs.x && jogador.y + jogador.altura >= chao.y - obs.altura && obs.altura > 55){
+                	if(especial == 1  || timer_especial < 1){
+                    //  Subtrai pontos caso o jogador Bata em alguma construção 
+                        this._obs.splice(i, 1);
+                        tam--;
+                        i--;
+                        jogador.score -= 2;
+
+                	}else if(estadoAtual != estados.perdeu){
+
+                        this._obs.splice(i, 1);
+                        tam--;
+                        i--;
+                        jogador.qtdPulos = 0;
+                        timer_especial = 5;
+                    	estadoAtual = estados.perdeu;
+                    	clearInterval(var_timer_especial);
+                	}
+                }else if(obs.x <= 0 && estadoAtual != estados.perdeu && obs.altura >= 55 && !obs._scored){
+                //  Soma 1 valor no Score a cada obstáculo pulado
+                    jogador.score++;
+                    obs._scored = true;
+
+                    if(pontosAtuais < pontosParaNovoNivel.length && jogador.score == pontosParaNovoNivel[pontosAtuais])
+                        passarDeFase();
+
+                }else if(obs.x <= -obs.largura - 90){
+                    this._obs.splice(i, 1);
+                    
+                    tam--;
+                    i--;
+                }
+            }
+
+            for(var x = 0, tam = this._obsfundo.length; x < tam; x++){
+                var obsb = this._obsfundo[x];
+                obsb.x -= velocidade_obs * 0.8;
+
+                if(obsb.x <= -obsb.largura - 90){
+                    this._obsfundo.splice(x, 1);
+
+                    tam--;
+                    x--;
+                }
+            }
+        } },
+
+        desenha: function(){
+            
+            for(var x = 0, tam = this._obsfundo.length; x < tam; x++){
+                var obsb = this._obsfundo[x];
+
+                if(obsb.altura < 55 && obsb.altura >= 50)
+                    spriteArvore.desenha(obsb.x, chao.y - obsb.altura + 8, obsb.largura, obsb.altura);
+                else if(obsb.altura < 50 && obsb.altura >= 45)
+                    spriteArvore_frutifera.desenha(obsb.x, chao.y - obsb.altura + 13, obsb.largura, obsb.altura);
+                else if(obsb.altura < 45 && obsb.altura >= 35)
+                    spriteArvore2.desenha(obsb.x, chao.y - 50 , obsb.largura, obsb.altura);
+                else
+                    spriteArbusto.desenha(obsb.x, chao.y - obsb.altura + 18, obsb.largura, obsb.altura);
+            }
+
+            chao.desenha();
+
+            for(var x = 0, tam = this._obsfundo.length; x < tam; x++){
+                var obsb = this._obsfundo[x];
+
+                // Sombra dos objetos
+                if(obsb.altura < 55 && obsb.altura >= 50)
+                    spriteSombra_Arvore.desenha(obsb.x - 11, chao.y, obsb.largura, obsb.altura);
+                else if(obsb.altura < 50 && obsb.altura >= 45)
+                    spriteSombra_ArvoreFrutifera.desenha(obsb.x - 8, chao.y, obsb.largura, obsb.altura);
+                else if(obsb.altura < 45 && obsb.altura >= 35)
+                    spriteSombra_Arvore2.desenha(obsb.x - 15, chao.y, obsb.largura, obsb.altura);
+            }
+
+            for(var i = 0, tam = this._obs.length; i < tam; i++){
+                var obs = this._obs[i];
+
+                if(obs.altura >= 55){
+                    
+                    if(obs.altura >= 80)
+                        spritePredio1.desenha(obs.x, chao.y - obs.altura + 25 , obs.largura, obs.altura);
+                    else
+                        spritePredio2.desenha(obs.x, chao.y - obs.altura + 25 , obs.largura, obs.altura);
+                    
+                }else if(obs.altura < 55 && obs.altura >= 50)
+                    spriteArvore.desenha(obs.x, chao.y - obs.altura + 25 , obs.largura, obs.altura);
+                else if(obs.altura < 50 && obs.altura >= 45)
+                    spriteArvore_frutifera.desenha(obs.x + 10, chao.y - obs.altura + 25 , obs.largura, obs.altura);
+                else if(obs.altura < 45 && obs.altura >= 35)
+                    spriteArvore2.desenha(obs.x, chao.y - 35 , obs.largura, obs.altura);
+                else
+                    spriteArbusto.desenha(obs.x, chao.y - obs.altura + 25 , obs.largura, obs.altura);
+            }
+
+            chao.desenha2();
+
+            for(var i = 0, tam = this._obs.length; i < tam; i++){
+                var obs = this._obs[i];
+
+                // Sombra dos objetos
+                if(obs.altura >= 55)
+                    spriteSombraPredio.desenha(obs.x - 30, chao.y + 12 , obs.largura, obs.altura);
+                else if(obs.altura < 55 && obs.altura >= 50)
+                    spriteSombra_Arvore.desenha(obs.x - 10, chao.y + 12 , obs.largura, obs.altura);
+                else if(obs.altura < 50 && obs.altura >= 45)
+                    spriteSombra_ArvoreFrutifera.desenha(obs.x + 5, chao.y + 10, obs.largura, obs.altura);
+                else if(obs.altura < 45 && obs.altura >= 35)
+                    spriteSombra_Arvore2.desenha(obs.x - 14, chao.y + 10, obs.largura, obs.altura);
+            }
+        }
+    }
+
+    function passarDeFase(){
+        velocidade_obs += 1.5;
+        pontosAtuais++;
+        
+        if(pontosAtuais != 20)
+            labelNovoNivel.texto = "Nivel " + pontosAtuais;
+        // else{
+        //     labelNovoNivel.texto = "Fase Completa!";
+
+        //     jogo.cenario();
+        //     jogo.Cenarios++;
+
+        //     localStorage.setItem("cenario", jogo.Cenarios);
+
+        //     setTimeout(function(){
+        //         document.location.reload(true);
+        //     }, 3000);
+        // }
+
+        labelNovoNivel.fadeIn(1.0);
+        
+        setTimeout(function(){
+            labelNovoNivel.fadeOut(1.0);
+        }, 2000); 
+    }
+
+    function clique(evento){
+        var tecla = event.keyCode;
+        console.log(tecla);
+
+        if(estadoAtual == estados.jogando){
+
+            switch(tecla){
+                case 32:  // Espaço
+                case 119: // W
+                    if(estado_pause != 1)
+                        jogador.pula();
+                break;
+                case 13:  // Enter
+                case 100: // D
+                    if(especial != 1 && timer_especial == 5)
+                        jogador.especial();
+                break;
+                case 112: // P
+                case 97: // A
+                    if(timer_especial == 5)
+                        jogo.pause();
+                break;
+                case 114: // R
+                    // jogo.operador();
+                break;
+            }
+
+        }else if(estadoAtual == estados.jogar && tecla == 32){
+            estadoAtual = estados.jogando;
+            timer_especial = 5;
+            controles.style.display = "none";
+            estatistic.style.display = "none";
+            configura.style.display = "none";
+
+        }else if(estadoAtual == estados.perdeu && jogador.y >= 20 * Altura){
+            estadoAtual = estados.jogar;
+            jogador.reset();
+        }else if(estadoAtual == estados.jogar){
+            if(tecla == 99 || tecla == 101 || tecla == 113)
+                jogo.botoes(tecla);
+            else if(tecla == 114){
+                localStorage.removeItem("cenario");
+
+                document.location.reload(true);
+            }
+        }
+    }
+
+    function main(){
+        Altura = window.innerHeight;
+        Largura = window.innerWidth;
+
+        if(Largura >= 1040){
+            Largura = 1200;
+            Altura = 600;
+        }
+
+        canvas = document.createElement("canvas");
+        canvas.width = Largura;
+        canvas.height = Altura;
+        canvas.style.border = "1px solid #000";
+
+        ctx = canvas.getContext("2d");
+        document.body.appendChild(canvas);
+
+        document.addEventListener("keypress", clique);
+
+        estadoAtual = estados.jogar;
+
+        record = localStorage.getItem("record");
+
+        if(record == null)
+            record = 0;
+
+        pulos_dados_hist = localStorage.getItem("qtdPulos");
+
+        if(pulos_dados_hist == null)
+            pulos_dados_hist = 0;
+
+        if(localStorage.getItem("cenario") == null)
+            jogo.Cenarios = 0;
+        else
+            jogo.Cenarios = localStorage.getItem("cenario");
+        
+        console.log(localStorage.getItem("cenario"));
+        jogo.cenario();
+        roda();
+    }
+
+    function roda(){
+        
+        atualiza();
+        desenha();
+        window.requestAnimationFrame(roda);
+    }
+
+    function atualiza(){
+        if(estadoAtual == estados.jogando){
+            obstaculos.atualiza();
+        }
+        
+        if(especial == 0 && estado_pause != 1){
+        	jogador.atualiza();
+        }
+
+        if(estado_pause != 1){
+            background_nuvens.atualiza();
+            background_predios.atualiza();
+            chao.atualiza();
+        }
+    }
+
+    function desenha(){
+        
+        background_ceu.desenha();
+        background_nuvens.desenha(0, 300);
+        background_predios.desenha(0, 400);
+        
+        ctx.fillStyle = "#fff";
+        ctx.font = "50px Minecraft";
+        ctx.fillText(jogador.score, 30, 68);
+        
+        if(especial == 1){
+            ctx.fillStyle = "yellow";
+            ctx.fillText(timer_especial, 250, 68);
+            ctx.fillStyle = "#fff";
+            
+            if(dev_op == 1){
+                ctx.font = "15px Minecraft";
+                ctx.fillText("DEV", 290, 47); 
+            }
+        }else if(especial == 0 & timer_especial < 5){
+            ctx.fillStyle = "cyan";
+            ctx.fillText(timer_especial, 250, 68);
+            ctx.font = "15px Minecraft";
+            ctx.fillText("Carregando", 290, 47);
+            ctx.fillStyle = "#fff";
+        }else
+            ctx.fillText(timer_especial, 250, 68);
+            
+
+        ctx.font = "50px Minecraft";
+
+        if(jogador.qtdPulos == 0){
+            ctx.fillStyle = "red";
+            ctx.fillText(jogador.qtdPulos, 1125, 68);
+            ctx.fillStyle = "#fff";
+        }else
+            ctx.fillText(jogador.qtdPulos, 1125, 68);
+
+        ctx.fillStyle = "rgba(255, 255, 255,"+ labelNovoNivel.opacidade +")";
+        ctx.fillText(labelNovoNivel.texto, canvas.width / 2 - ctx.measureText(labelNovoNivel.texto).width / 2, canvas.height / 3);
+        ctx.fillStyle = "#fff";
+
+        ctx.font = "25px Minecraft";
+        ctx.fillText("Especial (⏎)", 250, 25);
+        ctx.fillText("Pontuação", 10, 25);
+
+        if(hora >= 8 && hora < 18)
+            ctx.fillStyle = "black";
+        
+        ctx.fillText("Alpha 0.04", 1040, 25);
+        ctx.fillText("Pulos", 1050, 60);
+        
+        ctx.fillStyle = "#fff";
+        
+        ctx.font = "15px Minecraft";
+        if(especial == 1){
+            ctx.fillStyle = "yellow";
+            ctx.fillText("Segundos", 290, 65);
+        }else
+            ctx.fillText("Segundos", 290, 65);
+        
+        ctx.font = "50px Minecraft";
+
+        if(estadoAtual == estados.jogar){
+
+            if(hora >= 8 && hora < 18)
+                ctx.fillStyle = "black";
+
+            ctx.fillText("Iniciar", canvas.width / 2 - ctx.measureText("Iniciar").width / 2, Altura/1.5 + 30);
+            ctx.font = "40px Minecraft";
+            ctx.fillText("Controles ( C )", canvas.width / 2 - ctx.measureText("Controles ( C )").width / 2, 480);
+
+            ctx.fillStyle = "Green";
+            ctx.fillRect(Largura/2 - 50, Altura/2 - 50, 100, 100);
+            
+        }else if(estadoAtual == estados.perdeu){
+            ctx.fillStyle = "Red";
+            ctx.fillRect(Largura/2 - 50, Altura/2 - 50, 100, 100);
+
+            ctx.save();
+            ctx.translate(Largura/2, Altura/2);
+            ctx.fillStyle = "#fff";
+
+            if(jogador.score > record)
+                ctx.fillText("Novo Recorde!", -155, -65);
+            else if (record < 10)
+                ctx.fillText("Recorde: " + record, -120, -65);
+            else if (record >= 10 && record < 100)
+                ctx.fillText("Recorde: " + record, -125, -65);
+            else
+                ctx.fillText("Recorde: " + record, -130, -65);
+
+            if(jogador.score < 10)
+                ctx.fillText(jogador.score, -15, 19);
+            else if(jogador.score >= 10 && jogador.score < 100)
+                ctx.fillText(jogador.score, -26, 19);
+            else
+                ctx.fillText(jogador.score, -39, 19);
+
+            ctx.restore();
+        }if(estadoAtual == estados.jogando)
+            obstaculos.desenha();
+
+        if(estadoAtual == estados.jogar || estadoAtual == estados.perdeu){
+            obstaculos.atualiza();
+            obstaculos.desenha();
+        }
+
+        jogador.desenha();
+
+        if(estadoAtual == estados.jogar){
+            ctx.fillStyle = "#fff";
+            ctx.font = "25px Minecraft";
+            ctx.fillText("Estatísticas ( E )", 960, 580);
+            // ctx.fillText("Configuracoes ( Q )", 920, 580);
+            // ctx.fillText("Reiniciar Cenarios ( R )", 10, 580);
+        }
+    }
+
+    // Inicializando o game
+    main();
+</script>
+</body>
+</html>
