@@ -1,0 +1,90 @@
+body{
+    background-image: url("../Imagens/Fundo/log.png");
+    overflow-x: hidden;
+    animation: fundo_log 100s infinite;
+    touch-action: manipulation; /* Desabilita o zoom com duplo clique */
+}
+@font-face{
+    font-family: Minecraft;
+    src: url('../Fontes/Minecraft.ttf');
+}
+@font-face{
+    font-family: Minecraftia;
+    src: url('../Fontes/Minecraftia.ttf');
+}
+#tela_log_completa{
+    height: 100%;
+    position: fixed;
+    overflow-y: scroll;
+    background-color: rgba(4, 36, 124, 0.3);
+}
+#img_log{
+    z-index: 0;
+    top: 0px;
+    width: 1366px;
+    height: 149px;
+    box-shadow: 0px 0px 15px black;
+}
+h2#log_text{
+    font-family: "Minecraftia";
+    position: absolute;
+    z-index: 2;
+    color: white;
+    left: 2%;
+    top: 90px;
+    text-shadow: 2px 2px grey;
+}
+#novidades_log{
+    width: 50%;
+    box-shadow: 0px 1px 2px black;
+    border: solid 2px white;
+}
+.destaques{
+    color: white;
+    font-family: "Minecraftia";
+    text-shadow: 1px 1px 3px black;
+    text-align: center;
+    font-size: 30px;
+}
+.categoria_log{
+    padding-left: 22%;   
+    padding-right: 20%;
+    font-size: 17px;
+}
+#centraliza{
+    width: 80%;
+    left: 10%;
+    position: absolute;
+}
+#log_imbutido{
+    display: none;
+    z-index: 8;
+    position: fixed;
+}
+.fechador_log{
+    display: none;
+    font-family: "Minecraftia";
+    padding: 15px;
+    z-index: 8;
+    top: 24%;
+    right: 2px;
+    position: fixed;
+    min-width: 220px;
+    height: 40px;
+    color: black;
+    color: white;
+    background-color: rgba(0, 0, 0, .6);
+    transition: box-shadow .5s;
+}
+.fechador_log:hover{
+    box-shadow: 0px 0px 15px white; 
+}
+#rodape_log{
+    background-color: rgba(0, 0, 0, .6);
+    box-shadow: 0px 0px 15px black;
+    text-align: center;
+    color: white;
+    padding-top: 5px;
+    font-family: "Minecraftia";
+    width: 100%;
+}

@@ -1,0 +1,226 @@
+@keyframes entardecer{
+    0% { }
+    50% { background-color: rgba(145, 107, 5, .2); }
+    65% { background-color: rgba(105, 73, 4, .3); }
+    90% { background-color: rgba(10, 59, 75, .2); }
+    100% { }
+}
+@keyframes amanhecer{
+    0% { }
+    50% { background-color: rgba(14, 59, 110, .2); }
+    65% { background-color: rgba(16, 76, 145, .3); }
+    85% { background-color: rgba(5, 144, 190, .2); }
+    100% { }
+}
+@keyframes iniciar{
+    0% { color: red; transform: scale(1); }
+    25% { color: yellow; transform: scale(1.1); }
+    50% { color: green; transform: scale(1); }
+    75% { color: blue; transform: scale(1.1); }
+    100% { color: red; transform: scale(1); }
+}
+@keyframes muda_cor_loja{
+    0% { background-color: rgba(41, 41, 206, .5); }
+    25% { background-color: rgba(0, 0, 255, .5); }
+    50% { background-color: rgba(77, 41, 206, .6); }
+    75% { background-color: rgba(0, 0, 255, .5); }
+    100% { background-color: rgba(41, 41, 206, .5); }
+}
+@keyframes move_img_loja{
+    0% { background-position: 0% 0%; }
+	100% { background-position: 1890px 0px; }
+}
+@keyframes moedas{
+    0% { top: 50%; }
+    100% { top: 5%; }
+}
+@keyframes move_moeda{
+    0% { right: 15%; }
+    100% { right: 5%; }
+}
+@keyframes volta_moeda{
+    0% { right: 5%; }
+    100% { right: 15%; }
+}
+@keyframes abre_loja{
+    0% { left: 100%; }
+    100% { left: 0%; }
+}
+@keyframes muda_cor_fundo_loja{
+    0% { background-color: grey; }
+    50% { background-color: rgb(70, 70, 70, .5); }
+    75% { background-color: rgba(48, 48, 48, .6); }
+    100% { background-color: grey; }
+}
+@keyframes aparece_texto{
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@keyframes esconde_texto{
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+@keyframes desliza_letras{
+    0% { left: -250px; }
+    100% { left: 0px; }
+}
+@keyframes move_sombra{
+    0% { text-shadow: 0px 0px 0px rgba(0, 0, 0, .7); }
+    100% { text-shadow: 2px 2px 3px rgba(0, 0, 0, .7); }
+}
+@keyframes aparece_bloco{
+    0%{ top: -150%; }
+    100%{ top: 10%; }
+}
+@keyframes fade_block{
+    0% { opacity: 0; z-index: 1; }
+    100% { opacity: 1; z-index: 3; }
+}
+@keyframes brilha_bloco{
+    0% { box-shadow: black 0px 0px 15px; }
+    25% { box-shadow:  #9a01c0 0px 0px 25px; }
+    50% { box-shadow:  #9a01c0 0px 0px 25px; }
+    100% { box-shadow: black 0px 0px 15px; }
+}
+@keyframes brilha_bloco2{
+    0% { box-shadow: black 0px 0px 15px; }
+    25% { box-shadow:  #03a1b6 0px 0px 25px; }
+    50% { box-shadow:  #086d9c 0px 0px 25px; }
+    100% { box-shadow: black 0px 0px 15px; }
+}
+@keyframes brilha_bloco3{
+    0% { box-shadow: black 0px 0px 15px; }
+    25% { box-shadow:  #0bb914 0px 0px 25px; }
+    50% { box-shadow:  #14be30 0px 0px 25px; }
+    100% { box-shadow: black 0px 0px 15px; }
+}
+@keyframes brilha_bloco4{
+    0% { box-shadow: black 0px 0px 15px; }
+    25% { box-shadow: #cc2900 0px 0px 25px; }
+    50% { box-shadow: #ff6600 0px 0px 25px; }
+    100% { box-shadow: black 0px 0px 15px; }
+}
+@keyframes pisca_barra0{
+    0% { background-color: rgba(0, 0, 0, .7); }
+    50% { background-color: rgba(73, 3, 92, .9); }
+    100% { background-color: rgba(0, 0, 0, .7); }
+}
+@keyframes pisca_barra1{
+    0% { background-color: rgba(0, 0, 0, .7); }
+    50% { background-color: rgba(9, 69, 119, .9); }
+    100% { background-color: rgba(0, 0, 0, .7); }
+}
+@keyframes pisca_barra2{
+    0% { background-color: rgba(0, 0, 0, .7); }
+    50% { background-color: rgba(8, 99, 16, 0.9); }
+    100% { background-color: rgba(0, 0, 0, .7); }
+}
+@keyframes pisca_barra3{
+    0% { background-color: rgba(0, 0, 0, .7); }
+    50% { background-color: rgba(112, 54, 7, 0.9); }
+    100% { background-color: rgba(0, 0, 0, .7); }
+}
+
+@keyframes efeito_morte{
+    0% { opacity: 0; }
+    20% { background-color: black; opacity: .5; }
+    25% { background-color: white; opacity: .7; }
+    30% { background-color: black; opacity: .5; }
+    100% { background-color: black; opacity: .5; }
+}
+@keyframes sobe_estats{
+    from { padding-top: 200%; }
+    to { padding-top: 8%; }
+}
+
+@keyframes puxa_sessao_loja{
+    from { top: 100%; box-shadow: 0px 0px 5px black; }
+    to { top: 0px; box-shadow: 0px 0px 15px black; }
+}
+@keyframes loja_move_jogador{
+    from { right: 0; }
+    to { left: 0; }
+}
+@keyframes conquista_obtida{
+    0% { box-shadow: 0px 0px 0px black; border: solid 0px black; margin-left: 0px; transform: rotateZ(90deg); width: 0px; height: 0px; }
+    20% { box-shadow: 0px 0px 0px black; border: solid 0px black; margin-left: -25px; transform: rotateZ(0deg); width: 50px; height: 50px; }
+    100% { box-shadow: 0px 0px 15px black; border: solid 2px black; margin-left: -175px; width: 350px; height: 80px; }
+}
+@keyframes texto_conquista{
+    0%{ opacity: 0; }
+    90% { opacity: 0; }
+    100% { opacity: 1; }
+}
+@keyframes fecha_conquista{
+    0% { opacity: 1; box-shadow: 0px 0px 15px black; border: solid 2px black; margin-left: -175px; width: 350px; height: 80px; }
+    80% { box-shadow: 0px 0px 0px black; border: solid 0px black; margin-left: -25px; width: 50px; height: 50px; }
+    100% { box-shadow: 0px 0px 0px black; border: solid 0px black; margin-left: 0px; width: 0px; height: 0px; opacity: 0; }
+}
+@keyframes puxa_teaser{
+    from{ padding-left : 5%; }
+    top { padding-left: 0%; }
+}
+@keyframes transita_loja{
+    from { right: 0px; width: 0px; box-shadow: 0px 0px 0px black; background-color:rgb(3, 73, 64); }
+    to{ right: 0px; width: 100%; box-shadow: 0px 0px 15px black; background-color:rgb(3, 73, 64); }
+}
+@keyframes transita_loja2{
+    from { left: 0px; width: 100%; box-shadow: 0px 0px 0px black; background-color:rgb(3, 73, 64); }
+    to{ left: 0px; width: 0%; box-shadow: 0px 0px 15px black; background-color:rgb(3, 73, 64); }
+}
+@keyframes transita_log{
+    from { top: 0px; height: 0px; box-shadow: 0px 0px 0px black; background-color: yellow; }
+    to{ top: 0px; height: 100%; box-shadow: 0px 0px 15px black; background-color: yellow; }
+}
+@keyframes transita_log2{
+    from { bottom: 0px; height: 100%; box-shadow: 0px 0px 0px black; background-color: yellow; }
+    to{ bottom: 0px; height: 0%; box-shadow: 0px 0px 15px black; background-color: yellow; }
+}
+@keyframes abre_notificacao{
+    from { width: 0px; margin-left: 0px; opacity: 0; }
+    to { width: 350px; margin-left: -175px; opacity: 1; }
+}
+@keyframes fecha_notificacao{
+    from { width: 350px; margin-left: -175px; opacity: 1; }
+    to { width: 0px; margin-left: 0px; opacity: 0; }
+}
+@keyframes item_lendario{
+    0% { box-shadow: 0px 0px 15px goldenrod; }
+    25% { box-shadow: 0px 0px 25px gold; }
+    75% { box-shadow: 0px 0px 10px yellow; }
+    100% { box-shadow: 0px 0px 15px goldenrod; }
+}
+@keyframes termina_carregamento{
+    from { background-color: rgb(6, 114, 100); }
+    to { background-color: purple; }
+}
+@keyframes termina_carregamento2{
+    from { background-color: rgb(6, 114, 100); }
+    to { background-color: rgb(21, 197, 174); }
+}
+@keyframes altera_posicao_fechador{
+    from { top: 24%; }
+    to { top: 12%; }
+}
+@keyframes altera_posicao_fechador2{
+    from { top: 12%; }
+    to { top: 24%; }
+}
+@keyframes fundo_log{
+    from { background-position: 0% 0%; }
+    to { background-position: 1385px 831px; }
+}
+@keyframes tema_caixa_ativo{
+    0% { box-shadow: 0px 0px 15px goldenrod; }
+    50% { box-shadow: 0px 0px 30px rgb(253, 188, 22); }
+    75% { box-shadow: 0px 0px 25px rgb(235, 183, 52); }
+    100% { box-shadow: 0px 0px 15px goldenrod; }
+}
+@keyframes background_skins{
+    from { background-position-x: 0px; }
+    to { background-position-x: 386px; }
+}
+@keyframes desliza_tela_controles{
+    from { right: 25%; }
+    to { right: 50%; }
+}
