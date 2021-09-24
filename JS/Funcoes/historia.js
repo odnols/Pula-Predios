@@ -11,10 +11,10 @@ function historia(texto_especial, requisicao_auto){
     avancar_hist = document.getElementsByClassName("avancar_hist");
     avancar_hist_block = document.getElementsByClassName("avancar_hist_block");
 
-    let textos = ["Recebendo trasmissão . . .", "Olá tripulante!", "Parabéns, você foi selecionado para nossos testes super secretos!", "Estamos desenvolvendo um veículo de espionagem, e você ajudará a fazer parte da história!", "Tudo o que precisa fazer é pilotar ele, fácil não?", "Iremos começar os testes em alguns minutos", "Estamos esperando por você"];
-
+    let textos = ["Recebendo transmissão . . .", "Olá testador!", "Parabéns, você foi selecionado para nossos testes super secretos!", "Estamos criando um veículo anormal e você ajudará a fazer parte da história!", "Tudo o que precisa fazer é pilotar! fácil não?", "Iremos começar os testes em daqui a pouco", "Esperamos por você"];
+    
     if(idioma == "en")
-        textos = ["Receiving broadcast . . .", "Hello traveler!", "Congratulations, you have been selected for our super secret tests!", "We are developing a spy vehicle, and you will help to be part of the story!", "All you need to do is drive, it's easy not to?", "We will start testing in a few minutes", "We are waiting for you"];
+        textos = ["Receiving broadcast . . .", "Hello tester!", "Congratulations, you have been selected for our super secret tests!", "We are developing a vehicle, and you will help to be part of the story!", "All you need to do is drive! it's easy not to?", "We will start testing soon", "We are waiting for you"];
 
     if(indice_historia > textos.length - 1){
         $("#historia_jogo").fadeOut();
@@ -45,7 +45,7 @@ function historia(texto_especial, requisicao_auto){
             
             if(aguarda_confirmacao){
                 aguarda_confirmacao = false;
-                setTimeout(()=>{
+                setTimeout(() => {
                     indice_historia++;
                     historia(null, null);
                 }, 2000);
@@ -63,7 +63,7 @@ function historia(texto_especial, requisicao_auto){
         if(texto_especial != null)
             showtext(el, texto_especial, 0);
 
-        setTimeout(function(){
+        setTimeout(() => {
             if(indice_historia == 0){
                 indice_historia = 1;
                 historia(null, null);
