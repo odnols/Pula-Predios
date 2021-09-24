@@ -239,9 +239,9 @@ function carrega_dados(){
         jogador.skins_compradas = [0, 0, 0, 0, 0, 0, 0, 1];
     else{
         // Recolhendo os valores e convertendo para um array utilizável
-        var indices = loja_skinsCompradas.split(",");
+        let indices = loja_skinsCompradas.split(",");
 
-        for(var i = 0; i < 7; i++){
+        for(let i = 0; i < 7; i++){
             indices[i];
 
             if(indices[i] != 1)
@@ -256,9 +256,9 @@ function carrega_dados(){
         jogador.mods_comprados = [0, 0, 0, 0];
     else{
         // Recolhendo os valores e convertendo para um array utilizável
-        var indices = loja_modsComprados.split(",");
+        let indices = loja_modsComprados.split(",");
 
-        for(var i = 0; i < 4; i++){
+        for(let i = 0; i < 4; i++){
             indices[i];
 
             if(indices[i] != 1)
@@ -281,10 +281,10 @@ function carrega_dados(){
         jogador.mods_vezes_usados = [0, 0, 0, 0];
     else{
         // Recolhendo os valores e convertendo para um array utilizável
-        var indices = loja_modsCompradosUsados.split(",");
+        let indices = loja_modsCompradosUsados.split(",");
 
-        for(var i = 0; i < 4; i++){
-            var valor = indices[i];
+        for(let i = 0; i < 4; i++){
+            let valor = indices[i];
 
             if(jogador.mods_comprados[i] == 1 && valor == 0)
                 valor = 5;
@@ -301,9 +301,9 @@ function carrega_dados(){
         jogador.bonus_comprados = [0, 0, 0];
     else{
         // Recolhendo os valores e convertendo para um array utilizável
-        var indices = bonus_comprados.split(",");
+        let indices = bonus_comprados.split(",");
 
-        for(var i = 0; i < 3; i++){
+        for(let i = 0; i < 3; i++){
             indices[i];
 
             if(indices[i] != 1)
@@ -319,10 +319,10 @@ function carrega_dados(){
         jogador.bonus_vezes_usados = [0, 0, 0];
     else{
         // Recolhendo os valores e convertendo para um array utilizável
-        var indices = loja_bonusVezesUsados.split(",");
+        let indices = loja_bonusVezesUsados.split(",");
 
-        for(var i = 0; i < 3; i++){
-            var valor = indices[i];
+        for(let i = 0; i < 3; i++){
+            let valor = indices[i];
 
             if(jogador.bonus_comprados[i] == 1 && valor == 0)
                 valor = 5;
@@ -339,13 +339,13 @@ function carrega_dados(){
         lista_conquistas_ganhas = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     else{
         // Recolhendo os valores e convertendo para um array utilizável
-        var indices = lista_conquistas_g.split(",");
+        let indices = lista_conquistas_g.split(",");
 
         // Reiniciando o Array
         lista_conquistas_ganhas = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
         // Convertendo o valor e salvando no array corretamente
-        for(var i = 0; i < lista_conquistas.length; i++){
+        for(let i = 0; i < lista_conquistas.length; i++){
             indices[i];
 
             if(indices[i] == 0 || indices[i] == 1 || indices[i] == 2)
@@ -368,9 +368,9 @@ function carrega_dados(){
         jogo.temas_comprados = [1, 1];
     
     // Recolhe todas as informações do localStorage e salva
-    var identificadores = ["tt_skins_compradas", "tt_mods_comprados", "tt_bonus_comprados"];
+    let identificadores = ["tt_skins_compradas", "tt_mods_comprados", "tt_bonus_comprados"];
 
-    for(var i = 0; i < 3; i++){
+    for(let i = 0; i < 3; i++){
 
         valor = localStorage.getItem(identificadores[i]);
     

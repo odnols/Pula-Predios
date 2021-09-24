@@ -3,9 +3,9 @@ var tela_opcao_aberta = 0, cache_alvo = null;
 function botoes(tecla){
 
     if(confirma_carregamento){
-        var lista_menus = ["boas_vindas", "configuracoes", "opcoes", "estatisticas", "tutorial", "conquistas_mapa", "controles", "problemas_redes_sociais", "suporte_jogo"];
+        let lista_menus = ["boas_vindas", "configuracoes", "opcoes", "estatisticas", "tutorial", "conquistas_mapa", "controles", "problemas_redes_sociais", "suporte_jogo"];
 
-        var alvo = "placeholder";
+        let alvo = "placeholder";
 
         if(estadoAtual == estados.jogar && sessao_loja_ativa != 1)
             executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2);
@@ -124,7 +124,7 @@ function botoes(tecla){
 
             if(alvo != "notif"){
                 // Esconde todas as interfaces
-                for(var i = 0; i < lista_menus.length; i++){
+                for(let i = 0; i < lista_menus.length; i++){
                     if(alvo != lista_menus[i])
                         $("#"+ lista_menus[i] +"").fadeOut();
                 }
@@ -149,7 +149,7 @@ function clique(evento){
                 evento = evento || window.event;
 
                 // Controles do Mouse e cliques
-                var button = evento.which || evento.button;
+                let button = evento.which || evento.button;
 
                 if(button == 1 || evento == 32)
                     // ação para o botão esquerdo 
@@ -174,7 +174,7 @@ function clique(evento){
         }else{
             if(inicia_game == 1)
                 if(typeof evento != "number")
-                    var tecla = event.keyCode;
+                    tecla = event.keyCode;
                 else
                     tecla = evento;
 
@@ -231,7 +231,8 @@ function clique(evento){
 // Detectar tecla ESC
 document.onkeydown = function(evt){
     evt = evt || window.event;
-    var isEscape = false;
+    let isEscape = false;
+
     if("key" in evt)
         isEscape = (evt.key === "Escape" || evt.key === "Esc");
     else

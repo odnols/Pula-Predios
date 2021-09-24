@@ -36,9 +36,9 @@ function carrega_jogo(requisicao_auto){
             $("#button_animacoes_cell").fadeOut();
         }
 
-        var carregar_departamentos = [sincronizaQualidadeGrafica(), main(), aleatorizaProp(), sincronizaQuadroConquistas(), carrega_idioma(1)];
-        var texto_feedback_pt = ["Vasculhando o cache", "Colocando combustível", "Animando", "Aleatorizando Props", "Admirando Conquistas", "Traduzindo", "Sintonizando os sons"];
-        var texto_feedback_en = ["Searching the cache", "Putting fuel", "Starting animations", "Randomizing Props", "Admiring Achievements", "translating", "Tuning the sounds"];
+        let carregar_departamentos = [sincronizaQualidadeGrafica(), main(), aleatorizaProp(), sincronizaQuadroConquistas(), carrega_idioma(1)];
+        let texto_feedback_pt = ["Vasculhando o cache", "Colocando combustível", "Animando", "Aleatorizando Props", "Admirando Conquistas", "Traduzindo", "Sintonizando os sons"];
+        let texto_feedback_en = ["Searching the cache", "Putting fuel", "Starting animations", "Randomizing Props", "Admiring Achievements", "translating", "Tuning the sounds"];
 
         monta_data_atual = new Date();
 
@@ -61,7 +61,7 @@ function carrega_jogo(requisicao_auto){
         if(carregar_tudo){
             localStorage.setItem("ultimoCarregamento", data_atual);
 
-            var indice = 0;
+            let indice = 0;
 
             carregar_departaments = setInterval(function(){
                 if(idioma == "pt")
@@ -93,7 +93,7 @@ function carrega_jogo(requisicao_auto){
                 
                 document.getElementById("porcentagem_carregada").innerHTML = "An Odyssey full of heels";
             }
-            for(var i = 0; i < carregar_departamentos.length; i++){
+            for(let i = 0; i < carregar_departamentos.length; i++){
                 carregar_departamentos[i];
             }
             
@@ -117,15 +117,15 @@ function carrega_jogo(requisicao_auto){
 
 function carrega_sons(texto){
 
-    var lista_musicas = ["intro_1", "intro_2", "intro_3", "log", "loja", "main", "main_2", "ocioso", "ocioso_2"];
-    var lista_memes = ["bambam", "bambam2", "bambam3", "daciolo", "dilma_vento_1", "dilma_vento_2", "dilma_vento_3", "dilma_vento_4", "falencia", "gas", "jailson_1", "jailson_2", "jailson_3", "jailson_4", "parque", "parque2", "Sumiu"];
-    var lista_inicio = ["comeca_1", "comeca_2", "comeca_3", "comeca_4", "comeca_5", "comeca_6", "comeca_7", "comeca_8"];
-    var lista_final = ["morreu_1", "morreu_2", "morreu_3", "morreu_4", "morreu_5", "morreu_6", "morreu_7", "morreu_8", "morreu_9", "morreu_10", "morreu_11", "morreu_12", "morreu_13", "morreu_14", "morte_agua", "morte_lava"];
-    var lista_efeitos = ["Batida", "bigorna", "compra", "conquista_secreta", "conquista", "flutua", "hat", "levelup", "moeda", "orb", "parque", "pop", "Pulo1", "Pulo2", "Pulo3", "skin", "snare", "transitador_loja", "Vento"];
+    let lista_musicas = ["intro_1", "intro_2", "intro_3", "log", "loja", "main", "main_2", "ocioso", "ocioso_2"];
+    let lista_memes = ["bambam", "bambam2", "bambam3", "daciolo", "dilma_vento_1", "dilma_vento_2", "dilma_vento_3", "dilma_vento_4", "falencia", "gas", "jailson_1", "jailson_2", "jailson_3", "jailson_4", "parque", "parque2", "Sumiu"];
+    let lista_inicio = ["comeca_1", "comeca_2", "comeca_3", "comeca_4", "comeca_5", "comeca_6", "comeca_7", "comeca_8"];
+    let lista_final = ["morreu_1", "morreu_2", "morreu_3", "morreu_4", "morreu_5", "morreu_6", "morreu_7", "morreu_8", "morreu_9", "morreu_10", "morreu_11", "morreu_12", "morreu_13", "morreu_14", "morte_agua", "morte_lava"];
+    let lista_efeitos = ["Batida", "bigorna", "compra", "conquista_secreta", "conquista", "flutua", "hat", "levelup", "moeda", "orb", "parque", "pop", "Pulo1", "Pulo2", "Pulo3", "skin", "snare", "transitador_loja", "Vento"];
     
-    var localizacao = ["Musicas", "Memes", "Inicio", "Final", "Efeitos"];
+    let localizacao = ["Musicas", "Memes", "Inicio", "Final", "Efeitos"];
 
-    var faixas_sonoras = ["faixa_musicas", "faixa_ambiente", "faixa_conquistas", "faixa_pisoes", "faixa_memes1", "faixa_memes2", "faixa_efeitos1", "faixa_efeitos2", "faixa_efeitos3"];
+    let faixas_sonoras = ["faixa_musicas", "faixa_ambiente", "faixa_conquistas", "faixa_pisoes", "faixa_memes1", "faixa_memes2", "faixa_efeitos1", "faixa_efeitos2", "faixa_efeitos3"];
 
     alvo = [lista_musicas, lista_memes, lista_inicio, lista_final, lista_efeitos];
 

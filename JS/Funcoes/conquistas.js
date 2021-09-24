@@ -10,7 +10,7 @@ function sincronizaNomeConquistas(){
 }
 
 function conquista(conquista, modo){
-    var tempo_conquista;
+    let tempo_conquista;
     
     if(lista_conquistas_ganhas[conquista] == 0 || modo == 1){
         lista_conquistas_ganhas[conquista] = 1;
@@ -142,7 +142,7 @@ function sincronizaQuadroConquistas(){
 
     document.getElementById("placeholder_conquista").innerHTML = "";
 
-    for(var i = 0; i < lista_conquistas.length; i++){
+    for(let i = 0; i < lista_conquistas.length; i++){
         if(lista_conquistas_ganhas[i] == 0){
             if(conquistas_secretas.includes(i))
                 document.getElementById("placeholder_conquista").innerHTML += "<img class='img_conquista' src='Imagens/Conquistas/secreta.jpg'>";
@@ -156,9 +156,9 @@ function sincronizaQuadroConquistas(){
 
 function sincronizaEstatisticasConquistas(){
 
-    var obtidas = 0;
+    let obtidas = 0;
     
-    for(var x = 0; x < lista_conquistas.length; x++){
+    for(let x = 0; x < lista_conquistas.length; x++){
         if(lista_conquistas_ganhas[x] == 1 || lista_conquistas_ganhas[x] == 2)
             obtidas += 1;
     }

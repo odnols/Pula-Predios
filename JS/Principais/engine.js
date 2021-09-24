@@ -69,7 +69,7 @@ Cenario_sprites = {
     atualiza: function(){
 
         // Coletando a data e extraindo a hora
-        var nova_data = new Date();
+        let nova_data = new Date();
         hora = nova_data.getHours();
         
         // Define se o jogo iniciará de dia ou de noite
@@ -1082,8 +1082,8 @@ propsfundo = {
         else
             this.tempoInsere--;
 
-        for(var x = 0, tam = this._obsfundo.length; x < tam; x++){
-            var obsb = this._obsfundo[x];
+        for(let x = 0, tam = this._obsfundo.length; x < tam; x++){
+            let obsb = this._obsfundo[x];
             obsb.x -= velocidade_obs * 0.8;
 
             if(obsb.x <= -obsb.largura - 90){
@@ -1117,8 +1117,8 @@ propsfrente = {
         else
             this.tempoInsere--;
 
-        for(var x = 0, tam = this._obsfrente.length; x < tam; x++){
-            var obsf = this._obsfrente[x];
+        for(let x = 0, tam = this._obsfrente.length; x < tam; x++){
+            let obsf = this._obsfrente[x];
             obsf.x -= velocidade_obs * 1.2;
 
             if(obsf.x <= -obsf.largura - 90){
@@ -1172,8 +1172,8 @@ obstaculos = {
         else
             this.tempoInsere--;
 
-        for(var i = 0, tam = this._obs.length; i < tam; i++){
-            var obs = this._obs[i];
+        for(let i = 0, tam = this._obs.length; i < tam; i++){
+            let obs = this._obs[i];
 
             obs.x -= velocidade_obs;
 
@@ -1253,8 +1253,8 @@ obstaculos = {
             }
         }
 
-        for(var x = 0, tam = this._obsfundo.length; x < tam; x++){
-            var obsb = this._obsfundo[x];
+        for(let x = 0, tam = this._obsfundo.length; x < tam; x++){
+            let obsb = this._obsfundo[x];
             obsb.x -= velocidade_obs * 0.8;
 
             if(obsb.x <= -obsb.largura - 90){

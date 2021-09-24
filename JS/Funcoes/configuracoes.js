@@ -12,7 +12,7 @@ function sincronizaBotoesConfigs(valor){
 
 function alteraEstadoSom(){
     
-    var canais_de_audio = ["faixa_musicas", "faixa_ambiente", "faixa_conquistas", "faixa_pisoes", "faixa_memes1", "faixa_memes2", "faixa_efeitos1", "faixa_efeitos2", "faixa_efeitos3"];
+    let canais_de_audio = ["faixa_musicas", "faixa_ambiente", "faixa_conquistas", "faixa_pisoes", "faixa_memes1", "faixa_memes2", "faixa_efeitos1", "faixa_efeitos2", "faixa_efeitos3"];
     
     if(jogo.estadoOcioso)
         impedeOcioso();
@@ -21,8 +21,8 @@ function alteraEstadoSom(){
         jogo.estadoSom = 0;
 
         // Pausa todos os sons que possam estar sendo executados no momento
-        for(var i = 0; i < canais_de_audio.length; i++){        
-            var pausa_som = document.getElementById(canais_de_audio[i]);
+        for(let i = 0; i < canais_de_audio.length; i++){        
+            let pausa_som = document.getElementById(canais_de_audio[i]);
             pausa_som.pause();
         }
 
@@ -512,7 +512,7 @@ function sincronizaQtdModificadores(){
 
 function sincronizaVezesModificadoresComprados(){
 
-    for(var i = 0; i < 2; i++){
+    for(let i = 0; i < 2; i++){
         if(jogador.mods_vezes_usados[i] > 0)
             jogador.mods_vezes_usados[i] -= 1;
 
@@ -563,7 +563,7 @@ function sincronizaVezesModificadoresComprados(){
 function sincroniza_bonus(requisicao_auto){
 
     if(requisicao_auto != 1){
-        for(var i = 0; i < 3; i++){
+        for(let i = 0; i < 3; i++){
             if(jogador.bonus_vezes_usados[i] == 0)
                 jogador.bonus_comprados[i] = 0;
             else
@@ -584,7 +584,7 @@ function sincroniza_bonus(requisicao_auto){
     }
 
     // Icones de bônus adquiridos
-    for(var i = 1; i <= 3; i++){
+    for(let i = 1; i <= 3; i++){
         nome = "bonus_"+ i;
 
         if(jogador.bonus_comprados[i - 1] == 1)

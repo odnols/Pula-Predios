@@ -1,5 +1,5 @@
 function aleatorizadorInsercao(){
-    var tempo = 10 + Math.round(40 * Math.random());
+    let tempo = 10 + Math.round(40 * Math.random());
 
     return tempo;
 }

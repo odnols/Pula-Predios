@@ -76,16 +76,16 @@ function alteraVolume(volume, entidade, auto){
         var audio = document.getElementById("faixa_efeitos1");
         localStorage.setItem("volEfeito", volume);
 
-        var audio2 = document.getElementById("faixa_efeitos2");
+        let audio2 = document.getElementById("faixa_efeitos2");
         audio2.volume = volume / 100;
         
-        var audio3 = document.getElementById("faixa_efeitos3");
+        let audio3 = document.getElementById("faixa_efeitos3");
         audio3.volume = volume / 100;
 
-        var ambiente = document.getElementById("faixa_ambiente");
+        let ambiente = document.getElementById("faixa_ambiente");
         ambiente.volume = volume / 100;
 
-        var pisoes = document.getElementById("faixa_pisoes");
+        let pisoes = document.getElementById("faixa_pisoes");
         pisoes.volume = volume / 100;
 
         if(auto != null)
@@ -94,7 +94,7 @@ function alteraVolume(volume, entidade, auto){
         var audio = document.getElementById("faixa_memes1");
         localStorage.setItem("volMemes", volume);
 
-        var audio2 = document.getElementById("faixa_memes2");
+        let audio2 = document.getElementById("faixa_memes2");
         audio2.volume = volume / 100;
 
         if(auto != null){
@@ -130,8 +130,8 @@ function desliga_som(entidade, tipo){
     else               // Memes
         var volume_interno = localStorage.getItem("volMemes");
     
-    var pausa_som = document.getElementById(entidade);
-    var salva_volume = volume_interno;
+    let pausa_som = document.getElementById(entidade);
+    let salva_volume = volume_interno;
 
     regulador_som = setInterval(function(){
         if(volume_interno > 0.1){
@@ -162,8 +162,8 @@ function desliga_som2(entidade, tipo){
     else
         var volume_interno = localStorage.getItem("volMemes");
 
-    var pausa_som = document.getElementById(entidade);
-    var salva_volume = volume_interno;
+    let pausa_som = document.getElementById(entidade);
+    let salva_volume = volume_interno;
 
     regulador_som2 = setInterval(function(){
         if(volume_interno > 0.1){
@@ -194,8 +194,8 @@ function desliga_som3(entidade, tipo){
     else
         var volume_interno = localStorage.getItem("volMemes");
 
-    var pausa_som = document.getElementById(entidade);
-    var salva_volume = volume_interno;
+    let pausa_som = document.getElementById(entidade);
+    let salva_volume = volume_interno;
 
     regulador_som3 = setInterval(function(){
         if(volume_interno > 0.1){
@@ -258,7 +258,7 @@ function executaSomPerca(causa){
 
 function executaSomCarrega(){
     
-    var lista_entradas = ["bambam3", "daciolo", "jailson_3", "jailson_4", "parque2"];
+    let lista_entradas = ["bambam3", "daciolo", "jailson_3", "jailson_4", "parque2"];
     i = Math.round((lista_entradas.length - 1) * Math.random());
 
     executaSons("faixa_memes1", "Memes", lista_entradas[i]+".ogg", 3);

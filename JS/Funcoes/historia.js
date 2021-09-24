@@ -11,10 +11,10 @@ function historia(texto_especial, requisicao_auto){
     avancar_hist = document.getElementsByClassName("avancar_hist");
     avancar_hist_block = document.getElementsByClassName("avancar_hist_block");
 
-    if(idioma == "pt")
-        var textos = ["Recebendo trasmissão . . .", "Olá tripulante!", "Parabéns, você foi selecionado para nossos testes super secretos!", "Estamos desenvolvendo um veículo de espionagem, e você ajudará a fazer parte da história!", "Tudo o que precisa fazer é pilotar ele, fácil não?", "Iremos começar os testes em alguns minutos", "Estamos esperando por você"];
-    else
-        var textos = ["Receiving broadcast . . .", "Hello traveler!", "Congratulations, you have been selected for our super secret tests!", "We are developing a spy vehicle, and you will help to be part of the story!", "All you need to do is drive, it's easy not to?", "We will start testing in a few minutes", "We are waiting for you"];
+    let textos = ["Recebendo trasmissão . . .", "Olá tripulante!", "Parabéns, você foi selecionado para nossos testes super secretos!", "Estamos desenvolvendo um veículo de espionagem, e você ajudará a fazer parte da história!", "Tudo o que precisa fazer é pilotar ele, fácil não?", "Iremos começar os testes em alguns minutos", "Estamos esperando por você"];
+
+    if(idioma == "en")
+        textos = ["Receiving broadcast . . .", "Hello traveler!", "Congratulations, you have been selected for our super secret tests!", "We are developing a spy vehicle, and you will help to be part of the story!", "All you need to do is drive, it's easy not to?", "We will start testing in a few minutes", "We are waiting for you"];
 
     if(indice_historia > textos.length - 1){
         $("#historia_jogo").fadeOut();
@@ -26,7 +26,7 @@ function historia(texto_especial, requisicao_auto){
             avancar_hist_block[0].style.display = "block";
         
         // Executa o efeito de escrita na tela
-        var el = document.getElementById("texto_historia");
+        let el = document.getElementById("texto_historia");
         
         if(requisicao_auto == null || texto_especial != null)
             el.innerHTML = "";
@@ -83,10 +83,10 @@ function confirma_hist(){
     aguarda_confirmacao = true;
     document.getElementById("escolhas_hist").style.display = "none";
     
-    if(idioma == "pt")
-        var confirmacoes = ["Excelente!"];
-    else
-        var confirmacoes = ["Great!"];
+    let confirmacoes = ["Excelente!"];
+
+    if(idioma == "en")
+        confirmacoes = ["Great!"];
 
     historia(confirmacoes[indice_decisoes], null);
 }
@@ -96,10 +96,10 @@ function nega_hist(){
     aguarda_confirmacao = true;
     document.getElementById("escolhas_hist").style.display = "none";
 
-    if(idioma == "pt")
-        var negacoes = ["Negar não é uma opção."];
-    else
-        var negacoes = ["Denying is not an option."];
+    let negacoes = ["Negar não é uma opção."];
+
+    if(idioma == "en")
+        negacoes = ["Denying is not an option."];
 
     historia(negacoes[indice_decisoes], null);
 }

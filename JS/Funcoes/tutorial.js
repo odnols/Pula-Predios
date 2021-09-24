@@ -116,12 +116,12 @@ function executa_tutorial(requisicao_auto, especial){
         if(indice_tutorial == 2)
             freia_predio();
 
-        if(idioma == "pt")
-            tutorial_hist = ["Olá, é um prazer ter você por aqui!", "Vamos parar o veículo de testes para você entrar", "Suba lá e se arrume", "Nós estamos testando esse novo veículo e queremos ter certeza que ele é bom", "Tudo o que você precisa fazer é pilotar ele...", "Vamos começar!"];
-        else
+        let tutorial_hist = ["Olá, é um prazer ter você por aqui!", "Vamos parar o veículo de testes para você entrar", "Suba lá e se arrume", "Nós estamos testando esse novo veículo e queremos ter certeza que ele é bom", "Tudo o que você precisa fazer é pilotar ele...", "Vamos começar!"];
+
+        if(idioma == "en")
             tutorial_hist = ["Hello, it's a pleasure to have you here!", "We will stop the test vehicle for you to enter", "Get up there and get ready", "We are testing this new vehicle and we want to make sure that it is good", "All you have to do is drive it...", "Let's start!"];
 
-        var el = document.getElementById("frase_tuto_em_game");
+        let el = document.getElementById("frase_tuto_em_game");
         
         if(requisicao_auto == null && indice_tutorial < tutorial_hist.length){
             el.innerHTML = "";

@@ -237,10 +237,10 @@ function abre_loja_especial(aba_loja){
 
 function novidadesLoja(indice){
 
-    if(idioma == "pt")
-        var novidades_loja = ["Os Bônus já estão disponíveis!", "Temos novos mods :D", "O Patrão ficou maluco!", "A loja foi toda reformada!"];
-    else
-        var novidades_loja = ["Bonuses are now available!", "We have new mods :D", "Boss went crazy!", "The store was completely renovated!"];
+    let novidades_loja = ["Os Bônus já estão disponíveis!", "Temos novos mods :D", "O Patrão ficou maluco!", "A loja foi toda reformada!"];
+
+    if(idioma == "en")
+        novidades_loja = ["Bonuses are now available!", "We have new mods :D", "Boss went crazy!", "The store was completely renovated!"];
 
     if(indice == novidades_loja.length)
         indice_interno = 0;
@@ -256,7 +256,7 @@ function novidadesLoja(indice){
 
 function pisao_neles(){
     
-    var moeda_ev;
+    let moeda_ev;
 
     //  Efeito de Pisão
     jogador.qtdPulos++;
@@ -282,12 +282,10 @@ function pisao_neles(){
     else
         jogo.notifica("Kick them! +3 Points", "yellow");
 
-    if(jogo.dificuldade != 0)
-        var ganha = moeda_ev + Math.round(3 * Math.random());
-    else
-        var ganha = moeda_ev + Math.round(2 * Math.random());
-    
-    // ganha = 300;
+    let ganha = moeda_ev + Math.round(3 * Math.random());
+
+    if(jogo.dificuldade == 0)
+        ganha = moeda_ev + Math.round(2 * Math.random());
 
     if(ganha > 0){
         // Pling!
@@ -423,8 +421,7 @@ function encerra_modificador(){
 }
 
 function aleatorizaProp(){
-
-    var prop = Math.round(8 * Math.random());
+    let prop = Math.round(8 * Math.random());
     aleatorizadorProp = prop;
 }
 
@@ -807,8 +804,8 @@ function status_confirmacao(valor, requisicao_auto, objeto){
 
     if(valor != null && requisicao_auto == 0){
         if(objeto == "Loja"){
-            var categoria = cache_compra[0];
-            var item = cache_compra[1];
+            let categoria = cache_compra[0];
+            let item = cache_compra[1];
 
             confirma_compra(categoria, item, valor);
             janelaConfirma = 0;
@@ -854,7 +851,7 @@ function exibe_teaser(mensagem, cor){
 // Soma os valores para a pontuação de forma mais natural
 function soma_pontuacao(somar){
 
-    var contador = 0;
+    let contador = 0;
     
     somador = setInterval(function(){
         if(somar > 0){
@@ -916,8 +913,8 @@ function limpa_intervalos(){
 
 function registra_compra(item, requisicao_auto){
 
-    var identificadores = ["tt_skins_compradas", "tt_modificadores_comprados", "tt_bonus_comprados"];
-    var variaveis = [jogador.tt_skins_compradas, jogador.tt_mods_comprados, jogador.tt_bonus_comprados];
+    let identificadores = ["tt_skins_compradas", "tt_modificadores_comprados", "tt_bonus_comprados"];
+    let variaveis = [jogador.tt_skins_compradas, jogador.tt_mods_comprados, jogador.tt_bonus_comprados];
 
     if(requisicao_auto == 0){
         if(item == "Skins"){
@@ -937,7 +934,7 @@ function registra_compra(item, requisicao_auto){
 
         registra_compra(0, 1);
     }else{
-        for(var i = 0; i < 3; i++){
+        for(let i = 0; i < 3; i++){
             document.getElementById(identificadores[i]).innerHTML = variaveis[i];
         }
     }
@@ -982,8 +979,8 @@ function objetosVoadores(){
         libera_objeto_voador = 1 + Math.round(5 * Math.random());
         setTimeout(()=>{
 
-            var tempo = 50 + Math.round(25 * Math.random());
-            var caso = 1 + Math.round(3 * Math.random()); // Define se será um avião, dirigível ou disco voador
+            let tempo = 50 + Math.round(25 * Math.random());
+            let caso = 1 + Math.round(3 * Math.random()); // Define se será um avião, dirigível ou disco voador
             
             gera_objeto_voador = setTimeout(function(){
         
@@ -1008,16 +1005,15 @@ function objetosVoadores(){
 }
 
 function regula_sessao_loja(categoria){
-    var apelido_interno = "Skins";
+    let apelido_interno = "Skins";
 
     if(sessao_loja_ativa != 1){
-
         if(categoria == "Modificadores"){
             executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2);
         
-            if(idioma == "pt")
-                apelido_interno = categoria;
-            else
+            apelido_interno = categoria;
+
+            if(idioma == "en")
                 apelido_interno = "Modifiers";
         }
         
@@ -1154,7 +1150,7 @@ function notificacao(item, modo){
     }else{
         bloqueia_adicao = 0;
 
-        for(var i = 0; i < fila_notificacoes.length; i++){
+        for(let i = 0; i < fila_notificacoes.length; i++){
             if(fila_notificacoes[i] == item)
                 bloqueia_adicao++;
         }

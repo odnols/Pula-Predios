@@ -108,10 +108,10 @@ function transitador(elemento, altura, posicao_x, posicao_y){
     // Verifica se está de noite para executar a função
     if(libera_transitador == 1){
 
-        var img = document.getElementById(elemento);
-        var canvas = document.getElementById("canvas");
-        var ctxi = canvas.getContext("2d");
-        var pat = ctxi.createPattern(img, 'repeat');
+        let img = document.getElementById(elemento);
+        let canvas = document.getElementById("canvas");
+        let ctxi = canvas.getContext("2d");
+        let pat = ctxi.createPattern(img, 'repeat');
 
         document.getElementById(elemento).style.opacity = Cenario_sprites.opacidade_noite;
 
@@ -256,10 +256,10 @@ function limpa_ferrugem(){
 }
 
 function animaEstrelas(){
-    var posicoes = [0, 568];
+    let posicoes = [0, 568];
 
     tEst = setTimeout(function(){
-        var indice = Math.round((posicoes.length - 1) * Math.random());
+        let indice = Math.round((posicoes.length - 1) * Math.random());
         spriteMascara_estrelas.y = posicoes[indice];
 
         animaEstrelas();
@@ -347,9 +347,9 @@ function showtext(el, text, local) {
         tuto[0].style.display = "none";
     }
 
-    var char = text.split("").reverse();
+    let char = text.split("").reverse();
     
-    var typer = setInterval(function() {
+    let typer = setInterval(function() {
     
         if(!char.length){
             if(local == 0)
@@ -360,7 +360,7 @@ function showtext(el, text, local) {
             return clearInterval(typer);
         }
 
-        var next = char.pop();
+        let next = char.pop();
         
         el.innerHTML += next;
     }, 50);

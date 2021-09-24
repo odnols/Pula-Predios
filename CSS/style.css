@@ -1771,3 +1771,7 @@ img#trofeu{
     margin-right: -200px;
     animation: desliza_tela_controles 5s;
 }
+.img_skin_venda, .icon_mod_loja, .img_preview_tema{
+    image-rendering: auto;
+    image-rendering: pixelated;
+}

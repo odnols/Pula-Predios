@@ -1,7 +1,7 @@
 function desenha_propsfundo(){
 
-    for(var x = 0, tam = propsfundo._obsfundo.length; x < tam; x++){
-        var obsb = propsfundo._obsfundo[x];
+    for(let x = 0, tam = propsfundo._obsfundo.length; x < tam; x++){
+        let obsb = propsfundo._obsfundo[x];
 
         if(obsb.altura >= 55){
             if(obsb.altura > 80){
@@ -48,8 +48,8 @@ function desenha_propsfundo(){
 
     chao.desenha();
 
-    for(var x = 0, tam = propsfundo._obsfundo.length; x < tam; x++){
-        var obsb = propsfundo._obsfundo[x];
+    for(let x = 0, tam = propsfundo._obsfundo.length; x < tam; x++){
+        let obsb = propsfundo._obsfundo[x];
 
         // Sombra dos objetos
         if(obsb.altura > 80){
@@ -76,8 +76,8 @@ function desenha_propsfundo(){
 
 function desenha_obj(){
 
-    for(var i = 0, tam = obstaculos._obs.length; i < tam; i++){
-        var obs = obstaculos._obs[i];
+    for(let i = 0, tam = obstaculos._obs.length; i < tam; i++){
+        let obs = obstaculos._obs[i];
 
         if(obs.altura >= 60){
             if(obs.altura > 110){ // Amarelo
@@ -123,8 +123,8 @@ function desenha_obj(){
     chao.desenha2();
     jogador.desenha();
 
-    for(var i = 0, tam = obstaculos._obs.length; i < tam; i++){
-        var obs = obstaculos._obs[i];
+    for(let i = 0, tam = obstaculos._obs.length; i < tam; i++){
+        let obs = obstaculos._obs[i];
 
         // Sombra dos objetos
         if(obs.altura > 80){
@@ -152,8 +152,8 @@ function desenha_obj(){
 
 function desenha_propsfrente(){
 
-    for(var x = 0, tam = propsfrente._obsfrente.length; x < tam; x++){
-        var obsf = propsfrente._obsfrente[x];
+    for(let x = 0, tam = propsfrente._obsfrente.length; x < tam; x++){
+        let obsf = propsfrente._obsfrente[x];
 
         if(obsf.altura == 55){
             if(jogo.ultimo_evento == 0 || jogo.evento == 0){ // Área Densa
@@ -185,8 +185,8 @@ function desenha_propsfrente(){
 
     chao.desenha3();
 
-    for(var x = 0, tam = propsfrente._obsfrente.length; x < tam; x++){
-        var obsf = propsfrente._obsfrente[x];
+    for(let x = 0, tam = propsfrente._obsfrente.length; x < tam; x++){
+        let obsf = propsfrente._obsfrente[x];
 
         if(obsf.altura == 53)
             spriteSombraFonte.desenha(obsf.x - 5, chao.y + 35, obsf.largura, obsf.altura);

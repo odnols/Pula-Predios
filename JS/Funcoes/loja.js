@@ -31,10 +31,10 @@ function carrega_vendas_loja(caso){
 
     if(caso == "Skins"){
 
-        if(idioma == "pt")
-            var nomeSkins = ["Vermelho", "Branco", "Amarelo", "Azul", "Roxo", "Verde"];
-        else
-            var nomeSkins = ["Red", "White", "Yellow", "Blue", "Purple", "Green"];
+        nomeSkins = ["Vermelho", "Branco", "Amarelo", "Azul", "Roxo", "Verde"];
+
+        if(idioma == "en")
+            nomeSkins = ["Red", "White", "Yellow", "Blue", "Purple", "Green"];
 
         if(idioma == "pt")
             document.getElementById("categoria_teaser").innerHTML = "Mude a sua aparência por aqui ;)";
@@ -48,7 +48,7 @@ function carrega_vendas_loja(caso){
         else
             document.getElementById("placeholder_loja").innerHTML += "<div class='item_equipado' onclick='confirma_compra(1, 7)'><img class='img_skin_venda' src='Imagens/Loja/Skins/Jogador7_noite.png'><br><br>Padrão</div>";
 
-        for(var i = 0; i < 6; i++){
+        for(let i = 0; i < 6; i++){
             if(jogador.skins_compradas[i] != 1) // Item a venda
                 document.getElementById("placeholder_loja").innerHTML += "<div class='item_venda' onclick='confirma_compra(1, "+ i +", 55)'> <img class='img_skin_venda' src='Imagens/Loja/Skins/Jogador"+ (i + 1) +"_noite.png'><br><br>"+ nomeSkins[i] +" <div class='preco_item'> $"+ listaPrecos_Skins[i] +"</div> </div>";
             else if(jogador.skin != [i]) // Item Comprado
@@ -93,17 +93,15 @@ function carrega_vendas_loja(caso){
         if(jogador.mod_em_uso == 0 && jogador.mods_comprados[3] == 1)
             document.getElementById("mod_direita_principal").innerHTML += "<img id='restaura_modificador' src='Imagens/Loja/Mods/Lunar.png' onclick='altera_modificador(100)'>";
 
-        if(idioma == "pt")
-            var descricao = ["+ Tempo", "+ Vezes", "De Aço"];
-        else
-            var descricao = ["+ Time", "+ Turns", "Of steel"];
+        let nomeImagem = ["relogio.gif", "Jump_Boost.png", "Aco.png"];
+        let descricao = ["+ Tempo", "+ Vezes", "De Aço"];
 
-        var nomeImagem = ["relogio.gif", "Jump_Boost.png", "Aco.png"];
+        if(idioma == "en")
+            descricao = ["+ Time", "+ Turns", "Of steel"];
 
         document.getElementById("placeholder_loja").innerHTML = "";
 
-
-        for(var i = 0; i < descricao.length; i++){
+        for(let i = 0; i < descricao.length; i++){
             if(jogador.mods_comprados[i] == 0){ // Item a venda
                 if(i != 2)
                     document.getElementById("placeholder_loja").innerHTML += "<div class='mod_venda' onMouseOver='toolTip("+ 'descricao_Mods['+i+']' +")' onmouseout='toolTip()' onclick='confirma_compra(2, "+ i +", 55)'> <img class='img_mod_venda' src='Imagens/Loja/Mods/"+ nomeImagem[i] +"'><br><br>"+ descricao[i] +" <div class='preco_item'> $"+ listaPrecos_Mods[i] +"</div> </div>";
@@ -127,12 +125,12 @@ function carrega_vendas_loja(caso){
                 document.getElementById("placeholder_loja").innerHTML += "<div class='item_comprado_lendario' onMouseOver='toolTip("+ 'descricao_Mods[3]' +")' onmouseout='toolTip()' onclick='confirma_compra(2, 3, 55)'><img class='img_mod_venda' src='Imagens/Loja/Mods/Lunar.png'><br><br>Gravidade Lunar</div>";
         }   
     }else if(caso == "Bônus"){ // Bônus
-        if(idioma == "pt")
-            var descricao = ["2x$", "Garimpeiro", "Vento Estocado"];
-        else
-            var descricao = ["2x$", "Gold miner", "Stocked Wind"];
 
-        var nomeImagem = ["pisao2x.png", "Garimpeiro.png", "vento_estocado.png"];
+        let nomeImagem = ["pisao2x.png", "Garimpeiro.png", "vento_estocado.png"];
+        let descricao = ["2x$", "Garimpeiro", "Vento Estocado"];
+
+        if(idioma == "en")
+            descricao = ["2x$", "Gold miner", "Stocked Wind"];
 
         if(idioma == "pt")
             document.getElementById("categoria_teaser").innerHTML = "Adquira Bônus!";
@@ -141,19 +139,19 @@ function carrega_vendas_loja(caso){
 
         document.getElementById("placeholder_loja").innerHTML = "";
         
-        for(var i = 0; i < descricao.length; i++){
+        for(let i = 0; i < descricao.length; i++){
             if(jogador.bonus_comprados[i] != 1) // Item a venda
                 document.getElementById("placeholder_loja").innerHTML += "<div class='mod_venda' onMouseOver='toolTip("+ 'descricao_Bonus['+ i +']' +")' onmouseout='toolTip()' onclick='confirma_compra(3, "+ i +", 55)'> <img class='img_mod_venda' src='Imagens/Loja/Bonus/"+ nomeImagem[i] +"'><br><br>"+ descricao[i] +" <div class='preco_item'> $"+ listaPrecos_Bonus[i] +"</div></div>";
             else // Item Comprado
             document.getElementById("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip("+ 'descricao_Bonus['+ i +']' +")' onmouseout='toolTip()' onclick='confirma_compra(3, "+ i +", 55)'> <img class='img_mod_venda' src='Imagens/Loja/Bonus/"+ nomeImagem[i] +"'><br><br>"+ descricao[i] +"</div>";
         }   
-    }else{
-        if(idioma == "pt")
-            var descricao = ["1900's", "Padrão"];
-        else
-            var descricao = ["1900's", "Standard"];
+    }else{ // Temas
 
-        var nomeImagem = ["1900s.jpg", "Padrao.jpg"];
+        let nomeImagem = ["1900s.jpg", "Padrao.jpg"];
+        let descricao = ["1900's", "Padrão"];
+
+        if(idioma == "en")
+            descricao = ["1900's", "Standard"];
 
         if(idioma == "pt")
             document.getElementById("categoria_teaser").innerHTML = "Viagem no tempo!";
@@ -162,8 +160,7 @@ function carrega_vendas_loja(caso){
 
         document.getElementById("placeholder_loja").innerHTML = "";
 
-        
-        for(var i = 0; i < descricao.length; i++){
+        for(let i = 0; i < descricao.length; i++){
             if(jogo.temas_comprados[i] != 1){ // Temas não comprados
                 document.getElementById("placeholder_loja").innerHTML += "<div class='tema_caixa' onclick='confirma_compra(4, "+ i +", 55)' onMouseOver='toolTip("+ 'descricao_Tema['+ i +']' +")' onmouseout='toolTip()'><img class='img_preview_tema' src='Imagens/Loja/Temas/"+ nomeImagem[i] +"'><div class='info_tema'><br><br>"+ descricao[i] +" <div class='preco_tema'> $"+ listaPrecos_Temas[i] +"</div></div></div>";
             }else{
