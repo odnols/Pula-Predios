@@ -72,15 +72,15 @@ function conquista(conquista, modo){
                     tempo_conquista = 3000;
                 }
 
-                fecha_conquista = setTimeout(function(){ 
+                fecha_conquista = setTimeout(() => { 
                     document.getElementById("conquistas").style.animation = "fecha_conquista 2s";
                     document.getElementById("texto_conquista").style.animation = "esconde_texto 1s";
 
-                    setTimeout(function(){
+                    setTimeout(() => {
                         document.getElementById("texto_conquista").style.display = "none";
                     }, 1000);
 
-                    setTimeout(function(){
+                    setTimeout(() => {
                         document.getElementById("conquistas").style.display = "none";
                     }, 1900);
                     
@@ -88,7 +88,7 @@ function conquista(conquista, modo){
                 }, tempo_conquista);
 
                 // Libera para a próxima chamada
-                solta_conquista = setTimeout(function(){
+                solta_conquista = setTimeout(() => {
                     estado_conquista = 0;
                     clearTimeout(solta_conquista);
                 }, tempo_conquista + 2000);
@@ -115,7 +115,7 @@ function conquista(conquista, modo){
 
             fila_conquistas.push(conquista);
 
-            puxa_proxima = setInterval(function(){
+            puxa_proxima = setInterval(() => {
                 if(estado_conquista == 0)
                     redireciona_conquista(fila_conquistas[0]);
             }, 1000);

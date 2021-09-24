@@ -44,9 +44,8 @@ function Cenario(astro){
     // Define qual será o astro mostrado no céu ao carregar o game
     if(astro)
         img_astros.src = "Imagens/Sprites/lua.png";
-    else{
+    else
         img_astros.src = "Imagens/Sprites/sol.png";
-    }
 
     if(jogo.tema_ativo == 0){
         document.getElementById("canvas").style.filter = "grayscale(1)";
@@ -72,7 +71,7 @@ function transita_tempo(categoria){
         amanhecer();
 
         // Desliga a Função de Transição
-        conometro_transitador = setTimeout( function(){
+        conometro_transitador = setTimeout(() => {
             libera_transitador = 0;
 
             clearTimeout(conometro_transitador);
@@ -82,8 +81,8 @@ function transita_tempo(categoria){
 
 //  Função para fazer anoitecer
 function anoitecer(){
-    estrelificador = setInterval( function(){
-        if( Cenario_sprites.opacidade_noite <= 0.99)
+    estrelificador = setInterval(() => {
+        if(Cenario_sprites.opacidade_noite <= 0.99)
             Cenario_sprites.opacidade_noite += 0.01;
         else{  // Matando o intervalo
             clearInterval(estrelificador);
@@ -93,7 +92,7 @@ function anoitecer(){
 }
 
 function amanhecer(){
-    dializador = setInterval( function(){
+    dializador = setInterval(() => {
         if( Cenario_sprites.opacidade_noite >= 0.0 )
             Cenario_sprites.opacidade_noite -= 0.01;
         else{  // Matando o intervalo
@@ -173,7 +172,7 @@ function voltaAnimacao(){
 
 function animaMoeda(){
     if(jogo.qualidadeGrafica != 0 && dispositivo >= 1366){
-        tID = setTimeout(function(){
+        tID = setTimeout(() => {
 
             sprites = [0, 912, 798, 684, 570, 456, 342, 228, 114];
             posicao = ajusta_posicao_sprites(0, sprites);
@@ -181,7 +180,7 @@ function animaMoeda(){
             document.getElementById("moeda_img").style.backgroundPosition = posicao +'px 0px';
             
             if(posicao == 0){
-                setTimeout(function(){
+                setTimeout(() => {
                     animaMoeda();
                 }, 1000);
             }else
@@ -191,7 +190,7 @@ function animaMoeda(){
 }
 
 function animaBandeira(){
-    tBr = setTimeout(function(){
+    tBr = setTimeout(() => {
         
         sprites = [0, 51, 34, 17];
         ajusta_posicao_sprites(1, sprites);
@@ -202,7 +201,7 @@ function animaBandeira(){
 }
 
 function animaFogo(){
-    tFg = setTimeout(function(){
+    tFg = setTimeout(() => {
         
         sprites = [0, 31];
         ajusta_posicao_sprites(2, sprites);
@@ -213,7 +212,7 @@ function animaFogo(){
 }
 
 function animaRoda(){
-    tRd = setTimeout(function(){
+    tRd = setTimeout(() => {
         
         sprites = [0, 61, 122];
         ajusta_posicao_sprites(3, sprites);
@@ -224,7 +223,7 @@ function animaRoda(){
 }
 
 function AnimaModFlutuando(){
-    tMf = setTimeout(function(){
+    tMf = setTimeout(() => {
 
         sprites = [180, 120, 60, 0];
         ajusta_posicao_sprites(4, sprites);
@@ -234,7 +233,7 @@ function AnimaModFlutuando(){
 }
 
 function enferruja(){
-    tAco = setTimeout(function(){
+    tAco = setTimeout(() => {
 
         sprites = [47, 94, 141, 188, 235, 282];
         ajusta_posicao_sprites(5, sprites);
@@ -245,7 +244,7 @@ function enferruja(){
 }
 
 function limpa_ferrugem(){
-    tAco = setTimeout(function(){
+    tAco = setTimeout(() => {
 
         sprites = [282, 235, 188, 141, 94, 47, 329];
         ajusta_posicao_sprites(5, sprites);
@@ -258,7 +257,7 @@ function limpa_ferrugem(){
 function animaEstrelas(){
     let posicoes = [0, 568];
 
-    tEst = setTimeout(function(){
+    tEst = setTimeout(() => {
         let indice = Math.round((posicoes.length - 1) * Math.random());
         spriteMascara_estrelas.y = posicoes[indice];
 
@@ -269,7 +268,7 @@ function animaEstrelas(){
 function animaLuzesGuia(caso){
     if(jogo.qualidadeGrafica != 0 && dispositivo >= 1366){
         if(caso){ // Verifica se é uma requisição para ativar ou desligar a animação
-            tLuzN = setInterval(function(){
+            tLuzN = setInterval(() => {
                 if(anim_luzes_naveg < 164){
                     anim_luzes_naveg += 82;
                     spriteLuzes_navegacao.y += 82;
@@ -349,7 +348,7 @@ function showtext(el, text, local) {
 
     let char = text.split("").reverse();
     
-    let typer = setInterval(function() {
+    let typer = setInterval(() => {
     
         if(!char.length){
             if(local == 0)

@@ -543,12 +543,12 @@ jogo = {
             else
                 console.log("%cNext event in: "+ this.contador_tempo +" seconds", "color: purple;");
 
-        ativa_evento = setTimeout(function(){
+        ativa_evento = setTimeout(() => {
             jogo.eventos();
             clearTimeout(ativa_evento);
         }, this.contador_tempo * 1000);
 
-        deleta_cronometro = setTimeout(function(){
+        deleta_cronometro = setTimeout(() => {
             $("#temporizador").fadeOut();
             $("#barra_loading").fadeOut();
 
@@ -643,7 +643,7 @@ jogo = {
                 if(estadoAtual == estados.jogando)  
                     jogador.partida_evento_parque++;
 
-                parque_event = setTimeout(function(){
+                parque_event = setTimeout(() => {
                     if(estadoAtual == estados.jogando){
                         if(idioma == "pt")
                             jogo.notifica("Hora de Pontuar!", "#14e11e");
@@ -677,7 +677,7 @@ jogo = {
             if(estadoAtual == estados.jogando)
                 jogo.notifica(this.anuncio_evento[this.inicia_evento], "white");
 
-            setTimeout(function(){
+            setTimeout(() => {
 
                 jogo.evento = jogo.inicia_evento;
 
@@ -691,7 +691,7 @@ jogo = {
                     jogo.contador_tempo_evento_b = jogo.contador_tempo_evento;
 
                 if(estadoAtual == estados.jogando || estadoAtual == estados.ocioso){
-                    tempo_evento = setTimeout(function(){
+                    tempo_evento = setTimeout(() => {
                         
                         finaliza_evento();
                         termina_evento = jogo.evento;
@@ -802,7 +802,7 @@ jogo = {
         if(Cenario_sprites.astro[2] == 0)
             document.getElementById("notificacoes").style.color = "rgba(0, 0, 0, .8)";
 
-        limpar_notificacao = setTimeout(function(){
+        limpar_notificacao = setTimeout(() => {
             $("#notificacoes").fadeOut();
             clearTimeout(limpar_notificacao);
         }, 2000);
@@ -963,14 +963,14 @@ jogador = {
                 enferruja();
             
             if(this.mod_em_uso != 100){
-                modificador_timer = setTimeout(function(){
+                modificador_timer = setTimeout(() => {
                         mod = 1;    // Flutua
                     clearTimeout(modificador_timer);
                 }, 200);
             }
 
             if(this.mod_em_uso == 1){    // Modificador: De Aço
-                modificador_timer_som = setInterval(function(){
+                modificador_timer_som = setInterval(() => {
                     if(jogador.y >= 432){
                         executaSons2("faixa_efeitos3", "Efeitos", "bigorna.ogg", 2);
                         clearInterval(modificador_timer_som);
@@ -986,7 +986,7 @@ jogador = {
     },
 
     timer: function(){
-        var_timer_modificador = setInterval(function(){
+        var_timer_modificador = setInterval(() => {
 
             if(jogo.timer_mod > 0 && mod == 1){
                 jogo.timer_mod--;
@@ -1330,7 +1330,7 @@ function atualiza(){
         segura_vento = 1;
         executaSons2("faixa_ambiente", "Efeitos", "Vento.ogg", 2);
 
-        vento_delay = setInterval(function(){
+        vento_delay = setInterval(() => {
             segura_vento = 0;
             setInterval(vento_delay);
         }, 53000);
@@ -1376,7 +1376,7 @@ function desenha(){
                 ctx.fillText("Current Record: "+ recorde, canvas.width / 2 - ctx.measureText("Current Record: "+ recorde).width / 2, Altura / 1.3 + 50);
 
         ctx.save();
-        ctx.translate( Largura / 2, Altura / 2 );
+        ctx.translate(Largura / 2, Altura / 2);
         
         ctx.restore();
     }if(estadoAtual == estados.jogando)
@@ -1400,7 +1400,7 @@ function desenha(){
                 else
                     console.log("%cIdle Mode will start in 10 seconds", "color: green;");
 
-            contagemOcioso = setTimeout(function(){
+            contagemOcioso = setTimeout(() => {
                 estadoAtual = estados.ocioso;
 
                 estadoOcioso("auto");

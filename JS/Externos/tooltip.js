@@ -71,7 +71,6 @@ function TOOLTIP() {
 	this.cursorDistance = 10;			// distance from mouse cursor (pixels)
 	this.xPos = "right";				// horizontal position: "left" or "right"
 	this.yPos = "bottom";				// vertical position: "top" or "bottom"
-	this.boxShadow = "0px 0px 15px white";
 	this.textShadow = "1px 1px 2px black";
 
 	// don't change
@@ -96,7 +95,6 @@ function TOOLTIP() {
 		if(this.textColor) this.obj.style.color = this.textColor;
 		if(this.textAlign) this.obj.style.textAlign = this.textAlign;
 		if(this.bgColor) this.obj.style.backgroundColor = this.bgColor;
-		if(this.boxShadow) this.obj.style.boxShadow = this.boxShadow;
 		if(this.textShadow) this.obj.style.textShadow = this.textShadow;
 		
 		this.obj.innerHTML = this.text;

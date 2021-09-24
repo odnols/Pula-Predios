@@ -63,7 +63,7 @@ function carrega_jogo(requisicao_auto){
 
             let indice = 0;
 
-            carregar_departaments = setInterval(function(){
+            carregar_departaments = setInterval(() => {
                 if(idioma == "pt")
                     document.getElementById("texto_carregamento").innerHTML = texto_feedback_pt[indice];
                 else
@@ -97,7 +97,7 @@ function carrega_jogo(requisicao_auto){
                 carregar_departamentos[i];
             }
             
-            setTimeout(function(){
+            setTimeout(() => {
 
                 executaSomCarrega();
 
@@ -108,7 +108,7 @@ function carrega_jogo(requisicao_auto){
                     historia();
             }, 1000);
 
-            setTimeout(function(){
+            setTimeout(() => {
                 confirma_carregamento = 1;
             }, 2000);
         }
@@ -134,7 +134,7 @@ function carrega_sons(texto){
     porcentagem_sons = 25/69;
 
     
-    carregar_sons = setTimeout(function(){
+    carregar_sons = setTimeout(() => {
 
         if(indice == alvo.length){
             clearTimeout(carregar_sons);
@@ -206,7 +206,7 @@ function ultimo_estagio_carregamento(){
 
     fracao_restante = 25 / 100;
 
-    sincronizacao_final = setInterval(function(){
+    sincronizacao_final = setInterval(() => {
         
         fracao_restante++;
         fraca_formatada = (75 + fracao_restante).toFixed(2);
