@@ -333,7 +333,9 @@ function verifica_animacoes(condicao){
 
 function showtext(el, text, local) {
 
-    if(typeof typer != "undefined"){
+    let typer;
+
+    if(typeof typer != "interval"){
         clearInterval(typer);
 
         if(local == 0)
@@ -351,7 +353,7 @@ function showtext(el, text, local) {
 
     let char = text.split("").reverse();
     
-    let typer = setInterval(() => {
+    typer = setInterval(() => {
     
         if(!char.length){
             if(local == 0)

@@ -78,6 +78,11 @@ function avanca_hist(){
     historia();
 }
 
+function pular_hist(){
+    indice_historia += 5;
+    historia();
+}
+
 function confirma_hist(){
 
     aguarda_confirmacao = true;

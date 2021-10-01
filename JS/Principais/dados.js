@@ -355,6 +355,15 @@ function carrega_dados(){
 
     sincronizaConquistas();
 
+    // Sincroniza a musica tema principal
+    musicaTema = localStorage.getItem("temaMusica");
+    if(musicaTema == "0")
+        jogo.musica_tema = null;
+
+    musicaTemaOcioso = localStorage.getItem("temaOcioso");
+    if(musicaTemaOcioso == "0")
+        jogo.musica_tema_ocioso = null;
+
     temaAtivo = localStorage.getItem("temaAtivo");
     if(temaAtivo == null)
         jogo.tema_ativo = 1;

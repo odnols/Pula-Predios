@@ -76,11 +76,14 @@ function confirma_inicio_partida(){
         jogador.partida_distancia_viajada += velocidade_obs * 2;
     }, 1000);
 
-    let faixa = ["main_1.ogg", "main_2.ogg", "main_3.ogg"];
+    let faixa = ["main_1.ogg", "main_2.ogg", "main_3.ogg", "main_4.ogg"];
 
-    if(jogo.tema_ativo != 0)
-        executaSons2("faixa_musicas", "Musicas", faixa[Math.round(2 * Math.random())], 1);
-    else
+    if(jogo.tema_ativo != 0){
+        if(jogo.musica_tema == null)
+            executaSons2("faixa_musicas", "Musicas", faixa[Math.round(3 * Math.random())], 1);
+        else
+            executaSons2("faixa_musicas", "Musicas", jogo.musica_tema, 1);
+    }else
         executaSons2("faixa_musicas", "Musicas", "main_old.ogg", 1);
 
     botoes(600);
@@ -515,10 +518,13 @@ function estadoOcioso(caso){
         botoes(600);
         escondeInformacoes(1, 1);
 
-        let faixa = ["ocioso_1.ogg", "ocioso_2.ogg"];
+        let faixa = ["ocioso_1.ogg", "ocioso_2.ogg", "ocioso_3.ogg"];
 
         if(jogo.tema_ativo != 0)
-            executaSons2("faixa_musicas", "Musicas", faixa[Math.round(1 * Math.random())], 1);
+            if(jogo.musica_tema_ocioso == null)
+                executaSons2("faixa_musicas", "Musicas", faixa[Math.round(2 * Math.random())], 1);
+            else
+                executaSons2("faixa_musicas", "Musicas", jogo.musica_tema_ocioso, 1);
         else
             executaSons2("faixa_musicas", "Musicas", "ocioso_old.ogg", 1);
     }else{
@@ -1262,4 +1268,38 @@ function acelera_predio(){
             }
         }, 100);
     }, 2000);
+}
+
+function verifica_selecionado(local){
+    
+    if(typeof desliga_preview != "undefined") // Estende a visualização da música
+        clearTimeout(desliga_preview);
+
+    if(local)
+        componente = document.getElementById("seleciona_tema").value;
+    else
+        componente = document.getElementById("seleciona_ocioso").value; 
+
+    if(componente == "random"){
+        jogo.musica_tema = null;
+        
+        if(local)
+            localStorage.setItem("temaMusica", 0);
+        else
+            localStorage.setItem("temaOcioso", 0);
+    }else{
+        if(local){
+            jogo.musica_tema = componente +".ogg";
+            localStorage.setItem("temaMusica", componente +".ogg");
+        }else{
+            jogo.musica_tema_ocioso = componente +".ogg";
+            localStorage.setItem("temaOcioso", componente +".ogg");
+        }
+
+        executaSons2("faixa_musicas", "Musicas", componente +".ogg", 1);
+    }
+
+    desliga_preview = setTimeout(() => {
+        desliga_som("faixa_musicas", 1);
+    }, 10000);
 }

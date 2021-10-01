@@ -88,7 +88,8 @@
         <div id="texto_historia"></div>
 
         <button class="avancar_hist avancar_trad" onclick="avanca_hist()"></button>
-        <button class="avancar_hist_block avancar_trad"></button>
+        <button class="avancar_hist_block avancar_trad"></button><br><br><br>
+        <button class="avancar_hist pular_hist pular_trad" onclick="pular_hist()"></button>
 
         <div id="escolhas_hist">
             <button class="nega_hist" onclick="nega_hist()"></button>
@@ -271,7 +272,6 @@
     </div>
 
     <div id="conquistas_mapa"><br>
-
         <span class="fecha_janela" onclick="botoes(81)">X</span>
 
         <center><h1 class="conquistas_trad"></h1></center>
@@ -517,6 +517,23 @@
                 
                 <br>
                 <h4 class="texto"><center class="sons_trad"></center><button id="status_volume_som" class="button_opcoes" onclick="alteraEstadoSom()"></button></h4>
+
+                <div>
+                    <select id="seleciona_tema" onchange="verifica_selecionado(1)">
+                        <option value="main_1">Tema 1</option>
+                        <option value="main_2">Tema 2</option>
+                        <option value="main_3">Tema 3</option>
+                        <option value="main_4">Tema 4</option>
+                        <option value="random">Random</option>
+                    </select>
+
+                    <select id="seleciona_ocioso" onchange="verifica_selecionado(0)">
+                        <option value="ocioso_1">Ocioso 1</option>
+                        <option value="ocioso_2">Ocioso 2</option>
+                        <option value="ocioso_3">Ocioso 3</option>
+                        <option value="random">Random</option>
+                    </select>
+                </div>
 
             </div>
         </div>

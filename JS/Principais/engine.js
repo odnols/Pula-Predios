@@ -462,6 +462,8 @@ jogo = {
     
     tema_ativo: 1,
     temas_comprados: [0, 1],
+    musica_tema: null,
+    musica_tema_ocioso: null,
     
     timer_mod: 5,
     liberaMod: 0,

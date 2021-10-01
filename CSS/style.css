@@ -1687,7 +1687,7 @@ img#trofeu{
     width: 50%;
     top: 20%;
 }
-.avancar_hist, .avancar_hist_block{
+.avancar_hist, .avancar_hist_block, .pular_hist{
     display: none;
     width: 350px;
     font-size: 25px;
@@ -1698,6 +1698,9 @@ img#trofeu{
 }
 .avancar_hist_block{
     background-color: grey;
+}
+.pular_hist{
+    bottom: 3%;
 }
 #escolhas_hist{
     display: none;
