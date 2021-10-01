@@ -85,6 +85,15 @@ function botoes(tecla){
                 case 82:  // R
                     location.reload();
                 break;
+                // case 50:
+                //     jogo.evento = 2;
+                // break;
+                // case 49:
+                //     if(velocidade_obs > 0)
+                //         velocidade_obs = 0;
+                //     else
+                //         velocidade_obs = 10;
+                // break;
                 default:
                     if(estado_loja)
                         alvo = "loja";
@@ -178,7 +187,7 @@ function clique(evento){
                 else
                     tecla = evento;
 
-            // console.log(tecla);
+            console.log(tecla);
         //  Controles da partida em Andamento
             if(estadoAtual == estados.jogando || estadoAtual == estados.tutorial){
                 switch(tecla){

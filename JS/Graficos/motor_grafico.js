@@ -2,6 +2,9 @@ var anim_indices = [0, 0, 0, 0, 0, 0], anim_estrela = 0, anim_luzes_naveg = 0;
 
 function Cenario(astro){
 
+    let temas_disponiveis = ["cidade", "cidade", "lua"];
+    let tema_ativo = temas_disponiveis[jogo.tema_ativo];
+
     img_cenario = new Image();
 
     img_jogador = new Image();
@@ -24,12 +27,12 @@ function Cenario(astro){
 
     img_jogador.src = "Imagens/Sprites/Jogador/Jogador_dia.png";
 
-    img_objs.src = "Imagens/Sprites/Cidade/Objetos_dia.png";
-    img_cenario.src = "Imagens/Sprites/Cidade/cenario_dia.png";
-    img_agua.src = "Imagens/Sprites/Cidade/agua_dia.png";
-    img_lava.src = "Imagens/Sprites/Cidade/lava.png";
-    img_ceu.src = "Imagens/Sprites/Cidade/Ceu.png";
-    img_sombra.src = "Imagens/Sprites/Cidade/Sombra.png";
+    img_objs.src = "Imagens/Sprites/"+ tema_ativo +"/Objetos_dia.png";
+    img_cenario.src = "Imagens/Sprites/"+ tema_ativo +"/cenario_dia.png";
+    img_agua.src = "Imagens/Sprites/"+ tema_ativo +"/agua_dia.png";
+    img_lava.src = "Imagens/Sprites/"+ tema_ativo +"/lava.png";
+    img_ceu.src = "Imagens/Sprites/"+ tema_ativo +"/Ceu.png";
+    img_sombra.src = "Imagens/Sprites/"+ tema_ativo +"/Sombra.png";
 
     // Sprites animados usados no jogador
     img_adereco_aco.src = "Imagens/Sprites/Jogador/Aderecos/aco.png";

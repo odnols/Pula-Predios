@@ -1096,7 +1096,7 @@ propsfundo = {
     },
 
     desenha: function(){
-        desenha_propsfundo();
+        desenha_chao_fundo();
     }
 },
 
@@ -1131,7 +1131,7 @@ propsfrente = {
     },
 
     desenha: function(){
-        desenha_propsfrente();
+        desenha_chao_frente();
     }
 },
 
@@ -1267,7 +1267,7 @@ obstaculos = {
     },
 
     desenha: function(){
-        desenha_obj();
+        desenha_chao_centro();
     }
 }
 

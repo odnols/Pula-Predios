@@ -78,7 +78,7 @@ function confirma_inicio_partida(){
 
     let faixa = ["main_1.ogg", "main_2.ogg", "main_3.ogg"];
 
-    if(jogo.tema_ativo == 1)
+    if(jogo.tema_ativo != 0)
         executaSons2("faixa_musicas", "Musicas", faixa[Math.round(2 * Math.random())], 1);
     else
         executaSons2("faixa_musicas", "Musicas", "main_old.ogg", 1);
@@ -517,7 +517,7 @@ function estadoOcioso(caso){
 
         let faixa = ["ocioso_1.ogg", "ocioso_2.ogg"];
 
-        if(jogo.tema_ativo == 1)
+        if(jogo.tema_ativo != 0)
             executaSons2("faixa_musicas", "Musicas", faixa[Math.round(1 * Math.random())], 1);
         else
             executaSons2("faixa_musicas", "Musicas", "ocioso_old.ogg", 1);

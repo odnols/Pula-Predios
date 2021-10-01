@@ -63,7 +63,7 @@ function traduz(){
         // Textos da loja
         descricao_Mods = ["Acrescenta mais tempo ao seu modificador", "Acrescenta mais vezes de uso por partida ao seu modificador", "Modificador Principal: Te transforma numa bigorna ambulante, destruindo tudo o que vê pela frente!", "Modificador Principal: Proporciona uma gravidade diferente ao jogo, tornando a partida um tanto quanto imprevisível."];
         descricao_Bonus = ["Todos os pisões irão dar o dobro de moedas!", "Ao completar o evento de água, você ganhará umas moedas bônus!", "O Vento Estocado pode ser usado nas partidas como um empurrão para você ficar no ar por mais tempo."];
-        descricao_Tema = ["Volte a uma época de prosperidades e incertezas políticas.", "O tema padrão do Pula Prédios."];
+        descricao_Tema = ["Volte a uma época de prosperidades e incertezas políticas.", "O tema padrão do Pula Prédios.", "Viage até a lua!"];
     }else{
 
         pulos_trad[0].style.left = "5%";
@@ -79,7 +79,7 @@ function traduz(){
         // Textos da loja
         descricao_Mods = ["Adds more time to your modifier", "Adds more usage times per match to your modifier", "Main Modifier: Turns you into a walking anvil, destroying everything you see ahead!", "Main Modifier: Provides a different gravity to the game, making the game somewhat unpredictable."];
         descricao_Bonus = ["All kicks will give you double coins!", "Upon completing the river event, you will earn some bonus coins!", "Stocked Wind can be used in matches as a boost to keep you in the air for longer time."];
-        descricao_Tema = ["Return to a time of prosperity and political uncertainty.", "The default theme of Pula Prédios."];
+        descricao_Tema = ["Return to a time of prosperity and political uncertainty.", "The default theme of Pula Prédios.", "Travel to the Moon!"];
     }
 }
 

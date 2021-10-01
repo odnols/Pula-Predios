@@ -3,7 +3,7 @@ var identificadores_2 = ["Skins", "Modifiers", "Bonuses", "Themes"];
 var listaPrecos_Skins = [70, 70, 70, 70, 70, 70, 70];
 var listaPrecos_Mods = [50, 50, 70, 0];
 var listaPrecos_Bonus = [100, 100, 30];
-var listaPrecos_Temas = [200, 0];
+var listaPrecos_Temas = [200, 0, 0];
 
 var descricao_Mods;
 var descricao_Bonus;
@@ -147,11 +147,11 @@ function carrega_vendas_loja(caso){
         }   
     }else{ // Temas
 
-        let nomeImagem = ["1900s.jpg", "Padrao.jpg"];
-        let descricao = ["1900's", "Padrão"];
+        let nomeImagem = ["1900s.jpg", "Padrao.jpg", "Lua.jpg"];
+        let descricao = ["1900's", "Padrão", "Lua"];
 
         if(idioma == "en")
-            descricao = ["1900's", "Standard"];
+            descricao = ["1900's", "Standard", "Moon"];
 
         if(idioma == "pt")
             document.getElementById("categoria_teaser").innerHTML = "Viagem no tempo!";

@@ -982,6 +982,11 @@ h3#qtdPulos{
     grid-gap: 25px;
     padding: 10px;
 }
+.img_conquista_obtida, .img_conquista{
+    transition: width .5s, height .5s;
+    image-rendering: auto;
+    image-rendering: pixelated;
+}
 .img_conquista_obtida{
     padding: 0px;
     width: 54px;
@@ -990,19 +995,17 @@ h3#qtdPulos{
     box-shadow: 0px 0px 5px yellow;
     background-color: grey;
 }
-/* #canvas{ */
-    /* animation: cinza 10s; */
-    /* filter: grayscale(1); */
-/* }  */
 .img_conquista{
     filter: grayscale(1);
     padding: 0px;
-    width: 54px;
-    height: 54px;
     border: solid 2px black;
     box-shadow: 0px 0px 5px black;
-    width: 50px;
-    height: 50px;
+    width: 54px;
+    height: 54px;
+}
+.img_conquista:hover, .img_conquista_obtida:hover{
+    width: 200px;
+    height: 200px;
 }
 #tutorial{
     text-align: center;
