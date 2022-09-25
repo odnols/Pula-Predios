@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="utf-8">
     <title>Pula Prédios</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="shortcut icon" href="Imagens/Icones/Icone.png">
+    <link rel="shortcut icon" href="source/images/Icones/Icone.png">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
@@ -16,7 +17,8 @@
     <link rel="stylesheet" type="text/css" href="CSS/responsividade.css">
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"  crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        crossorigin="anonymous">
 
     <script src="JS/Graficos/sprite.js"></script>
 
@@ -41,19 +43,20 @@
     <script src="JS/Externos/jquery.js"></script>
     <script src="JS/Externos/tooltip.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
-    
+
     <script type="text/javascript">
         // Verifica se a tela está focada no game
-        document.addEventListener("DOMContentLoaded", function(){
-            document.addEventListener("visibilitychange", function(){
-                if(document.hidden)
-                    tela_focada = false;
+        document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("visibilitychange", function () {
+                if (document.hidden)
+                    tela_focada = false
                 else
-                    tela_focada = true;
-            });
-        });
+                    tela_focada = tru
+            })
+        })
     </script>
 </head>
+
 <body>
 
     <!-- Usado para carregar os dados do jogo -->
@@ -61,7 +64,7 @@
 
         <div id="cabecalho_carrega_jogo">
             <h1>Pula Prédios</h1>
-            <hr style="width: 50%;">
+            <hr style="width: 50%">
 
             <div id="primeiro_logon">
                 <button onclick="carrega_jogo(1)" id="button_inicia_game">Iniciar</button>
@@ -108,10 +111,20 @@
 
     <div id="controles_tuto">
         <div id="placeholder_controles">
-            <p class="tecla espaco_trad"></p> <p class="espacador"></p> <p class="tecla" style="width: 70px;">W</p> <p class="espacador"></p><p class="controle_text"> -> <span class="pulo_trad"></span></p>
-            
+            <p class="tecla espaco_trad"></p>
+            <p class="espacador"></p>
+            <p class="tecla" style="width: 70px">W</p>
+            <p class="espacador"></p>
+            <p class="controle_text"> -> <span class="pulo_trad"></span></p>
+
             <br><br><br>
-            <p class="tecla">D</p> <p class="espacador"></p> <div class="enter"><p class="enter2">⏎</p></div> <p class="espacador"></p> <p class="controle_text">-> <span class="mod_trad"></span></p>
+            <p class="tecla">D</p>
+            <p class="espacador"></p>
+            <div class="enter">
+                <p class="enter2">⏎</p>
+            </div>
+            <p class="espacador"></p>
+            <p class="controle_text">-> <span class="mod_trad"></span></p>
         </div>
     </div>
 
@@ -120,50 +133,51 @@
 
     <!-- Sprites para o tema Noturno -->
     <div id="sprites_imgs">
-        <img class="sprite_noite" id="ceu_noite" src="Imagens/Sprites/Cidade/ceu_noite.png" alt="ceu noturno">
-        <img class="sprite_noite" id="cidade_noite" src="Imagens/Sprites/Cidade/cidade_noite.png" alt="cidade noturna">
-        <img class="sprite_noite" id="agua_noite" src="Imagens/Sprites/Cidade/agua_noite.png">
-        <img class="sprite_noite" id="chao_noite" src="Imagens/Sprites/Cidade/chao_noite.png">
-        <img class="sprite_noite" id="montanhas_noite" src="Imagens/Sprites/Cidade/montanhas_noite.png">
-        <img class="sprite_noite" id="nuvens1_noite" src="Imagens/Sprites/Cidade/nuvens1_noite.png">
-        <img class="sprite_noite" id="nuvens2_noite" src="Imagens/Sprites/Cidade/nuvens2_noite.png">
-        <img class="sprite_noite" id="nuvens1_2_noite" src="Imagens/Sprites/Cidade/nuvens1_2_noite.png">
-        <img class="sprite_noite" id="nuvens2_2_noite" src="Imagens/Sprites/Cidade/nuvens2_2_noite.png">
+        <img class="sprite_noite" id="ceu_noite" src="source/images/Sprites/Cidade/ceu_noite.png" alt="ceu noturno">
+        <img class="sprite_noite" id="cidade_noite" src="source/images/Sprites/Cidade/cidade_noite.png"
+            alt="cidade noturna">
+        <img class="sprite_noite" id="agua_noite" src="source/images/Sprites/Cidade/agua_noite.png">
+        <img class="sprite_noite" id="chao_noite" src="source/images/Sprites/Cidade/chao_noite.png">
+        <img class="sprite_noite" id="montanhas_noite" src="source/images/Sprites/Cidade/montanhas_noite.png">
+        <img class="sprite_noite" id="nuvens1_noite" src="source/images/Sprites/Cidade/nuvens1_noite.png">
+        <img class="sprite_noite" id="nuvens2_noite" src="source/images/Sprites/Cidade/nuvens2_noite.png">
+        <img class="sprite_noite" id="nuvens1_2_noite" src="source/images/Sprites/Cidade/nuvens1_2_noite.png">
+        <img class="sprite_noite" id="nuvens2_2_noite" src="source/images/Sprites/Cidade/nuvens2_2_noite.png">
 
-        <img class="sprite_noite" id="jogador1_noite" src="Imagens/Sprites/Jogador/Jogador1_noite.png">
-        <img class="sprite_noite" id="jogador2_noite" src="Imagens/Sprites/Jogador/Jogador2_noite.png">
-        <img class="sprite_noite" id="jogador3_noite" src="Imagens/Sprites/Jogador/Jogador3_noite.png">
-        <img class="sprite_noite" id="jogador4_noite" src="Imagens/Sprites/Jogador/Jogador4_noite.png">
-        <img class="sprite_noite" id="jogador5_noite" src="Imagens/Sprites/Jogador/Jogador5_noite.png">
-        <img class="sprite_noite" id="jogador6_noite" src="Imagens/Sprites/Jogador/Jogador6_noite.png">
-        <img class="sprite_noite" id="jogador7_noite" src="Imagens/Sprites/Jogador/Jogador7_noite.png">
+        <img class="sprite_noite" id="jogador1_noite" src="source/images/Sprites/Jogador/Jogador1_noite.png">
+        <img class="sprite_noite" id="jogador2_noite" src="source/images/Sprites/Jogador/Jogador2_noite.png">
+        <img class="sprite_noite" id="jogador3_noite" src="source/images/Sprites/Jogador/Jogador3_noite.png">
+        <img class="sprite_noite" id="jogador4_noite" src="source/images/Sprites/Jogador/Jogador4_noite.png">
+        <img class="sprite_noite" id="jogador5_noite" src="source/images/Sprites/Jogador/Jogador5_noite.png">
+        <img class="sprite_noite" id="jogador6_noite" src="source/images/Sprites/Jogador/Jogador6_noite.png">
+        <img class="sprite_noite" id="jogador7_noite" src="source/images/Sprites/Jogador/Jogador7_noite.png">
 
-        <img class="sprite_noite" id="predio1_1" src="Imagens/Sprites/Cidade/Predio1_1.png">
-        <img class="sprite_noite" id="predio1_2" src="Imagens/Sprites/Cidade/Predio1_2.png">
-        <img class="sprite_noite" id="predio2_1" src="Imagens/Sprites/Cidade/Predio2_1.png">
-        <img class="sprite_noite" id="predio2_2" src="Imagens/Sprites/Cidade/Predio2_2.png">
-        <img class="sprite_noite" id="predio3" src="Imagens/Sprites/Cidade/Predio3.png">
+        <img class="sprite_noite" id="predio1_1" src="source/images/Sprites/Cidade/Predio1_1.png">
+        <img class="sprite_noite" id="predio1_2" src="source/images/Sprites/Cidade/Predio1_2.png">
+        <img class="sprite_noite" id="predio2_1" src="source/images/Sprites/Cidade/Predio2_1.png">
+        <img class="sprite_noite" id="predio2_2" src="source/images/Sprites/Cidade/Predio2_2.png">
+        <img class="sprite_noite" id="predio3" src="source/images/Sprites/Cidade/Predio3.png">
 
-        <img class="sprite_noite" id="predio1_1_background" src="Imagens/Sprites/Cidade/Predio1_1_background.png">
-        <img class="sprite_noite" id="predio1_2_background" src="Imagens/Sprites/Cidade/Predio1_2_background.png">
-        <img class="sprite_noite" id="predio2_1_background" src="Imagens/Sprites/Cidade/Predio2_1_background.png">
-        <img class="sprite_noite" id="predio2_2_background" src="Imagens/Sprites/Cidade/Predio2_2_background.png">
-        <img class="sprite_noite" id="predio3_background" src="Imagens/Sprites/Cidade/Predio3_background.png">
+        <img class="sprite_noite" id="predio1_1_background" src="source/images/Sprites/Cidade/Predio1_1_background.png">
+        <img class="sprite_noite" id="predio1_2_background" src="source/images/Sprites/Cidade/Predio1_2_background.png">
+        <img class="sprite_noite" id="predio2_1_background" src="source/images/Sprites/Cidade/Predio2_1_background.png">
+        <img class="sprite_noite" id="predio2_2_background" src="source/images/Sprites/Cidade/Predio2_2_background.png">
+        <img class="sprite_noite" id="predio3_background" src="source/images/Sprites/Cidade/Predio3_background.png">
 
-        <img class="sprite_noite" id="pisao_noite" src="Imagens/Sprites/Cidade/Pisao_noite.png">
-        <img class="sprite_noite" id="pisao2_noite" src="Imagens/Sprites/Cidade/Pisao2_noite.png">
+        <img class="sprite_noite" id="pisao_noite" src="source/images/Sprites/Cidade/Pisao_noite.png">
+        <img class="sprite_noite" id="pisao2_noite" src="source/images/Sprites/Cidade/Pisao2_noite.png">
 
-        <img class="sprite_noite" id="arvore1" src="Imagens/Sprites/Cidade/Arvore1.png">
-        <img class="sprite_noite" id="arvore2" src="Imagens/Sprites/Cidade/Arvore2.png">
-        <img class="sprite_noite" id="arvore_frutifera" src="Imagens/Sprites/Cidade/ArvoreFrutifera.png">
-        <img class="sprite_noite" id="arbusto" src="Imagens/Sprites/Cidade/Arbusto.png">
-        <img class="sprite_noite" id="poste1_noite" src="Imagens/Sprites/Cidade/poste1_noite.png">
-        <img class="sprite_noite" id="poste2_noite" src="Imagens/Sprites/Cidade/poste2_noite.png">
-        <img class="sprite_noite" id="fonte_noite" src="Imagens/Sprites/Cidade/Fonte_noite.png">
+        <img class="sprite_noite" id="arvore1" src="source/images/Sprites/Cidade/Arvore1.png">
+        <img class="sprite_noite" id="arvore2" src="source/images/Sprites/Cidade/Arvore2.png">
+        <img class="sprite_noite" id="arvore_frutifera" src="source/images/Sprites/Cidade/ArvoreFrutifera.png">
+        <img class="sprite_noite" id="arbusto" src="source/images/Sprites/Cidade/Arbusto.png">
+        <img class="sprite_noite" id="poste1_noite" src="source/images/Sprites/Cidade/poste1_noite.png">
+        <img class="sprite_noite" id="poste2_noite" src="source/images/Sprites/Cidade/poste2_noite.png">
+        <img class="sprite_noite" id="fonte_noite" src="source/images/Sprites/Cidade/Fonte_noite.png">
 
-        <img class="sprite_noite" id="aviao_noite" src="Imagens/Sprites/Cidade/Aviao_noite.png">
-        <img class="sprite_noite" id="disco_voador_noite" src="Imagens/Sprites/Cidade/disco_voador_noite.png">
-        <img class="sprite_noite" id="dirigivel_noite" src="Imagens/Sprites/Cidade/Dirigivel_noite.png">
+        <img class="sprite_noite" id="aviao_noite" src="source/images/Sprites/Cidade/Aviao_noite.png">
+        <img class="sprite_noite" id="disco_voador_noite" src="source/images/Sprites/Cidade/disco_voador_noite.png">
+        <img class="sprite_noite" id="dirigivel_noite" src="source/images/Sprites/Cidade/Dirigivel_noite.png">
     </div>
 
     <!-- Áudios do game -->
@@ -183,7 +197,7 @@
     </div>
 
     <div id="conquistas">
-        <img id="trofeu" src="Imagens/Icones/trofeu.png">
+        <img id="trofeu" src="source/images/Icones/trofeu.png">
 
         <div id="texto_conquista">
             <h3 id="tipo_conquista"></h3>
@@ -204,19 +218,27 @@
     <div id="icones_aquisicoes">
 
         <div id="icon_modificadores">
-            <img class="mods_icon mod_principal" id="mod_0" src="Imagens/Loja/Mods/Flutua.png" onMouseOver="toolTip_trad(0, 0)" onmouseout="toolTip()">
-            <img class="mods_icon mod_principal" id="mod_3" src="Imagens/Loja/Mods/Aco.png" onMouseOver="toolTip_trad(0, 1)" onmouseout="toolTip()">
-            <img class="mods_icon mod_principal" id="mod_4" src="Imagens/Loja/Mods/Lunar.png" onMouseOver="toolTip_trad(0, 2)" onmouseout="toolTip()">
+            <img class="mods_icon mod_principal" id="mod_0" src="source/images/Loja/Mods/Flutua.png"
+                onMouseOver="toolTip_trad(0, 0)" onmouseout="toolTip()">
+            <img class="mods_icon mod_principal" id="mod_3" src="source/images/Loja/Mods/Aco.png"
+                onMouseOver="toolTip_trad(0, 1)" onmouseout="toolTip()">
+            <img class="mods_icon mod_principal" id="mod_4" src="source/images/Loja/Mods/Lunar.png"
+                onMouseOver="toolTip_trad(0, 2)" onmouseout="toolTip()">
             <br>
 
-            <img class="mods_icon" id="mod_1" src="Imagens/Loja/Mods/relogio.gif" onMouseOver="toolTip_trad(0, 3)" onmouseout="toolTip()">
-            <img class="mods_icon" id="mod_2" src="Imagens/Loja/Mods/Jump_Boost.png" onMouseOver="toolTip_trad(0, 4)" onmouseout="toolTip()">
+            <img class="mods_icon" id="mod_1" src="source/images/Loja/Mods/relogio.gif" onMouseOver="toolTip_trad(0, 3)"
+                onmouseout="toolTip()">
+            <img class="mods_icon" id="mod_2" src="source/images/Loja/Mods/Jump_Boost.png"
+                onMouseOver="toolTip_trad(0, 4)" onmouseout="toolTip()">
         </div>
 
         <div id="icon_bonus">
-            <img class="bonus_icon" id="bonus_1" src="Imagens/Loja/Bonus/pisao2x.png" onMouseOver="toolTip('2x$')" onmouseout="toolTip()"> 
-            <img class="bonus_icon" id="bonus_2" src="Imagens/Loja/Bonus/Garimpeiro.png" onMouseOver="toolTip_trad(1, 0)" onmouseout="toolTip()"> 
-            <img class="bonus_icon" id="bonus_3" src="Imagens/Loja/Bonus/vento_estocado.png" onMouseOver="toolTip_trad(1, 1)" onmouseout="toolTip()">
+            <img class="bonus_icon" id="bonus_1" src="source/images/Loja/Bonus/pisao2x.png" onMouseOver="toolTip('2x$')"
+                onmouseout="toolTip()">
+            <img class="bonus_icon" id="bonus_2" src="source/images/Loja/Bonus/Garimpeiro.png"
+                onMouseOver="toolTip_trad(1, 0)" onmouseout="toolTip()">
+            <img class="bonus_icon" id="bonus_3" src="source/images/Loja/Bonus/vento_estocado.png"
+                onMouseOver="toolTip_trad(1, 1)" onmouseout="toolTip()">
         </div>
     </div>
 
@@ -227,7 +249,7 @@
 
     <!-- Tela Secundária com sensibilidade a cliques, também utilizada para fazer transições entre dia e noite -->
     <div id="filtro"></div>
-    
+
     <div id="botoes_acessibilidade">
         <button class="button_mod" onclick="jogador.modificador()">Mod</button>
         <button class="button_pulo" onclick="clique(32)"></button>
@@ -237,30 +259,38 @@
     <div id="filtro2">
         <center id="estatisticas_morte">
             <h1 class="fimdejogo"></h1>
-            <h3><span class="causa_perca_trad"></span>: <a class="estat" id="causa_perca" style="color: red;">??</a></h3>
+            <h3><span class="causa_perca_trad"></span>: <a class="estat" id="causa_perca" style="color: red">??</a>
+            </h3>
 
             <div id="stats_dead">
                 <p class="texto _estatistic_dead">
                     <span class="resumo_partida_trad"></span> \\//<br><br>
                     <span class="pontuacao_trad"></span>: <a class="estat" id="pontuacao_partida">0</a><br>
                     <span class="tempo_correndo_trad"></span>: <a class="estat" id="tempo_jogado_partida">0</a><br>
-                    <span class="distancia_trad"></span>: <a class="estat" id="distancia_percorrida_partida">0</a><br><br>
+                    <span class="distancia_trad"></span>: <a class="estat"
+                        id="distancia_percorrida_partida">0</a><br><br>
 
                     N° <span class="n_de_pulos_trad"></span>: <a class="estat" id="quantidade_pulos_partida">0</a><br>
-                    <span class="mods_utilizados_trad"></span>: <a class="estat" id="quantidade_modificadores_partida">0</a><br><br>
+                    <span class="mods_utilizados_trad"></span>: <a class="estat"
+                        id="quantidade_modificadores_partida">0</a><br><br>
 
-                    <span class="moedas_coletadas_trad"></span>: <a class="estat" id="moedas_coletadas_partida">0</a><br>
-                    N° <span class="n_de_pisoes_trad"></span>: <a class="estat" id="quantidade_pisoes_partida">0</a><br><br>
-                    
-                    <span class="predios_atropelados_trad"></span>: <a class="estat" id="quantidade_predios_partida">0</a><br>
+                    <span class="moedas_coletadas_trad"></span>: <a class="estat"
+                        id="moedas_coletadas_partida">0</a><br>
+                    N° <span class="n_de_pisoes_trad"></span>: <a class="estat"
+                        id="quantidade_pisoes_partida">0</a><br><br>
+
+                    <span class="predios_atropelados_trad"></span>: <a class="estat"
+                        id="quantidade_predios_partida">0</a><br>
                 </p>
             </div>
 
-            <div id="stats_dead2"> 
+            <div id="stats_dead2">
                 <p class="texto _estatistic_dead">
                     <span class="eventos_trad"></span> \\//<br><br>
-                    <span class="eventos_concluidos_trad"></span>: <a class="estat" id="eventos_concluidos_partida">0</a><br>
-                    <span class="tempo_em_eventos_trad"></span>: <a class="estat" id="tempo_eventos_partida">0</a><br><br>
+                    <span class="eventos_concluidos_trad"></span>: <a class="estat"
+                        id="eventos_concluidos_partida">0</a><br>
+                    <span class="tempo_em_eventos_trad"></span>: <a class="estat"
+                        id="tempo_eventos_partida">0</a><br><br>
 
                     <span class="evento_cidade_trad"></span>: <a class="estat" id="quantidade_cidade_partida">0</a><br>
                     <span class="evento_parque_trad"></span>: <a class="estat" id="quantidade_parque_partida">0</a><br>
@@ -274,8 +304,10 @@
     <div id="conquistas_mapa"><br>
         <span class="fecha_janela" onclick="botoes(81)">X</span>
 
-        <center><h1 class="conquistas_trad"></h1></center>
-        <hr style="width: 50%;">
+        <center>
+            <h1 class="conquistas_trad"></h1>
+        </center>
+        <hr style="width: 50%">
 
         <div id="lista_conquistas">
             <div id="placeholder_conquista"></div>
@@ -283,11 +315,13 @@
     </div>
 
     <div id="tutorial"><br>
-        
+
         <span class="fecha_janela" onclick="botoes(81)">X</span>
 
-        <center><h1>Tutorial</h1></center>
-        <hr style="width: 50%;">
+        <center>
+            <h1>Tutorial</h1>
+        </center>
+        <hr style="width: 50%">
 
         <div id="tutoriais_1">
             <a class="opcao_tutorial historia_trad" href="#" onclick="exibeTutorial(15)"></a><br><br>
@@ -317,43 +351,69 @@
 
         <span class="fecha_janela" onclick="botoes(81)">X</span>
 
-        <center><h1 class="controles_trad"></h1></center>
-        <hr style="width: 50%;">
- 
+        <center>
+            <h1 class="controles_trad"></h1>
+        </center>
+        <hr style="width: 50%">
+
         <div id="controles_1">
             <h2>Menus</h2>
-            <hr style="width: 50%;">
+            <hr style="width: 50%">
 
-            
-            <p class="tecla">O</p> <p class="espacador"></p><p class="controle_text">-> <span class="conquistas_trad"></span></p>
-            
-            <br><br><br>
-            <p class="tecla">C</p> <p class="espacador"></p><p class="controle_text">-> <span class="controles_trad"></span></p>
 
-            <br><br><br>
-            <p class="tecla">E</p> <p class="espacador"></p><p class="controle_text">-> <span class="estatisticas_trad"></span></p>
+            <p class="tecla">O</p>
+            <p class="espacador"></p>
+            <p class="controle_text">-> <span class="conquistas_trad"></span></p>
 
             <br><br><br>
-            <p class="tecla">L</p> <p class="espacador"></p><p class="controle_text">-> Log</p>
-            
-            <br><br><br>
-            <p class="tecla">X</p> <p class="espacador"></p><p class="controle_text"> -> <span class="loja_trad"></span></p> 
+            <p class="tecla">C</p>
+            <p class="espacador"></p>
+            <p class="controle_text">-> <span class="controles_trad"></span></p>
 
             <br><br><br>
-            <p class="tecla">Z</p> <p class="espacador"></p><p class="controle_text"> -> <span class="opcoes_trad"></span></p>
+            <p class="tecla">E</p>
+            <p class="espacador"></p>
+            <p class="controle_text">-> <span class="estatisticas_trad"></span></p>
 
             <br><br><br>
-            <p class="tecla">T</p> <p class="espacador"></p><p class="controle_text">-> Tutorial</p>
+            <p class="tecla">L</p>
+            <p class="espacador"></p>
+            <p class="controle_text">-> Log</p>
+
+            <br><br><br>
+            <p class="tecla">X</p>
+            <p class="espacador"></p>
+            <p class="controle_text"> -> <span class="loja_trad"></span></p>
+
+            <br><br><br>
+            <p class="tecla">Z</p>
+            <p class="espacador"></p>
+            <p class="controle_text"> -> <span class="opcoes_trad"></span></p>
+
+            <br><br><br>
+            <p class="tecla">T</p>
+            <p class="espacador"></p>
+            <p class="controle_text">-> Tutorial</p>
         </div>
 
-        <div id="controles_2"> 
+        <div id="controles_2">
             <h2>Gameplay</h2>
-            <hr style="width: 50%;">
+            <hr style="width: 50%">
 
-            <p class="tecla espaco_trad"></p> <p class="espacador"></p> <p class="tecla" style="width: 70px;">W</p> <p class="espacador"></p><p class="controle_text"> -> <span class="pulo_trad"></span></p>
-            
+            <p class="tecla espaco_trad"></p>
+            <p class="espacador"></p>
+            <p class="tecla" style="width: 70px">W</p>
+            <p class="espacador"></p>
+            <p class="controle_text"> -> <span class="pulo_trad"></span></p>
+
             <br><br><br>
-            <p class="tecla">D</p> <p class="espacador"></p> <div class="enter"><p class="enter2">⏎</p></div> <p class="espacador"></p> <p class="controle_text">-> <span class="mod_trad"></span></p>
+            <p class="tecla">D</p>
+            <p class="espacador"></p>
+            <div class="enter">
+                <p class="enter2">⏎</p>
+            </div>
+            <p class="espacador"></p>
+            <p class="controle_text">-> <span class="mod_trad"></span></p>
         </div>
     </div>
 
@@ -365,19 +425,24 @@
     </div>
 
     <div id="problemas_redes_sociais"><br>
-        
+
         <span class="fecha_janela" onclick="botoes(81)">X</span>
 
-        <center><h1 class="problemas_trad"></h1></center>
-        <hr style="width: 50%;">
+        <center>
+            <h1 class="problemas_trad"></h1>
+        </center>
+        <hr style="width: 50%">
         <div class="opcoes_esquerda_2">
             <h4 class="problemas_descri_trad"></h4>
 
-            <a href="https://twitter.com/slndtk" target="_blank"><img src="Imagens/Icones/Twitter.png" style="width: 250px;"></a>
+            <a href="https://twitter.com/slndtk" target="_blank"><img src="source/images/Icones/Twitter.png"
+                    style="width: 250px"></a>
         </div>
 
         <div class="opcoes_direita">
-            <iframe src="https://discord.com/widget?id=666465457565335563&theme=dark" width="350" height="360" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+            <iframe src="https://discord.com/widget?id=666465457565335563&theme=dark" width="350" height="360"
+                allowtransparency="true" frameborder="0"
+                sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         </div>
     </div>
 
@@ -385,8 +450,10 @@
 
         <span class="fecha_janela" onclick="botoes(81)">X</span>
 
-        <center><h1 class="suporte_trad"></h1></center>
-        <hr style="width: 50%;">
+        <center>
+            <h1 class="suporte_trad"></h1>
+        </center>
+        <hr style="width: 50%">
         <div class="opcoes_esquerda_2">
             <h4 class="suporte_descri_1"></h4><br>
 
@@ -395,7 +462,7 @@
         </div>
 
         <div class="opcoes_direita">
-            <img src="Imagens/Icones/picpay.png" style="width: 300px; box-shadow: 0px 0px 15px black;">
+            <img src="source/images/Icones/picpay.png" style="width: 300px; box-shadow: 0px 0px 15px black;">
         </div>
     </div>
 
@@ -404,14 +471,16 @@
         <span class="fecha_janela" onclick="botoes(81)">X</span>
 
         <div id="excluirdados" onclick="quadro_confirma_exclusao(1)">
-            <img src="Imagens/Icones/lixeira.png" id="iconlixeira">
+            <img src="source/images/Icones/lixeira.png" id="iconlixeira">
 
             <span class="excluir_dados_trad"></span>
         </div>
 
-        <center><h1 class="estatisticas_trad"></h1></center>
-        <hr style="width: 50%;">
-        
+        <center>
+            <h1 class="estatisticas_trad"></h1>
+        </center>
+        <hr style="width: 50%">
+
         <div id="stats_">
             <p class="texto _estatistic_dead">
                 <span class="geral_trad"></span> \\//<br><br>
@@ -424,18 +493,19 @@
 
                 <span class="moedas_coletadas_trad"></span>: <a class="estat" id="moedas_coletadas">0</a><br>
                 <span class="moedas_gastas_trad"></span>: <a class="estat" id="moedas_gastas">0</a><br><br>
-                
+
                 <span class="skins_compradas_trad"></span>: <a class="estat" id="tt_skins_compradas">0</a><br>
                 <span class="mods_comprados_trad"></span>: <a class="estat" id="tt_modificadores_comprados">0</a><br>
                 <span class="bonus_comprados_trad"></span>: <a class="estat" id="tt_bonus_comprados">0</a><br><br>
 
                 <span class="conquistas_trad"></span>: <a class="estat" id="conquistas_obtidas"></a><br><br>
                 <span class="pontos_obtidos_trad"></span>: <a class="estat" id="quantidade_pontos">0</a><br>
-                <span class="melhor_partida_trad"></span>: <a class="estat" id="recorde">0</a> <span id="pontos_trad"></span><br>
+                <span class="melhor_partida_trad"></span>: <a class="estat" id="recorde">0</a> <span
+                    id="pontos_trad"></span><br>
             </p>
         </div>
 
-        <div id="stats_2"> 
+        <div id="stats_2">
             <p class="texto _estatistic_dead">
                 <span class="eventos_trad"></span> \\//<br><br>
                 <span class="eventos_concluidos_trad"></span>: <a class="estat" id="eventos_concluidos">0</a><br>
@@ -453,9 +523,11 @@
 
         <span id="fecha_janela_c" onclick="botoes(81)">X</span>
 
-        <center><h1 class="opcoes_trad"></h1></center>
-        <hr style="width: 50%;">
-        
+        <center>
+            <h1 class="opcoes_trad"></h1>
+        </center>
+        <hr style="width: 50%">
+
         <div class="opcoes_direita">
             <h3><button class="button_opcoes geral_trad" onclick="menu_opcoes(1)"></button></h3>
             <h3><button class="button_opcoes sons_trad" onclick="menu_opcoes(2)"></button></h3>
@@ -468,10 +540,14 @@
 
         <div id="config_grafc">
             <div class="itens_configs">
-                <h4 class="texto"><button id="status_tema_atual" class="button_opcoes" onclick="alteraRelogio()"></button> : <span class="definir_tempo_trad"></span></h4>
+                <h4 class="texto"><button id="status_tema_atual" class="button_opcoes"
+                        onclick="alteraRelogio()"></button> : <span class="definir_tempo_trad"></span></h4>
 
-                <h4 class="texto" id="button_animacoes_cell"><button id="status_animacoes_block" class="button_opcoes_block"><span class="status_anima"></span></button> : <span class="animacoes_trad"></span></h4>
-                <h4 class="texto" id="button_animacoes_pc"><button id="status_animacoes" class="button_opcoes" onclick="alteraQualidadeGrafica()"></button> : <span class="animacoes_trad"></span></h4>
+                <h4 class="texto" id="button_animacoes_cell"><button id="status_animacoes_block"
+                        class="button_opcoes_block"><span class="status_anima"></span></button> : <span
+                        class="animacoes_trad"></span></h4>
+                <h4 class="texto" id="button_animacoes_pc"><button id="status_animacoes" class="button_opcoes"
+                        onclick="alteraQualidadeGrafica()"></button> : <span class="animacoes_trad"></span></h4>
             </div>
         </div>
 
@@ -485,15 +561,23 @@
 
         <div id="config_gerais">
             <div class="itens_configs">
-                <h4 class="texto"><button id="status_dificuldade" class="button_opcoes" onclick="alteraDificuldade()"></button> : <span class="dificuldade_trad"></span></h4>
+                <h4 class="texto"><button id="status_dificuldade" class="button_opcoes"
+                        onclick="alteraDificuldade()"></button> : <span class="dificuldade_trad"></span></h4>
 
-                <h4 class="texto"><button id="status_tela_estatisti" class="button_opcoes" onclick="alteraEstadoEstatistica()"></button> : <span class="estatisticas_morte_trad"></span></h4>
-            
-                <h4 class="texto"><button id="status_estatisticas_nerds" class="button_opcoes" onclick="alteraEstatisticasNerds()"></button> : <span class="estatisticas_nerd_trad"></span></h4>
+                <h4 class="texto"><button id="status_tela_estatisti" class="button_opcoes"
+                        onclick="alteraEstadoEstatistica()"></button> : <span class="estatisticas_morte_trad"></span>
+                </h4>
 
-                <h4 class="texto"><button id="status_conquistas_notifc" class="button_opcoes" onclick="alteraNotificacoesConquistas()"></button> : <span class="notificacoes_conquistas_trad"></span></h4>
+                <h4 class="texto"><button id="status_estatisticas_nerds" class="button_opcoes"
+                        onclick="alteraEstatisticasNerds()"></button> : <span class="estatisticas_nerd_trad"></span>
+                </h4>
 
-                <h4 class="texto"><button id="status_modo_ocioso" class="button_opcoes" onclick="alteraEstadoOcioso()"></button> : <span class="modo_ocioso_trad"></span></h4>
+                <h4 class="texto"><button id="status_conquistas_notifc" class="button_opcoes"
+                        onclick="alteraNotificacoesConquistas()"></button> : <span
+                        class="notificacoes_conquistas_trad"></span></h4>
+
+                <h4 class="texto"><button id="status_modo_ocioso" class="button_opcoes"
+                        onclick="alteraEstadoOcioso()"></button> : <span class="modo_ocioso_trad"></span></h4>
             </div>
         </div>
 
@@ -501,22 +585,30 @@
             <div id="controle_som">
 
                 <div class="opcao_som">
-                    <h3 style="float: left;"><label for="volume_musica" class="musicas_trad"></label></h3>
-                    <input class="control_volume" type="range" min="0" max="100" id="volume_musica" oninput="alteraVolume(this.value, 1)" onchange="alteraVolume(this.value, 1, 1)">
+                    <h3 style="float: left"><label for="volume_musica" class="musicas_trad"></label></h3>
+                    <input class="control_volume" type="range" min="0" max="100" id="volume_musica"
+                        oninput="alteraVolume(this.value, 1)" onchange="alteraVolume(this.value, 1, 1)">
                 </div>
 
                 <div class="opcao_som">
-                    <h3 style="float: left;"><label for="volume_efeitos" class="efeitos_trad"></label></h3>
-                    <input class="control_volume" type="range" min="0" max="100" value="carrega_sons(2)" id="volume_efeitos" oninput="alteraVolume(this.value, 2)" onchange="alteraVolume(this.value, 2, 1)">
+                    <h3 style="float: left"><label for="volume_efeitos" class="efeitos_trad"></label></h3>
+                    <input class="control_volume" type="range" min="0" max="100" value="carrega_sons(2)"
+                        id="volume_efeitos" oninput="alteraVolume(this.value, 2)"
+                        onchange="alteraVolume(this.value, 2, 1)">
                 </div>
 
                 <div class="opcao_som">
-                    <h3 style="float: left;"><label for="volume_memes">Memes</label></h3>
-                    <input class="control_volume" type="range" min="0" max="100" value="carrega_sons(3)" id="volume_memes" oninput="alteraVolume(this.value, 3)" onchange="alteraVolume(this.value, 3, 1)">
+                    <h3 style="float: left"><label for="volume_memes">Memes</label></h3>
+                    <input class="control_volume" type="range" min="0" max="100" value="carrega_sons(3)"
+                        id="volume_memes" oninput="alteraVolume(this.value, 3)"
+                        onchange="alteraVolume(this.value, 3, 1)">
                 </div>
-                
+
                 <br>
-                <h4 class="texto"><center class="sons_trad"></center><button id="status_volume_som" class="button_opcoes" onclick="alteraEstadoSom()"></button></h4>
+                <h4 class="texto">
+                    <center class="sons_trad"></center><button id="status_volume_som" class="button_opcoes"
+                        onclick="alteraEstadoSom()"></button>
+                </h4>
 
                 <div>
                     <select id="seleciona_tema" onchange="verifica_selecionado(1)">
@@ -542,16 +634,19 @@
     <div id="opcoes"><br>
         <span class="fecha_janela" onclick="botoes(900)">X</span>
 
-        <center><h1>Menu</h1></center>
-        <hr style="width: 50%;">
+        <center>
+            <h1>Menu</h1>
+        </center>
+        <hr style="width: 50%">
 
         <div class="opcoes_direita">
             <h3><button class="button_opcoes controles_trad" onclick="botoes(99)"></button></h3>
             <h3><button class="button_opcoes estatisticas_trad" onclick="botoes(101)"></button></h3>
 
             <div>
-            <button class="button_opcoes_t opcoes_trad" onclick="botoes(90)"></button>
-            <button class="button_trad" onclick="menu_opcoes(4, 1)"><img id="img_trad" src="Imagens/Icones/Globo.png"></button>
+                <button class="button_opcoes_t opcoes_trad" onclick="botoes(90)"></button>
+                <button class="button_trad" onclick="menu_opcoes(4, 1)"><img id="img_trad"
+                        src="source/images/Icones/Globo.png"></button>
             </div>
         </div>
 
@@ -569,7 +664,8 @@
     <!-- Log de Mudanças e Apresentações -->
     <div id="boas_vindas">
         <div id="pag1"><br>
-            <h1 class="boas_vindas_trad"></h1><hr>
+            <h1 class="boas_vindas_trad"></h1>
+            <hr>
             <p class="versao_trad"></p>
             <strong style="color: red" class="sons_ativados_trad"></strong><br>
             <button class="botao_a beleuza_trad" onclick="boasVindas()"></button><br><br>
@@ -582,7 +678,7 @@
     <div id="barra_topo">
         <div id="pontuador"><span class="pontuador_trad"></span>
             <h3 id="pontuacao">0</h3>
-        </div> 
+        </div>
 
         <div id="mod"><span class="mod_trad"></span>
             <h3 id="timer_mod"></h3>
@@ -626,7 +722,8 @@
     </div>
 
     <!-- Menus da Loja -->
-    <p id="puxador_loja" onclick="abre_loja()" onMouseOver="toolTip_trad(3, 0)" onmouseout="toolTip()"><img src="Imagens/Icones/loja.png" id="icone_puxador_loja"></p>
+    <p id="puxador_loja" onclick="abre_loja()" onMouseOver="toolTip_trad(3, 0)" onmouseout="toolTip()"><img
+            src="source/images/Icones/loja.png" id="icone_puxador_loja"></p>
     <div id="loja"><br>
 
         <p class="fechador_loja" onclick="abre_loja()"></p>
@@ -635,18 +732,27 @@
 
         <div id="quadro_novidades_loja">
             <fieldset id="colore_loja">
-                <img id="sprite_jogador_loja" src="Imagens/Loja/Skins/Jogador7_noite.png" animation="loja_move_jogador 5s;">
-                
+                <img id="sprite_jogador_loja" src="source/images/Loja/Skins/Jogador7_noite.png"
+                    animation="loja_move_jogador 5s">
+
                 <div id="text_novidades_loja"></div>
-                <img id="icon_loja_novidades" src="Imagens/Icones/loja.png">
+                <img id="icon_loja_novidades" src="source/images/Icones/loja.png">
             </fieldset>
         </div>
 
         <div id="quadros_loja_grid">
-            <div class="item_grid_loja_2 quadros_loja" onclick="carrega_dados_loja(0)"><p class="text_quadro_loja">Skins</p></div>
-            <div class="item_grid_loja_3 quadros_loja" onclick="carrega_dados_loja(1)"><p class="text_quadro_loja">Mods</p></div>
-            <div class="item_grid_loja_4 quadros_loja" onclick="carrega_dados_loja(2)"><p class="text_quadro_loja bonus_trad"></p></div>
-            <div class="item_grid_loja_1 quadros_loja" onclick="carrega_dados_loja(3)"><p class="text_quadro_loja temas_trad"></p></div>
+            <div class="item_grid_loja_2 quadros_loja" onclick="carrega_dados_loja(0)">
+                <p class="text_quadro_loja">Skins</p>
+            </div>
+            <div class="item_grid_loja_3 quadros_loja" onclick="carrega_dados_loja(1)">
+                <p class="text_quadro_loja">Mods</p>
+            </div>
+            <div class="item_grid_loja_4 quadros_loja" onclick="carrega_dados_loja(2)">
+                <p class="text_quadro_loja bonus_trad"></p>
+            </div>
+            <div class="item_grid_loja_1 quadros_loja" onclick="carrega_dados_loja(3)">
+                <p class="text_quadro_loja temas_trad"></p>
+            </div>
         </div>
 
         <div id="sessao_loja">
@@ -659,18 +765,20 @@
             </div>
 
             <div id="filtro_alerta_loja"></div>
-            
+
             <button class="voltar_inicio_loja" onclick="fechar_sessao_loja()"></button>
-            
+
             <div id="cabecalho_categoria_loja">
                 <h1 id="categoria_loja"></h1>
                 <hr width="250px">
-            
+
                 <p id="categoria_teaser"></p>
             </div>
 
-            <div id="quadro_vendas"><div id="placeholder_loja"></div></div>
-            
+            <div id="quadro_vendas">
+                <div id="placeholder_loja"></div>
+            </div>
+
         </div>
     </div>
 
@@ -680,6 +788,7 @@
         <h3 id="mensagem_teaser"></h3>
     </div>
 
-    <script> carrega_jogo(0); </script>
+    <script> carrega_jogo(0) </script>
 </body>
+
 </html>

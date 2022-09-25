@@ -1,371 +1,368 @@
-var anim_indices = [0, 0, 0, 0, 0, 0], anim_estrela = 0, anim_luzes_naveg = 0;
+var anim_indices = [0, 0, 0, 0, 0, 0], anim_estrela = 0, anim_luzes_naveg = 0
 
-function Cenario(astro){
+function Cenario(astro) {
 
-    let temas_disponiveis = ["cidade", "cidade", "lua"];
-    let tema_ativo = temas_disponiveis[jogo.tema_ativo];
+    let temas_disponiveis = ["cidade", "cidade", "lua"]
+    let tema_ativo = temas_disponiveis[jogo.tema_ativo]
 
-    img_cenario = new Image();
+    img_cenario = new Image()
 
-    img_jogador = new Image();
-    img_objs = new Image();
-    img_sombra = new Image();
+    img_jogador = new Image()
+    img_objs = new Image()
+    img_sombra = new Image()
 
-    img_ceu = new Image();
-    img_agua = new Image();
-    img_lava = new Image();
-    img_astros = new Image();
+    img_ceu = new Image()
+    img_agua = new Image()
+    img_lava = new Image()
+    img_astros = new Image()
 
-    img_adereco_aco = new Image();
-    img_adereco_fogo = new Image();
-    img_adereco_roda = new Image();
-    img_adereco_bandeira = new Image();
-    img_adereco_combustao = new Image();
-    
-    img_mascara_estrela = new Image();
-    img_luzes_navegacao = new Image();
+    img_adereco_aco = new Image()
+    img_adereco_fogo = new Image()
+    img_adereco_roda = new Image()
+    img_adereco_bandeira = new Image()
+    img_adereco_combustao = new Image()
 
-    img_jogador.src = "Imagens/Sprites/Jogador/Jogador_dia.png";
+    img_mascara_estrela = new Image()
+    img_luzes_navegacao = new Image()
 
-    img_objs.src = "Imagens/Sprites/"+ tema_ativo +"/Objetos_dia.png";
-    img_cenario.src = "Imagens/Sprites/"+ tema_ativo +"/cenario_dia.png";
-    img_agua.src = "Imagens/Sprites/"+ tema_ativo +"/agua_dia.png";
-    img_lava.src = "Imagens/Sprites/"+ tema_ativo +"/lava.png";
-    img_ceu.src = "Imagens/Sprites/"+ tema_ativo +"/Ceu.png";
-    img_sombra.src = "Imagens/Sprites/"+ tema_ativo +"/Sombra.png";
+    img_jogador.src = "source/images/Sprites/Jogador/Jogador_dia.png"
+
+    img_objs.src = `source/images/Sprites/${tema_ativo}/Objetos_dia.png`
+    img_cenario.src = `source/images/Sprites/${tema_ativo}/cenario_dia.png`
+    img_agua.src = `source/images/Sprites/${tema_ativo}/agua_dia.png`
+    img_lava.src = `source/images/Sprites/${tema_ativo}/lava.png`
+    img_ceu.src = `source/images/Sprites/${tema_ativo}/Ceu.png`
+    img_sombra.src = `source/images/Sprites/${tema_ativo}/Sombra.png`
 
     // Sprites animados usados no jogador
-    img_adereco_aco.src = "Imagens/Sprites/Jogador/Aderecos/aco.png";
-    img_adereco_fogo.src = "Imagens/Sprites/Jogador/Aderecos/mascara_fogo.png";
-    img_adereco_roda.src = "Imagens/Sprites/Jogador/Aderecos/roda.png";
-    img_adereco_bandeira.src = "Imagens/Sprites/Jogador/Aderecos/bandeira.png";
-    img_adereco_combustao.src = "Imagens/Sprites/Jogador/Aderecos/combustao.png";
+    img_adereco_aco.src = "source/images/Sprites/Jogador/Aderecos/aco.png"
+    img_adereco_fogo.src = "source/images/Sprites/Jogador/Aderecos/mascara_fogo.png"
+    img_adereco_roda.src = "source/images/Sprites/Jogador/Aderecos/roda.png"
+    img_adereco_bandeira.src = "source/images/Sprites/Jogador/Aderecos/bandeira.png"
+    img_adereco_combustao.src = "source/images/Sprites/Jogador/Aderecos/combustao.png"
 
-    img_mascara_estrela.src = "Imagens/Sprites/Cidade/mascara_estrelas.png";
-    img_luzes_navegacao.src = "Imagens/Sprites/Cidade/luzes_de_navegacao.png";
+    img_mascara_estrela.src = "source/images/Sprites/Cidade/mascara_estrelas.png"
+    img_luzes_navegacao.src = "source/images/Sprites/Cidade/luzes_de_navegacao.png"
 
     // Define qual será o astro mostrado no céu ao carregar o game
-    if(astro)
-        img_astros.src = "Imagens/Sprites/lua.png";
+    if (astro)
+        img_astros.src = "source/images/Sprites/lua.png"
     else
-        img_astros.src = "Imagens/Sprites/sol.png";
+        img_astros.src = "source/images/Sprites/sol.png"
 
-    if(jogo.tema_ativo == 0){
-        document.getElementById("canvas").style.filter = "grayscale(1)";
-        document.getElementById("icones_aquisicoes").style.filter = "grayscale(1)";
-        document.getElementById("conquistas").style.filter = "grayscale(1)";
-        document.getElementById("carrega_jogo").style.filter = "grayscale(1)";
-        document.getElementById("quadro_notificacoes").style.filter = "grayscale(1)";
-        document.getElementById("barra_loading").style.filter = "grayscale(1)";
-        document.getElementById("temporizador").style.filter = "grayscale(1)";
-        document.getElementById("moedas").style.filter = "grayscale(1)";
-        document.getElementById("mod").style.filter = "grayscale(1)";
-        document.getElementById("notificacoes").style.filter = "grayscale(1)";
-        document.getElementById("menu_inicial").style.filter = "grayscale(1)";
+    if (jogo.tema_ativo == 0) {
+
+        const alvos = ["canvas", "icones_aquisicoes", "conquistas", "carrega_jogo", "quadro_notificacoes", "barra_loading", "temporizador", "moedas", "mod", "notificacoes", "menu_inicial"]
+
+        for (let i = 0; i < alvos.length; i++)
+            document.getElementById(alvos[i]).style.filter = "grayscale(1)"
     }
 }
 
-function transita_tempo(categoria){
-    if(categoria){
-        anoitecer();
+function transita_tempo(categoria) {
+    if (categoria) {
+        anoitecer()
         // Liga a função de Transição
-        libera_transitador = 1;
-    }else{
-        amanhecer();
+        libera_transitador = 1
+    } else {
+        amanhecer()
 
         // Desliga a Função de Transição
         conometro_transitador = setTimeout(() => {
-            libera_transitador = 0;
+            libera_transitador = 0
 
-            clearTimeout(conometro_transitador);
-        }, 20000);
+            clearTimeout(conometro_transitador)
+        }, 20000)
     }
 }
 
 //  Função para fazer anoitecer
-function anoitecer(){
+function anoitecer() {
     estrelificador = setInterval(() => {
-        if(Cenario_sprites.opacidade_noite <= 0.99)
-            Cenario_sprites.opacidade_noite += 0.01;
-        else{  // Matando o intervalo
-            clearInterval(estrelificador);
-            Cenario_sprites.opacidade_noite = 1.0;
+        if (Cenario_sprites.opacidade_noite <= 0.99)
+            Cenario_sprites.opacidade_noite += 0.01
+        else {  // Matando o intervalo
+            clearInterval(estrelificador)
+            Cenario_sprites.opacidade_noite = 1.0
         }
-    }, 180);
+    }, 180)
 }
 
-function amanhecer(){
+function amanhecer() {
     dializador = setInterval(() => {
-        if( Cenario_sprites.opacidade_noite >= 0.0 )
-            Cenario_sprites.opacidade_noite -= 0.01;
-        else{  // Matando o intervalo
-            clearInterval(dializador);
-            Cenario_sprites.opacidade_noite = 0.0;
+        if (Cenario_sprites.opacidade_noite >= 0.0)
+            Cenario_sprites.opacidade_noite -= 0.01
+        else {  // Matando o intervalo
+            clearInterval(dializador)
+            Cenario_sprites.opacidade_noite = 0.0
         }
-    }, 180);
+    }, 180)
 }
 
-function transitador(elemento, altura, posicao_x, posicao_y){
+function transitador(elemento, altura, posicao_x, posicao_y) {
 
     // Verifica se está de noite para executar a função
-    if(libera_transitador == 1){
+    if (libera_transitador == 1) {
 
-        let img = document.getElementById(elemento);
-        let canvas = document.getElementById("canvas");
-        let ctxi = canvas.getContext("2d");
-        let pat = ctxi.createPattern(img, 'repeat');
+        let img = document.getElementById(elemento)
+        let canvas = document.getElementById("canvas")
+        let ctxi = canvas.getContext("2d")
+        let pat = ctxi.createPattern(img, 'repeat')
 
-        document.getElementById(elemento).style.opacity = Cenario_sprites.opacidade_noite;
+        document.getElementById(elemento).style.opacity = Cenario_sprites.opacidade_noite
 
-        ctxi.globalAlpha = Cenario_sprites.opacidade_noite;
+        ctxi.globalAlpha = Cenario_sprites.opacidade_noite
 
-        ctxi.fillStyle = pat;
+        ctxi.fillStyle = pat
 
         // Verifica se a Opacidade está correta e exibe na tela
-        if(Cenario_sprites.opacidade_noite >= 0.0 && Cenario_sprites.opacidade_noite <= 1.0){
-            ctxi.beginPath();
-            ctxi.drawImage(img, posicao_x, posicao_y); 
-            ctxi.fill(); 
-            ctxi.closePath();
+        if (Cenario_sprites.opacidade_noite >= 0.0 && Cenario_sprites.opacidade_noite <= 1.0) {
+            ctxi.beginPath()
+            ctxi.drawImage(img, posicao_x, posicao_y)
+            ctxi.fill()
+            ctxi.closePath()
         }
 
-        ctxi.globalAlpha = 1;
+        ctxi.globalAlpha = 1
 
-        ctxi.beginPath(); ctxi.rect(0, 0, 0, 0); ctxi.fill(); ctxi.closePath();
+        ctxi.beginPath()
+        ctxi.rect(0, 0, 0, 0)
+        ctxi.fill()
+        ctxi.closePath()
     }
 }
 
-function inverte_tempo(){
-    if(Cenario_sprites.astro[2] == 0){ // Noite
-        Cenario_sprites.astro[2] = 1;
-        libera_transitador = 1;
-        Cenario_sprites.opacidade_noite = 1;
+function inverte_tempo() {
+    if (Cenario_sprites.astro[2] == 0) { // Noite
+        Cenario_sprites.astro[2] = 1
+        libera_transitador = 1
+        Cenario_sprites.opacidade_noite = 1
 
-        if(typeof tEst != "undefined")
+        if (typeof tEst != "undefined")
             clearTimeout(tEst)
 
         // Verifica se as luzes de navegação estão ativas com o avião voando
-        if(typeof tLuzN == "undefined" && Cenario_sprites.objeto_voador[3] == 1 && dispositivo >= 1366)
-            animaLuzesGuia(1);
-        
-        animaEstrelas();
-    }else{ // Dia
-        Cenario_sprites.astro[2] = 0;
-        libera_transitador = 0;
-        Cenario_sprites.opacidade_noite = 0;
+        if (typeof tLuzN == "undefined" && Cenario_sprites.objeto_voador[3] == 1 && dispositivo >= 1366)
+            animaLuzesGuia(1)
 
-        if(typeof tEst != "undefined")
+        animaEstrelas()
+    } else { // Dia
+        Cenario_sprites.astro[2] = 0
+        libera_transitador = 0
+        Cenario_sprites.opacidade_noite = 0
+
+        if (typeof tEst != "undefined")
             clearTimeout(tEst)
     }
 
-    animaLuzesGuia(0);
+    animaLuzesGuia(0)
 }
 
-function iniciaAnimacao(){
-    animaMoeda();
+function iniciaAnimacao() {
+    animaMoeda()
 }
 
-function voltaAnimacao(){
-    if(jogo.qualidadeGrafica != 0 && dispositivo >= 1366){
-        animaBandeira();
-        animaRoda();
-        animaFogo();
+function voltaAnimacao() {
+    if (jogo.qualidadeGrafica != 0 && dispositivo >= 1366) {
+        animaBandeira()
+        animaRoda()
+        animaFogo()
     }
 }
 
-function animaMoeda(){
-    if(jogo.qualidadeGrafica != 0 && dispositivo >= 1366){
+function animaMoeda() {
+    if (jogo.qualidadeGrafica != 0 && dispositivo >= 1366) {
         tID = setTimeout(() => {
 
-            sprites = [0, 912, 798, 684, 570, 456, 342, 228, 114];
-            posicao = ajusta_posicao_sprites(0, sprites);
+            sprites = [0, 912, 798, 684, 570, 456, 342, 228, 114]
+            posicao = ajusta_posicao_sprites(0, sprites)
 
-            document.getElementById("moeda_img").style.backgroundPosition = posicao +'px 0px';
-            
-            if(posicao == 0){
+            document.getElementById("moeda_img").style.backgroundPosition = `${posicao}px 0px`
+
+            if (posicao == 0) {
                 setTimeout(() => {
-                    animaMoeda();
-                }, 1000);
-            }else
-                animaMoeda();
-        }, 100);
+                    animaMoeda()
+                }, 1000)
+            } else
+                animaMoeda()
+        }, 100)
     }
 }
 
-function animaBandeira(){
+function animaBandeira() {
     tBr = setTimeout(() => {
-        
-        sprites = [0, 51, 34, 17];
-        ajusta_posicao_sprites(1, sprites);
 
-        if(jogo.qualidadeGrafica != 0)
-            animaBandeira();
-    }, 100);
+        sprites = [0, 51, 34, 17]
+        ajusta_posicao_sprites(1, sprites)
+
+        if (jogo.qualidadeGrafica != 0)
+            animaBandeira()
+    }, 100)
 }
 
-function animaFogo(){
+function animaFogo() {
     tFg = setTimeout(() => {
-        
-        sprites = [0, 31];
-        ajusta_posicao_sprites(2, sprites);
 
-        if(jogo.qualidadeGrafica != 0)
-            animaFogo();
-    }, 100);
+        sprites = [0, 31]
+        ajusta_posicao_sprites(2, sprites)
+
+        if (jogo.qualidadeGrafica != 0)
+            animaFogo()
+    }, 100)
 }
 
-function animaRoda(){
+function animaRoda() {
     tRd = setTimeout(() => {
-        
-        sprites = [0, 61, 122];
-        ajusta_posicao_sprites(3, sprites);
 
-        if(jogo.qualidadeGrafica != 0)
-            animaRoda();
-    }, 50);
+        sprites = [0, 61, 122]
+        ajusta_posicao_sprites(3, sprites)
+
+        if (jogo.qualidadeGrafica != 0)
+            animaRoda()
+    }, 50)
 }
 
-function AnimaModFlutuando(){
+function AnimaModFlutuando() {
     tMf = setTimeout(() => {
 
-        sprites = [180, 120, 60, 0];
-        ajusta_posicao_sprites(4, sprites);
-    
-        AnimaModFlutuando();
-    }, 100);
+        sprites = [180, 120, 60, 0]
+        ajusta_posicao_sprites(4, sprites)
+
+        AnimaModFlutuando()
+    }, 100)
 }
 
-function enferruja(){
+function enferruja() {
     tAco = setTimeout(() => {
 
-        sprites = [47, 94, 141, 188, 235, 282];
-        ajusta_posicao_sprites(5, sprites);
+        sprites = [47, 94, 141, 188, 235, 282]
+        ajusta_posicao_sprites(5, sprites)
 
-        if(anim_indices[5] != 5)
-            enferruja();
-    }, 80);
+        if (anim_indices[5] != 5)
+            enferruja()
+    }, 80)
 }
 
-function limpa_ferrugem(){
+function limpa_ferrugem() {
     tAco = setTimeout(() => {
 
-        sprites = [282, 235, 188, 141, 94, 47, 329];
-        ajusta_posicao_sprites(5, sprites);
-        
-        if(anim_indices[5] != 6)
-            limpa_ferrugem();
-    }, 80);
+        sprites = [282, 235, 188, 141, 94, 47, 329]
+        ajusta_posicao_sprites(5, sprites)
+
+        if (anim_indices[5] != 6)
+            limpa_ferrugem()
+    }, 80)
 }
 
-function animaEstrelas(){
-    let posicoes = [0, 568];
+function animaEstrelas() {
+    let posicoes = [0, 568]
 
     tEst = setTimeout(() => {
-        let indice = Math.round((posicoes.length - 1) * Math.random());
-        spriteMascara_estrelas.y = posicoes[indice];
+        let indice = Math.round((posicoes.length - 1) * Math.random())
+        spriteMascara_estrelas.y = posicoes[indice]
 
-        animaEstrelas();
-    }, 1000);
+        animaEstrelas()
+    }, 1000)
 }
 
-function animaLuzesGuia(caso){
-    if(jogo.qualidadeGrafica != 0 && dispositivo >= 1366){
-        if(caso){ // Verifica se é uma requisição para ativar ou desligar a animação
+function animaLuzesGuia(caso) {
+    if (jogo.qualidadeGrafica != 0 && dispositivo >= 1366) {
+        if (caso) { // Verifica se é uma requisição para ativar ou desligar a animação
             tLuzN = setInterval(() => {
-                if(anim_luzes_naveg < 164){
-                    anim_luzes_naveg += 82;
-                    spriteLuzes_navegacao.y += 82;
-                }else{
-                    anim_luzes_naveg = 0;
-                    spriteLuzes_navegacao.y = 0;
+                if (anim_luzes_naveg < 164) {
+                    anim_luzes_naveg += 82
+                    spriteLuzes_navegacao.y += 82
+                } else {
+                    anim_luzes_naveg = 0
+                    spriteLuzes_navegacao.y = 0
                 }
-            }, 500);
-        }else{
-            anim_luzes_naveg = 0;
+            }, 500)
+        } else {
+            anim_luzes_naveg = 0
 
-            spriteLuzes_navegacao.y = 246;
+            spriteLuzes_navegacao.y = 246
 
-            if(typeof tLuzN != "undefined")
-                clearInterval(tLuzN);
+            if (typeof tLuzN != "undefined")
+                clearInterval(tLuzN)
         }
-        
-    }else
-        spriteLuzes_navegacao.y = 246;
+
+    } else
+        spriteLuzes_navegacao.y = 246
 }
 
-function ajusta_posicao_sprites(elemento, array_sprites){
+function ajusta_posicao_sprites(elemento, array_sprites) {
 
-    lista_sprites = ["/moeda/", spriteAdereco_bandeira, spriteAdereco_fogo, spriteAdereco_roda, spriteAdereco_combustao, spriteAdereco_aco];
-    indice = anim_indices[elemento];
+    lista_sprites = ["/moeda/", spriteAdereco_bandeira, spriteAdereco_fogo, spriteAdereco_roda, spriteAdereco_combustao, spriteAdereco_aco]
+    indice = anim_indices[elemento]
 
-    if(anim_indices[elemento] < array_sprites.length - 1)
-        indice++;
+    if (anim_indices[elemento] < array_sprites.length - 1)
+        indice++
     else
-        indice = 0;
+        indice = 0
 
     // Salva o valor atualizado
-    anim_indices[elemento] = indice;
-    elemento_final = lista_sprites[elemento];
+    anim_indices[elemento] = indice
+    elemento_final = lista_sprites[elemento]
 
-    elemento_final.x = array_sprites[indice];
+    elemento_final.x = array_sprites[indice]
 
-    if(elemento == 0)
-        return array_sprites[indice];
+    if (elemento == 0)
+        return array_sprites[indice]
 }
 
-function verifica_animacoes(condicao){
+function verifica_animacoes(condicao) {
 
-    if(typeof tBr != "undefined")
-        clearTimeout(tBr);
+    if (typeof tBr != "undefined")
+        clearTimeout(tBr)
 
-    if(typeof tFg != "undefined")
-        clearTimeout(tFg);
+    if (typeof tFg != "undefined")
+        clearTimeout(tFg)
 
-    if(typeof tRd != "undefined")
-        clearTimeout(tRd);
+    if (typeof tRd != "undefined")
+        clearTimeout(tRd)
 
-    if(typeof tLuzN != "undefined")
-        clearInterval(tLuzN);
+    if (typeof tLuzN != "undefined")
+        clearInterval(tLuzN)
 
-    if(condicao && dispositivo >= 1366)
-        voltaAnimacao();
+    if (condicao && dispositivo >= 1366)
+        voltaAnimacao()
 }
 
 function showtext(el, text, local) {
 
-    let typer;
+    let typer
 
-    if(typeof typer != "interval"){
-        clearInterval(typer);
+    if (typeof typer != "interval") {
+        clearInterval(typer)
 
-        if(local == 0)
-            limpa = document.getElementById("texto_historia");
+        if (local == 0)
+            limpa = document.getElementById("texto_historia")
         else
-            limpa = document.getElementById("frase_tuto_em_game");
+            limpa = document.getElementById("frase_tuto_em_game")
 
-        limpa.innerHTML = "";
+        limpa.innerHTML = ""
     }
 
-    if(local == 1){
-        tuto = document.getElementsByClassName("avancar_tuto");
-        tuto[0].style.display = "none";
+    if (local == 1) {
+        tuto = document.getElementsByClassName("avancar_tuto")
+        tuto[0].style.display = "none"
     }
 
-    let char = text.split("").reverse();
-    
+    let char = text.split("").reverse()
+
     typer = setInterval(() => {
-    
-        if(!char.length){
-            if(local == 0)
-                historia(null, 1);
-            else
-                executa_tutorial(1, null);
 
-            return clearInterval(typer);
+        if (!char.length) {
+            if (local == 0)
+                historia(null, 1)
+            else
+                executa_tutorial(1, null)
+
+            return clearInterval(typer)
         }
 
-        let next = char.pop();
-        
-        el.innerHTML += next;
-    }, 50);
+        let next = char.pop()
+
+        el.innerHTML += next
+    }, 50)
 }

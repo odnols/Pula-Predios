@@ -1,17 +1,24 @@
-body{
-    -webkit-user-select: none; /* Safari */        
-    -moz-user-select: none; /* Firefox */
-    -ms-user-select: none; /* IE10+/Edge */
-    user-select: none; /* Standard */
+body {
+    -webkit-user-select: none;
+    /* Safari */
+    -moz-user-select: none;
+    /* Firefox */
+    -ms-user-select: none;
+    /* IE10+/Edge */
+    user-select: none;
+    /* Standard */
     overflow-x: hidden;
     overflow-y: hidden;
-    touch-action: manipulation; /* Desabilita o zoom com duplo clique */
-}   
-hr{
+    touch-action: manipulation;
+    /* Desabilita o zoom com duplo clique */
+}
+
+hr {
     height: 5px;
     background-color: white;
 }
-canvas{
+
+canvas {
     box-shadow: 0px 0px 15px black;
     position: absolute;
     top: 0px;
@@ -20,10 +27,12 @@ canvas{
     right: 0px;
     margin: auto;
 }
-.sprite_noite{
+
+.sprite_noite {
     display: none;
 }
-#botoes_acessibilidade{
+
+#botoes_acessibilidade {
     display: none;
     font-family: "Minecraftia";
     opacity: .5;
@@ -33,23 +42,27 @@ canvas{
     width: 220px;
     position: fixed;
 }
-.button_mod{
+
+.button_mod {
     float: right;
     width: 100px;
     height: 100px;
 }
-.button_pulo{
+
+.button_pulo {
     float: left;
     width: 100px;
     height: 100px;
 }
-#filtro{
+
+#filtro {
     z-index: 3;
     width: 100%;
     height: 100%;
-    position: fixed;    
+    position: fixed;
 }
-#filtro2{
+
+#filtro2 {
     z-index: 3;
     font-family: "Minecraftia";
     animation: efeito_morte 1s;
@@ -60,16 +73,19 @@ canvas{
     display: none;
     text-shadow: 2px 2px 3px rgba(0, 0, 0, .7);
 }
-#estatisticas_morte{
+
+#estatisticas_morte {
     animation: sobe_estats 1s;
     padding-top: 8%;
     color: white;
     width: 100%;
 }
-#fimdejogo{
+
+#fimdejogo {
     font-size: 50px;
 }
-._estatistic_dead{
+
+._estatistic_dead {
     z-index: 5;
     float: left;
     position: absolute;
@@ -79,7 +95,8 @@ canvas{
     font-family: Minecraftia;
     font-size: 25px;
 }
-#stats_dead{
+
+#stats_dead {
     overflow-y: scroll;
     box-shadow: inset 0px 0px 10px black;
     width: 400px;
@@ -88,7 +105,8 @@ canvas{
     right: 15%;
     position: absolute;
 }
-#stats_dead2{
+
+#stats_dead2 {
     box-shadow: inset 0px 0px 10px black;
     width: 400px;
     height: 400px;
@@ -96,10 +114,11 @@ canvas{
     left: 15%;
     position: absolute;
 }
-#stats_{
+
+#stats_ {
     box-shadow: inset 0px 0px 10px black;
     background-color: rgba(0, 0, 0, .5);
-    background: url("../Imagens/Fundo/Update.png");
+    background: url("../source/images/Fundo/Update.png");
     text-align: center;
     width: 450px;
     height: 70%;
@@ -107,9 +126,10 @@ canvas{
     position: absolute;
     overflow-y: scroll;
 }
-#stats_2{
+
+#stats_2 {
     box-shadow: inset 0px 0px 10px black;
-    background: url("../Imagens/Fundo/Update.png");
+    background: url("../source/images/Fundo/Update.png");
     text-align: center;
     width: 450px;
     height: 70%;
@@ -117,47 +137,58 @@ canvas{
     position: absolute;
     overflow-y: auto;
 }
-@font-face{
+
+@font-face {
     font-family: Minecraft;
-    src: url('../Fontes/Minecraft.ttf');
+    src: url('../source/fonts/Minecraft.ttf');
 }
-@font-face{
+
+@font-face {
     font-family: Minecraftia;
-    src: url('../Fontes/Minecraftia.ttf');
+    src: url('../source/fonts/Minecraftia.ttf');
 }
-a#log_click{
+
+a#log_click {
     color: yellow;
     text-decoration: none;
     transition: color 1s;
 }
-a#log_click:hover{
+
+a#log_click:hover {
     color: grey;
 }
-a.estat:hover{
+
+a.estat:hover {
     color: yellow;
     text-decoration: none;
 }
-a.estat{
+
+a.estat {
     color: white;
 }
-.botao{
+
+.botao {
     position: absolute;
     right: 10%;
     top: 4%;
 }
-.botao:hover{
+
+.botao:hover {
     background-color: grey;
 }
-.botao_a{
+
+.botao_a {
     z-index: 5;
     color: black;
     height: auto;
     transition: .5s transform;
 }
-.botao_a:hover{
+
+.botao_a:hover {
     transform: scale(1.1);
 }
-#menu_inicial{
+
+#menu_inicial {
     z-index: 4;
     position: fixed;
     font-family: "Minecraftia";
@@ -168,7 +199,8 @@ a.estat{
     text-shadow: 2px 2px 3px rgba(0, 0, 0, .7);
     height: 40%;
 }
-.iniciar_{
+
+.iniciar_ {
     padding: 15px;
     z-index: 2;
     height: 50px;
@@ -176,7 +208,8 @@ a.estat{
     animation: iniciar 3s infinite;
     overflow: hidden;
 }
-#opcoes_{
+
+#opcoes_ {
     overflow: hidden;
     padding-top: 20px;
     z-index: 3;
@@ -185,47 +218,56 @@ a.estat{
     width: 200px;
     height: 50px;
 }
-#opcoes_:hover{
+
+#opcoes_:hover {
     color: yellow;
     transform: scale(1.2);
 }
-#log_{
+
+#log_ {
     position: fixed;
     bottom: 10px;
     right: 3%;
     display: none;
     transition: .5s transform;
 }
-#log_:hover{
+
+#log_:hover {
     color: yellow;
     transform: scale(1.2);
 }
-button{
+
+button {
     padding-top: 15px;
     color: black;
     transition: .5s transform;
 }
-#opcoes_button{
+
+#opcoes_button {
     position: absolute;
     top: 150px;
     left: 3%;
     transition: .5s transform;
 }
-#opcoes_button:hover{
+
+#opcoes_button:hover {
     color: yellow;
     transform: scale(1.2);
 }
-.reload_button{
+
+.reload_button {
     position: fixed;
     bottom: 10px;
     left: 3%;
     transition: 1s transform;
 }
-.reload_button:hover{
+
+.reload_button:hover {
     color: yellow;
     transform: scale(1.2);
 }
-#moedas{
+
+#moedas {
     z-index: 7;
     right: 15%;
     top: 5%;
@@ -233,17 +275,19 @@ button{
     width: auto;
     height: 44px;
 }
-#moeda_img{
+
+#moeda_img {
     width: 115px;
     height: 115px;
     left: 20%;
     top: -100%;
     float: right;
-    background: url('../Imagens/Icones/moeda.png') 0px 0px;
+    background: url('../source/images/Icones/moeda.png') 0px 0px;
     transform: scale(.3);
     position: relative;
 }
-#notifica_moeda{
+
+#notifica_moeda {
     top: 6%;
     right: 50%;
     position: absolute;
@@ -254,7 +298,8 @@ button{
     font-family: "Minecraftia";
     animation: moedas .5s;
 }
-#puxador_loja{
+
+#puxador_loja {
     font-family: "Minecraftia";
     z-index: 5;
     top: 50%;
@@ -267,17 +312,20 @@ button{
     background-color: rgba(0, 0, 0, .6);
     transition: width .5s, box-shadow .5s;
 }
-#puxador_loja:hover{
+
+#puxador_loja:hover {
     width: 60px;
     box-shadow: 0px 0px 15px white;
 }
-#icone_puxador_loja{
+
+#icone_puxador_loja {
     position: absolute;
     padding-top: 70px;
     left: 6px;
     width: 30px;
 }
-.fechador_loja{
+
+.fechador_loja {
     padding: 15px;
     z-index: 1;
     top: 24%;
@@ -290,11 +338,13 @@ button{
     background-color: rgba(0, 0, 0, .6);
     transition: width .5s, box-shadow .5s;
 }
-.fechador_loja:hover{
+
+.fechador_loja:hover {
     width: 200px;
-    box-shadow: 0px 0px 15px white; 
+    box-shadow: 0px 0px 15px white;
 }
-#loja{
+
+#loja {
     display: none;
     animation: abre_loja .5s;
     font-family: "Minecraftia";
@@ -306,39 +356,45 @@ button{
     background-color: grey;
     text-shadow: 2px 2px 1px black;
 }
-.titu_loja{
+
+.titu_loja {
     left: 3%;
     position: absolute;
     text-shadow: 1px 1px 2px black;
     animation: aparece_texto 1s;
     color: white;
 }
-#quadro_novidades_loja{
+
+#quadro_novidades_loja {
     width: 95%;
     float: right;
     height: 120px;
-    background: url("../Imagens/Fundo/Quadrantes.png");
+    background: url("../source/images/Fundo/Quadrantes.png");
     animation: move_img_loja 30s infinite;
     overflow: hidden;
 }
-#text_novidades_loja{
+
+#text_novidades_loja {
     padding-top: 60px;
     padding-left: 5%;
     font-size: 25px;
 }
-#colore_loja{
+
+#colore_loja {
     box-shadow: inset 0px 0px 25px black;
     animation: muda_cor_loja 30s infinite;
     width: 120%;
     height: 100%;
 }
-#sprite_jogador_loja{
+
+#sprite_jogador_loja {
     transform: rotateZ(-10deg);
     position: absolute;
     -webkit-filter: drop-shadow(0px 5px 15px black);
     filter: drop-shadow(0px 5px 15px black);
 }
-#icon_loja_novidades{
+
+#icon_loja_novidades {
     width: 100px;
     transform: rotateZ(15deg);
     position: absolute;
@@ -346,12 +402,34 @@ button{
     top: 50px;
 }
 
-.item_grid_loja_1 { grid-area: tema; background-image: url("../Imagens/Loja/Temas/1900s.jpg") !important; background-size: cover !important; }
-.item_grid_loja_2 { grid-area: skin; overflow: hidden; background-image: url("../Imagens/Loja/skins.png") !important; animation: background_skins 10s infinite; background-size: cover !important; }
-.item_grid_loja_3 { grid-area: mod; background-image: url("../Imagens/Loja/mods.gif") !important; background-position: 0px 100px; background-size: cover !important; }
-.item_grid_loja_4 { grid-area: bonus; background-image: url("../Imagens/Loja/bonus.gif") !important;  background-size: cover !important; }
+.item_grid_loja_1 {
+    grid-area: tema;
+    background-image: url("../source/images/Loja/Temas/1900s.jpg") !important;
+    background-size: cover !important;
+}
 
-#quadros_loja_grid{
+.item_grid_loja_2 {
+    grid-area: skin;
+    overflow: hidden;
+    background-image: url("../source/images/Loja/skins.png") !important;
+    animation: background_skins 10s infinite;
+    background-size: cover !important;
+}
+
+.item_grid_loja_3 {
+    grid-area: mod;
+    background-image: url("../source/images/Loja/mods.gif") !important;
+    background-position: 0px 100px;
+    background-size: cover !important;
+}
+
+.item_grid_loja_4 {
+    grid-area: bonus;
+    background-image: url("../source/images/Loja/bonus.gif") !important;
+    background-size: cover !important;
+}
+
+#quadros_loja_grid {
     position: absolute;
     left: 5%;
     top: 32%;
@@ -365,55 +443,62 @@ button{
     grid-column-gap: 20px;
     padding: 10px;
 }
-#quadros_loja_grid > div {
+
+#quadros_loja_grid>div {
     text-align: center;
     padding: 20px 0;
     color: white;
     font-size: 30px;
     overflow: hidden;
 }
-.quadros_loja{
-    background: url("../Imagens/Fundo/Quadrantes.png");
+
+.quadros_loja {
+    background: url("../source/images/Fundo/Quadrantes.png");
     background-color: rgb(3, 73, 64);
     box-shadow: inset 0px 0px 15px black;
     transition: background-color .5s, box-shadow .2s;
 }
-.quadros_loja:hover{
+
+.quadros_loja:hover {
     background-color: rgb(9, 126, 110);
     box-shadow: inset 0px 0px 15px white;
 }
-.text_quadro_loja{
+
+.text_quadro_loja {
     box-sizing: border-box;
     padding: 7px;
     float: right;
     width: 200px;
-    height: 35px;  
+    height: 35px;
     text-align: center;
     text-shadow: 1px 1px 5px black;
     background-color: rgba(0, 0, 0, .7);
     box-shadow: 0px 0px 15px black;
 }
-.tema_caixa{
+
+.tema_caixa {
     z-index: 2;
     box-shadow: 0px 0px 15px black;
     color: white;
     height: 200px;
     width: 500px;
     transition: box-shadow .3s, transform .5s;
-    background-image: url("../Imagens/Fundo/Quadrantes.png");
+    background-image: url("../source/images/Fundo/Quadrantes.png");
     overflow: hidden;
 }
-.tema_caixa_ativo{
+
+.tema_caixa_ativo {
     z-index: 2;
     color: white;
     height: 200px;
     width: 500px;
     transition: box-shadow .3s, transform .5s;
-    background-image: url("../Imagens/Fundo/Quadrantes.png");
+    background-image: url("../source/images/Fundo/Quadrantes.png");
     overflow: hidden;
     animation: tema_caixa_ativo 10s infinite;
 }
-.info_tema{
+
+.info_tema {
     font-size: 25px;
     z-index: 0;
     overflow: hidden;
@@ -425,46 +510,51 @@ button{
     width: 250px;
     text-align: center;
 }
-.preco_tema{
+
+.preco_tema {
     -webkit-filter: drop-shadow(0px 5px 10px black);
     filter: drop-shadow(0px 5px 10px black);
     opacity: .8;
     font-size: 40px;
     color: greenyellow;
 }
-.img_preview_tema{
+
+.img_preview_tema {
     float: left;
     width: 1098px;
     height: 309px;
 }
-#quadros_mods{
+
+#quadros_mods {
     position: static;
     margin: 4%;
     float: left;
     bottom: 50px;
     width: 350px;
     height: 350px;
-    background: url("../Imagens/Fundo/Quadrantes.png");
+    background: url("../source/images/Fundo/Quadrantes.png");
     box-shadow: inset 0px 0px 15px black;
     color: white;
     font-size: 80px;
     transition: transform .5s box-shadow .2s;
     overflow: hidden;
 }
-#sessao_loja{
+
+#sessao_loja {
     display: none;
     animation: puxa_sessao_loja .8s;
     z-index: 0;
     padding-top: 50px;
     text-align: center;
-    background: rgb(128,128,128);
-    background: radial-gradient(circle, rgba(128,128,128,1) 0%, rgba(89,89,89,1) 100%);
+    background: rgb(128, 128, 128);
+    background: radial-gradient(circle, rgba(128, 128, 128, 1) 0%, rgba(89, 89, 89, 1) 100%);
     width: 100%;
     height: 100%;
     position: fixed;
     top: 0px;
 }
-#filtro_alerta_loja{
+
+#filtro_alerta_loja {
     width: 100%;
     height: 100%;
     color: rgb(0, 255, 255);
@@ -474,7 +564,8 @@ button{
     display: none;
     animation: aparece_texto .5s;
 }
-#quadro_confirma_exclusao{
+
+#quadro_confirma_exclusao {
     text-align: center;
     color: white;
     text-shadow: 1px 1px 2px grey;
@@ -490,9 +581,10 @@ button{
     position: fixed;
     width: 40%;
     height: 250px;
-    background-image: url("../Imagens/Fundo/Geometria.png");
+    background-image: url("../source/images/Fundo/Geometria.png");
 }
-#quadro_confirma_compra{
+
+#quadro_confirma_compra {
     display: none;
     left: 35%;
     top: 40%;
@@ -503,15 +595,18 @@ button{
     position: fixed;
     width: 30%;
     height: 250px;
-    background-image: url("../Imagens/Fundo/Geometria.png");
+    background-image: url("../source/images/Fundo/Geometria.png");
 }
-.cancela_compra{
+
+.cancela_compra {
     background-color: lightcoral;
 }
-.confirmar_compra{
+
+.confirmar_compra {
     background-color: greenyellow;
 }
-#transitador_sessao{
+
+#transitador_sessao {
     display: none;
     z-index: 8;
     right: 0px;
@@ -519,13 +614,15 @@ button{
     width: 100%;
     height: 100%;
 }
-#cabecalho_categoria_loja{
+
+#cabecalho_categoria_loja {
     text-align: center;
     z-index: 1;
     position: absolute;
     width: 100%;
 }
-.voltar_inicio_loja{
+
+.voltar_inicio_loja {
     z-index: 2;
     position: absolute;
     top: 4%;
@@ -541,13 +638,15 @@ button{
     height: 50px;
     transition: .2s transform, .1s background-color, .1s border, box-shadow .2s;
 }
-.voltar_inicio_loja:hover{
+
+.voltar_inicio_loja:hover {
     box-shadow: 2px 2px 10px black;
     background-color: rgb(185, 185, 185);
     border: solid 2px rgb(146, 146, 146);
     transform: scale(1.1);
 }
-#rodape_loja{
+
+#rodape_loja {
     font-family: "Minecraftia";
     z-index: 9;
     display: none;
@@ -562,11 +661,13 @@ button{
     background-color: rgba(0, 0, 0, .6);
     text-align: center;
 }
-#mensagem_teaser{
+
+#mensagem_teaser {
     display: none;
     animation: puxa_teaser .5s;
 }
-#quadro_vendas{
+
+#quadro_vendas {
     position: absolute;
     display: grid;
     max-width: 90%;
@@ -574,7 +675,8 @@ button{
     height: 65%;
     bottom: 0px;
 }
-#placeholder_loja{
+
+#placeholder_loja {
     position: absolute;
     width: 80%;
     left: 12%;
@@ -585,7 +687,8 @@ button{
     padding-top: 30px;
     padding-left: 10%;
 }
-.item_venda{
+
+.item_venda {
     padding: 10px;
     z-index: 2;
     box-shadow: 0px 0px 15px black;
@@ -594,14 +697,16 @@ button{
     width: 150px;
     transition: box-shadow .3s, transform .5s;
     background-color: midnightblue;
-    background-image: url("../Imagens/Fundo/Quadrantes.png");
+    background-image: url("../source/images/Fundo/Quadrantes.png");
 }
-.item_venda:hover{
+
+.item_venda:hover {
     box-shadow: 0px 0px 15px white;
     transform: scale(1.1);
     z-index: 3;
 }
-.preco_item{
+
+.preco_item {
     -webkit-filter: drop-shadow(0px 5px 10px black);
     filter: drop-shadow(0px 5px 10px black);
     opacity: .8;
@@ -611,7 +716,8 @@ button{
     position: absolute;
     width: 130px;
 }
-.item_comprado{
+
+.item_comprado {
     padding: 10px;
     z-index: 2;
     box-shadow: 0px 0px 15px black;
@@ -620,14 +726,16 @@ button{
     width: 150px;
     transition: box-shadow .3s, transform .5s;
     background-color: greenyellow;
-    background-image: url("../Imagens/Fundo/Quadrantes.png");
+    background-image: url("../source/images/Fundo/Quadrantes.png");
 }
-.item_comprado:hover{
+
+.item_comprado:hover {
     box-shadow: 0px 0px 15px greenyellow;
     transform: scale(1.1);
     z-index: 3;
 }
-.item_comprado_lendario{
+
+.item_comprado_lendario {
     padding: 10px;
     z-index: 2;
     color: white;
@@ -635,14 +743,16 @@ button{
     width: 150px;
     transition: transform .5s;
     background-color: greenyellow;
-    background-image: url("../Imagens/Fundo/Quadrantes.png");
+    background-image: url("../source/images/Fundo/Quadrantes.png");
     animation: item_lendario 3s infinite;
 }
-.item_comprado_lendario:hover{
+
+.item_comprado_lendario:hover {
     transform: scale(1.1);
     z-index: 3;
 }
-.item_equipado{
+
+.item_equipado {
     padding: 10px;
     z-index: 2;
     box-shadow: 0px 0px 15px black;
@@ -651,13 +761,15 @@ button{
     width: 150px;
     transition: box-shadow .3s;
     background-color: yellow;
-    background-image: url("../Imagens/Fundo/Quadrantes.png");
+    background-image: url("../source/images/Fundo/Quadrantes.png");
 }
-.item_equipado:hover{
+
+.item_equipado:hover {
     box-shadow: 0px 0px 15px yellow;
     z-index: 3;
 }
-#icones_aquisicoes{
+
+#icones_aquisicoes {
     z-index: 4;
     top: 20%;
     right: 5px;
@@ -665,17 +777,20 @@ button{
     padding: 5px;
     width: 100px;
 }
-.mod_principal{
+
+.mod_principal {
     background-color: yellow !important;
 }
-#mod_em_uso{
+
+#mod_em_uso {
     position: absolute;
     font-size: 10px;
     width: 80%;
     height: 80px;
     left: 10%;
 }
-#barra_mods_loja{
+
+#barra_mods_loja {
     font-size: 20px;
     position: absolute;
     bottom: 0px;
@@ -684,22 +799,25 @@ button{
     padding-top: 15px;
     background-color: red;
     box-shadow: inset 0px 0px 15px black;
-    background-image: url("../Imagens/Fundo/Quadrantes.png");
+    background-image: url("../source/images/Fundo/Quadrantes.png");
 }
-#mod_esquerda_principal{
+
+#mod_esquerda_principal {
     width: 35%;
     text-align: left;
     position: absolute;
     left: 20px;
 }
-#mod_direita_principal{
+
+#mod_direita_principal {
     width: 35%;
     top: 0px;
     text-align: left;
     position: absolute;
     right: 20px;
 }
-.icon_mod_loja{
+
+.icon_mod_loja {
     width: 25px;
     background-color: yellow;
     box-shadow: 0px 0px 10px black;
@@ -707,7 +825,8 @@ button{
     float: right;
     position: absolute;
 }
-#restaura_modificador{
+
+#restaura_modificador {
     border: solid 2px rgb(10, 100, 85);
     text-shadow: 2px 2px 3px rgba(0, 0, 0);
     text-align: center;
@@ -715,29 +834,34 @@ button{
     height: 35px;
     transition: .2s transform, .1s background-color, .1s border;
 }
-#restaura_modificador:hover{
+
+#restaura_modificador:hover {
     border: solid 2px rgb(3, 73, 64);
     transform: scale(1.1);
     background-color: rgb(6, 114, 100);
 }
-#icon_modificadores{
+
+#icon_modificadores {
     width: 39px;
     float: right;
     padding: 2px;
 }
-#icon_bonus{
+
+#icon_bonus {
     width: 39px;
     float: left;
     padding: 2px;
 }
-.mods_icon{
+
+.mods_icon {
     width: 35px;
     display: none;
     box-shadow: 0px 0px 10px black;
     background-color: grey;
     border: solid 2px black;
 }
-.bonus_icon{
+
+.bonus_icon {
     width: 35px;
     display: none;
     padding-top: 5px;
@@ -747,7 +871,8 @@ button{
     border: solid 2px;
     border-color: green rgb(153, 153, 15) green rgb(153, 153, 15);
 }
-.mod_venda{
+
+.mod_venda {
     padding: 10px;
     z-index: 2;
     box-shadow: 0px 0px 15px black;
@@ -756,14 +881,16 @@ button{
     width: 150px;
     transition: box-shadow .3s, transform .5s;
     background-color: midnightblue;
-    background-image: url("../Imagens/Fundo/Quadrantes.png");
+    background-image: url("../source/images/Fundo/Quadrantes.png");
 }
-.mod_venda:hover{
+
+.mod_venda:hover {
     box-shadow: 0px 0px 15px white;
     transform: scale(1.1);
     z-index: 3;
 }
-.mod_principal_venda{
+
+.mod_principal_venda {
     padding: 10px;
     z-index: 2;
     box-shadow: 0px 0px 15px black;
@@ -772,17 +899,20 @@ button{
     width: 150px;
     transition: box-shadow .3s, transform .5s;
     background-color: red;
-    background-image: url("../Imagens/Fundo/Quadrantes.png");
+    background-image: url("../source/images/Fundo/Quadrantes.png");
 }
-.mod_principal_venda:hover{
+
+.mod_principal_venda:hover {
     box-shadow: 0px 0px 15px white;
     transform: scale(1.1);
     z-index: 3;
 }
-.img_mod_venda{
+
+.img_mod_venda {
     width: 100px;
 }
-.mod_equipado{
+
+.mod_equipado {
     padding: 10px;
     z-index: 2;
     box-shadow: 0px 0px 15px black;
@@ -791,15 +921,18 @@ button{
     width: 150px;
     transition: box-shadow .3s, transform .5s;
     background-color: yellow;
-    background-image: url("../Imagens/Fundo/Quadrantes.png");
+    background-image: url("../source/images/Fundo/Quadrantes.png");
 }
-#item_1{
+
+#item_1 {
     display: none;
 }
-#item_2{
+
+#item_2 {
     display: none;
 }
-#notificacoes{
+
+#notificacoes {
     position: fixed;
     width: 100%;
     left: 0px;
@@ -814,7 +947,8 @@ button{
     display: none;
     animation: desliza_letras 2s;
 }
-#barra_topo{
+
+#barra_topo {
     position: fixed;
     color: white;
     font-family: "Minecraftia";
@@ -826,32 +960,37 @@ button{
     width: 100%;
     animation: move_sombra .5s;
 }
-#pontuacao{
+
+#pontuacao {
     position: absolute;
     top: 60%;
     left: 0%;
     font-family: "Minecraft";
     font-size: 50px;
 }
-#mod{
+
+#mod {
     min-width: 140px;
     top: 1%;
     position: absolute;
     left: 12%;
 }
-h3#timer_mod{
+
+h3#timer_mod {
     font-family: "Minecraft";
     font-size: 50px;
     top: 60%;
     position: absolute;
 }
-h3#estado_mod{
+
+h3#estado_mod {
     top: 160%;
     font-size: 18px;
     position: absolute;
     left: 40%;
 }
-h3#carregando{
+
+h3#carregando {
     color: Cyan;
     font-size: 15px;
     position: absolute;
@@ -859,39 +998,45 @@ h3#carregando{
     top: 90%;
     display: none;
 }
-h3#qtdMods{
+
+h3#qtdMods {
     color: greenyellow;
     font-size: 15px;
     position: absolute;
     left: 40%;
     top: 90%;
 }
-#velocidade{
+
+#velocidade {
     top: 1%;
     position: absolute;
     left: 24%;
     min-width: 132px;
 }
-h3#velocity{
+
+h3#velocity {
     font-family: "Minecraft";
     font-size: 50px;
     top: 60%;
     position: absolute;
 }
-h3#metros_s{
+
+h3#metros_s {
     font-size: 30px;
     position: absolute;
     left: 48%;
     top: 135%;
 }
-#temporizador{
+
+#temporizador {
     display: none;
     position: absolute;
     top: 1%;
     left: 38%;
     width: 100%;
 }
-h3#cronometro{
+
+h3#cronometro {
     position: absolute;
     top: 60%;
     left: 0%;
@@ -899,13 +1044,15 @@ h3#cronometro{
     font-family: "Minecraft";
     font-size: 50px;
 }
-h3#tempo_cro{
+
+h3#tempo_cro {
     position: absolute;
     left: 4.5%;
     font-size: 18px;
     top: 160%;
 }
-#barra_loading{
+
+#barra_loading {
     width: 75%;
     left: 50%;
     margin-left: -37.5%;
@@ -918,11 +1065,13 @@ h3#tempo_cro{
     display: none;
     overflow: hidden;
 }
-#completa_timer{
+
+#completa_timer {
     z-index: 5;
     height: 100%;
 }
-#versao{
+
+#versao {
     position: absolute;
     right: 5%;
     top: 50%;
@@ -930,23 +1079,27 @@ h3#tempo_cro{
     width: 200px;
     height: 20px;
 }
-h3#versao_texto{
+
+h3#versao_texto {
     position: absolute;
     left: 0%;
     font-size: 28px;
 }
-.pulos_trad{
+
+.pulos_trad {
     display: none;
     position: absolute;
     font-size: 30px;
 }
-h3#qtdPulos{
+
+h3#qtdPulos {
     display: none;
     position: absolute;
     right: 20%;
     font-size: 35px;
 }
-#conquistas_mapa{
+
+#conquistas_mapa {
     text-align: center;
     z-index: 5;
     display: none;
@@ -960,14 +1113,15 @@ h3#qtdPulos{
     font-family: Minecraftia;
     font-size: 25px;
 }
-#lista_conquistas{
+
+#lista_conquistas {
     display: grid;
     border: solid 2px black;
     box-shadow: inset 0px 0px 15px black;
     width: 90%;
     height: 70%;
     background-color: rgba(255, 255, 255, .1);
-    background: url("../Imagens/Fundo/Geometria.png");
+    background: url("../source/images/Fundo/Geometria.png");
     bottom: 8%;
     padding: 5%;
     left: 5%;
@@ -975,19 +1129,23 @@ h3#qtdPulos{
     overflow-y: auto;
     overflow-x: hidden;
 }
-#placeholder_conquista{
+
+#placeholder_conquista {
     grid-template-columns: auto auto auto auto auto auto auto auto auto;
     display: grid;
     border: border-box;
     grid-gap: 25px;
     padding: 10px;
 }
-.img_conquista_obtida, .img_conquista{
+
+.img_conquista_obtida,
+.img_conquista {
     transition: width .5s, height .5s;
     image-rendering: auto;
     image-rendering: pixelated;
 }
-.img_conquista_obtida{
+
+.img_conquista_obtida {
     padding: 0px;
     width: 54px;
     height: 54px;
@@ -995,7 +1153,8 @@ h3#qtdPulos{
     box-shadow: 0px 0px 5px yellow;
     background-color: grey;
 }
-.img_conquista{
+
+.img_conquista {
     filter: grayscale(1);
     padding: 0px;
     border: solid 2px black;
@@ -1003,11 +1162,14 @@ h3#qtdPulos{
     width: 54px;
     height: 54px;
 }
-.img_conquista:hover, .img_conquista_obtida:hover{
+
+.img_conquista:hover,
+.img_conquista_obtida:hover {
     width: 200px;
     height: 200px;
 }
-#tutorial{
+
+#tutorial {
     text-align: center;
     z-index: 5;
     display: none;
@@ -1021,7 +1183,8 @@ h3#qtdPulos{
     font-family: Minecraftia;
     font-size: 25px;
 }
-#tutoriais_1{
+
+#tutoriais_1 {
     overflow-y: scroll;
     width: 28%;
     height: 70%;
@@ -1030,34 +1193,39 @@ h3#qtdPulos{
     left: 5%;
     position: absolute;
 }
-#tutoriais_2{
+
+#tutoriais_2 {
     overflow-y: auto;
     width: 60%;
     height: 70%;
     background-color: rgba(0, 0, 0, .5);
     right: 5%;
     position: absolute;
-    background-image: url("../Imagens/Fundo/Mosaico.png");
+    background-image: url("../source/images/Fundo/Mosaico.png");
     box-shadow: inset 0px 0px 15px black;
 }
-.opcao_tutorial{
+
+.opcao_tutorial {
     float: left;
     padding-left: 20px;
     padding-top: 30px;
     color: white;
     text-decoration: none;
 }
-.opcao_tutorial:hover{
+
+.opcao_tutorial:hover {
     color: yellow;
 }
-.nome_tutorial{
+
+.nome_tutorial {
     float: left;
     padding-left: 30px;
     padding-top: 30px;
     color: white;
     text-decoration: none;
 }
-#controles{
+
+#controles {
     text-align: center;
     z-index: 5;
     display: none;
@@ -1071,7 +1239,8 @@ h3#qtdPulos{
     font-family: Minecraftia;
     font-size: 25px;
 }
-#controles_1{
+
+#controles_1 {
     overflow-y: scroll;
     width: 450px;
     height: 70%;
@@ -1082,7 +1251,8 @@ h3#qtdPulos{
     border-bottom-left-radius: 0px !important;
     padding: 20px;
 }
-#controles_2{
+
+#controles_2 {
     box-shadow: inset 0px 0px 15px black;
     background-color: rgba(0, 0, 0, .3);
     width: 450px;
@@ -1091,7 +1261,8 @@ h3#qtdPulos{
     position: absolute;
     padding: 20px;
 }
-.tecla{
+
+.tecla {
     float: left;
     color: black;
     border: solid 2px grey;
@@ -1102,11 +1273,13 @@ h3#qtdPulos{
     box-shadow: 2px 2px 5px black;
     transition: box-shadow .5s, transform .5s;
 }
-.tecla:hover{
+
+.tecla:hover {
     box-shadow: 0px 0px 0px black;
     transform: scale(.9);
 }
-.enter{
+
+.enter {
     float: left;
     color: black;
     height: 40px;
@@ -1115,7 +1288,8 @@ h3#qtdPulos{
     background-color: lightgray;
     transition: box-shadow .5s, transform .5s;
 }
-.enter2{
+
+.enter2 {
     top: 0px;
     float: right;
     color: black;
@@ -1125,31 +1299,38 @@ h3#qtdPulos{
     padding: 20px;
     box-shadow: 3px 3px 5px black;
 }
-.enter:hover{
+
+.enter:hover {
     box-shadow: 0px 0px 0px black;
     transform: scale(.9);
 }
-.espacador{
+
+.espacador {
     float: left;
     width: 20px;
 }
-.controle_text{
+
+.controle_text {
     padding-top: 50px;
     float: left;
 }
-#alerta_teclas{
+
+#alerta_teclas {
     position: absolute;
     bottom: 5px;
     left: 5%;
 }
-#filecontents{
+
+#filecontents {
     color: white;
 }
-.texto{
+
+.texto {
     padding-left: 5%;
     font-family: Minecraftia;
 }
-#repositorio{   
+
+#repositorio {
     color: white;
     width: 6%;
     left: 2px;
@@ -1158,10 +1339,12 @@ h3#qtdPulos{
     position: absolute;
     display: none;
 }
-canvas{
+
+canvas {
     z-index: 2;
 }
-#boas_vindas{
+
+#boas_vindas {
     display: none;
     z-index: 5;
     text-align: center;
@@ -1175,52 +1358,64 @@ canvas{
     font-family: Minecraftia;
     font-size: 25px;
 }
-#pag1{
+
+#pag1 {
     display: block;
 }
-#pag2{
+
+#pag2 {
     display: none;
 }
-#pag3{
+
+#pag3 {
     display: none;
 }
-#pag4{
+
+#pag4 {
     display: none;
 }
-#ibagem{
+
+#ibagem {
     width: 150px;
     height: 150px;
     box-shadow: 5px 5px 15px black;
 }
-#link{
+
+#link {
     color: yellow;
     transition: color 1s;
 }
-#link:hover{
+
+#link:hover {
     transform: scale(1.2);
     color: grey;
 }
-.ibagem_2{
+
+.ibagem_2 {
     width: 350px;
     height: 150px;
     transition: 1s transform;
     z-index: 6;
     box-shadow: 5px 5px 15px black;
 }
-#ibagem_3{
+
+#ibagem_3 {
     width: 350px;
     height: 100px;
     transition: 1s transform;
     z-index: 6;
     box-shadow: 5px 5px 15px black;
 }
-.ibagem_2:hover{
+
+.ibagem_2:hover {
     transform: scale(2.5);
 }
-#ibagem_3:hover{
+
+#ibagem_3:hover {
     transform: scale(1.2);
 }
-#estatisticas{
+
+#estatisticas {
     z-index: 5;
     display: none;
     position: absolute;
@@ -1233,7 +1428,8 @@ canvas{
     font-family: Minecraftia;
     font-size: 25px;
 }
-#problemas_redes_sociais{
+
+#problemas_redes_sociais {
     z-index: 5;
     display: none;
     position: absolute;
@@ -1246,7 +1442,8 @@ canvas{
     font-family: Minecraftia;
     font-size: 25px;
 }
-#suporte_jogo{
+
+#suporte_jogo {
     z-index: 5;
     display: none;
     position: absolute;
@@ -1259,7 +1456,8 @@ canvas{
     font-family: Minecraftia;
     font-size: 25px;
 }
-#configuracoes{
+
+#configuracoes {
     z-index: 5;
     display: none;
     position: absolute;
@@ -1272,28 +1470,34 @@ canvas{
     font-family: Minecraftia;
     font-size: 25px;
 }
-#config_sons{
+
+#config_sons {
     display: none;
 }
-#config_gerais{
+
+#config_gerais {
     width: 100%;
     float: left;
     display: none;
 }
-.itens_configs{
+
+.itens_configs {
     padding-left: 19%;
 }
-#config_idioma{
+
+#config_idioma {
     display: none;
 }
-#alinha_traducoes{
+
+#alinha_traducoes {
     width: 100%;
     position: absolute;
     left: 20%;
     width: 60%;
     padding-left: 14%;
 }
-.control_volume{
+
+.control_volume {
     position: absolute;
     right: 18%;
     width: 150px;
@@ -1302,7 +1506,8 @@ canvas{
     outline: none;
     border: 3px;
 }
-.control_volume::-webkit-slider-thumb{
+
+.control_volume::-webkit-slider-thumb {
     -webkit-appearance: none;
     width: 48px;
     height: 48px;
@@ -1310,10 +1515,12 @@ canvas{
     z-index: 3;
     position: relative;
 }
-#config_grafc{
+
+#config_grafc {
     display: none;
 }
-#opcoes{
+
+#opcoes {
     text-align: center;
     z-index: 5;
     display: none;
@@ -1327,62 +1534,77 @@ canvas{
     font-family: Minecraftia;
     font-size: 25px;
 }
-#button_animacoes_pc{
+
+#button_animacoes_pc {
     display: none;
 }
-.button_opcoes_block{
+
+.button_opcoes_block {
     background-color: grey;
 }
-.button_opcoes, .button_opcoes_block{
+
+.button_opcoes,
+.button_opcoes_block {
     width: 300px !important;
 }
-.button_opcoes:hover{
+
+.button_opcoes:hover {
     background-color: grey;
 }
-.button_opcoes_t{
+
+.button_opcoes_t {
     font-size: 28px;
     float: left;
     width: 250px !important;
 }
-.button_opcoes_t:hover{
+
+.button_opcoes_t:hover {
     background-color: grey;
 }
-#img_trad{
+
+#img_trad {
     width: 30px;
     margin-left: -5px;
     margin-top: -20px;
 }
-.button_trad{
+
+.button_trad {
     float: right;
     padding: 10px;
     width: 45px !important;
 }
-.button_trad:hover{
+
+.button_trad:hover {
     background-color: grey;
 }
-.opcoes_direita{
+
+.opcoes_direita {
     position: absolute;
     right: 5%;
     max-width: 350px;
     padding: 25px;
 }
-.opcoes_esquerda{
+
+.opcoes_esquerda {
     position: absolute;
     left: 5%;
     max-width: 350px;
     padding: 25px;
 }
-.opcoes_esquerda_2{
+
+.opcoes_esquerda_2 {
     position: absolute;
     left: 5%;
     max-width: 450px;
     padding: 25px;
 }
-#opcoes_esquerda_config{
+
+#opcoes_esquerda_config {
     position: absolute;
     width: 700px;
 }
-#controle_som{
+
+#controle_som {
     float: right;
     text-align: center;
     font-size: 30px;
@@ -1393,11 +1615,13 @@ canvas{
     top: 20%;
     width: 500px;
 }
-.opcao_som{
+
+.opcao_som {
     margin-left: 50px;
     padding: 25px;
 }
-.fecha_janela{
+
+.fecha_janela {
     overflow: hidden;
     border: solid 2px rgb(177, 8, 8);
     text-shadow: 2px 2px 3px rgba(0, 0, 0);
@@ -1410,12 +1634,14 @@ canvas{
     height: 50px;
     transition: .2s transform, .1s background-color, .1s border;
 }
-.fecha_janela:hover{
+
+.fecha_janela:hover {
     border: solid 2px rgb(134, 7, 7);
     transform: scale(1.1);
     background-color: rgb(211, 15, 15);
 }
-#fecha_janela_c{
+
+#fecha_janela_c {
     overflow: hidden;
     border: solid 2px rgb(177, 8, 8);
     text-shadow: 2px 2px 3px rgba(0, 0, 0);
@@ -1428,12 +1654,14 @@ canvas{
     height: 50px;
     transition: .2s transform, .1s background-color, .1s border;
 }
-#fecha_janela_c:hover{
+
+#fecha_janela_c:hover {
     border: solid 2px rgb(134, 7, 7);
     transform: scale(1.1);
     background-color: rgb(211, 15, 15);
 }
-#excluirdados{
+
+#excluirdados {
     overflow: hidden;
     color: black;
     border: solid 2px grey;
@@ -1446,16 +1674,19 @@ canvas{
     height: 50px;
     transition: .2s transform, .1s background-color, .1s border;
 }
-#iconlixeira{
+
+#iconlixeira {
     width: 25px;
     height: 25px;
     float: left;
 }
-#excluirdados:hover{
+
+#excluirdados:hover {
     border: solid 2px rgb(56, 54, 54);
     transform: scale(1.1);
     background-color: rgb(136, 136, 136);
 }
+
 /* The container */
 .container {
     display: block;
@@ -1488,12 +1719,12 @@ canvas{
 }
 
 /* On mouse-over, add a grey background color */
-.container:hover input ~ .checkmark {
+.container:hover input~.checkmark {
     background-color: #ccc;
 }
 
 /* When the radio button is checked, add a blue background */
-.container input:checked ~ .checkmark {
+.container input:checked~.checkmark {
     background-color: #2196F3;
 }
 
@@ -1505,7 +1736,7 @@ canvas{
 }
 
 /* Show the indicator (dot/circle) when checked */
-.container input:checked ~ .checkmark:after {
+.container input:checked~.checkmark:after {
     display: block;
 }
 
@@ -1517,14 +1748,16 @@ canvas{
     height: 8px;
     background: white;
 }
-#fundo{
+
+#fundo {
     width: 100%;
     height: 100%;
     background-color: rgb(19, 127, 141);
-    background-image: url("../Imagens/Fundo/Mosaico.png");
+    background-image: url("../source/images/Fundo/Mosaico.png");
     position: absolute;
 }
-#conquistas{
+
+#conquistas {
     left: 50%;
     margin-left: -175px;
     width: 350px;
@@ -1539,7 +1772,8 @@ canvas{
     display: none;
     animation: conquista_obtida 2s;
 }
-img#trofeu{
+
+img#trofeu {
     width: 35px;
     height: 35px;
     position: absolute;
@@ -1550,10 +1784,12 @@ img#trofeu{
     -webkit-filter: drop-shadow(0px 5px 15px black);
     filter: drop-shadow(0px 5px 15px black);
 }
-#texto_conquista{
+
+#texto_conquista {
     animation: texto_conquista 1.4s;
 }
-#log_lateral{
+
+#log_lateral {
     position: fixed;
     overflow-y: auto;
     right: 0px;
@@ -1565,7 +1801,8 @@ img#trofeu{
     height: 100%;
     z-index: 5;
 }
-#quadro_notificacoes{
+
+#quadro_notificacoes {
     font-family: "Minecraftia";
     display: none;
     width: 350px;
@@ -1581,22 +1818,26 @@ img#trofeu{
     box-shadow: inset 0px 0px 15px black;
     overflow: hidden;
 }
-.texto_notificacoes_trad{
+
+.texto_notificacoes_trad {
     width: 350px;
     text-align: center;
     padding-top: 5%;
 }
-#barra_notificacao{
+
+#barra_notificacao {
     height: 5px;
     width: 100%;
     background-color: rgb(66, 66, 66);
 }
-#status_barra_notificacoes{
+
+#status_barra_notificacoes {
     width: 0px;
     background-color: white;
     height: 100%;
 }
-#carrega_jogo{
+
+#carrega_jogo {
     /* display: none; */
     font-family: 'Minecraftia';
     color: white;
@@ -1609,39 +1850,47 @@ img#trofeu{
     align-items: center;
     box-shadow: inset 0px 0px 150px black;
 }
-#cabecalho_carrega_jogo{
+
+#cabecalho_carrega_jogo {
     padding-top: 5%;
     text-shadow: 2px 2px 2px black;
 }
-#primeiro_logon{
+
+#primeiro_logon {
     display: none;
     width: 100%;
 }
-#button_inicia_game{
+
+#button_inicia_game {
     font-size: 25px;
     width: 400px;
     margin-left: -200px;
     position: absolute;
 }
-#idioma_config_inicio{
+
+#idioma_config_inicio {
     position: fixed;
     width: 100%;
     top: 50%;
 }
-.button_opcoes_inicio{
+
+.button_opcoes_inicio {
     width: 350px;
     font-size: 25px;
 }
-#status_carregamento{
+
+#status_carregamento {
     display: none;
 }
-#texto_carregamento{
+
+#texto_carregamento {
     width: 100%;
     position: fixed;
     top: 60%;
     text-shadow: 2px 2px 2px black;
 }
-#barra_carregamento{
+
+#barra_carregamento {
     position: absolute;
     width: 80%;
     height: 50px;
@@ -1650,7 +1899,8 @@ img#trofeu{
     bottom: 10%;
     overflow: hidden;
 }
-#porcentagem_carregada{
+
+#porcentagem_carregada {
     width: 100%;
     position: fixed;
     top: 75%;
@@ -1659,14 +1909,16 @@ img#trofeu{
     color: white;
     text-shadow: 2px 2px 2px black;
 }
-#progresso_barra_carregamento{
+
+#progresso_barra_carregamento {
     width: 0%;
     height: 100%;
     background-color: yellow;
     box-shadow: inset 0px 0px 15px black;
-    background-image: url("../Imagens/Fundo/Update.png");
+    background-image: url("../source/images/Fundo/Update.png");
 }
-#historia_jogo{
+
+#historia_jogo {
     display: none;
     font-family: 'Minecraftia';
     color: white;
@@ -1679,7 +1931,8 @@ img#trofeu{
     align-items: center;
     box-shadow: inset 0px 0px 150px black;
 }
-#texto_historia{
+
+#texto_historia {
     position: absolute;
     left: 50%;
     margin-left: -25%;
@@ -1687,7 +1940,10 @@ img#trofeu{
     width: 50%;
     top: 20%;
 }
-.avancar_hist, .avancar_hist_block, .pular_hist{
+
+.avancar_hist,
+.avancar_hist_block,
+.pular_hist {
     display: none;
     width: 350px;
     font-size: 25px;
@@ -1696,29 +1952,37 @@ img#trofeu{
     left: 50%;
     margin-left: -175px;
 }
-.avancar_hist_block{
+
+.avancar_hist_block {
     background-color: grey;
 }
-.pular_hist{
+
+.pular_hist {
     bottom: 3%;
 }
-#escolhas_hist{
+
+#escolhas_hist {
     display: none;
     width: 100%;
     position: fixed;
     font-size: 25px;
     bottom: 15%;
 }
-.confirma_hist{
+
+.confirma_hist {
     background-color: greenyellow;
 }
-.nega_hist{
+
+.nega_hist {
     background-color: rgb(241, 48, 48);
 }
-.confirma_hist, .nega_hist{
+
+.confirma_hist,
+.nega_hist {
     width: 250px;
 }
-#tutorial_em_jogo{
+
+#tutorial_em_jogo {
     display: none;
     font-family: 'Minecraftia';
     color: white;
@@ -1734,16 +1998,22 @@ img#trofeu{
     align-items: center;
     background-color: rgba(0, 0, 0, .7);
 }
-#frase_tuto_em_game{
+
+#frase_tuto_em_game {
     font-size: 25px;
 }
-.avancar_tuto{
+
+.avancar_tuto {
     z-index: 2;
 }
-.avancar_tuto_block{
+
+.avancar_tuto_block {
     z-index: 0;
 }
-.avancar_tuto, .avancar_tuto_block, .pular_tuto{
+
+.avancar_tuto,
+.avancar_tuto_block,
+.pular_tuto {
     width: 350px;
     font-size: 25px;
     bottom: 8%;
@@ -1751,20 +2021,24 @@ img#trofeu{
     left: 50%;
     margin-left: -175px;
 }
-.avancar_tuto_block{
+
+.avancar_tuto_block {
     background-color: gray;
 }
-.pular_tuto{
-    bottom: 25%;   
+
+.pular_tuto {
+    bottom: 25%;
 }
-#controles_tuto{
+
+#controles_tuto {
     width: 100%;
     position: fixed;
     height: 150px;
     z-index: 3;
     top: 20%;
 }
-#placeholder_controles{
+
+#placeholder_controles {
     display: none;
     font-family: 'Minecraftia';
     font-size: 25px;
@@ -1777,7 +2051,10 @@ img#trofeu{
     margin-right: -200px;
     animation: desliza_tela_controles 5s;
 }
-.img_skin_venda, .icon_mod_loja, .img_preview_tema{
+
+.img_skin_venda,
+.icon_mod_loja,
+.img_preview_tema {
     image-rendering: auto;
     image-rendering: pixelated;
 }
