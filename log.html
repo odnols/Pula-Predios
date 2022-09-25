@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <title>Pula Prédios</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="Imagens/Icones/Icone.png">
+
+    <!-- CSS -->
+    <link rel="stylesheet" type="text/css" href="CSS/log.css">
+    <link rel="stylesheet" type="text/css" href="CSS/anima.css">
+    <link rel="stylesheet" type="text/css" href="CSS/responsividade.css">
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet" type="text/css" href="CSS/bootstrap.css">
+
+    <!-- Javascript -->
+    <script src="JS/Funcoes/funcoes.js"></script>
+
+    <script language="javascript" type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+
+    <script type="text/javascript" language="javascript">
+        $(function() {
+            $(this).bind("contextmenu", function(e) {
+                e.preventDefault();
+            });
+        });        
+    </script>
+</head>
+<body>
+
+<div id="tela_log_completa">
+    <h2 id="log_text">Pula Prédios 1.0</h2>
+    <img src="Imagens/Atualiza/log.png" id="img_log" alt="banner pula prédios">
+    
+    <br><br><br>
+    <h3 class="destaques">Alterações da 1.0</h3>
+    <hr id="novidades_log">
+    <center><h4>Fora das alphas e betas desde 1975!</h4></center>
+
+
+    <div id="centraliza">
+        <br><br><h3 class="destaques">> Adições <</h3>
+
+        <ul class="categoria_log"><h3>A Tela de carregamento</h3>
+            <p><em>Sim, pq não?</em></p>
+            <li>Ela será aberta todo dia para sincronizar os recursos!</li>
+            <li>Caso você atualize a página, após fazer o carregamento, não terá que esperar novamente o carregamento.</li>
+            <li>Ela foi adicionada para forçar o navegador a baixar os arquivos de áudio antes de executar eles, de uma só vez.</li>
+            <ul>
+                <li>Isso acontece devido aos arquivos não estarem localmente, por isso o navegador precisa requisitar do servidor e executar.</li>
+                <li>Esse processo demanda alguns segundos dependendo de sua conexão e pode interferir no gameplay.</li>
+            </ul>
+        </ul>  
+
+        <ul class="categoria_log"><h3>Conquistas</h3>
+            <p><em>Desafiando o navegador até o limite!</em></p>
+            <li>Incluí um novo botão no menu com mais de 25 conquistas.</li>    
+            <ul>
+                <li>Também há algumas secretas!</li>
+                <li>Algumas podem dar prêmios em game.</li>
+            </ul>
+            <li>As conquistas obtidas irão aparecer como notificação na tela por alguns segundos.</li>
+            <ul>
+                <li>Elas respeitarão um tempo, e caso venham aos montes, formaram filas para serem mostradas.</li>
+                <li>Você pode desativar essa notificação nas opções.</li>
+            </ul>
+            <li>Acesse o menu para ver seu progresso, ou aperte a tecla ( O ).</li>
+            <li>Você pode ver o nome e a descrição delas colocando o mouse sob elas.</li>
+            <li>Mais conquistas são planejadas para o futuro.</li>
+        </ul>  
+        
+        <ul class="categoria_log"><h3>Temas</h3>
+            <p><em>A Viagem no tempo está liberada!</em></p>
+            <li>Foi adicionado um novo tema ao jogo.</li>
+            <li>Ele levará o jogo de volta para 1900!</li>
+            <li>Para os jogadores que estão retornando, ele será distribuido como um presente :D</li>
+        </ul>
+        
+        <ul class="categoria_log"><h3>Navegação pelos Menus</h3>
+            <li>Foram adicionados alguns botões nos menus.</li>
+            <li>Agora é possível navegar entre eles apenas clicando na tela.</li>
+            <li>Outros botões foram reformados para ficarem mais modernos.</li>
+            <li>Transitadores</li>
+            <ul>
+                <li>Vão ser ativados ao transitar entre algumas páginas.</li>
+                <li>São animações rápidas entre o carregamento das telas.</li>
+            </ul>
+        </ul>
+
+        <ul class="categoria_log"><h3>Traduções</h3>
+            <p><em>Traduzindo tudo!</em></p>
+            <li>Agora o pula prédios possuí suporte ao inglês.</li>
+            <li>Você pode trocar de idioma através das opções, na aba "Idiomas".</li>
+            <ul><li>Também foi adicionado um botão de atalho no Menu, ao lado das opções.</li></ul>
+        </ul>
+
+        <ul class="categoria_log"><h3>Teclas de atalho</h3>
+            <p><em>Atalhoficando</em></p>
+            <li>Várias atalhos foram adicionados.</li>
+            <ul>
+                <li>Ao entrar na loja, pressione Q, W ou E para abrir as categorias ou transitar entre elas caso esteja com uma aberta.</li>
+                <li>Feche a loja ou outros menus pressionando a tecla ESC.</li>
+                <li>Exclusivo da loja: Você pode fechar ela pressionando X ou ESC.</li>
+            </ul>
+            <li>Pressione L no início para ser levado ao log ( esta página :P ) da versão.</li>
+            <ul><li>Ele pode ser fechado pressionando L ou ESC, ou pelo botão disponível dentro dele.</li></ul>
+        </ul>
+
+        <ul class="categoria_log"><h3>Animações</h3>
+            <p><em>Superanimados!</em></p>
+            <li>Várias animações foram adicionadas.</li>
+            <li>Algumas são exibidas apenas em determinados momentos, outras são a todo o momento!</li>
+            <li>Foram adicionados detalhes mais que especiais ao personagem principal.</li>
+            <li>Caso necessário, é possível desativar elas através do menu em Opções/Gráficos.</li>
+            <ul><li>Agora é possível desativar o filtro ao entardecer ou amanhecer, por padrão ele ficará desativado.</li></ul>
+        </ul>
+
+        <ul class="categoria_log"><h3>Modificadores</h3>
+            <p><em>Modifica Brasil!</em></p>
+            <li>Foram adicionados muitos novos!</li>
+            <ul>
+                <li>Ao todo temos 5 modificadores no momento.</li>
+                <li>Eles também podem conceder conquistas ou serem prêmios delas!</li>
+            </ul>
+            <li>Agora existem modificadores Principais</li>
+            <ul>
+                <li>No momento são 3 modificadores que podem se tornar principais.</li>
+                <li>Você só poderá usar 1 deles por vez.</li>
+                <li>Modificadores principais comprados, também esgotados após 5 partidas jogadas.</li>
+                <li>Eles também podem ser modificados com +tempo ou +vezes.</li>
+            </ul>
+        </ul>
+
+        <ul class="categoria_log"><h3>Bônus</h3>
+            <li>Uma nova categoria na loja ;D</li>
+            <li>Por enquanto temos 3 bônus disponíveis.</li>
+            <li>Eles serão válidos pelas próximas 5 partidas jogadas.</li>
+        </ul>
+        
+        <ul class="categoria_log"><h3>Músicas e Sons</h3>
+            <p><em>Não há limites!</em></p>
+            <li>Vários sons e músicas novas foram adicionadas.</li>
+            <li>Você poderá ver sons desde a loja até em modificadores e ao navegar pelos menus.</li>
+            <li>As funções de reprodução de som foram todas revisadas e atualizadas.</li>
+            <li>Atualmente temos mais de 60 arquivos de Sons!</li>
+        </ul><br><br>
+
+        <h3 class="destaques">> Alterações <</h3>
+
+        <ul class="categoria_log"><h3>O Log</h3>
+            <p><em>"Mudou um pouquinho!" :v</em></p>
+            <li>Agora o log não é mais uma tela pop-up.</li>
+            <li>Ele usa de transitadores para ser acessado.</li>
+            <li>O funcionamento dele ficou bem mais moderno!</li>
+            <li>Pode ser aberto ou fechado pressionando ( L ).</li>
+            <ul><li>Também pode ser fechado pressionando ESC.</li></ul>
+        </ul>
+
+        <ul class="categoria_log"><h3>Tutorial</h3>
+            <li>Foram adicionados mais artigos para complementar as novidades dessa atualização.</li>
+            <ul>
+                <li>Sendo eles:</li>
+                <li>Conquistas</li>
+                <li>Bônus</li>
+            </ul>
+            <li>Os artigos já existentes também foram atualizados para complementar com as novas informações.</li>
+        </ul>
+
+        <ul class="categoria_log"><h3>O Modo Ocioso</h3>
+            <li>Ele deixou de ser um recurso Experimental.</li>
+            <li>Agora ao abrir algum menu, ele ficará inativo caso esteja ativado.</li>
+            <li>Essa mudança também contempla a loja e o log.</li>
+        </ul>
+
+        <ul class="categoria_log"><h3>Estatísticas</h3>
+            <li>Foi alterada a interface das estatísticas.</li>
+            <li>Agora temos mais informações e elas estão melhor organizadas.</li>
+            <li>A Distância percorrida foi alterada para unidades de comprimento, agora temos metros e quilômetros.</li>
+            <li>O Tempo de Jogo também foi alterado, agora tempos segundos, minutos e horas de forma separada.</li>
+            <ul>
+                <li>Você poderá notar essa diferença no tempo de jogo em eventos e por partida também.</li>
+                <li>Além da apresentação em formato hh:mm:ss, também é exibido um texto, podendo ser: </li>
+                <li>Hora/horas</li>
+                <li>Minuto/minutos</li>
+                <li>Segundo/segundos</li>
+            </ul>
+            <li>O Total de conquistas disponíveis e o total coletada está disponível.</li>
+            <li>Estatísticas de compras e moedas gastas/coletadas agora estão dispostas.</li>
+            <li>Estatísticas de compras de itens na loja também estão disponíveis.</li>
+        </ul>
+
+        <ul class="categoria_log"><h3>Estatístiscas para Nerds</h3>
+            <li>Foram adicionadas várias mensagens de feedback ao console.</li>
+            <li>Algumas que já estavam no jogo, foram re-escritas para fazerem mais sentido.</li>
+            <li>Esses retornos também estão disponíveis em inglês agora.</li>
+        </ul>
+        
+        <ul class="categoria_log"><h3>Configurações</h3>
+            <li>Agora é chamado de Opções, sua tecla de atalho continua sendo a letra ( Z ).</li>
+            <li>Ele foi sub-divido em outras abas, você poderá personalizar entre \/</li>
+            <ul>
+                <li>Geral</li>
+                <li>Gráficos</li>
+                <li>Sons</li>
+                <li>Experimental</li>
+            </ul>
+            <li>As novas opcões de configuração já estão disponíveis para uso por aqui.</li>
+        </ul>
+
+        <ul class="categoria_log"><h3>Músicas e Sons 3.0</h3>
+            <li>Foi adicionado mais uma opção de ajuste para os sons.</li>
+            <li>Agora é possível escolher o volume dos memes que serão tocados.</li>
+            <li>Alguns botões foram polidos para tornar a interação mais intuitiva.</li>
+            <li>Foi ajustado o volume geral de todos os arquivos para igualar uns aos outros.</li>
+        </ul>
+        
+        <ul class="categoria_log"><h3>Loja</h3>
+            <li>As cores utilizadas e botões da loja foram ajustados.</li>
+            <li>Temos novos textos para mostrar na barra principal, logo ao abrir a loja.</li>
+            <li>O Preço de vários itens foram ajustados.</li>
+            <li>Agora a loja possuí sons próprios, bem como efeitos sonoros.</li>
+            <li>Agora ao alterar sua skin, você conseguirá ver a alteração em tempo real.</li>
+            <ul><li>Isso também vale para modificadores e bônus, todas as telas se atualizam simultaneamente!</li></ul>
+            <li>Os modificadores e bônus ganharam descrições, passe o mouse sob eles para ver!</li>
+            <li>As mensagens de feedback agora usam uma função mais elaborada, ela possibilita o uso de cores e animações.</li>
+            <ul><li>Foi incluído um filtro na loja, ele irá reagir conforme suas ações na loja.</li></ul>
+            <li>Agora é possível acessar e alterar entre as categorias pressionando, Q W E ou S respectivamente.</li>
+        </ul>
+        
+        <ul class="categoria_log"><h3>Especial</h3>
+            <li>Seu nome foi alterado para "Modificador" ou "Modificadores".</li>
+            <li>Essa mudança vem para fazer mais sentido ao recurso, o qual está modificando o jogo :v</li>
+        </ul>
+
+        <ul class="categoria_log"><h3>Eventos</h3>
+            <li>Serão afetados por modificadores e bônus ativos.</li>
+            <li>O tempo de ativação deles foi diminuido e o limite de repetições foi aumentado.</li>
+            <ul><li>Também foi adicionado mais verificadores para garantirem que eles não se repetirão muitas vezes seguidas.</li></ul>
+            <li>O Evento aquático irá dar algumas moedas caso você possua um modificador "garimpeiro" ativo.</li>
+            <li>Caso esteja com o Modificador "De Aço" ativo, se pisar na água ou lava, irá afundar levemente.</li>
+        </ul>
+        
+        <ul class="categoria_log"><h3>Tráfego Aéreo</h3>
+            <li>Agora ele é independente do horário do jogo.</li>
+            <ul>
+                <li>Na versão anterior, era utilizado a posição do sol e da lua, para definir o local dos objetos voadores.</li>
+                <li>Essa mudança vem para tornar essa condição nula, tornando o céu mais populoso e aleatório.</li>
+            </ul>
+            <li>Foram adicionados mais texturas para os objetos voadores.</li>
+            <li>Também foram adicionadas animações.</li>
+            <li>Há várias regras novas para as aeronaves operarem no jogo.</li>
+        </ul>
+        
+        <ul class="categoria_log"><h3>Interfaces & Fontes 5.0</h3>
+            <li>Várias Interfaces foram atualizadas.</li>
+            <li>Elas vão tornar a navegação mais intuitiva.</li>
+            <li>Todas as bordas curvas foram despensadas! Viva o pixel, viva os 90°!</li>
+            <ul>
+                <li>Há uma razão lógica para isso, o navegador não funciona bem quando há muitos itens com bordas curvas para renderizar ao mesmo tempo.</li>
+                <li>Dessa forma, todos as bordas curvas foram desativadas, para maximizar a performance do game.</li>
+            </ul>
+            <li>Também foram alterados vários textos devido a correções de ortografia e para tornar a leitura mais fácil.</li>
+            <li>As mensagens de confirmação para a loja e exclusão de dados foi atualizada.</li>
+            <ul><li>Agora é possível usar outras teclas (Enter) para confirmar ou cancelar operações.</li></ul>
+        </ul>
+        
+        <ul class="categoria_log"><h3>Cabeçalho de Informações da Partida</h3>
+            <li>Agora sua pontuação irá subir de forma rápida ao invés de pular os valores.</li>
+            <ul>
+                <li>Como quando você ganha 3 pontos em um pisão, ao invés de subir +3 de uma vez, o placar irá somar de 1 em 1, 3 vezes.</li>
+                <li>Igual o funcionamento da velocidade, ao perder, sua pontuação será restaurada ao zero de forma mais natural.</li>
+            </ul>
+            <li>A velocidade foi ajustada e irá subir de 1 metro em 1 metro, ao invés de 2.</li>
+            <ul><li>Agora os intervalos de alteração dela são menores para compensar a mudança da aceleração.</li></ul>
+            <li>A exibição das informações foram refinadas, para deixar a visualização melhor.</li>
+        </ul><br><br>
+
+    <h3 class="destaques">> Mudanças de Jogabilidade <</h3>
+        <ul class="categoria_log"><h3>"Para ficar mais fácil"</h3>
+            <li>Foi diminuída a velocidade que você poderá atingir, o novo limite das rodas são 60m/s.</li>
+            <li>A Velodidade irá aumentar de forma mais lenta, saltando sempre de 1 metro em 1 metro.</li>
+            <li>O Preço de vários itens na loja foram alterados.</li>
+            <li>Agora é possível definir um Modificador Principal, caso seja um comprado, ele será válido pelas próximas 5 partidas jogadas.</li>
+            <ul>
+                <li>Caso você compre um e não deixe ele ativo enquanto joga suas partidas, ele ficará guardado, ele apenas poderá esgotar se estiver em uso.</li>
+            </ul>
+            <li>Ao esgotar um modificador principal adquirido, o jogo irá retonar ao modificador padrão de forma automática.</li>
+            <li>Não é mais possível iniciar uma nova partida enquanto sua pontuação não se igualar a zero.</li>
+            <li>Agora é possível confirmar janelas pressionando o Enter.</li>
+            <li>Ao abrir a loja, é possível acessar as categorias pressionando, Q W E ou S respectivamente.</li>
+            <li>Agora é possível fechar a loja, e outros menus apertando a tecla ESC.</li>
+            <li>O Jogo será recarregado caso o idioma seja alterado.</li>
+            <li>Agora é possível alterar o tema do jogo inteiro.</li>
+        </ul><br><br>
+
+    <h3 class="destaques">> Refatoração <</h3>
+        <ul class="categoria_log"><h3>Mais e mais códigos revisados</h3>
+            <li>Refatoramos a função que exibe as mensagens de morte para ocupar menos linhas.</li>
+            <li>Várias áreas do game foram revisadas para ficarem mais uniformes.</li>
+            <li>Há algumas dezenas de novas pastas para contemplar e organizar vários arquivos.</li>
+            <li>Vários verificadores de condições para ativar o modificador foram re-escritos para ficarem mais eficiêntes e demandarem menos programação.</li>
+            <li>Foram incluídas várias funções novas para deixar a engine do jogo mais moderna e funcionar melhor.</li>
+            <li>A função que converte o tempo em horas, minutos e segundos foi refatorada para se tornar mais intuitiva e evitar problemas.</li>
+            <li>Foram implementadas umas funções que se auto-chamam para terminar de cumprir suas funções, por meio de chamadas automáticas com alguns valores fixos.</li>
+            <ul><li>No momento elas estão sendo usadas nas caixas de confirmação da loja e da exclusão de dados.</li></ul>
+            <li>A Barra de progresso dos eventos agora usa um valor em porcentagem ao invés de valores em pixels.</li>
+            <li>As funções responsáveis pelos controles foram re-escritas para ocuparem menos linhas.</li>
+            <li>Re-estruturação nas funções de controle de som, agora elas desligam todos os sons sendo executados no momento, caso a opção de Sons seja desativada.</li>
+            <li>Agora o jogo irá obedecer uma regra, passando sempre primeiro pelo carregamento ao entrar na página.</li>
+            <ul>
+                <li>Caso seja a primeira visita do dia, o jogador terá que esperar os arquivos serem sincronizados.</li>
+                <li>Caso não seja a primeira visita do dia, a tela de carregamento será pulada.</li>
+                <li>Todas as funções de interação, agora esperam o jogo confirmar o carregamento, para poderem ser executadas.</li>
+            </ul>
+            <li>Agora todas as notificações que chegarem simultaneamente formaram filas para serem exibidas.</li>
+        </ul><br><br>
+
+    <h3 class="destaques">> Correções de Bugs <</h3>
+        <ul class="categoria_log"><h3>Polindo até o infinito e além</h3>
+            <li>Conquistas são chamadas várias vezes se sobrepondo e quebrando animações.</li>
+            <li>A lista de conquistas obtidas não é salva como esperado, e sua conversão após resulta em falha.</li>
+            <li>O Sol e a lua se invertem e não respeitam o cenário, ocasionando na lua aparecer durante o dia e o sol durante a noite.</li>
+            <li>Ativar o modificador de Flutuação não conta como uma ativação e apenas diminuí a quantidade de modificadores restantes para a partida.</li>
+            <li>As animações se aceleram toda vez que o jogo é perdido, causando um aumento de processamento.</li>
+            <li>Alguns dados das estatísticas não salvavam corretamente.</li>
+            <li>Animações não iniciam ao recarregar a página se estiverem na opção "Aprimoradas".</li>
+            <li>As vezes as legendas dos itens da loja somem ao iniciar uma partida.</li>
+            <li>Corrigidos alguns problemas com os sprites e seus tamanhos foras de padrão, o que causionavam em glitchs.</li>
+            <li>Ao trocar entre os modificadores principais adquiridos, o jogo zerava as compras dos modificadores.</li>
+            <li>Os modificadores principais não atualizam suas estatísticas de uso corretamente, se tornando infinitos.</li>
+            <li>Ao fazer uma interação na loja, ocasionando na exibição de uma mensagem de feedback, e logo após trocando de categoria de item rapidamente é possível ver a mensagem ativa anteriormente.</li>
+            <li>As horas, minutos e segundos não são convertidos corretamente.</li>
+            <li>Foi corrigido o problema de clique errado ao tentar abrir o menu ao clicar na tela.</li>
+            <li>Centenas de erros devido a formatação html foram corrigidos, os problemas poderiam causar quedas de frame devido a verificações do navegador.</li>
+            <li>Foram corrigidos uns problemas relacionado ao funcionamento do transitador rápido na loja.</li>
+            <li>Foi corrigido um problema que ocorria no retorno do evento aquático e de lava, onde se o jogador estivesse com o mod. "de aço", ativo, ele poderia entrar na terra ao finalizar o evento.</li>
+            <li>Haviam alguns problemas com o preenchimento da barra de progresso dos eventos, eles foram corrigidos.</li>
+            <li>Corrigido um problema com relação ao menu de opções funcionando de forma errada.</li>
+            <li>Foi corrigido um problema que poderia causar na execução dos efeitos sonoros de vento, mesmo se a partida estivesse sido perdida.</li>
+            <li>Foram corrigidos diversos problemas com relação ao carregamento e o modo ocioso.</li>
+            <li>Foi corrigido um problema com relação a execução das animações, sempre ao morrer o jogo checava as animações, desligando elas e ligando em seguida, essa função estava ocasionando num aumento de processamento, uma vez que a função das animações criava várias réplicas e a animação acelerava, se tornando uma bola de neve.</li>
+            <li>Corrigido um problema com relação a conversão da hora, o jogo não estava coletando os valores corretos.</li>
+            <li>O jogo não liberava os controles do teclado após o carregamento rápido na versão online.</li>
+            <li>Havia um problema com a navegação dos menus e a função ESC, onde o menu não mostrava os textos.</li>
+            <li>Agora se o modo ocioso estiver ativo, ao abrir um menu, ele não será fechado após 10 segundos.</li>
+            <li>Foram corrigidos alguns erros com relação as notificações, agora elas formam filas também.</li>
+            <li>Foram corrigidos uns problemas com relação as transições entre água e lava que ocorriam no modo ocioso.</li>
+            <li>Ao comprar algum item na loja, as moedas eram somadas ao invés de serem decrescidas, esse problema era apenas visual mas foi corrigido.</li>
+            <li>Se o jogador tivesse aberto uma categoria na loja, fechado a loja e aberto novamente a loja, o rodapé de informações ficava invisível.</li>
+        </ul><br><br>
+
+        <div id="rodape_log">
+            <h3>Pula Prédios ( 2019-2021 )<br>Todas as direitas Reservadas (C) Slondo Corp. 1975 - 2015+</h3>
+        </div>
+    </div>
+</div>
+</body>
+</html>
