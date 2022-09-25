@@ -30,17 +30,24 @@
 <body>
 
 <div id="tela_log_completa">
-    <h2 id="log_text">Pula Prédios 1.0</h2>
+    <h2 id="log_text">Pula Prédios 1.1</h2>
     <img src="Imagens/Atualiza/log.png" id="img_log" alt="banner pula prédios">
     
     <br><br><br>
-    <h3 class="destaques">Alterações da 1.0</h3>
+    <h3 class="destaques">Alterações da 1.1</h3>
     <hr id="novidades_log">
     <center><h4>Fora das alphas e betas desde 1975!</h4></center>
 
 
     <div id="centraliza">
         <br><br><h3 class="destaques">> Adições <</h3>
+
+        <ul class="categoria_log"><h3>Adição da Versão 1.1</h3>
+            <p><em>Foi adicionado um tutorial inicial!</em></p>
+            <li>Agora ao entrar pela 1° vez no game, você passará por um rápido tutorial.</li>
+            <li>Ele explicará um pouco mais do jogo e trará os controles.</li>
+            <li>Também é possível pular este tutorial.</li>
+        </ul>
 
         <ul class="categoria_log"><h3>A Tela de carregamento</h3>
             <p><em>Sim, pq não?</em></p>
@@ -51,8 +58,15 @@
                 <li>Isso acontece devido aos arquivos não estarem localmente, por isso o navegador precisa requisitar do servidor e executar.</li>
                 <li>Esse processo demanda alguns segundos dependendo de sua conexão e pode interferir no gameplay.</li>
             </ul>
-        </ul>  
-
+        </ul>
+        
+        <ul class="categoria_log"><h3>História</h3>
+            <p><em>Foi adicionada uma história ao jogo!</em></p>
+            <li>Olá testador de prédios espiões!</li>
+            <li>Ela será exibida na primeira vez que você logar.</li>
+            <li>Um resumo está disponível nos Tutoriais.</li>
+        </ul>
+        
         <ul class="categoria_log"><h3>Conquistas</h3>
             <p><em>Desafiando o navegador até o limite!</em></p>
             <li>Incluí um novo botão no menu com mais de 25 conquistas.</li>    
@@ -74,6 +88,7 @@
             <p><em>A Viagem no tempo está liberada!</em></p>
             <li>Foi adicionado um novo tema ao jogo.</li>
             <li>Ele levará o jogo de volta para 1900!</li>
+            <ul><li>Também inclui músicas da época.</li></ul>
             <li>Para os jogadores que estão retornando, ele será distribuido como um presente :D</li>
         </ul>
         
@@ -292,6 +307,13 @@
             <li>Agora é possível fechar a loja, e outros menus apertando a tecla ESC.</li>
             <li>O Jogo será recarregado caso o idioma seja alterado.</li>
             <li>Agora é possível alterar o tema do jogo inteiro.</li>
+            <li>Foi desativado a função de duplo clique para zoom que ocorre nos celulares, tornando o game jogável em dispositivos móveis.</li>
+        </ul>
+
+        <ul class="categoria_log"><h3>Mudanças da Versão 1.1</h3>
+            <li>Foram adicionados novas texturas para os prédios do cenário.</li>
+            <li>Agora os prédios de fundo irão aparecer com texturas diferentes para facilitar a visualização.</li>
+            <li>Espere por um cenário mais colorido (e fácil :P) em suas próximas partidas!</li>
         </ul><br><br>
 
     <h3 class="destaques">> Refatoração <</h3>
@@ -314,6 +336,13 @@
                 <li>Todas as funções de interação, agora esperam o jogo confirmar o carregamento, para poderem ser executadas.</li>
             </ul>
             <li>Agora todas as notificações que chegarem simultaneamente formaram filas para serem exibidas.</li>
+        </ul>
+        
+        <ul class="categoria_log"><h3>Refatorações da Versão 1.1</h3>
+            <li>Foram refatoradas as funções de animações, agora elas são menores e fazem requisições anônimas apenas para atualizar os sprites.</li>
+            <li>Agora 8 das 9 funções de animação utilizam de requisições do tipo timeout ao invés de intervalos.</li>
+            <li>As funções de escrita da história e do tutorial foram unificadas para ocupatem menos linhas.</li>
+            <li>O Jogo tentará carregar os áudios, caso não seja possível, ele pulará o carregamento e abrirá imediatamente.</li>
         </ul><br><br>
 
     <h3 class="destaques">> Correções de Bugs <</h3>
@@ -348,6 +377,19 @@
             <li>Foram corrigidos uns problemas com relação as transições entre água e lava que ocorriam no modo ocioso.</li>
             <li>Ao comprar algum item na loja, as moedas eram somadas ao invés de serem decrescidas, esse problema era apenas visual mas foi corrigido.</li>
             <li>Se o jogador tivesse aberto uma categoria na loja, fechado a loja e aberto novamente a loja, o rodapé de informações ficava invisível.</li>
+        </ul>
+        
+        <ul class="categoria_log"><h3>Correções da Versão 1.1</h3>
+            <li>Foram corrigidos vários problemas com relações às funções com intervalos.</li>
+            <ul>
+                <li>Dentre eles temos:</li>
+                <li>Animações se acelerando e forçando demais o navegador.</li>
+                <li>Jogo travando muito devido as várias requisições.</li>
+                <li>Problemas de estabilidade e aumento de processamento.</li>
+            </ul>
+            <li>Foi corrigido um problema com o encerramento da partida, com relação às mensagens de morte estarem erradas ao perder no evento de água ou lava atropelando outros prédios.</li>
+            <li>O texto introdutório e o tutorial às vezes podiam bugar e aparecer todo quebrado e desconfigurado, tornando a leitura impossível.</li>
+            <li>O Carregamento do game resulta em erros na parte dos áudios.</li>
         </ul><br><br>
 
         <div id="rodape_log">

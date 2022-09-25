@@ -3,9 +3,9 @@ var tela_opcao_aberta = 0, cache_alvo = null;
 function botoes(tecla){
 
     if(confirma_carregamento){
-        var lista_menus = ["boas_vindas", "configuracoes", "opcoes", "estatisticas", "tutorial", "conquistas_mapa", "controles", "problemas_redes_sociais", "suporte_jogo"];
+        let lista_menus = ["boas_vindas", "configuracoes", "opcoes", "estatisticas", "tutorial", "conquistas_mapa", "controles", "problemas_redes_sociais", "suporte_jogo"];
 
-        var alvo = "placeholder";
+        let alvo = "placeholder";
 
         if(estadoAtual == estados.jogar && sessao_loja_ativa != 1)
             executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2);
@@ -85,6 +85,15 @@ function botoes(tecla){
                 case 82:  // R
                     location.reload();
                 break;
+                // case 50:
+                //     jogo.evento = 2;
+                // break;
+                // case 49:
+                //     if(velocidade_obs > 0)
+                //         velocidade_obs = 0;
+                //     else
+                //         velocidade_obs = 10;
+                // break;
                 default:
                     if(estado_loja)
                         alvo = "loja";
@@ -92,7 +101,7 @@ function botoes(tecla){
                     if(estado_log)
                         alvo = "log";
 
-                    if(estadoAtual == estados.jogando){
+                    if(estadoAtual == estados.jogando || estadoAtual == estados.tutorial){
                         $("#notifica_moeda").fadeOut();
                         $("#puxador_loja").fadeOut();
                     }
@@ -124,7 +133,7 @@ function botoes(tecla){
 
             if(alvo != "notif"){
                 // Esconde todas as interfaces
-                for(var i = 0; i < lista_menus.length; i++){
+                for(let i = 0; i < lista_menus.length; i++){
                     if(alvo != lista_menus[i])
                         $("#"+ lista_menus[i] +"").fadeOut();
                 }
@@ -144,14 +153,14 @@ function clique(evento){
         
         // Partida ativa
         if(!event.keyCode && inicia_game == 1 && estadoAtual != estados.perdeu){
-            if(estadoAtual == estados.jogando){
+            if(estadoAtual == estados.jogando || estadoAtual == estados.tutorial){
 
                 evento = evento || window.event;
 
                 // Controles do Mouse e cliques
-                var button = evento.which || evento.button;
+                let button = evento.which || evento.button;
 
-                if(button == 1)
+                if(button == 1 || evento == 32)
                     // ação para o botão esquerdo 
                     jogador.pula();
                 else if(button == 2){
@@ -173,25 +182,29 @@ function clique(evento){
                 estadoOcioso("volta");
         }else{
             if(inicia_game == 1)
-                var tecla = event.keyCode;
+                if(typeof evento != "number")
+                    tecla = event.keyCode;
+                else
+                    tecla = evento;
 
             console.log(tecla);
         //  Controles da partida em Andamento
-            if(estadoAtual == estados.jogando){
+            if(estadoAtual == estados.jogando || estadoAtual == estados.tutorial){
                 switch(tecla){
-                    case 49: // 1 -> evento cidade
-                        jogo.evento();
-                    break;
                     case 32:  // Espaço
                     case 119: // w
                     case 87:  // W
-                        jogador.pula();
+                        if(indice_tutorial > 5)
+                            jogador.pula();
+                        else
+                            avanca_tutorial();
                     break;
                     case 13:  // Enter
                     case 100: // d
                     case 68:  // D
                         if(mod != 1 && jogador.qtdMods > 0 && jogo.liberaMod == 0) // + Vezes
-                            jogador.modificador();
+                            if(indice_tutorial > 5)
+                                jogador.modificador();
                     break;
                     // case 114: // r
                     // case 82:  // R
@@ -227,7 +240,8 @@ function clique(evento){
 // Detectar tecla ESC
 document.onkeydown = function(evt){
     evt = evt || window.event;
-    var isEscape = false;
+    let isEscape = false;
+
     if("key" in evt)
         isEscape = (evt.key === "Escape" || evt.key === "Esc");
     else

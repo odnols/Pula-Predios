@@ -200,6 +200,12 @@ spritePredio1_2 = new Sprite_Objetos(164, 187, 46, 182),            // Vermelho 
 spritePredio2_2 = new Sprite_Objetos(113, 187, 46, 182),            // Amarelo com Antena
 spritePredio3 = new Sprite_Objetos(6, 378, 46, 80),                 // Laranja Médio
 
+spritePredio2_1_background = new Sprite_Objetos(373, 155, 46, 366), // Ciano
+spritePredio1_1_background = new Sprite_Objetos(320, 155, 46, 366), // Azul
+spritePredio1_2_background = new Sprite_Objetos(477, 187, 46, 182), // Ciano com Antena
+spritePredio2_2_background = new Sprite_Objetos(426, 187, 46, 182), // Azul com Antena
+spritePredio3_background = new Sprite_Objetos(258, 250, 46, 80),    // Azul Médio
+
 spriteFogo = new Sprite_Objetos(1282, 22, 1156, 60),
 spriteArbusto = new Sprite_Objetos(267, 536, 42, 19),
 spriteArvore = new Sprite_Objetos(89, 501, 47, 55),

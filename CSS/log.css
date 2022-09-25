@@ -2,6 +2,7 @@ body{
     background-image: url("../Imagens/Fundo/log.png");
     overflow-x: hidden;
     animation: fundo_log 100s infinite;
+    touch-action: manipulation; /* Desabilita o zoom com duplo clique */
 }
 @font-face{
     font-family: Minecraft;

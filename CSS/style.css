@@ -5,7 +5,8 @@ body{
     user-select: none; /* Standard */
     overflow-x: hidden;
     overflow-y: hidden;
-}
+    touch-action: manipulation; /* Desabilita o zoom com duplo clique */
+}   
 hr{
     height: 5px;
     background-color: white;
@@ -22,20 +23,31 @@ canvas{
 .sprite_noite{
     display: none;
 }
-#bandeira{
-    background: url("../Imagens/Sprites/Jogador/Bandeira.png") 0px 0px;
-    position: absolute;
-    z-index: 3;
+#botoes_acessibilidade{
     display: none;
-    left: 56px;
-    width: 17px;
-    height: 15px;
+    font-family: "Minecraftia";
+    opacity: .5;
+    z-index: 3;
+    right: 8%;
+    top: 15%;
+    width: 220px;
+    position: fixed;
+}
+.button_mod{
+    float: right;
+    width: 100px;
+    height: 100px;
+}
+.button_pulo{
+    float: left;
+    width: 100px;
+    height: 100px;
 }
 #filtro{
     z-index: 3;
     width: 100%;
     height: 100%;
-    position: fixed;
+    position: fixed;    
 }
 #filtro2{
     z-index: 3;
@@ -334,10 +346,10 @@ button{
     top: 50px;
 }
 
-.item_grid_loja_1 { grid-area: tema; background-image: url("../Imagens/Loja/Temas/1900s.jpg") !important; background-position: 0px 390px; }
-.item_grid_loja_2 { grid-area: skin; overflow: hidden; background-image: url("../Imagens/Loja/skins.png") !important; animation: background_skins 10s infinite; }
-.item_grid_loja_3 { grid-area: mod; }
-.item_grid_loja_4 { grid-area: bonus; }
+.item_grid_loja_1 { grid-area: tema; background-image: url("../Imagens/Loja/Temas/1900s.jpg") !important; background-size: cover !important; }
+.item_grid_loja_2 { grid-area: skin; overflow: hidden; background-image: url("../Imagens/Loja/skins.png") !important; animation: background_skins 10s infinite; background-size: cover !important; }
+.item_grid_loja_3 { grid-area: mod; background-image: url("../Imagens/Loja/mods.gif") !important; background-position: 0px 100px; background-size: cover !important; }
+.item_grid_loja_4 { grid-area: bonus; background-image: url("../Imagens/Loja/bonus.gif") !important;  background-size: cover !important; }
 
 #quadros_loja_grid{
     position: absolute;
@@ -349,7 +361,8 @@ button{
     grid-template-areas:
         'skin mod bonus'
         'tema tema bonus';
-    grid-gap: 10px;
+    grid-row-gap: 10px;
+    grid-column-gap: 20px;
     padding: 10px;
 }
 #quadros_loja_grid > div {
@@ -969,6 +982,11 @@ h3#qtdPulos{
     grid-gap: 25px;
     padding: 10px;
 }
+.img_conquista_obtida, .img_conquista{
+    transition: width .5s, height .5s;
+    image-rendering: auto;
+    image-rendering: pixelated;
+}
 .img_conquista_obtida{
     padding: 0px;
     width: 54px;
@@ -977,19 +995,17 @@ h3#qtdPulos{
     box-shadow: 0px 0px 5px yellow;
     background-color: grey;
 }
-/* #canvas{ */
-    /* animation: cinza 10s; */
-    /* filter: grayscale(1); */
-/* }  */
 .img_conquista{
     filter: grayscale(1);
     padding: 0px;
-    width: 54px;
-    height: 54px;
     border: solid 2px black;
     box-shadow: 0px 0px 5px black;
-    width: 50px;
-    height: 50px;
+    width: 54px;
+    height: 54px;
+}
+.img_conquista:hover, .img_conquista_obtida:hover{
+    width: 200px;
+    height: 200px;
 }
 #tutorial{
     text-align: center;
@@ -1311,7 +1327,13 @@ canvas{
     font-family: Minecraftia;
     font-size: 25px;
 }
-.button_opcoes{
+#button_animacoes_pc{
+    display: none;
+}
+.button_opcoes_block{
+    background-color: grey;
+}
+.button_opcoes, .button_opcoes_block{
     width: 300px !important;
 }
 .button_opcoes:hover{
@@ -1582,7 +1604,7 @@ img#trofeu{
     width: 100%;
     height: 100%;
     background-color: rgb(6, 114, 100);
-    z-index: 8;
+    z-index: 9;
     text-align: center;
     align-items: center;
     box-shadow: inset 0px 0px 150px black;
@@ -1591,8 +1613,23 @@ img#trofeu{
     padding-top: 5%;
     text-shadow: 2px 2px 2px black;
 }
-#inicia_game{
-    width: 500px;
+#primeiro_logon{
+    display: none;
+    width: 100%;
+}
+#button_inicia_game{
+    font-size: 25px;
+    width: 400px;
+    margin-left: -200px;
+    position: absolute;
+}
+#idioma_config_inicio{
+    position: fixed;
+    width: 100%;
+    top: 50%;
+}
+.button_opcoes_inicio{
+    width: 350px;
     font-size: 25px;
 }
 #status_carregamento{
@@ -1629,13 +1666,118 @@ img#trofeu{
     box-shadow: inset 0px 0px 15px black;
     background-image: url("../Imagens/Fundo/Update.png");
 }
-#flag_api{
-    top: 15%;
-    right: 1%;
-    z-index: 5;
-    width: 30px;
-    height: 30px;
+#historia_jogo{
+    display: none;
+    font-family: 'Minecraftia';
+    color: white;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background-color: rgb(14, 95, 75);
+    z-index: 8;
+    text-align: center;
+    align-items: center;
+    box-shadow: inset 0px 0px 150px black;
+}
+#texto_historia{
     position: absolute;
+    left: 50%;
+    margin-left: -25%;
+    font-size: 40px;
+    width: 50%;
+    top: 20%;
+}
+.avancar_hist, .avancar_hist_block, .pular_hist{
+    display: none;
+    width: 350px;
+    font-size: 25px;
+    bottom: 15%;
+    position: fixed;
+    left: 50%;
+    margin-left: -175px;
+}
+.avancar_hist_block{
+    background-color: grey;
+}
+.pular_hist{
+    bottom: 3%;
+}
+#escolhas_hist{
+    display: none;
+    width: 100%;
+    position: fixed;
+    font-size: 25px;
+    bottom: 15%;
+}
+.confirma_hist{
+    background-color: greenyellow;
+}
+.nega_hist{
+    background-color: rgb(241, 48, 48);
+}
+.confirma_hist, .nega_hist{
+    width: 250px;
+}
+#tutorial_em_jogo{
+    display: none;
+    font-family: 'Minecraftia';
+    color: white;
+    position: absolute;
+    left: 50%;
+    width: 400px;
+    height: 400px;
+    margin-left: -200px;
+    z-index: 5;
+    padding: 40px;
+    top: 20%;
+    text-align: center;
+    align-items: center;
+    background-color: rgba(0, 0, 0, .7);
+}
+#frase_tuto_em_game{
+    font-size: 25px;
+}
+.avancar_tuto{
+    z-index: 2;
+}
+.avancar_tuto_block{
+    z-index: 0;
+}
+.avancar_tuto, .avancar_tuto_block, .pular_tuto{
+    width: 350px;
+    font-size: 25px;
+    bottom: 8%;
+    position: absolute;
+    left: 50%;
+    margin-left: -175px;
+}
+.avancar_tuto_block{
     background-color: gray;
-    border: 1px black solid;
+}
+.pular_tuto{
+    bottom: 25%;   
+}
+#controles_tuto{
+    width: 100%;
+    position: fixed;
+    height: 150px;
+    z-index: 3;
+    top: 20%;
+}
+#placeholder_controles{
+    display: none;
+    font-family: 'Minecraftia';
+    font-size: 25px;
+    color: white;
+    position: absolute;
+    height: 150px;
+    width: 400px;
+    right: 50%;
+    padding: 15px;
+    margin-right: -200px;
+    animation: desliza_tela_controles 5s;
+}
+.img_skin_venda, .icon_mod_loja, .img_preview_tema{
+    image-rendering: auto;
+    image-rendering: pixelated;
 }

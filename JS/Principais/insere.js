@@ -1,5 +1,5 @@
 function aleatorizadorInsercao(){
-    var tempo = 10 + Math.round(40 * Math.random());
+    let tempo = 10 + Math.round(40 * Math.random());
 
     return tempo;
 }
@@ -95,7 +95,7 @@ function insere_obj(){
             largura: 46,
             altura: this.altura_media + Math.round(this.variacao * Math.random()),
         });
-    }else if(jogo.evento == 0 || jogo.evento == 2 || jogo.evento == null){ // Diferente do Evento de Água ou lava
+    }else if(jogo.evento == 0 || jogo.evento == 2 || jogo.evento == null && estadoAtual != estados.tutorial){ // Diferente do Evento de Água ou lava
         obstaculos._obs.push({
             x: Largura,
             largura: 10,

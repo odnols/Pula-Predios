@@ -79,14 +79,14 @@ function pisca_barra(){
 
     document.getElementById("barra_loading").style.animation = "pisca_barra"+ jogo.inicia_evento +" .5s";
  
-    crono = setTimeout(function(){
+    crono = setTimeout(() => {
         document.getElementById("barra_loading").style.animation = "none";
         clearTimeout(crono);
     }, 500)
 }
 
 function preenche_barra(){
-    cronometro = setInterval(function(){
+    cronometro = setInterval(() => {
         if(jogo.contador_tempo_interno >= 0 && (estadoAtual == estados.jogando || estadoAtual == estados.ocioso)){
             if(jogo.contador_tempo_interno < 10)
                 document.getElementById("cronometro").innerHTML = "0" + jogo.contador_tempo_interno;
@@ -112,7 +112,7 @@ function preenche_barra(){
         }
     }, 1000);
 
-    cronometro2 = setInterval(function(){
+    cronometro2 = setInterval(() => {
         if(jogo.contador_tempo_interno >= 0 && (estadoAtual == estados.jogando || estadoAtual == estados.ocioso)){
             
             if(jogo.quantia_pixels_interno < 100)

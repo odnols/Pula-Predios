@@ -24,39 +24,20 @@ function valores(){
 
 }
 
-function requisita_api(){
-
-    // Enviando os dados para a API salvar
-    const elemento = document.getElementById("flag_api")
-
-    const data = {
-        pulos: hist_pulos,
-        money: jogador.moedas,
-        mortes: hist_mortes
-    }
-
-    fetch(`http://localhost:3000/pula?save=1&data=${JSON.stringify(data)}`)
-    .then(res => res.json())
-    .then(retorno => {
-        if(retorno.status !== 404)
-            elemento.style.backgroundColor = "Green"
-        else
-            elemento.style.backgroundColor = "Orange"
-    })
-    .catch(err => {
-        console.log("API Offline", err)
-        elemento.style.backgroundColor = "Red"
-    })
-}
-
 function carrega_dados(){
 
-    inicia_game = localStorage.getItem("iniciaLoucura_1.0");
+    inicia_game = localStorage.getItem("iniciaLoucura_1.1");
     if(inicia_game == null)
         $("#boas_vindas").fadeIn();
     else
         $("#log_").fadeIn();
 
+    tutorial_completo = localStorage.getItem("tutorialCompleto");
+    if(tutorial_completo == null)
+        tut_complet = 0;    
+    else
+        tut_complet = parseInt(tutorial_completo);
+    
     recorde = localStorage.getItem("recorde");
     if(recorde == null)
         recorde = 0;
@@ -258,9 +239,9 @@ function carrega_dados(){
         jogador.skins_compradas = [0, 0, 0, 0, 0, 0, 0, 1];
     else{
         // Recolhendo os valores e convertendo para um array utilizável
-        var indices = loja_skinsCompradas.split(",");
+        let indices = loja_skinsCompradas.split(",");
 
-        for(var i = 0; i < 7; i++){
+        for(let i = 0; i < 7; i++){
             indices[i];
 
             if(indices[i] != 1)
@@ -275,9 +256,9 @@ function carrega_dados(){
         jogador.mods_comprados = [0, 0, 0, 0];
     else{
         // Recolhendo os valores e convertendo para um array utilizável
-        var indices = loja_modsComprados.split(",");
+        let indices = loja_modsComprados.split(",");
 
-        for(var i = 0; i < 4; i++){
+        for(let i = 0; i < 4; i++){
             indices[i];
 
             if(indices[i] != 1)
@@ -300,10 +281,10 @@ function carrega_dados(){
         jogador.mods_vezes_usados = [0, 0, 0, 0];
     else{
         // Recolhendo os valores e convertendo para um array utilizável
-        var indices = loja_modsCompradosUsados.split(",");
+        let indices = loja_modsCompradosUsados.split(",");
 
-        for(var i = 0; i < 4; i++){
-            var valor = indices[i];
+        for(let i = 0; i < 4; i++){
+            let valor = indices[i];
 
             if(jogador.mods_comprados[i] == 1 && valor == 0)
                 valor = 5;
@@ -320,9 +301,9 @@ function carrega_dados(){
         jogador.bonus_comprados = [0, 0, 0];
     else{
         // Recolhendo os valores e convertendo para um array utilizável
-        var indices = bonus_comprados.split(",");
+        let indices = bonus_comprados.split(",");
 
-        for(var i = 0; i < 3; i++){
+        for(let i = 0; i < 3; i++){
             indices[i];
 
             if(indices[i] != 1)
@@ -338,10 +319,10 @@ function carrega_dados(){
         jogador.bonus_vezes_usados = [0, 0, 0];
     else{
         // Recolhendo os valores e convertendo para um array utilizável
-        var indices = loja_bonusVezesUsados.split(",");
+        let indices = loja_bonusVezesUsados.split(",");
 
-        for(var i = 0; i < 3; i++){
-            var valor = indices[i];
+        for(let i = 0; i < 3; i++){
+            let valor = indices[i];
 
             if(jogador.bonus_comprados[i] == 1 && valor == 0)
                 valor = 5;
@@ -358,13 +339,13 @@ function carrega_dados(){
         lista_conquistas_ganhas = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
     else{
         // Recolhendo os valores e convertendo para um array utilizável
-        var indices = lista_conquistas_g.split(",");
+        let indices = lista_conquistas_g.split(",");
 
         // Reiniciando o Array
         lista_conquistas_ganhas = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
         // Convertendo o valor e salvando no array corretamente
-        for(var i = 0; i < lista_conquistas.length; i++){
+        for(let i = 0; i < lista_conquistas.length; i++){
             indices[i];
 
             if(indices[i] == 0 || indices[i] == 1 || indices[i] == 2)
@@ -373,6 +354,15 @@ function carrega_dados(){
     }
 
     sincronizaConquistas();
+
+    // Sincroniza a musica tema principal
+    musicaTema = localStorage.getItem("temaMusica");
+    if(musicaTema == "0")
+        jogo.musica_tema = null;
+
+    musicaTemaOcioso = localStorage.getItem("temaOcioso");
+    if(musicaTemaOcioso == "0")
+        jogo.musica_tema_ocioso = null;
 
     temaAtivo = localStorage.getItem("temaAtivo");
     if(temaAtivo == null)
@@ -387,9 +377,9 @@ function carrega_dados(){
         jogo.temas_comprados = [1, 1];
     
     // Recolhe todas as informações do localStorage e salva
-    var identificadores = ["tt_skins_compradas", "tt_mods_comprados", "tt_bonus_comprados"];
+    let identificadores = ["tt_skins_compradas", "tt_mods_comprados", "tt_bonus_comprados"];
 
-    for(var i = 0; i < 3; i++){
+    for(let i = 0; i < 3; i++){
 
         valor = localStorage.getItem(identificadores[i]);
     
@@ -456,39 +446,37 @@ function carrega_dados(){
 
 function reseta(){
 
-    requisita_api() // Sincronizando com a API
+    $("#versao_texto").fadeIn();
+    $(".pulos_trad").fadeOut();
+    $("#qtdPulos").fadeOut();
 
-    $("#versao_texto").fadeIn()
-    $(".pulos_trad").fadeOut()
-    $("#qtdPulos").fadeOut()
-
-    gravidade = 1.6
-    jogador.velocidade = 0
-    jogador.y = 0
+    gravidade = 1.6;
+    jogador.velocidade = 0;
+    jogador.y = 0;
 
     if(jogador.partida_pontuacao > recorde){
-        localStorage.setItem("recorde", jogador.partida_pontuacao)
-        recorde = jogador.partida_pontuacao
+        localStorage.setItem("recorde", jogador.partida_pontuacao);
+        recorde = jogador.partida_pontuacao;
     }
 
     // Salvando os valores atualizados no LocalStorage
     if(jogador.partida_pontuacao > 0)
-        hist_pontos += jogador.partida_pontuacao
+        hist_pontos += jogador.partida_pontuacao;
 
     if(jogador.partida_moedas_coletadas > 0)
-        altera_moedas(jogador.partida_moedas_coletadas, jogador.moedas)
+        altera_moedas(jogador.partida_moedas_coletadas, jogador.moedas);
     else
-        document.getElementById("notifica_moeda").innerHTML = `$${jogador.moedas}`
-    
+        document.getElementById("notifica_moeda").innerHTML = "$"+ jogador.moedas;
+
     // Dados Gerais
-    jogador.moedas += jogador.partida_moedas_coletadas
-    hist_distancia += jogador.partida_distancia_viajada
-    hist_tempo_jogado += jogador.partida_tempo_jogado
-    hist_pulos += jogador.partida_pulos_dados
-    hist_mod += jogador.partida_mods_ativados
-    hist_tempo_flutuando += jogador.partida_tempo_flutuando
-    hist_mortes += contador_mortes
-    hist_pisoes += jogador.partida_pisoes_pontuados
+    jogador.moedas += jogador.partida_moedas_coletadas;
+    hist_distancia += jogador.partida_distancia_viajada;
+    hist_tempo_jogado += jogador.partida_tempo_jogado;
+    hist_pulos += jogador.partida_pulos_dados;
+    hist_mod += jogador.partida_mods_ativados;
+    hist_tempo_flutuando += jogador.partida_tempo_flutuando;
+    hist_mortes += contador_mortes;
+    hist_pisoes += jogador.partida_pisoes_pontuados;
 
     // Eventos
     hist_eventos_concluidos += jogador.partida_eventos_concluidos;

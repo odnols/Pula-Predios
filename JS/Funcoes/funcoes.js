@@ -9,10 +9,10 @@ function boasVindas(){
     inicia_game = 1;
     confirma_carregamento = 1;
 
-    localStorage.setItem("iniciaLoucura_1.0", 1);  
+    localStorage.setItem("iniciaLoucura_1.1", 1);  
     executaSons("faixa_musicas", "Musicas", "intro_1.ogg", 1);
 
-    valida_jogador = localStorage.getItem("iniciaLoucura_03Beta");
+    valida_jogador = localStorage.getItem("iniciaLoucura_1.1");
     if(valida_jogador != null){
         jogo.temas_comprados = [1, 1]
         localStorage.setItem("temasComprados", jogo.temas_comprados);
@@ -22,62 +22,85 @@ function boasVindas(){
 
 function inicia_jogo(){
 
-    // Verifica se há músicas sendo encerradas
-    // verificaDesligamentos();
-
     // Inicia apenas quando a pontuação estiver igualada a zero
     if(jogador.partida_pontuacao == 0){
 
-        desliga_som("faixa_memes3", 3);
-        $("#quadro_notificacoes").fadeOut();
+        if(tut_complet == 0){
+            executa_tutorial();
+        }else{
+            indice_tutorial = 6;
 
-        // Intervado que trás a pontuação ao zero novamente
-        if(typeof zerador != "undefined")
-            clearInterval(zerador);
+            desliga_som("faixa_memes3", 3);
+            $("#quadro_notificacoes").fadeOut();
 
-        // Intervalo que altera o valor das moedas
-        if(typeof altera_moeda != "undefined")
-            clearInterval(altera_moeda);
-
-        estadoAtual = estados.jogando;
-        jogo.ultimo_evento = null;
-        toolTip();
-        troca_descricao(0, 0, 0);
-
-        // Ligando os motores
-        conquista(0, 0);
-
-        if(segura_som == 0){ // Meme usado para começar
-            executaSons("faixa_memes2", "Inicio", escolhe_som(1, 0), 3);
-            segura_som++;
+            confirma_inicio_partida();
         }
+    }
+}
 
-        cronometroTempoPartida = setInterval(function(){
-            jogador.partida_tempo_jogado += 1;
+function confirma_inicio_partida(){
 
-            jogador.partida_distancia_viajada += velocidade_obs * 2;
-        }, 1000);
+    verificaDesligamentos();
+    
+    // Intervalo que acelera o prédio novamente
+    if(typeof vlt_velocidade != "undefined")
+        clearTimeout(vlt_velocidade);
 
-        if(jogo.tema_ativo == 1)
-            executaSons2("faixa_musicas", "Musicas", "main.ogg", 1);
+    if(typeof volta_velocidade != "undefined")
+        clearInterval(volta_velocidade);
+
+    // Intervado que trás a pontuação ao zero novamente
+    if(typeof zerador != "undefined")
+        clearInterval(zerador);
+
+    // Intervalo que altera o valor das moedas
+    if(typeof altera_moeda != "undefined")
+        clearInterval(altera_moeda);
+
+    estadoAtual = estados.jogando;
+    jogo.ultimo_evento = null;
+    toolTip();
+    troca_descricao(0, 0, 0);
+
+    // Ligando os motores
+    conquista(0, 0);
+
+    if(segura_som == 0){ // Meme usado para começar
+        executaSons("faixa_memes2", "Inicio", escolhe_som(1, 0), 3);
+        segura_som++;
+    }
+
+    cronometroTempoPartida = setInterval(() => {
+        jogador.partida_tempo_jogado += 1;
+
+        jogador.partida_distancia_viajada += velocidade_obs * 2;
+    }, 1000);
+
+    let faixa = ["main_1.ogg", "main_2.ogg", "main_3.ogg", "main_4.ogg"];
+
+    if(jogo.tema_ativo != 0){
+        if(jogo.musica_tema == null)
+            executaSons2("faixa_musicas", "Musicas", faixa[Math.round(3 * Math.random())], 1);
         else
-            executaSons2("faixa_musicas", "Musicas", "main_2.ogg", 1);
+            executaSons2("faixa_musicas", "Musicas", jogo.musica_tema, 1);
+    }else
+        executaSons2("faixa_musicas", "Musicas", "main_old.ogg", 1);
 
-        botoes(600);
+    botoes(600);
 
+    if(estadoAtual == estados.jogando)
         jogo.relogio_eventos();
 
-        jogo.estadoOcioso = 0;
+    jogo.estadoOcioso = 0;
 
-        if(typeof contagemOcioso != "undefined")
-            clearTimeout(contagemOcioso);
-        
-        $("#versao_texto").fadeOut();
-        $(".pulos_trad").fadeIn();
-        $("#qtdPulos").fadeIn();
+    if(typeof contagemOcioso != "undefined")
+        clearTimeout(contagemOcioso);
+    
+    $("#versao_texto").fadeOut();
+    $(".pulos_trad").fadeIn();
+    $("#qtdPulos").fadeIn();
 
-        clearInterval(var_timer_mod);
-    }
+    clearInterval(var_timer_mod);
 }
 
 function regula_velocidade(){
@@ -87,7 +110,7 @@ function regula_velocidade(){
     
     desliga_som("faixa_ambiente", 2);
 
-    regula_velo = setInterval(function(){
+    regula_velo = setInterval(() => {
         if(velocidade_obs > 11){
             velocidade_obs--;
         }else{
@@ -135,7 +158,7 @@ function visualizar_log(caso){
         $("#opcoes").fadeOut("slow", "linear");
     }
 
-    primeira_transicao = setTimeout(()=>{
+    primeira_transicao = setTimeout(() => {
         
         document.getElementById("transitador_sessao").style.height = "100%";
         document.getElementById("transitador_sessao").style.width = "100%";
@@ -156,7 +179,7 @@ function visualizar_log(caso){
         clearTimeout(primeira_transicao);
     }, 500);
 
-    segunda_transicao = setTimeout(()=>{
+    segunda_transicao = setTimeout(() => {
         document.getElementById("transitador_sessao").style.display = "none";
 
         clearTimeout(segunda_transicao);
@@ -184,7 +207,7 @@ function abre_loja(){
 
         executaSons("faixa_musicas", "Musicas", "loja.ogg", 1);
 
-        altera_anim_loja = setTimeout(function(){
+        altera_anim_loja = setTimeout(() => {
             document.getElementById("loja").style.animation = "muda_cor_fundo_loja 50s infinite";
             clearTimeout(altera_anim_loja);
         }, 600);
@@ -219,10 +242,10 @@ function abre_loja_especial(aba_loja){
 
 function novidadesLoja(indice){
 
-    if(idioma == "pt")
-        var novidades_loja = ["Os Bônus já estão disponíveis!", "Temos novos mods :D", "O Patrão ficou maluco!", "A loja foi toda reformada!"];
-    else
-        var novidades_loja = ["Bonuses are now available!", "We have new mods :D", "Boss went crazy!", "The store was completely renovated!"];
+    let novidades_loja = ["Os Bônus já estão disponíveis!", "Temos novos mods :D", "O Patrão ficou maluco!", "A loja foi toda reformada!"];
+
+    if(idioma == "en")
+        novidades_loja = ["Bonuses are now available!", "We have new mods :D", "Boss went crazy!", "The store was completely renovated!"];
 
     if(indice == novidades_loja.length)
         indice_interno = 0;
@@ -231,14 +254,14 @@ function novidadesLoja(indice){
     
     document.getElementById("text_novidades_loja").innerHTML = novidades_loja[indice_interno];
     
-    altera_novidade = setTimeout(function(){
+    altera_novidade = setTimeout(() => {
         novidadesLoja(indice_interno + 1);
     }, 2000);
 }
 
 function pisao_neles(){
     
-    var moeda_ev;
+    let moeda_ev;
 
     //  Efeito de Pisão
     jogador.qtdPulos++;
@@ -264,12 +287,10 @@ function pisao_neles(){
     else
         jogo.notifica("Kick them! +3 Points", "yellow");
 
-    if(jogo.dificuldade != 0)
-        var ganha = moeda_ev + Math.round(3 * Math.random());
-    else
-        var ganha = moeda_ev + Math.round(2 * Math.random());
-    
-    // ganha = 300;
+    let ganha = moeda_ev + Math.round(3 * Math.random());
+
+    if(jogo.dificuldade == 0)
+        ganha = moeda_ev + Math.round(2 * Math.random());
 
     if(ganha > 0){
         // Pling!
@@ -318,7 +339,7 @@ function mostra_moedas(valor){
         if(typeof esconde_moeda != "undefined")
             clearTimeout(esconde_moeda);
 
-        esconde_moeda = setTimeout(function(){
+        esconde_moeda = setTimeout(() => {
             $("#notifica_moeda").fadeOut();
 
             clearTimeout(esconde_moeda);
@@ -362,7 +383,7 @@ function finaliza_evento(){
     if(estadoAtual == estados.jogando)
         executaSons2("faixa_efeitos3", "Efeitos", "levelup.ogg", 2);
 
-    confirmaFechamento = setTimeout(function(){
+    confirmaFechamento = setTimeout(() => {
         jogo.termina_evento = null;
         jogo.seguraEventoOcioso = 0;
         clearTimeout(confirmaFechamento);
@@ -405,8 +426,7 @@ function encerra_modificador(){
 }
 
 function aleatorizaProp(){
-
-    var prop = Math.round(8 * Math.random());
+    let prop = Math.round(8 * Math.random());
     aleatorizadorProp = prop;
 }
 
@@ -498,10 +518,15 @@ function estadoOcioso(caso){
         botoes(600);
         escondeInformacoes(1, 1);
 
-        if(jogo.tema_ativo == 1)
-            executaSons2("faixa_musicas", "Musicas", "ocioso.ogg", 1);
+        let faixa = ["ocioso_1.ogg", "ocioso_2.ogg", "ocioso_3.ogg"];
+
+        if(jogo.tema_ativo != 0)
+            if(jogo.musica_tema_ocioso == null)
+                executaSons2("faixa_musicas", "Musicas", faixa[Math.round(2 * Math.random())], 1);
+            else
+                executaSons2("faixa_musicas", "Musicas", jogo.musica_tema_ocioso, 1);
         else
-            executaSons2("faixa_musicas", "Musicas", "ocioso_2.ogg", 1);
+            executaSons2("faixa_musicas", "Musicas", "ocioso_old.ogg", 1);
     }else{
         // Retorna o jogo do modo ocioso
         cancela_evento();
@@ -677,7 +702,7 @@ function alteraValorEstatisticaPartida(objeto, valor){
     }else{
 
         if(estadoAtual != estados.jogando){
-            cronometra = setTimeout(function(){
+            cronometra = setTimeout(() => {
                 document.getElementById("causa_perca").innerHTML = "??";
 
                 document.getElementById("pontuacao_partida").innerHTML = 0;
@@ -718,11 +743,11 @@ function troca_descricao(primeira, segunda, modo){
     if(modo){
         toolTip(primeira);
 
-        altera_descricao = setTimeout(function(){
+        altera_descricao = setTimeout(() => {
 
             toolTip(segunda);
 
-            requisita_titulo = setTimeout(function(){
+            requisita_titulo = setTimeout(() => {
                 troca_descricao(primeira, segunda, modo);
             }, 2000);
 
@@ -768,11 +793,11 @@ function pisca_loja(cor){
     document.getElementById("filtro_alerta_loja").style.backgroundColor = "rgba("+ cor +")";
     document.getElementById("filtro_alerta_loja").style.display = "block";
 
-    pisca_fundo_loja = setTimeout(function(){
+    pisca_fundo_loja = setTimeout(() => {
         $("#filtro_alerta_loja").fadeOut();
         clearTimeout(pisca_fundo_loja);
 
-        pisca_fundo_loja2 = setTimeout(function(){
+        pisca_fundo_loja2 = setTimeout(() => {
             document.getElementById("filtro_alerta_loja").style.display = "none";
             clearTimeout(pisca_fundo_loja2);
         }, 500);
@@ -789,8 +814,8 @@ function status_confirmacao(valor, requisicao_auto, objeto){
 
     if(valor != null && requisicao_auto == 0){
         if(objeto == "Loja"){
-            var categoria = cache_compra[0];
-            var item = cache_compra[1];
+            let categoria = cache_compra[0];
+            let item = cache_compra[1];
 
             confirma_compra(categoria, item, valor);
             janelaConfirma = 0;
@@ -827,7 +852,7 @@ function exibe_teaser(mensagem, cor){
 
     $("#mensagem_teaser").fadeIn();
 
-    esconde_teaser = setTimeout(function(){
+    esconde_teaser = setTimeout(() => {
         $("#mensagem_teaser").fadeOut();
         clearTimeout(esconde_teaser);        
     }, 3000);
@@ -836,9 +861,9 @@ function exibe_teaser(mensagem, cor){
 // Soma os valores para a pontuação de forma mais natural
 function soma_pontuacao(somar){
 
-    var contador = 0;
+    let contador = 0;
     
-    somador = setInterval(function(){
+    somador = setInterval(() => {
         if(somar > 0){
             contador++;
             jogador.partida_pontuacao++;
@@ -857,7 +882,7 @@ function soma_pontuacao(somar){
 
 function reseta_pontuacao(){
 
-    zerador = setInterval(function(){
+    zerador = setInterval(() => {
 
         if(jogador.partida_pontuacao > 0)
             jogador.partida_pontuacao--;
@@ -898,8 +923,8 @@ function limpa_intervalos(){
 
 function registra_compra(item, requisicao_auto){
 
-    var identificadores = ["tt_skins_compradas", "tt_modificadores_comprados", "tt_bonus_comprados"];
-    var variaveis = [jogador.tt_skins_compradas, jogador.tt_mods_comprados, jogador.tt_bonus_comprados];
+    let identificadores = ["tt_skins_compradas", "tt_modificadores_comprados", "tt_bonus_comprados"];
+    let variaveis = [jogador.tt_skins_compradas, jogador.tt_mods_comprados, jogador.tt_bonus_comprados];
 
     if(requisicao_auto == 0){
         if(item == "Skins"){
@@ -919,7 +944,7 @@ function registra_compra(item, requisicao_auto){
 
         registra_compra(0, 1);
     }else{
-        for(var i = 0; i < 3; i++){
+        for(let i = 0; i < 3; i++){
             document.getElementById(identificadores[i]).innerHTML = variaveis[i];
         }
     }
@@ -937,7 +962,7 @@ function altera_moedas(valor, total){
     
     montante = 0;
 
-    altera_moeda = setInterval(function(){
+    altera_moeda = setInterval(() => {
         
         if(valor < montante)
             montante--;
@@ -962,12 +987,12 @@ function objetosVoadores(){
         segura_objeto_voador = 1;
 
         libera_objeto_voador = 1 + Math.round(5 * Math.random());
-        setTimeout(()=>{
+        setTimeout(() => {
 
-            var tempo = 50 + Math.round(25 * Math.random());
-            var caso = 1 + Math.round(3 * Math.random()); // Define se será um avião, dirigível ou disco voador
+            let tempo = 50 + Math.round(25 * Math.random());
+            let caso = 1 + Math.round(3 * Math.random()); // Define se será um avião, dirigível ou disco voador
             
-            gera_objeto_voador = setTimeout(function(){
+            gera_objeto_voador = setTimeout(() => {
         
                 if(caso == 1 && jogo.tema_ativo == 1) // Gera um avião
                     // Apenas cria o avião se o tema for o padrão
@@ -990,16 +1015,15 @@ function objetosVoadores(){
 }
 
 function regula_sessao_loja(categoria){
-    var apelido_interno = "Skins";
+    let apelido_interno = "Skins";
 
     if(sessao_loja_ativa != 1){
-
         if(categoria == "Modificadores"){
             executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2);
         
-            if(idioma == "pt")
-                apelido_interno = categoria;
-            else
+            apelido_interno = categoria;
+
+            if(idioma == "en")
                 apelido_interno = "Modifiers";
         }
         
@@ -1034,7 +1058,7 @@ function regula_sessao_loja(categoria){
         document.getElementById("transitador_sessao").style.backgroundColor = "rgb(3, 73, 64);";
         document.getElementById("transitador_sessao").style.animation = "transita_loja .5s";
     
-        primeira_transicao = setTimeout(()=>{
+        primeira_transicao = setTimeout(() => {
             document.getElementById("transitador_sessao").style.width = "100%";
             document.getElementById("transitador_sessao").style.animation = "transita_loja2 .5s";
 
@@ -1043,7 +1067,7 @@ function regula_sessao_loja(categoria){
             clearTimeout(primeira_transicao);
         }, 500);
 
-        segunda_transicao = setTimeout(()=>{
+        segunda_transicao = setTimeout(() => {
             document.getElementById("transitador_sessao").style.display = "none";
 
             clearTimeout(segunda_transicao);
@@ -1060,6 +1084,8 @@ function regula_sessao_loja(categoria){
 }
 
 function sincronizaApelidoInterno(apelido){
+
+    conversao = "Skins";
 
     if(apelido == "Modificadores")
         if(idioma == "pt")
@@ -1090,13 +1116,13 @@ function altera_altura_fechador(){
         // Animação do fechador da loja subindo
         fechador_loja[0].style.animation = "altera_posicao_fechador 1s";
 
-        setTimeout(()=>{
+        setTimeout(() => {
             fechador_loja[0].style.top = "12%";
         }, 990);
     }else{
         fechador_loja[0].style.animation = "altera_posicao_fechador2 1s";
 
-        setTimeout(()=>{
+        setTimeout(() => {
             fechador_loja[0].style.top = "24%";
         }, 990);
     }
@@ -1104,6 +1130,8 @@ function altera_altura_fechador(){
 
 function notificacao(item, modo){
 
+    carrega_idioma(1);
+    
     if(segura_notificacao == 0){
         segura_notificacao = 1;
 
@@ -1126,13 +1154,13 @@ function notificacao(item, modo){
 
         executaSons("faixa_memes3", "Memes", "gas.ogg", 3);
 
-        setTimeout(function(){
+        setTimeout(() => {
             tempo_notificacao();
         }, 1200);
     }else{
         bloqueia_adicao = 0;
 
-        for(var i = 0; i < fila_notificacoes.length; i++){
+        for(let i = 0; i < fila_notificacoes.length; i++){
             if(fila_notificacoes[i] == item)
                 bloqueia_adicao++;
         }
@@ -1151,7 +1179,6 @@ function notificacao(item, modo){
 
 // Redireciona a fila de notificações
 function redireciona_notificacao(valor){
-    
     if(fila_notificacoes.length == 0)
         clearInterval(puxa_proxima_notificacao);
 
@@ -1163,7 +1190,7 @@ function tempo_notificacao(){
     if(tamanho_barra_notificacao == null)
         tamanho_barra_notificacao = 0;
 
-    preenche_barra_notificacao = setInterval(function(){
+    preenche_barra_notificacao = setInterval(() => {
         if(tamanho_barra_notificacao >= 100){
             tamanho_barra_notificacao = 100;
 
@@ -1172,7 +1199,7 @@ function tempo_notificacao(){
 
             document.getElementById("quadro_notificacoes").style.animation = "fecha_notificacao 1s";
 
-            gatilho_fecha_notificacao = setTimeout(function(){
+            gatilho_fecha_notificacao = setTimeout(() => {
                 clearInterval(preenche_barra_notificacao);
                 clearTimeout(gatilho_fecha_notificacao);
 
@@ -1180,7 +1207,7 @@ function tempo_notificacao(){
                 tamanho_barra_notificacao = 0;
                 segura_notificacao = 0;
 
-                setTimeout(()=>{
+                setTimeout(() => {
                     if(fila_notificacoes.length > 0){
                         redireciona_notificacao(fila_notificacoes[0]);
                     }
@@ -1198,7 +1225,81 @@ function pausa_tempo_notificacao(){
 }
 
 function recarrega_jogo_tema(){
-    setTimeout(()=>{
+    setTimeout(() => {
         location.reload();
     }, 2000);
+}
+
+function verifica_tema(){
+    // Encerra as transições entre dia e noite
+    if(typeof estrelificador != "undefined")
+        clearInterval(estrelificador);
+
+    if(typeof dializador != "undefined")
+        clearInterval(dializador);
+
+}
+
+function freia_predio(){
+    clearTimeout(tRd);
+
+    zera_velocidade = setInterval(() => {
+        if(velocidade_obs > 0)
+            velocidade_obs--;
+        else{
+            velocidade_obs = 0;
+            clearInterval(zera_velocidade);
+        }
+    }, 40);
+}
+
+function acelera_predio(){
+    vlt_velocidade = setTimeout(() => {
+        animaRoda();
+
+        volta_velocidade = setInterval(() => {
+
+            if(velocidade_obs < 10)
+                velocidade_obs++;
+            else{
+                velocidade_obs = 10;
+                clearInterval(volta_velocidade);
+                clearTimeout(vlt_velocidade);
+            }
+        }, 100);
+    }, 2000);
+}
+
+function verifica_selecionado(local){
+    
+    if(typeof desliga_preview != "undefined") // Estende a visualização da música
+        clearTimeout(desliga_preview);
+
+    if(local)
+        componente = document.getElementById("seleciona_tema").value;
+    else
+        componente = document.getElementById("seleciona_ocioso").value; 
+
+    if(componente == "random"){
+        jogo.musica_tema = null;
+        
+        if(local)
+            localStorage.setItem("temaMusica", 0);
+        else
+            localStorage.setItem("temaOcioso", 0);
+    }else{
+        if(local){
+            jogo.musica_tema = componente +".ogg";
+            localStorage.setItem("temaMusica", componente +".ogg");
+        }else{
+            jogo.musica_tema_ocioso = componente +".ogg";
+            localStorage.setItem("temaOcioso", componente +".ogg");
+        }
+
+        executaSons2("faixa_musicas", "Musicas", componente +".ogg", 1);
+    }
+
+    desliga_preview = setTimeout(() => {
+        desliga_som("faixa_musicas", 1);
+    }, 10000);
 }

@@ -1,3 +1,5 @@
+indice_tutorial = 0, tut_complet = null;
+
 function exibeTutorial(valor){
 
     switch(valor){
@@ -85,10 +87,81 @@ function exibeTutorial(valor){
             else
                 document.getElementById("item_selecionado").innerHTML = "<h2 class='nome_tutorial'>Bonuses</h2><br><br><br><p> These are items that work similarly to the <a href='#' onclick='exibeTutorial("+ 12 +")'>modifiers</a>, they are acquired through the store and will be valid for the next 5 games played.</p><h2 class='nome_tutorial'>Available items</h2><br><br><br><p>We currently have 3 purchase bonuses, as the name implies, they will grant bonuses to the player during the match.</p>";
         break;
+        case 15:
+            if(idioma == "pt")
+                document.getElementById("item_selecionado").innerHTML = "<h2 class='nome_tutorial'>História</h2><br><br><br><p>Você foi selecionado para participar de testes super-secretos para uma organização de espiões, eles estão elaborando um veículo que não pode levantar suspeitas em hipótese nenhuma! Assuma a direção deste prédio com rodas, habilidades e propulsores inimagináveis e corra o quanto puder.</p>";
+            else
+                document.getElementById("item_selecionado").innerHTML = "<h2 class='nome_tutorial'>Story</h2><br><br><br><p>You have been selected to participate in top secret tests for an espionage organization, they are designing a vehicle that cannot arouse suspicion under any circumstances! Take command of this building with wheels, skills and unimaginable thrusters and run as much as you can.</p>";
         default:
             $("#tutoriais_2").animate({ scrollTop: 0 }, "slow");
         break;
     }
 
     $("#tutoriais_2").animate({ scrollTop: 0 }, "slow");
+}
+
+function repete_tutorial(){
+    indice_tutorial = 0;
+    executa_tutorial(null, 1);
+}
+
+function executa_tutorial(requisicao_auto, especial){
+
+    if(tut_complet == 0){
+
+        $("#tutorial_em_jogo").fadeIn();
+
+        estadoAtual = estados.tutorial;
+
+        if(indice_tutorial == 2)
+            freia_predio();
+
+        let tutorial_hist = ["Olá, é um prazer ter você por aqui!", "Vamos parar o veículo de testes para você entrar", "Suba lá e se arrume", "Nós estamos testando esse novo veículo e queremos ter certeza que ele é bom", "Tudo o que você precisa fazer é pilotar ele...", "Vamos começar!"];
+
+        if(idioma == "en")
+            tutorial_hist = ["Hello, it's a pleasure to have you here!", "We will stop the test vehicle for you to enter", "Get up there and get ready", "We are testing this new vehicle and we want to make sure that it is good", "All you have to do is drive it...", "Let's start!"];
+
+        let el = document.getElementById("frase_tuto_em_game");
+        
+        if(requisicao_auto == null && indice_tutorial < tutorial_hist.length){
+            el.innerHTML = "";
+            showtext(el, tutorial_hist[indice_tutorial], 1);
+        }
+
+        if(requisicao_auto)
+            $(".avancar_tuto").fadeIn();
+
+        if(indice_tutorial == tutorial_hist.length){
+            controles_tutorial();
+            $("#tutorial_em_jogo").fadeOut();
+        }
+    }
+}
+
+function controles_tutorial(){
+
+    indice_tutorial = 6;
+    acelera_predio();
+    
+    $("#placeholder_controles").fadeIn();
+    
+    setTimeout(function(){
+        $("#placeholder_controles").fadeOut();
+        localStorage.setItem("tutorialCompleto", 1);
+
+        confirma_inicio_partida();
+    }, 10000);
+}
+
+function avanca_tutorial(){
+    indice_tutorial++;
+    executa_tutorial();
+}
+
+function pular_tutorial(){
+    $("#tutorial_em_jogo").fadeOut();
+    indice_tutorial = 6;
+
+    localStorage.setItem("tutorialCompleto", 1);
+    confirma_inicio_partida();
 }

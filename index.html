@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Pula Prédios</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="shortcut icon" href="Imagens/Icones/Icone.png">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
@@ -30,9 +30,10 @@
     <script src="JS/Graficos/desenhaChao.js"></script>
     <script src="JS/Principais/engine.js"></script>
     <script src="JS/Funcoes/eventos.js"></script>
+    <script src="JS/Funcoes/historia.js"></script>
     <script src="JS/Principais/insere.js"></script>
     <script src="JS/Funcoes/funcoes.js"></script>
-    <script src="JS/Funcoes/loja.js"></script>
+    <script src="JS/Principais/loja.js"></script>
     <script src="JS/Graficos/motor_grafico.js"></script>
     <script src="JS/Funcoes/sons.js"></script>
     <script src="JS/Funcoes/tutorial.js"></script>
@@ -54,13 +55,24 @@
     </script>
 </head>
 <body>
-    
+
     <!-- Usado para carregar os dados do jogo -->
     <div id="carrega_jogo">
 
         <div id="cabecalho_carrega_jogo">
             <h1>Pula Prédios</h1>
             <hr style="width: 50%;">
+
+            <div id="primeiro_logon">
+                <button onclick="carrega_jogo(1)" id="button_inicia_game">Iniciar</button>
+
+                <div id="idioma_config_inicio">
+                    <button class="button_opcoes_inicio" onclick="define_idioma('en')">English</button><br><br>
+                    <button class="button_opcoes_inicio" onclick="define_idioma('pt')">Português</button>
+                </div>
+            </div>
+
+            <h4 style="position: absolute; right: 2%; bottom: 2%" id="versao_trad">Versão 1.1</h4>
         </div>
 
         <div id="status_carregamento">
@@ -69,6 +81,37 @@
             <div id="barra_carregamento">
                 <div id="progresso_barra_carregamento"></div>
             </div>
+        </div>
+    </div>
+
+    <div id="historia_jogo">
+        <div id="texto_historia"></div>
+
+        <button class="avancar_hist avancar_trad" onclick="avanca_hist()"></button>
+        <button class="avancar_hist_block avancar_trad"></button><br><br><br>
+        <button class="avancar_hist pular_hist pular_trad" onclick="pular_hist()"></button>
+
+        <div id="escolhas_hist">
+            <button class="nega_hist" onclick="nega_hist()"></button>
+            <button class="confirma_hist" onclick="confirma_hist()"></button>
+        </div>
+    </div>
+
+    <div id="tutorial_em_jogo">
+        <span id="frase_tuto_em_game"></span>
+
+        <button class="avancar_tuto avancar_trad" onclick="avanca_tutorial()"></button>
+        <button class="avancar_tuto_block avancar_trad"></button>
+
+        <button class="pular_tuto pular_trad" onclick="pular_tutorial()"></button>
+    </div>
+
+    <div id="controles_tuto">
+        <div id="placeholder_controles">
+            <p class="tecla espaco_trad"></p> <p class="espacador"></p> <p class="tecla" style="width: 70px;">W</p> <p class="espacador"></p><p class="controle_text"> -> <span class="pulo_trad"></span></p>
+            
+            <br><br><br>
+            <p class="tecla">D</p> <p class="espacador"></p> <div class="enter"><p class="enter2">⏎</p></div> <p class="espacador"></p> <p class="controle_text">-> <span class="mod_trad"></span></p>
         </div>
     </div>
 
@@ -100,6 +143,13 @@
         <img class="sprite_noite" id="predio2_1" src="Imagens/Sprites/Cidade/Predio2_1.png">
         <img class="sprite_noite" id="predio2_2" src="Imagens/Sprites/Cidade/Predio2_2.png">
         <img class="sprite_noite" id="predio3" src="Imagens/Sprites/Cidade/Predio3.png">
+
+        <img class="sprite_noite" id="predio1_1_background" src="Imagens/Sprites/Cidade/Predio1_1_background.png">
+        <img class="sprite_noite" id="predio1_2_background" src="Imagens/Sprites/Cidade/Predio1_2_background.png">
+        <img class="sprite_noite" id="predio2_1_background" src="Imagens/Sprites/Cidade/Predio2_1_background.png">
+        <img class="sprite_noite" id="predio2_2_background" src="Imagens/Sprites/Cidade/Predio2_2_background.png">
+        <img class="sprite_noite" id="predio3_background" src="Imagens/Sprites/Cidade/Predio3_background.png">
+
         <img class="sprite_noite" id="pisao_noite" src="Imagens/Sprites/Cidade/Pisao_noite.png">
         <img class="sprite_noite" id="pisao2_noite" src="Imagens/Sprites/Cidade/Pisao2_noite.png">
 
@@ -131,8 +181,6 @@
         <audio id="faixa_efeitos2"></audio>
         <audio id="faixa_efeitos3"></audio>
     </div>
-
-    <div id="flag_api"></div>
 
     <div id="conquistas">
         <img id="trofeu" src="Imagens/Icones/trofeu.png">
@@ -179,6 +227,11 @@
 
     <!-- Tela Secundária com sensibilidade a cliques, também utilizada para fazer transições entre dia e noite -->
     <div id="filtro"></div>
+    
+    <div id="botoes_acessibilidade">
+        <button class="button_mod" onclick="jogador.modificador()">Mod</button>
+        <button class="button_pulo" onclick="clique(32)"></button>
+    </div>
 
     <!-- Tela de estatísticas para quando o jogador morre -->
     <div id="filtro2">
@@ -219,7 +272,6 @@
     </div>
 
     <div id="conquistas_mapa"><br>
-
         <span class="fecha_janela" onclick="botoes(81)">X</span>
 
         <center><h1 class="conquistas_trad"></h1></center>
@@ -238,6 +290,7 @@
         <hr style="width: 50%;">
 
         <div id="tutoriais_1">
+            <a class="opcao_tutorial historia_trad" href="#" onclick="exibeTutorial(15)"></a><br><br>
             <a class="opcao_tutorial como_jogar_trad" href="#" onclick="exibeTutorial(1)"></a><br><br>
             <a class="opcao_tutorial mod_trad" href="#" onclick="exibeTutorial(2)"></a><br><br>
             <a class="opcao_tutorial bonus_trad" href="#" onclick="exibeTutorial(14)"></a><br><br>
@@ -320,11 +373,11 @@
         <div class="opcoes_esquerda_2">
             <h4 class="problemas_descri_trad"></h4>
 
-            <a href="https://twitter.com/slondotk" target="_blank"><img src="Imagens/Icones/Twitter.png" style="width: 250px;"></a>
+            <a href="https://twitter.com/slndtk" target="_blank"><img src="Imagens/Icones/Twitter.png" style="width: 250px;"></a>
         </div>
 
         <div class="opcoes_direita">
-            <!-- <iframe src="https://discord.com/widget?id=666465457565335563&theme=dark" width="350" height="360" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe> -->
+            <iframe src="https://discord.com/widget?id=666465457565335563&theme=dark" width="350" height="360" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         </div>
     </div>
 
@@ -417,7 +470,8 @@
             <div class="itens_configs">
                 <h4 class="texto"><button id="status_tema_atual" class="button_opcoes" onclick="alteraRelogio()"></button> : <span class="definir_tempo_trad"></span></h4>
 
-                <h4 class="texto"><button id="status_animacoes" class="button_opcoes" onclick="alteraQualidadeGrafica()"></button> : <span class="animacoes_trad"></span></h4>
+                <h4 class="texto" id="button_animacoes_cell"><button id="status_animacoes_block" class="button_opcoes_block"><span class="status_anima"></span></button> : <span class="animacoes_trad"></span></h4>
+                <h4 class="texto" id="button_animacoes_pc"><button id="status_animacoes" class="button_opcoes" onclick="alteraQualidadeGrafica()"></button> : <span class="animacoes_trad"></span></h4>
             </div>
         </div>
 
@@ -464,6 +518,23 @@
                 <br>
                 <h4 class="texto"><center class="sons_trad"></center><button id="status_volume_som" class="button_opcoes" onclick="alteraEstadoSom()"></button></h4>
 
+                <div>
+                    <select id="seleciona_tema" onchange="verifica_selecionado(1)">
+                        <option value="main_1">Tema 1</option>
+                        <option value="main_2">Tema 2</option>
+                        <option value="main_3">Tema 3</option>
+                        <option value="main_4">Tema 4</option>
+                        <option value="random">Random</option>
+                    </select>
+
+                    <select id="seleciona_ocioso" onchange="verifica_selecionado(0)">
+                        <option value="ocioso_1">Ocioso 1</option>
+                        <option value="ocioso_2">Ocioso 2</option>
+                        <option value="ocioso_3">Ocioso 3</option>
+                        <option value="random">Random</option>
+                    </select>
+                </div>
+
             </div>
         </div>
     </div>
@@ -498,16 +569,10 @@
     <!-- Log de Mudanças e Apresentações -->
     <div id="boas_vindas">
         <div id="pag1"><br>
-            <h1>Olá! Bem-vindo(a)</h1><hr>
-            <p>Esta é a 1.0!
-
-                <center>
-                    <img id="ibagem" src="Imagens/Atualiza/Bullshit.gif"><br><br>
-                </center>
-
-            Cuidado com os bugs! <br>Não esperamos, mas pode acontecer :P</p>
-            <strong style="color: red">Sons ativados! Abaixe o volume ;)</strong><br>
-            <button class="botao_a" onclick="boasVindas()">Beleuza!</button><br><br>
+            <h1 class="boas_vindas_trad"></h1><hr>
+            <p class="versao_trad"></p>
+            <strong style="color: red" class="sons_ativados_trad"></strong><br>
+            <button class="botao_a beleuza_trad" onclick="boasVindas()"></button><br><br>
         </div>
     </div>
 
@@ -570,7 +635,7 @@
 
         <div id="quadro_novidades_loja">
             <fieldset id="colore_loja">
-                <img id="sprite_jogador_loja" src="Imagens/Sprites/Jogador/Jogador7_noite.png" animation="loja_move_jogador 5s;">
+                <img id="sprite_jogador_loja" src="Imagens/Loja/Skins/Jogador7_noite.png" animation="loja_move_jogador 5s;">
                 
                 <div id="text_novidades_loja"></div>
                 <img id="icon_loja_novidades" src="Imagens/Icones/loja.png">
@@ -615,11 +680,6 @@
         <h3 id="mensagem_teaser"></h3>
     </div>
 
-    <!-- <script src="JS/Funcoes/efeitosClimaticos.js"> -->
-        <!-- setup(); -->
-    <!-- </script> -->
-    
-    <script src="JS/Graficos/raios.js"></script>
-    <script> carrega_jogo(); </script>
+    <script> carrega_jogo(0); </script>
 </body>
 </html>

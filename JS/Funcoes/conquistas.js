@@ -10,7 +10,7 @@ function sincronizaNomeConquistas(){
 }
 
 function conquista(conquista, modo){
-    var tempo_conquista;
+    let tempo_conquista;
     
     if(lista_conquistas_ganhas[conquista] == 0 || modo == 1){
         lista_conquistas_ganhas[conquista] = 1;
@@ -30,7 +30,7 @@ function conquista(conquista, modo){
 
             // Colhendo os frutos
             if(conquista == 26){
-                notificacao(0);
+                notificacao(0, 0);
                 mostra_moedas(Math.round(25 * Math.random()));
             }
 
@@ -72,15 +72,15 @@ function conquista(conquista, modo){
                     tempo_conquista = 3000;
                 }
 
-                fecha_conquista = setTimeout(function(){ 
+                fecha_conquista = setTimeout(() => { 
                     document.getElementById("conquistas").style.animation = "fecha_conquista 2s";
                     document.getElementById("texto_conquista").style.animation = "esconde_texto 1s";
 
-                    setTimeout(function(){
+                    setTimeout(() => {
                         document.getElementById("texto_conquista").style.display = "none";
                     }, 1000);
 
-                    setTimeout(function(){
+                    setTimeout(() => {
                         document.getElementById("conquistas").style.display = "none";
                     }, 1900);
                     
@@ -88,7 +88,7 @@ function conquista(conquista, modo){
                 }, tempo_conquista);
 
                 // Libera para a próxima chamada
-                solta_conquista = setTimeout(function(){
+                solta_conquista = setTimeout(() => {
                     estado_conquista = 0;
                     clearTimeout(solta_conquista);
                 }, tempo_conquista + 2000);
@@ -115,7 +115,7 @@ function conquista(conquista, modo){
 
             fila_conquistas.push(conquista);
 
-            puxa_proxima = setInterval(function(){
+            puxa_proxima = setInterval(() => {
                 if(estado_conquista == 0)
                     redireciona_conquista(fila_conquistas[0]);
             }, 1000);
@@ -142,7 +142,7 @@ function sincronizaQuadroConquistas(){
 
     document.getElementById("placeholder_conquista").innerHTML = "";
 
-    for(var i = 0; i < lista_conquistas.length; i++){
+    for(let i = 0; i < lista_conquistas.length; i++){
         if(lista_conquistas_ganhas[i] == 0){
             if(conquistas_secretas.includes(i))
                 document.getElementById("placeholder_conquista").innerHTML += "<img class='img_conquista' src='Imagens/Conquistas/secreta.jpg'>";
@@ -156,9 +156,9 @@ function sincronizaQuadroConquistas(){
 
 function sincronizaEstatisticasConquistas(){
 
-    var obtidas = 0;
+    let obtidas = 0;
     
-    for(var x = 0; x < lista_conquistas.length; x++){
+    for(let x = 0; x < lista_conquistas.length; x++){
         if(lista_conquistas_ganhas[x] == 1 || lista_conquistas_ganhas[x] == 2)
             obtidas += 1;
     }
@@ -203,7 +203,7 @@ function sincronizaConquistas(){
         conquista(10, 0);
     
     // Colhendo os Frutos
-    if((lista_conquistas_ganhas[13] == 2 || lista_conquistas_ganhas[13] == 1) && (lista_conquistas_ganhas[8] == 2 || lista_conquistas_ganhas[8] == 1)){
+    if((lista_conquistas_ganhas[13] != 0) && (lista_conquistas_ganhas[8] != 0)){
         conquista(26, 0);
     }
 }

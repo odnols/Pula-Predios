@@ -10,6 +10,7 @@ estados = {
     jogando: 1,
     perdeu: 2,
     ocioso: 3,
+    tutorial: 4,
 },
 
 background_predios = {
@@ -68,7 +69,7 @@ Cenario_sprites = {
     atualiza: function(){
 
         // Coletando a data e extraindo a hora
-        var nova_data = new Date();
+        let nova_data = new Date();
         hora = nova_data.getHours();
         
         // Define se o jogo iniciará de dia ou de noite
@@ -91,18 +92,23 @@ Cenario_sprites = {
             this.astro[0] += .5;
         }
 
+        if(velocidade_obs > 5)
+            velocidade_interna = velocidade_obs;
+        else
+            velocidade_interna = 5;
+
         this.predios -= velocidade_obs * 0.2;
-        this.nuvem_camada1 -= velocidade_obs * 0.03;
-        this.nuvem_camada2 -= velocidade_obs * 0.04;
-        this.nuvem_camada3 -= velocidade_obs * 0.05;
-        this.nuvem_camada4 -= velocidade_obs * 0.06;
+        this.nuvem_camada1 -= velocidade_interna * 0.03;
+        this.nuvem_camada2 -= velocidade_interna * 0.04;
+        this.nuvem_camada3 -= velocidade_interna * 0.05;
+        this.nuvem_camada4 -= velocidade_interna * 0.06;
         
         // Controla a posição no eixo X do objeto voador
         if(this.objeto_voador[3] != 0 && this.objeto_voador[3] != 3)
             this.objeto_voador[1] += this.objeto_voador[0];
         
         if(this.objeto_voador[3] == 3) // Velocidade do Dirigível
-            this.objeto_voador[1] += this.objeto_voador[0] * velocidade_obs;
+            this.objeto_voador[1] += this.objeto_voador[0] * velocidade_interna;
         
         objetosVoadores();
 
@@ -212,8 +218,6 @@ Cenario_sprites = {
             transitador("disco_voador_noite", 102, this.objeto_voador[1], this.objeto_voador[2] - 2);
         }
 
-        // render_raio();
-        
         spriteNuvens.desenha(this.nuvem_camada1, 280);
         spriteNuvens.desenha(this.nuvem_camada1 + Largura, 280);
 
@@ -240,7 +244,7 @@ Cenario_sprites = {
 
         if(this.objeto_voador[3] == 3){ // Dirigível
             spriteDirigivel.desenha(this.objeto_voador[1], this.objeto_voador[2]);
-            transitador("dirigivel_noite", 200, this.objeto_voador[1], this.objeto_voador[2]);
+            transitador("dirigivel_noite", 200, this.objeto_voador[1] - 120, this.objeto_voador[2] - 45);
         }
 
         spriteNuvensSup.desenha(this.nuvem_camada3 + 500, 150);
@@ -268,8 +272,8 @@ background_ceu = {
 
         transitador("ceu_noite", 750, 0, 0);
 
-        // if(Cenario_sprites.astro[2] == 1 && Cenario_sprites.astro[0] < 1200)   
-            // spriteMascara_estrelas.desenha(10, 0);
+        if(Cenario_sprites.astro[2] == 1 && Cenario_sprites.astro[0] < 1200)   
+            spriteMascara_estrelas.desenha(0, 0);
     }
 },
 
@@ -458,6 +462,8 @@ jogo = {
     
     tema_ativo: 1,
     temas_comprados: [0, 1],
+    musica_tema: null,
+    musica_tema_ocioso: null,
     
     timer_mod: 5,
     liberaMod: 0,
@@ -496,8 +502,10 @@ jogo = {
         document.getElementById("qtdMods").style.display = "none";
         
         // Restaura a skin ao escolhido anteriormente depois do modificador
-        if(jogador.mod_em_uso == 1)
+        if(jogador.mod_em_uso == 1){
+            anim_indices[5] = 0;
             limpa_ferrugem();
+        }
 
         var_timer_recarrega = setInterval( function(){
             if(jogo.timer_mod < jogador.tempoMod && mod == 0){
@@ -537,12 +545,12 @@ jogo = {
             else
                 console.log("%cNext event in: "+ this.contador_tempo +" seconds", "color: purple;");
 
-        ativa_evento = setTimeout(function(){
+        ativa_evento = setTimeout(() => {
             jogo.eventos();
             clearTimeout(ativa_evento);
         }, this.contador_tempo * 1000);
 
-        deleta_cronometro = setTimeout(function(){
+        deleta_cronometro = setTimeout(() => {
             $("#temporizador").fadeOut();
             $("#barra_loading").fadeOut();
 
@@ -637,7 +645,7 @@ jogo = {
                 if(estadoAtual == estados.jogando)  
                     jogador.partida_evento_parque++;
 
-                parque_event = setTimeout(function(){
+                parque_event = setTimeout(() => {
                     if(estadoAtual == estados.jogando){
                         if(idioma == "pt")
                             jogo.notifica("Hora de Pontuar!", "#14e11e");
@@ -671,7 +679,7 @@ jogo = {
             if(estadoAtual == estados.jogando)
                 jogo.notifica(this.anuncio_evento[this.inicia_evento], "white");
 
-            setTimeout(function(){
+            setTimeout(() => {
 
                 jogo.evento = jogo.inicia_evento;
 
@@ -685,7 +693,7 @@ jogo = {
                     jogo.contador_tempo_evento_b = jogo.contador_tempo_evento;
 
                 if(estadoAtual == estados.jogando || estadoAtual == estados.ocioso){
-                    tempo_evento = setTimeout(function(){
+                    tempo_evento = setTimeout(() => {
                         
                         finaliza_evento();
                         termina_evento = jogo.evento;
@@ -715,9 +723,10 @@ jogo = {
             desliga_som2("faixa_ambiente", 2);
 
         estadoAtual = estados.perdeu;
-
+        
         contador_mortes++;
         
+        jogador.chao_referencia = chao.y;
         jogador.qtdPulos = 0;
 
         // Regula a quantidade de modificadores conforme a dificuldade do jogo
@@ -795,7 +804,7 @@ jogo = {
         if(Cenario_sprites.astro[2] == 0)
             document.getElementById("notificacoes").style.color = "rgba(0, 0, 0, .8)";
 
-        limpar_notificacao = setTimeout(function(){
+        limpar_notificacao = setTimeout(() => {
             $("#notificacoes").fadeOut();
             clearTimeout(limpar_notificacao);
         }, 2000);
@@ -811,7 +820,7 @@ jogador = {
     forcaDoPulo: 23.6,
     qtdPulos: 3,
     qtdMods: 5,
-    chao_referencia: chao.y ,
+    chao_referencia: chao.y,
 
     moedas: 0,
     moedas_coletadas: 0,
@@ -862,7 +871,7 @@ jogador = {
                 gravidade = .3;
             }
             
-            if(estadoAtual != estados.ocioso)
+            if(estadoAtual != estados.ocioso && this.mod_em_uso != 100)
                 this.chao_referencia = 650;
         }else if(this.mod_em_uso != 100 && chao.muda_chao[1] == 0){
             this.chao_referencia = chao.y;
@@ -913,7 +922,7 @@ jogador = {
 
         jogo.liberaMod = 1;
 
-        if(estadoAtual == estados.jogando && jogo.timer_mod != 0 && mod != 1 && this.qtdMods > 0){
+        if((estadoAtual == estados.jogando || estadoAtual == estados.tutorial) && jogo.timer_mod != 0 && mod != 1 && this.qtdMods > 0){
             
             if(jogo.estatisticasNerds)
                 if(idioma == "pt")
@@ -956,14 +965,14 @@ jogador = {
                 enferruja();
             
             if(this.mod_em_uso != 100){
-                modificador_timer = setTimeout(function(){
+                modificador_timer = setTimeout(() => {
                         mod = 1;    // Flutua
                     clearTimeout(modificador_timer);
                 }, 200);
             }
 
             if(this.mod_em_uso == 1){    // Modificador: De Aço
-                modificador_timer_som = setInterval(function(){
+                modificador_timer_som = setInterval(() => {
                     if(jogador.y >= 432){
                         executaSons2("faixa_efeitos3", "Efeitos", "bigorna.ogg", 2);
                         clearInterval(modificador_timer_som);
@@ -979,7 +988,7 @@ jogador = {
     },
 
     timer: function(){
-        var_timer_modificador = setInterval(function(){
+        var_timer_modificador = setInterval(() => {
 
             if(jogo.timer_mod > 0 && mod == 1){
                 jogo.timer_mod--;
@@ -1075,8 +1084,8 @@ propsfundo = {
         else
             this.tempoInsere--;
 
-        for(var x = 0, tam = this._obsfundo.length; x < tam; x++){
-            var obsb = this._obsfundo[x];
+        for(let x = 0, tam = this._obsfundo.length; x < tam; x++){
+            let obsb = this._obsfundo[x];
             obsb.x -= velocidade_obs * 0.8;
 
             if(obsb.x <= -obsb.largura - 90){
@@ -1089,7 +1098,7 @@ propsfundo = {
     },
 
     desenha: function(){
-        desenha_propsfundo();
+        desenha_chao_fundo();
     }
 },
 
@@ -1110,8 +1119,8 @@ propsfrente = {
         else
             this.tempoInsere--;
 
-        for(var x = 0, tam = this._obsfrente.length; x < tam; x++){
-            var obsf = this._obsfrente[x];
+        for(let x = 0, tam = this._obsfrente.length; x < tam; x++){
+            let obsf = this._obsfrente[x];
             obsf.x -= velocidade_obs * 1.2;
 
             if(obsf.x <= -obsf.largura - 90){
@@ -1124,7 +1133,7 @@ propsfrente = {
     },
 
     desenha: function(){
-        desenha_propsfrente();
+        desenha_chao_frente();
     }
 },
 
@@ -1149,10 +1158,13 @@ obstaculos = {
             jogador.pula();
 
         if(jogador.y >= 432 && chao.muda_chao[1] == 2 && ((jogo.timer_mod == 5 && jogador.mods_comprados[1] == 0) || (jogo.timer_mod == 10 && jogador.mods_comprados[0] == 1) || (jogo.timer_mod == 5 && jogador.mods_comprados[1] == 1)))
-            if(estadoAtual == estados.jogando){
-
+            if(estadoAtual == estados.jogando || estadoAtual == estados.tutorial){
                 if(mod == 0){
-                    jogo.perdeu(jogo.inicia_evento);
+                    if(jogador.chao_referencia == 650 || chao.muda_chao[1] == 2)
+                        jogo.perdeu(jogo.inicia_evento);
+                    else
+                        jogo.perdeu(0);
+
                     gravidade = .3;
                 }
             }
@@ -1162,13 +1174,13 @@ obstaculos = {
         else
             this.tempoInsere--;
 
-        for(var i = 0, tam = this._obs.length; i < tam; i++){
-            var obs = this._obs[i];
+        for(let i = 0, tam = this._obs.length; i < tam; i++){
+            let obs = this._obs[i];
 
             obs.x -= velocidade_obs;
 
             if(jogador.x < obs.x + obs.largura && jogador.x + jogador.largura >= obs.x && jogador.y + jogador.altura >= chao.y - obs.altura && obs.altura >= 55){
-                if((mod == 1 || jogo.timer_mod < 1) && jogador.qtdMods > 0 && estadoAtual == estados.jogando){
+                if((mod == 1 || jogo.timer_mod < 1) && jogador.qtdMods > 0 && (estadoAtual == estados.jogando || estadoAtual == estados.tutorial)){
 
                     if(obs.altura >= 55 && obs.altura < 60){
                         pisao_neles();
@@ -1184,7 +1196,7 @@ obstaculos = {
                         i--;
                         contador_mortes++;
             
-                        if(estadoAtual == estados.jogando && obs.altura > 60){
+                        if((estadoAtual == estados.jogando || estadoAtual == estados.tutorial ) && obs.altura > 60){
                             if(jogador.mod_em_uso != 1){
                                 if(idioma == "pt")
                                     jogo.notifica("Não Atropele os Prédios!", "red");
@@ -1209,11 +1221,14 @@ obstaculos = {
                             executaSons("faixa_efeitos2", "Efeitos", "Batida.ogg", 2);
                         }
                     }
-                }else if(estadoAtual == estados.jogando){
+                }else if(estadoAtual == estados.jogando || estadoAtual == estados.tutorial){
                     if(obs.altura >= 55 && obs.altura < 60){
                         pisao_neles();
                     }else{
-                        jogo.perdeu(jogo.evento);
+                        if(jogador.chao_referencia == 650 || chao.muda_chao[1] == 2)
+                            jogo.perdeu(jogo.evento);
+                        else
+                            jogo.perdeu(0);
                         
                         jogador.partida_predios_atropelados++;
                         alteraValorEstatisticaPartida("quantidade_predios_partida", jogador.partida_predios_atropelados);
@@ -1223,7 +1238,7 @@ obstaculos = {
                     tam--;
                     i--;
                 }
-            }else if(obs.x <= 0 && estadoAtual == estados.jogando && obs.altura >= 55 && !obs._scored){
+            }else if(obs.x <= 0 && (estadoAtual == estados.jogando || estadoAtual == estados.tutorial) && obs.altura >= 55 && !obs._scored){
                 // Soma 1 valor no Score a cada obstáculo pulado
                 jogador.partida_pontuacao++;
                 obs._scored = true;
@@ -1240,8 +1255,8 @@ obstaculos = {
             }
         }
 
-        for(var x = 0, tam = this._obsfundo.length; x < tam; x++){
-            var obsb = this._obsfundo[x];
+        for(let x = 0, tam = this._obsfundo.length; x < tam; x++){
+            let obsb = this._obsfundo[x];
             obsb.x -= velocidade_obs * 0.8;
 
             if(obsb.x <= -obsb.largura - 90){
@@ -1254,7 +1269,7 @@ obstaculos = {
     },
 
     desenha: function(){
-        desenha_obj();
+        desenha_chao_centro();
     }
 }
 
@@ -1295,9 +1310,11 @@ function roda(){
 
 function atualiza(){
 
-    if(estadoAtual == estados.jogando){
-        obstaculos.atualiza();
+    if(estadoAtual == estados.jogando || estadoAtual == estados.tutorial){
         menu_inicial(0);
+
+        if(estadoAtual == estados.jogando)
+            obstaculos.atualiza();
     }
 
     jogador.atualiza();
@@ -1311,13 +1328,13 @@ function atualiza(){
 
     // Executa o som de fundo de Vento em altas velocidades
     if(velocidade_obs > 22.5 && segura_vento == 0 && estadoAtual == estados.jogando){
-        if(segura_vento == 0)
-            executaSons2("faixa_ambiente", "Efeitos", "Vento.ogg", 2);
-
+        
         segura_vento = 1;
-        vento_delay = setTimeout(function(){
+        executaSons2("faixa_ambiente", "Efeitos", "Vento.ogg", 2);
+
+        vento_delay = setInterval(() => {
             segura_vento = 0;
-            clearTimeout(vento_delay);
+            setInterval(vento_delay);
         }, 53000);
     }
 }
@@ -1333,7 +1350,7 @@ function desenha(){
 
     ctx.fillStyle = "#fff";
     ctx.font = "50px Minecraft";
-
+    
     if(estadoAtual == estados.perdeu){
         document.getElementById("notifica_moeda").innerHTML = "$"+ jogador.moedas;
         $("#notifica_moeda").fadeIn();
@@ -1361,13 +1378,13 @@ function desenha(){
                 ctx.fillText("Current Record: "+ recorde, canvas.width / 2 - ctx.measureText("Current Record: "+ recorde).width / 2, Altura / 1.3 + 50);
 
         ctx.save();
-        ctx.translate( Largura / 2, Altura / 2 );
+        ctx.translate(Largura / 2, Altura / 2);
         
         ctx.restore();
     }if(estadoAtual == estados.jogando)
         obstaculos.desenha();
 
-    if(estadoAtual == estados.jogar || estadoAtual == estados.perdeu || estadoAtual == estados.ocioso){
+    if(estadoAtual == estados.jogar || estadoAtual == estados.perdeu || estadoAtual == estados.ocioso || estadoAtual == estados.tutorial){
         propsfundo.desenha();
 
         obstaculos.atualiza();
@@ -1385,7 +1402,7 @@ function desenha(){
                 else
                     console.log("%cIdle Mode will start in 10 seconds", "color: green;");
 
-            contagemOcioso = setTimeout(function(){
+            contagemOcioso = setTimeout(() => {
                 estadoAtual = estados.ocioso;
 
                 estadoOcioso("auto");

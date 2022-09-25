@@ -12,7 +12,7 @@ function sincronizaBotoesConfigs(valor){
 
 function alteraEstadoSom(){
     
-    var canais_de_audio = ["faixa_musicas", "faixa_ambiente", "faixa_conquistas", "faixa_pisoes", "faixa_memes1", "faixa_memes2", "faixa_efeitos1", "faixa_efeitos2", "faixa_efeitos3"];
+    let canais_de_audio = ["faixa_musicas", "faixa_ambiente", "faixa_conquistas", "faixa_pisoes", "faixa_memes1", "faixa_memes2", "faixa_efeitos1", "faixa_efeitos2", "faixa_efeitos3"];
     
     if(jogo.estadoOcioso)
         impedeOcioso();
@@ -21,8 +21,8 @@ function alteraEstadoSom(){
         jogo.estadoSom = 0;
 
         // Pausa todos os sons que possam estar sendo executados no momento
-        for(var i = 0; i < canais_de_audio.length; i++){        
-            var pausa_som = document.getElementById(canais_de_audio[i]);
+        for(let i = 0; i < canais_de_audio.length; i++){        
+            let pausa_som = document.getElementById(canais_de_audio[i]);
             pausa_som.pause();
         }
 
@@ -109,6 +109,9 @@ function alteraRelogio(){
     }
 
     if(Cenario_sprites.tema == 0){
+        // Termina as transições entre dia e noite
+        verifica_tema();
+
         Cenario_sprites.tema = 1;
 
         if(idioma == "pt")
@@ -117,15 +120,18 @@ function alteraRelogio(){
             document.getElementById("status_tema_atual").innerHTML = "Always Day";
 
         animaLuzesGuia(0);
-
+    
     }else if(Cenario_sprites.tema == 1){
+        // Termina as transições entre dia e noite
+        verifica_tema();
+
         Cenario_sprites.tema = 2;
-        
+
         if(idioma == "pt")
             document.getElementById("status_tema_atual").innerHTML = "Sempre Noite";
         else
             document.getElementById("status_tema_atual").innerHTML = "Always night";
-
+        
         if(Cenario_sprites.objeto_voador[3] == 1)
             animaLuzesGuia(1);
         
@@ -148,6 +154,10 @@ function sincronizaRelogio(){
         Cenario_sprites.opacidade_noite = 0.0;
         libera_transitador = 0;
 
+        // Desliga a animação das estrelas
+        if(typeof tEst != "undefined")
+            clearInterval(tEst)
+
         if(idioma == "pt")
             document.getElementById("status_tema_atual").innerHTML = "Sempre Dia";
         else
@@ -156,6 +166,11 @@ function sincronizaRelogio(){
         Cenario_sprites.astro[2] = 1;
         Cenario_sprites.opacidade_noite = 1;
         libera_transitador = 1;
+
+        if(typeof tEst != "undefined")
+            clearInterval(tEst)
+            
+        animaEstrelas();
 
         if(idioma == "pt")
             document.getElementById("status_tema_atual").innerHTML = "Sempre Noite";
@@ -497,7 +512,7 @@ function sincronizaQtdModificadores(){
 
 function sincronizaVezesModificadoresComprados(){
 
-    for(var i = 0; i < 2; i++){
+    for(let i = 0; i < 2; i++){
         if(jogador.mods_vezes_usados[i] > 0)
             jogador.mods_vezes_usados[i] -= 1;
 
@@ -548,7 +563,7 @@ function sincronizaVezesModificadoresComprados(){
 function sincroniza_bonus(requisicao_auto){
 
     if(requisicao_auto != 1){
-        for(var i = 0; i < 3; i++){
+        for(let i = 0; i < 3; i++){
             if(jogador.bonus_vezes_usados[i] == 0)
                 jogador.bonus_comprados[i] = 0;
             else
@@ -569,7 +584,7 @@ function sincroniza_bonus(requisicao_auto){
     }
 
     // Icones de bônus adquiridos
-    for(var i = 1; i <= 3; i++){
+    for(let i = 1; i <= 3; i++){
         nome = "bonus_"+ i;
 
         if(jogador.bonus_comprados[i - 1] == 1)

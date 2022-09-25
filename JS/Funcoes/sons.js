@@ -2,15 +2,15 @@
 function escolhe_som(ocasiao, evento){
     
     if(ocasiao == 1) // Inicio
-        escolha = 1 + Math.round(7 * Math.random())
+        escolha = 1 + Math.round(7 * Math.random());
     else // Fim
-        escolha = 1 + Math.round(12 * Math.random())
+        escolha = 1 + Math.round(13 * Math.random());
     
     if(ocasiao == 1)      // Começa
-        nome = `comeca_${escolha}.ogg`
+        nome = "comeca_"+ escolha +".ogg";
     else if(ocasiao == 2) // Perca
         if(evento != 1)
-            nome = `morreu_${escolha}.ogg`
+            nome = "morreu_"+ escolha +".ogg";
         else
             nome = "morreu_6.ogg";
 
@@ -20,91 +20,93 @@ function escolhe_som(ocasiao, evento){
 function executaSons(elemento, localizacao, nomeSom, tipo){
     if(jogo.estadoSom != 0){ // Verifica se a reprodução de sons não está desativada
         if(tipo == 1)       // Músicas
-            var volume_interno = localStorage.getItem("volMusica")
+            var volume_interno = localStorage.getItem("volMusica");
         else if(tipo == 2)  // Efeitos
-            var volume_interno = localStorage.getItem("volEfeito")
+            var volume_interno = localStorage.getItem("volEfeito");
         else if(tipo == 3) // Memes
-            var volume_interno = localStorage.getItem("volMemes")
+            var volume_interno = localStorage.getItem("volMemes");
 
-        var audio = document.getElementById(elemento)
-        audio.volume = volume_interno / 100
+        var audio = document.getElementById(elemento);
+        audio.volume = volume_interno / 100;
 
-        audio.src = `Sons/${localizacao}/${nomeSom}`
-        audio.play()
+        audio.src = "Sons/"+ localizacao +"/"+ nomeSom;
+        audio.play();
     }
 }
 
 function executaSons2(elemento, localizacao, nomeSom, tipo){
     if(jogo.estadoSom != 0){ // Verifica se a reprodução de sons não está desativada
         if(tipo == 1)       // Músicas
-            var volume_interno = localStorage.getItem("volMusica")
+            var volume_interno = localStorage.getItem("volMusica");
         else if(tipo == 2)  // Efeitos
-            var volume_interno = localStorage.getItem("volEfeito")
+            var volume_interno = localStorage.getItem("volEfeito");
         else if(tipo == 3) // Memes
-            var volume_interno = localStorage.getItem("volMemes")
+            var volume_interno = localStorage.getItem("volMemes");
         
-        var audio = document.getElementById(elemento)
-        audio.volume = volume_interno / 100
+        var audio = document.getElementById(elemento);
+        audio.volume = volume_interno / 100;
 
-        audio.src = `Sons/${localizacao}/${nomeSom}`
-        audio.play()
+        audio.src = "Sons/"+ localizacao +"/"+ nomeSom;
+        audio.play();
     }
 }
 
 // Altera o Volume dos Sons e Salva no Sistema
 function alteraVolume(volume, entidade, auto){
 
-    if(jogo.estadoOcioso == 1)
-        impedeOcioso()
+    if(jogo.estadoOcioso == 1){
+        impedeOcioso();
+    }
     
-    if(entidade == 1){ // Músicas
-        var audio = document.getElementById("faixa_musicas")
-        localStorage.setItem("volMusica", volume)
-
-        if(auto != null) // Verifica se há músicas sendo encerradas
-            verificaDesligamentos()
-
-        if(auto != null){
-            if(Math.round(2 * Math.random()) > 1)
-                executaSons("faixa_musicas", "Musicas", "intro_2.ogg", 1)
-            else
-                executaSons("faixa_musicas", "Musicas", "intro_3.ogg", 1)
-        }
-    }else if(entidade == 2){ // Efeitos
-        var audio = document.getElementById("faixa_efeitos1")
-        localStorage.setItem("volEfeito", volume)
-
-        var audio2 = document.getElementById("faixa_efeitos2")
-        audio2.volume = volume / 100
-        
-        var audio3 = document.getElementById("faixa_efeitos3")
-        audio3.volume = volume / 100
-
-        var ambiente = document.getElementById("faixa_ambiente")
-        ambiente.volume = volume / 100
-
-        var pisoes = document.getElementById("faixa_pisoes")
-        pisoes.volume = volume / 100
+    if(entidade == 1){       // Músicas
+        var audio = document.getElementById("faixa_musicas");
+        localStorage.setItem("volMusica", volume);
 
         if(auto != null)
-            executaSons("faixa_efeitos1", "Efeitos", "pop.ogg", 2)
-    }else if(entidade == 3){ // Memes
-        var audio = document.getElementById("faixa_memes1")
-        localStorage.setItem("volMemes", volume)
+            // Verifica se há músicas sendo encerradas
+            verificaDesligamentos();
 
-        var audio2 = document.getElementById("faixa_memes2")
-        audio2.volume = volume / 100
+        if(auto != null){
+            if(Math.round(2 * Math.random()) > 1)
+                executaSons("faixa_musicas", "Musicas", "intro_2.ogg", 1);
+            else
+                executaSons("faixa_musicas", "Musicas", "intro_3.ogg", 1);
+        }
+    }else if(entidade == 2){ // Efeitos
+        var audio = document.getElementById("faixa_efeitos1");
+        localStorage.setItem("volEfeito", volume);
+
+        let audio2 = document.getElementById("faixa_efeitos2");
+        audio2.volume = volume / 100;
+        
+        let audio3 = document.getElementById("faixa_efeitos3");
+        audio3.volume = volume / 100;
+
+        let ambiente = document.getElementById("faixa_ambiente");
+        ambiente.volume = volume / 100;
+
+        let pisoes = document.getElementById("faixa_pisoes");
+        pisoes.volume = volume / 100;
+
+        if(auto != null)
+            executaSons("faixa_efeitos1", "Efeitos", "pop.ogg", 2);
+    }else if(entidade == 3){ // Memes
+        var audio = document.getElementById("faixa_memes1");
+        localStorage.setItem("volMemes", volume);
+
+        let audio2 = document.getElementById("faixa_memes2");
+        audio2.volume = volume / 100;
 
         if(auto != null){
 
             if(Math.round(2 * Math.random()) > 1)
-                executaSons("faixa_memes1", "Memes", "jailson_1.ogg", 3)
+                executaSons("faixa_memes1", "Memes", "jailson_1.ogg", 3);
             else
-                executaSons("faixa_memes1", "Memes", "jailson_2.ogg", 3)
+                executaSons("faixa_memes1", "Memes", "jailson_2.ogg", 3);
         }
     }
 
-    audio.volume = volume / 100
+    audio.volume = volume / 100;
 }
 
 // Executada automaticamente quando a página carrega, ela ajusta o volume para o valor salvo
@@ -128,8 +130,8 @@ function desliga_som(entidade, tipo){
     else               // Memes
         var volume_interno = localStorage.getItem("volMemes");
     
-    var pausa_som = document.getElementById(entidade);
-    var salva_volume = volume_interno;
+    let pausa_som = document.getElementById(entidade);
+    let salva_volume = volume_interno;
 
     regulador_som = setInterval(function(){
         if(volume_interno > 0.1){
@@ -160,8 +162,8 @@ function desliga_som2(entidade, tipo){
     else
         var volume_interno = localStorage.getItem("volMemes");
 
-    var pausa_som = document.getElementById(entidade);
-    var salva_volume = volume_interno;
+    let pausa_som = document.getElementById(entidade);
+    let salva_volume = volume_interno;
 
     regulador_som2 = setInterval(function(){
         if(volume_interno > 0.1){
@@ -192,8 +194,8 @@ function desliga_som3(entidade, tipo){
     else
         var volume_interno = localStorage.getItem("volMemes");
 
-    var pausa_som = document.getElementById(entidade);
-    var salva_volume = volume_interno;
+    let pausa_som = document.getElementById(entidade);
+    let salva_volume = volume_interno;
 
     regulador_som3 = setInterval(function(){
         if(volume_interno > 0.1){
@@ -256,7 +258,7 @@ function executaSomPerca(causa){
 
 function executaSomCarrega(){
     
-    var lista_entradas = ["bambam3", "daciolo", "jailson_3", "jailson_4", "parque2"];
+    let lista_entradas = ["bambam3", "daciolo", "jailson_3", "jailson_4", "parque2"];
     i = Math.round((lista_entradas.length - 1) * Math.random());
 
     executaSons("faixa_memes1", "Memes", lista_entradas[i]+".ogg", 3);
