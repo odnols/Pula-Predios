@@ -2069,3 +2069,12 @@ img#trofeu {
     background-color: gray;
     border: 1px black solid;
 }
+
+#perfil_user {
+    position: fixed;
+    z-index: 5;
+    width: 25px;
+    height: 25px;
+    right: 1.25%;
+    top: 10%;
+}

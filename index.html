@@ -22,6 +22,7 @@
 
     <script src="JS/Graficos/sprite.js"></script>
 
+    <script src="JS/Principais/sessao.js"></script>
     <script src="JS/Principais/carrega.js"></script>
     <script src="JS/Funcoes/configuracoes.js"></script>
     <script src="JS/Funcoes/conquistas.js"></script>
@@ -51,7 +52,7 @@
                 if (document.hidden)
                     tela_focada = false
                 else
-                    tela_focada = tru
+                    tela_focada = true
             })
         })
     </script>
@@ -107,6 +108,10 @@
         <button class="avancar_tuto_block avancar_trad"></button>
 
         <button class="pular_tuto pular_trad" onclick="pular_tutorial()"></button>
+    </div>
+
+    <div id="perfil_user">
+        <img src='source/images/Icones/perfil.png' style="width: 25px" onclick="checa_user()">
     </div>
 
     <div id="controles_tuto">
