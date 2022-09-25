@@ -2058,3 +2058,14 @@ img#trofeu {
     image-rendering: auto;
     image-rendering: pixelated;
 }
+
+#flag_api {
+    top: 15%;
+    right: 1%;
+    z-index: 5;
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    background-color: gray;
+    border: 1px black solid;
+}

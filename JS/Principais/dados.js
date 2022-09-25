@@ -16,12 +16,36 @@ function valores() {
     else if (jogador.qtdMods == 0)
         ajusta_cores(3, 2)
 
-
     if (jogador.qtdPulos == 0)
         ajusta_cores(1, 3)
     else
         ajusta_cores(5, 3)
+}
 
+function requisita_api() {
+
+    // EXPERIMENTAL
+    // Enviando os dados para a API salvar
+    const elemento = document.getElementById("flag_api")
+
+    const data = {
+        pulos: hist_pulos,
+        money: jogador.moedas,
+        mortes: hist_mortes
+    }
+
+    fetch(`http://localhost:3000/pula?save=1&data=${JSON.stringify(data)}`)
+        .then(res => res.json())
+        .then(retorno => {
+            if (retorno.status !== 404)
+                elemento.style.backgroundColor = "Green"
+            else
+                elemento.style.backgroundColor = "Orange"
+        })
+        .catch(err => {
+            console.log("API Offline", err)
+            elemento.style.backgroundColor = "Red"
+        })
 }
 
 function carrega_dados() {
@@ -196,7 +220,7 @@ function carrega_dados() {
     if (estatisticasNerds == null)
         jogo.estatisticasNerds = 0
 
-        jogo.estatisticasNerds = parseInt(estatisticasNerds)
+    jogo.estatisticasNerds = parseInt(estatisticasNerds)
 
     // Sincroniza as notificações de conquistas
     notificacoesConquistas = localStorage.getItem("notificaConquistas")
@@ -445,6 +469,8 @@ function carrega_dados() {
 }
 
 function reseta() {
+
+    requisita_api() // Sincronizando com a API
 
     $("#versao_texto").fadeIn()
     $(".pulos_trad").fadeOut()
