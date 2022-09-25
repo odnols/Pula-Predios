@@ -22,19 +22,38 @@ function valores() {
         ajusta_cores(5, 3)
 }
 
-function requisita_api() {
+function sincroniza_api() {
+
+    const data_user = {
+        pulos: hist_pulos,
+        mortes: hist_mortes,
+        pisoes: hist_pisoes,
+        mods: hist_mod,
+    
+        distancia_percorrida: hist_distancia,
+        pontos_coletados: hist_pontos,
+        recorde: recorde,
+    
+        moedas: jogador.moedas,
+        moedas_gastas: jogador.moedas_gastas,
+        moedas_coletadas: jogador.moedas_coletadas,
+    
+        conquistas: jogador.conquistas,
+        consquistas_total: jogador.consquistas_total,
+    
+        tempo_jogado: hist_tempo_jogado,
+        tempo_voando: hist_tempo_flutuando,
+        tempo_eventos: hist_tempo_eventos,
+    
+        eventos_concluidos: hist_eventos_concluidos,
+        eventos: [hist_agua, hist_lava, hist_cidade, hist_parque],
+    }
 
     // EXPERIMENTAL
     // Enviando os dados para a API salvar
     const elemento = document.getElementById("flag_api")
 
-    const data = {
-        pulos: hist_pulos,
-        money: jogador.moedas,
-        mortes: hist_mortes
-    }
-
-    fetch(`http://localhost:3000/pula?save=1&data=${JSON.stringify(data)}`)
+    fetch(`http://apisal.herokuapp.com/pula?token=placholder&save=1&token_user=9qH2vQSZpLC9tjpTKCJi2&data=${JSON.stringify(data_user)}`)
         .then(res => res.json())
         .then(retorno => {
             if (retorno.status !== 404)
@@ -46,6 +65,10 @@ function requisita_api() {
             console.log("API Offline", err)
             elemento.style.backgroundColor = "Red"
         })
+
+    setTimeout(() => {
+        elemento.style.backgroundColor = "Gray"
+    }, 2000)
 }
 
 function carrega_dados() {
@@ -470,8 +493,6 @@ function carrega_dados() {
 
 function reseta() {
 
-    requisita_api() // Sincronizando com a API
-
     $("#versao_texto").fadeIn()
     $(".pulos_trad").fadeOut()
     $("#qtdPulos").fadeOut()
@@ -600,6 +621,8 @@ function reseta() {
     clearInterval(var_timer_mod)
     clearTimeout(tempo_evento)
     clearTimeout(ativa_evento)
+
+    sincroniza_api() // Sincronizando com a API
 }
 
 function apagaDados(valor) {

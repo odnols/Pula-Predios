@@ -151,7 +151,6 @@ function sincronizaQuadroConquistas() {
         } else
             document.getElementById("placeholder_conquista").innerHTML += "<img onMouseOver='troca_descricao(" + 'lista_conquistas[' + i + ']' + "," + 'lista_descricao[' + i + ']' + ", 1)' onmouseout='troca_descricao(0, 0, 0)' class='img_conquista_obtida' src='source/images/Conquistas/" + i + ".jpg'>"
     }
-
 }
 
 function sincronizaEstatisticasConquistas() {
@@ -162,6 +161,9 @@ function sincronizaEstatisticasConquistas() {
         if (lista_conquistas_ganhas[x] || lista_conquistas_ganhas[x] == 2)
             obtidas++
     }
+
+    jogador.conquistas = obtidas
+    jogador.consquistas_total = lista_conquistas.length
 
     document.getElementById("conquistas_obtidas").innerHTML = `${obtidas}/${lista_conquistas.length}`
 
