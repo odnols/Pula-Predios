@@ -1,17 +1,17 @@
 function valores() {
     document.getElementById("pontuacao").innerHTML = jogador.partida_pontuacao
-    document.getElementById("velocity").innerHTML = velocidade_obs * 2
-    document.getElementById("timer_mod").innerHTML = jogo.timer_mod
+    document.getElementById("velocity").innerHTML = jogo.velocidade * 2
+    document.getElementById("timer_mod").innerHTML = jogador.timer_mod
     document.getElementById("qtdPulos").innerHTML = jogador.qtdPulos
 
     if (mod == 1) {
         ajusta_cores(1, 2)
 
-        if (dev_op == 1) {
+        if (opcoes.dev_op) {
             ajusta_cores(3, 2)
             document.getElementById("estado_mod").innerHTML = "DEV"
         }
-    } else if (mod == 0 & jogo.timer_mod < 5 && estadoAtual == estados.jogando && jogador.qtdMods > 0) // Verifica se a qtd do modificador é maior que 0 para poder recarregar
+    } else if (mod == 0 & jogador.timer_mod < 5 && jogo.status == estados.jogando && jogador.qtdMods > 0) // Verifica se a qtd do modificador é maior que 0 para poder recarregar
         ajusta_cores(2, 2)
     else if (jogador.qtdMods == 0)
         ajusta_cores(3, 2)
@@ -29,22 +29,22 @@ function sincroniza_api() {
         mortes: hist_mortes,
         pisoes: hist_pisoes,
         mods: hist_mod,
-    
+
         distancia_percorrida: hist_distancia,
         pontos_coletados: hist_pontos,
-        recorde: parseInt(recorde),
-    
+        recorde: parseInt(jogador.recorde),
+
         moedas: jogador.moedas,
         moedas_gastas: jogador.moedas_gastas,
         moedas_coletadas: jogador.moedas_coletadas,
-    
+
         conquistas: jogador.conquistas,
         consquistas_total: jogador.consquistas_total,
-    
+
         tempo_jogado: hist_tempo_jogado,
         tempo_voando: hist_tempo_flutuando,
         tempo_eventos: hist_tempo_eventos,
-    
+
         eventos_concluidos: hist_eventos_concluidos,
         eventos: [hist_agua, hist_lava, hist_cidade, hist_parque],
     }
@@ -75,11 +75,11 @@ function sincroniza_api() {
 function carrega_dados() {
 
     let token = localStorage.getItem("token_user")
-    if(token)
+    if (token)
         usuario.token = token
 
-    inicia_game = localStorage.getItem("iniciaLoucura_1.1")
-    if (inicia_game == null)
+    opcoes.inicia_game = localStorage.getItem("iniciaLoucura_1.1")
+    if (opcoes.inicia_game == null)
         $("#boas_vindas").fadeIn()
     else
         $("#log_").fadeIn()
@@ -90,9 +90,9 @@ function carrega_dados() {
     else
         tut_complet = parseInt(tutorial_completo)
 
-    recorde = localStorage.getItem("recorde")
-    if (recorde == null)
-        recorde = 0
+    jogador.recorde = localStorage.getItem("recorde")
+    if (!jogador.recorde)
+        jogador.recorde = 0
 
     // Pegando os valores de pulos do localStorage e convertendo em inteiros
     hist_distancia = localStorage.getItem("qtdDistancia")
@@ -226,11 +226,11 @@ function carrega_dados() {
 
 
     // Sincroniza animação de morte
-    estatistica_morte = localStorage.getItem("estatisticaMorte")
-    if (estatistica_morte == null)
-        estatistica_morte = 1
+    menus.estatistica_morte = localStorage.getItem("estatisticaMorte")
+    if (menus.estatistica_morte == null)
+        menus.estatistica_morte = 1
     else
-        estatistica_morte = parseInt(estatistica_morte)
+        menus.estatistica_morte = parseInt(menus.estatistica_morte)
 
     // Sincroniza a configuração de tema atual
     config_temaEscolhido = localStorage.getItem("TemaEscolhido")
@@ -321,11 +321,11 @@ function carrega_dados() {
     }
 
     // Sincronizando o mod que está ativo no momento
-    mod_em_uso = localStorage.getItem("modEmUso")
-    if (mod_em_uso == null)
+    jogador.mod_em_uso = localStorage.getItem("modEmUso")
+    if (jogador.mod_em_uso == null)
         jogador.mod_em_uso = 0
     else
-        jogador.mod_em_uso = parseInt(mod_em_uso)
+        jogador.mod_em_uso = parseInt(jogador.mod_em_uso)
 
     // Sincroniza a quantidade de usos dos modificadores
     loja_modsCompradosUsados = localStorage.getItem("modsCompradosUsados")
@@ -473,7 +473,7 @@ function carrega_dados() {
     document.getElementById("quantidade_mods").innerHTML = hist_mod
     document.getElementById("quantidade_mortes").innerHTML = hist_mortes
     document.getElementById("quantidade_pisoes").innerHTML = hist_pisoes
-    document.getElementById("recorde").innerHTML = recorde
+    document.getElementById("recorde").innerHTML = jogador.recorde
 
     document.getElementById("notifica_moeda").innerHTML = `$${jogador.moedas}`
     document.getElementById("moedas_coletadas").innerHTML = jogador.moedas_coletadas
@@ -493,7 +493,7 @@ function carrega_dados() {
 
     document.getElementById("qtdMods").innerHTML = jogador.qtdMods
 
-    sincronizaBotoesConfigs(estatistica_morte)
+    sincronizaBotoesConfigs(menus.estatistica_morte)
 }
 
 function reseta() {
@@ -502,7 +502,7 @@ function reseta() {
     $(".pulos_trad").fadeOut()
     $("#qtdPulos").fadeOut()
 
-    gravidade = 1.6
+    jogo.gravidade = 1.6
     jogador.velocidade = 0
     jogador.y = 0
 
@@ -527,7 +527,7 @@ function reseta() {
     hist_pulos += jogador.partida_pulos_dados
     hist_mod += jogador.partida_mods_ativados
     hist_tempo_flutuando += jogador.partida_tempo_flutuando
-    hist_mortes += contador_mortes
+    hist_mortes += jogador.contador_mortes
     hist_pisoes += jogador.partida_pisoes_pontuados
 
     // Eventos
@@ -559,9 +559,9 @@ function reseta() {
     localStorage.setItem("qtdEventoAgua", hist_agua)
     localStorage.setItem("qtdEventoLava", hist_lava)
 
-    segura_som = 0
+    ambiente.segura_som = 0
     pontosAtuais = null
-    contador_mortes = 0
+    jogador.contador_mortes = 0
 
     alteraValorEstatisticaPartida("reset", 0)
     sincronizaConquistas()
@@ -593,23 +593,23 @@ function reseta() {
 
     obstaculos.qtdObjetos = 0
 
-    jogo.evento = null
-    jogo.inicia_evento = null
+    eventos.evento = null
+    eventos.inicia_evento = null
 
     if (jogador.mods_comprados[0] == 1)
-        jogo.timer_mod = 10
+        jogador.timer_mod = 10
     else
-        jogo.timer_mod = 5
+        jogador.timer_mod = 5
 
-    jogo.qtd_eventos = [8, 8, 8, 8]
-    jogo.quantia_pixels_interno = 0
+    eventos.qtd_eventos = [8, 8, 8, 8]
+    eventos.quantia_pixels_interno = 0
     document.getElementById("completa_timer").style.width = "0px"
 
     document.getElementById("qtdMods").innerHTML = jogador.qtdMods
     document.getElementById("carregando").style.display = "none"
     document.getElementById("qtdMods").style.display = "block"
 
-    iniciando_evento = null
+    eventos.iniciando_evento = null
     chao.muda_chao = [0, 0, 0]
 
     menu_inicial(1)
@@ -623,9 +623,9 @@ function reseta() {
     $("#puxador_loja").fadeIn()
     $("#filtro2").fadeOut()
 
-    clearInterval(var_timer_mod)
-    clearTimeout(tempo_evento)
-    clearTimeout(ativa_evento)
+    clearInterval(jogador.var_timer_mod)
+    clearTimeout(eventos.tempo_evento)
+    clearTimeout(eventos.ativa_evento)
 
     sincroniza_api() // Sincronizando com a API
 }

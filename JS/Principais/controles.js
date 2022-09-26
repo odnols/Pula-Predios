@@ -7,18 +7,18 @@ function botoes(tecla) {
 
         let alvo = "placeholder"
 
-        if (estadoAtual == estados.jogar && !sessao_loja_ativa)
+        if (jogo.status == estados.jogar && !menus.sessao_loja_ativa)
             executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
 
-        if (jogo.estadoOcioso == 1)
+        if (jogo.estadoOcioso)
             impedeOcioso()
 
-        if (inicia_game == 1) {
+        if (opcoes.inicia_game) {
             switch (tecla) {
                 case 76:  // l
                 case 108: // L
-                    if (!estado_loja) {
-                        if (estado_log)
+                    if (!menus.estado_loja) {
+                        if (menus.estado_log)
                             visualizar_log(0)
                         else {
                             visualizar_log(1)
@@ -28,57 +28,57 @@ function botoes(tecla) {
                     break
                 case 116: // t
                 case 84:  // T
-                    if (!estado_loja)
+                    if (!menus.estado_loja)
                         alvo = "tutorial"
                     break
                 case 99:  // C
                 case 67:  // c
-                    if (!estado_loja)
+                    if (!menus.estado_loja)
                         alvo = "controles"
                     break
                 case 101: // e
                 case 69:  // E
-                    if (!estado_loja)
+                    if (!menus.estado_loja)
                         alvo = "estatisticas"
                     else
                         regula_sessao_loja("Bônus")
                     break
                 case 120: // x
                 case 88:  // X
-                    if (!estado_log)
+                    if (!menus.estado_log)
                         abre_loja()
                     alvo = "loja"
                     break
                 case 113: // q
                 case 81:  // Q
-                    if (!estado_loja)
+                    if (!menus.estado_loja)
                         alvo = "opcoes"
                     else
                         regula_sessao_loja("Skins")
                     break
                 case 115: // s
                 case 83:  // S
-                    if (estado_loja)
+                    if (menus.estado_loja)
                         regula_sessao_loja("Temas")
                     break
                 case 122: // z
                 case 90:  // Z
-                    if (!estado_loja) {
+                    if (!menus.estado_loja) {
                         alvo = "configuracoes"
                         menu_opcoes(91)
                     }
                     break
                 case 111: // o
                 case 79:  // O
-                    if (!estado_loja)
+                    if (!menus.estado_loja)
                         alvo = "conquistas_mapa"
                     break
                 case 150: // Problemas
-                    if (!estado_loja)
+                    if (!menus.estado_loja)
                         alvo = "problemas_redes_sociais"
                     break
                 case 151: // Suporte ao jogo
-                    if (!estado_loja)
+                    if (!menus.estado_loja)
                         alvo = "suporte_jogo"
                     break
                 case 114: // r
@@ -86,22 +86,22 @@ function botoes(tecla) {
                     location.reload()
                     break
                 // case 50:
-                //     jogo.evento = 2
+                //     eventos.evento = 2
                 // break
                 // case 49:
-                //     if(velocidade_obs > 0)
-                //         velocidade_obs = 0
+                //     if(jogo.velocidade > 0)
+                //         jogo.velocidade = 0
                 //     else
-                //         velocidade_obs = 10
+                //         jogo.velocidade = 10
                 // break
                 default:
-                    if (estado_loja)
+                    if (menus.estado_loja)
                         alvo = "loja"
 
-                    if (estado_log)
+                    if (menus.estado_log)
                         alvo = "log"
 
-                    if (estadoAtual == estados.jogando || estadoAtual == estados.tutorial) {
+                    if (jogo.status == estados.jogando || jogo.status == estados.tutorial) {
                         $("#notifica_moeda").fadeOut()
                         $("#puxador_loja").fadeOut()
                     }
@@ -112,13 +112,13 @@ function botoes(tecla) {
                 alvo = "placeholder"
 
             // Guarda o ultimo menu aberto
-            if (!estado_loja && !estado_log) {
+            if (!menus.estado_loja && !menus.estado_log) {
                 if (alvo != "placeholder")
                     verificaOciosidade(true)
                 else if (alvo == "placeholder")
                     verificaOciosidade(false)
             } else {
-                if (estado_loja)
+                if (menus.estado_loja)
                     if (tecla == 120 || tecla == 88)
                         if (alvo != "placeholder")
                             verificaOciosidade(true, 1)
@@ -151,8 +151,8 @@ function clique(evento) {
             document.location.reload(true)
 
         // Partida ativa
-        if (!event.keyCode && inicia_game == 1 && estadoAtual != estados.perdeu) {
-            if (estadoAtual == estados.jogando || estadoAtual == estados.tutorial) {
+        if (!event.keyCode && opcoes.inicia_game && jogo.status != estados.perdeu) {
+            if (jogo.status == estados.jogando || jogo.status == estados.tutorial) {
 
                 evento = evento || window.event
 
@@ -164,30 +164,30 @@ function clique(evento) {
                     jogador.pula()
                 else if (button == 2) {
                     // ação para a rodinha do mouse
-                    // if(jogo.timer_mod >= 5)
+                    // if(jogador.timer_mod >= 5)
                     // jogo.operador()
                 } else if (button == 3)
                     // ação para o botão direito 
-                    if ((jogo.timer_mod == 5 && !jogador.mods_comprados[1]) || jogo.timer_mod == 10)
+                    if ((jogador.timer_mod == 5 && !jogador.mods_comprados[1]) || jogador.timer_mod == 10)
                         jogador.modificador()
 
                 botoes(600)
             }
 
-            if (estadoAtual == estados.jogar && !estado_loja && !estado_log)
+            if (jogo.status == estados.jogar && !menus.estado_loja && !menus.estado_log)
                 inicia_jogo()
 
-            if (estadoAtual == estados.ocioso)
+            if (jogo.status == estados.ocioso)
                 estadoOcioso("volta")
         } else {
-            if (inicia_game == 1)
+            if (opcoes.inicia_game)
                 if (typeof evento != "number")
                     tecla = event.keyCode
                 else
                     tecla = evento
 
             //  Controles da partida em Andamento
-            if (estadoAtual == estados.jogando || estadoAtual == estados.tutorial) {
+            if (jogo.status == estados.jogando || jogo.status == estados.tutorial) {
                 switch (tecla) {
                     case 32:  // Espaço
                     case 119: // w
@@ -200,36 +200,36 @@ function clique(evento) {
                     case 13:  // Enter
                     case 100: // d
                     case 68:  // D
-                        if (!mod && jogador.qtdMods > 0 && !jogo.liberaMod) // + Vezes
+                        if (!jogador.mod && jogador.qtdMods > 0 && !jogo.liberaMod) // + Vezes
                             if (indice_tutorial > 5)
                                 jogador.modificador()
                         break
-                    // case 114: // r
-                    // case 82:  // R
-                    //     if(jogo.timer_mod >= 5)
-                    //         jogo.operador()
-                    // break
+                    case 114: // r
+                    case 82:  // R
+                        if(jogador.timer_mod >= 5)
+                            jogo.operador()
+                    break
                 }
 
-            } else if (estadoAtual == estados.jogar && (tecla == 32 || tecla == 87 || tecla == 119) && !estado_loja && !estado_log)
+            } else if (jogo.status == estados.jogar && (tecla == 32 || tecla == 87 || tecla == 119) && !menus.estado_loja && !menus.estado_log)
                 inicia_jogo()
-            else if (estadoAtual == estados.perdeu && jogador.y >= 10 * Altura && !estado_loja) {
-                estadoAtual = estados.jogar
+            else if (jogo.status == estados.perdeu && jogador.y >= 10 * opcoes.altura && !menus.estado_loja) {
+                jogo.status = estados.jogar
                 reseta()
 
-            } else if (estadoAtual == estados.jogar && janelaConfirma != 0) {
-                if (tecla == 13 && janelaConfirma == 1)
+            } else if (jogo.status == estados.jogar && menus.janelaConfirma != 0) {
+                if (tecla == 13 && menus.janelaConfirma == 1)
                     status_confirmacao(1, 0, cache_confirma)
                 else if (tecla == 114 || tecla == 82) // R
                     document.location.reload(true)
                 else
                     botoes(tecla)
-            } else if (estado_loja == 1 && (tecla == 87 || tecla == 119))
+            } else if (menus.estado_loja == 1 && (tecla == 87 || tecla == 119))
                 regula_sessao_loja("Modificadores")
             else
                 botoes(tecla)
 
-            if (estadoAtual == estados.ocioso)
+            if (jogo.status == estados.ocioso)
                 estadoOcioso("volta")
         }
     }
@@ -245,22 +245,22 @@ document.onkeydown = function (evt) {
     else
         isEscape = (evt.keyCode === 27)
 
-    if (isEscape && estadoAtual != estados.jogando) {
-        if (estadoAtual == estados.perdeu) {
-            estadoAtual = estados.jogar
+    if (isEscape && jogo.status != estados.jogando) {
+        if (jogo.status == estados.perdeu) {
+            jogo.status = estados.jogar
             reseta()
         }
 
-        if (estado_loja && janelaConfirma == 0)
+        if (menus.estado_loja && menus.janelaConfirma == 0)
             abre_loja()
 
-        if (janelaConfirma) {
-            janelaConfirma = 0
+        if (menus.janelaConfirma) {
+            menus.janelaConfirma = 0
             $("#quadro_confirma_compra").fadeOut()
             $("#quadro_confirma_exclusao").fadeOut()
         }
 
-        if (estado_log)
+        if (menus.estado_log)
             visualizar_log(0)
 
         botoes(600)
@@ -280,7 +280,7 @@ function menu_opcoes(valor, caso) {
 
         document.getElementById("fecha_janela_c").onclick = () => menu_opcoes(90)
 
-        if (estadoAtual == estados.jogar && valor != 91)
+        if (jogo.status == estados.jogar && valor != 91)
             executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
 
         if (!tela_opcao_aberta) {

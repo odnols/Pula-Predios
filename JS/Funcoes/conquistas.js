@@ -26,7 +26,7 @@ function conquista(conquista, modo) {
             fila_conquistas.shift()
 
         // Trava a animação da conquista
-        if (estado_conquista != 1 && lista_conquistas_ganhas[conquista] < 2) {
+        if (menus.estado_conquista != 1 && lista_conquistas_ganhas[conquista] < 2) {
 
             // Colhendo os frutos
             if (conquista == 26) {
@@ -45,7 +45,7 @@ function conquista(conquista, modo) {
             // Verifica se a notificação das conquistas está ativa para exibir-las
             if (jogo.notificaConquista) {
 
-                estado_conquista = 1
+                menus.estado_conquista = 1
                 document.getElementById("nome_conquista").innerHTML = lista_conquistas[conquista]
 
                 // Atualizando o nome da conquista para exibição
@@ -88,7 +88,7 @@ function conquista(conquista, modo) {
 
                 // Libera para a próxima chamada
                 solta_conquista = setTimeout(() => {
-                    estado_conquista = 0
+                    menus.estado_conquista = 0
                     clearTimeout(solta_conquista)
                 }, tempo_conquista + 2000)
 
@@ -115,7 +115,7 @@ function conquista(conquista, modo) {
             fila_conquistas.push(conquista)
 
             puxa_proxima = setInterval(() => {
-                if (estado_conquista == 0)
+                if (menus.estado_conquista == 0)
                     redireciona_conquista(fila_conquistas[0])
             }, 1000)
         }

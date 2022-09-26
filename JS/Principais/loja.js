@@ -19,12 +19,12 @@ function carrega_dados_loja(categoria_loja) {
 
     carrega_vendas_loja(identificadores[categoria_loja])
 
-    categoria_anterior = identificadores[categoria_loja]
+    menus.categoria_anterior = identificadores[categoria_loja]
 }
 
 function carrega_vendas_loja(caso) {
 
-    sessao_loja_ativa = 1
+    menus.sessao_loja_ativa = 1
     altera_altura_fechador()
 
     if (caso == "Skins") {
@@ -183,7 +183,7 @@ function confirma_compra(categoria, item, confirmacao) {
 
                 // Verifica se é uma requisição automática
                 if (confirmacao == 55) {
-                    cache_compra = [categoria, item]
+                    menus.cache_compra = [categoria, item]
                     quadro_confirma_compra(1)
                 }
 
@@ -256,7 +256,7 @@ function confirma_compra(categoria, item, confirmacao) {
 
                 // Verifica se é uma requisição automática
                 if (confirmacao == 55) {
-                    cache_compra = [categoria, item]
+                    menus.cache_compra = [categoria, item]
                     quadro_confirma_compra(1)
                 }
 
@@ -346,7 +346,7 @@ function confirma_compra(categoria, item, confirmacao) {
 
                 // Verifica se é uma requisição automática
                 if (confirmacao == 55) {
-                    cache_compra = [categoria, item]
+                    menus.cache_compra = [categoria, item]
                     quadro_confirma_compra(1)
                 }
 
@@ -401,7 +401,7 @@ function confirma_compra(categoria, item, confirmacao) {
 
                 // Verifica se é uma requisição automática
                 if (confirmacao == 55) {
-                    cache_compra = [categoria, item]
+                    menus.cache_compra = [categoria, item]
                     quadro_confirma_compra(1)
                 }
 
@@ -514,7 +514,7 @@ function fechar_sessao_loja() {
     $("#sessao_loja").fadeOut()
     $("#rodape_loja").fadeOut()
 
-    sessao_loja_ativa = 0
+    menus.sessao_loja_ativa = 0
     altera_altura_fechador()
 
     setTimeout(function () {

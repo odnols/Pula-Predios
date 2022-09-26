@@ -54,9 +54,8 @@ function executaSons2(elemento, localizacao, nomeSom, tipo) {
 // Altera o Volume dos Sons e Salva no Sistema
 function alteraVolume(volume, entidade, auto) {
 
-    if (jogo.estadoOcioso == 1) {
+    if (jogo.estadoOcioso)
         impedeOcioso()
-    }
 
     if (entidade == 1) {       // Músicas
         var audio = document.getElementById("faixa_musicas")
@@ -133,7 +132,7 @@ function desliga_som(entidade, tipo) {
     let pausa_som = document.getElementById(entidade)
     let salva_volume = volume_interno
 
-    regulador_som = setInterval(function () {
+    regulador_som = setInterval(() => {
         if (volume_interno > 0.1) {
 
             volume_interno -= 3
@@ -148,7 +147,7 @@ function desliga_som(entidade, tipo) {
 
             if (entidade == "ambiente") {
                 clearTimeout(vento_delay)
-                segura_vento = 0
+                ambiente.segura_vento = 0
             }
         }
     }, 100)
@@ -165,7 +164,7 @@ function desliga_som2(entidade, tipo) {
     let pausa_som = document.getElementById(entidade)
     let salva_volume = volume_interno
 
-    regulador_som2 = setInterval(function () {
+    regulador_som2 = setInterval(() => {
         if (volume_interno > 0.1) {
 
             volume_interno -= 3
@@ -180,7 +179,7 @@ function desliga_som2(entidade, tipo) {
 
             if (entidade == "ambiente") {
                 clearTimeout(vento_delay)
-                segura_vento = 0
+                ambiente.segura_vento = 0
             }
         }
     }, 100)
@@ -197,7 +196,7 @@ function desliga_som3(entidade, tipo) {
     let pausa_som = document.getElementById(entidade)
     let salva_volume = volume_interno
 
-    regulador_som3 = setInterval(function () {
+    regulador_som3 = setInterval(() => {
         if (volume_interno > 0.1) {
 
             volume_interno -= 3
@@ -212,7 +211,7 @@ function desliga_som3(entidade, tipo) {
 
             if (entidade == "ambiente") {
                 clearTimeout(vento_delay)
-                segura_vento = 0
+                ambiente.segura_vento = 0
             }
         }
     }, 100)

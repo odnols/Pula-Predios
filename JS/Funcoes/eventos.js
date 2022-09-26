@@ -77,7 +77,7 @@ function ajusta_cores(ajustadeira, funcao) {
 
 function pisca_barra() {
 
-    document.getElementById("barra_loading").style.animation = `pisca_barra${jogo.inicia_evento} .5s`
+    document.getElementById("barra_loading").style.animation = `pisca_barra${eventos.inicia_evento} .5s`
 
     crono = setTimeout(() => {
         document.getElementById("barra_loading").style.animation = "none"
@@ -87,41 +87,41 @@ function pisca_barra() {
 
 function preenche_barra() {
     cronometro = setInterval(() => {
-        if (jogo.contador_tempo_interno >= 0 && (estadoAtual == estados.jogando || estadoAtual == estados.ocioso)) {
-            if (jogo.contador_tempo_interno < 10)
-                document.getElementById("cronometro").innerHTML = "0" + jogo.contador_tempo_interno
+        if (eventos.contador_tempo_interno >= 0 && (jogo.status == estados.jogando || jogo.status == estados.ocioso)) {
+            if (eventos.contador_tempo_interno < 10)
+                document.getElementById("cronometro").innerHTML = `0${eventos.contador_tempo_interno}`
             else
-                document.getElementById("cronometro").innerHTML = jogo.contador_tempo_interno
+                document.getElementById("cronometro").innerHTML = eventos.contador_tempo_interno
 
-            if (jogo.contador_tempo_interno <= 3 && jogo.contador_tempo_interno != 0)
-                if (jogo.contador_tempo_interno > 1 && estadoAtual == estados.jogando)
+            if (eventos.contador_tempo_interno <= 3 && eventos.contador_tempo_interno != 0)
+                if (eventos.contador_tempo_interno > 1 && jogo.status == estados.jogando)
                     executaSons("faixa_efeitos3", "Efeitos", "snare.ogg", 2)
 
-            jogo.contador_tempo_interno--
+            eventos.contador_tempo_interno--
 
-            if (estadoAtual == estados.jogando)
-                jogador.partida_tempo_em_eventos++
+            if (jogo.status == estados.jogando)
+                eventos.partida_tempo_em_eventos++
 
-            if (jogo.contador_tempo_interno == 2 && (jogo.evento == 1 || jogo.evento == 3))
-                chao.libera_volta_chao = [1, 1, 1]
+            if (eventos.contador_tempo_interno == 2 && (eventos.evento == 1 || eventos.evento == 3))
+                chao.libera_volta_chao = [1, 1, 1] // Alterar o chão para grama novamente
         } else {
             clearInterval(cronometro)
 
-            if (estadoAtual == estados.jogando)
-                jogador.partida_eventos_concluidos++
+            if (jogo.status == estados.jogando)
+                eventos.partida_eventos_concluidos++
         }
     }, 1000)
 
     cronometro2 = setInterval(() => {
-        if (jogo.contador_tempo_interno >= 0 && (estadoAtual == estados.jogando || estadoAtual == estados.ocioso)) {
+        if (eventos.contador_tempo_interno >= 0 && (jogo.status == estados.jogando || jogo.status == estados.ocioso)) {
 
-            if (jogo.quantia_pixels_interno < 100)
-                jogo.quantia_pixels_interno += jogo.quantia_pixels
+            if (eventos.quantia_pixels_interno < 100)
+                eventos.quantia_pixels_interno += eventos.quantia_pixels
             else
-                jogo.quantia_pixels_interno = 100
+                eventos.quantia_pixels_interno = 100
 
-            if (jogo.contador_tempo_interno < jogo.contador_tempo_evento) {
-                document.getElementById("completa_timer").style.width = `${jogo.quantia_pixels_interno}%`
+            if (eventos.contador_tempo_interno < eventos.contador_tempo_evento) {
+                document.getElementById("completa_timer").style.width = `${eventos.quantia_pixels_interno}%`
                 pisca_barra()
             }
         } else

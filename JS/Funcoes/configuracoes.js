@@ -67,15 +67,15 @@ function alteraEstadoEstatistica() {
     if (jogo.estadoOcioso)
         impedeOcioso()
 
-    if (estatistica_morte) {
-        estatistica_morte = 0
+    if (menus.estatistica_morte) {
+        menus.estatistica_morte = 0
 
         if (idioma == "pt")
             document.getElementById("status_tela_estatisti").innerHTML = "Desativado"
         else
             document.getElementById("status_tela_estatisti").innerHTML = "Disabled"
     } else {
-        estatistica_morte = 1
+        menus.estatistica_morte = 1
 
         if (idioma == "pt")
             document.getElementById("status_tela_estatisti").innerHTML = "Ativado"
@@ -83,7 +83,7 @@ function alteraEstadoEstatistica() {
             document.getElementById("status_tela_estatisti").innerHTML = "Activated"
     }
 
-    localStorage.setItem("estatisticaMorte", estatistica_morte)
+    localStorage.setItem("estatisticaMorte", menus.estatistica_morte)
 }
 
 function sincronizaEstatisticaMorte(estado) {
@@ -150,7 +150,7 @@ function sincronizaRelogio() {
     if (Cenario_sprites.tema == 1) { // Sempre Dia
         Cenario_sprites.astro[2] = 0
         Cenario_sprites.opacidade_noite = 0.0
-        libera_transitador = 0
+        ambiente.libera_transitador = 0
 
         // Desliga a animação das estrelas
         if (typeof tEst != "undefined")
@@ -163,7 +163,7 @@ function sincronizaRelogio() {
     } else if (Cenario_sprites.tema == 2) { // Sempre Noite
         Cenario_sprites.astro[2] = 1
         Cenario_sprites.opacidade_noite = 1
-        libera_transitador = 1
+        ambiente.libera_transitador = 1
 
         if (typeof tEst != "undefined")
             clearInterval(tEst)
@@ -446,7 +446,7 @@ function sincronizaModificadoresComprados(requisicao_auto) {
     } else {
         document.getElementById("mod_1").style.display = "none"
         jogador.tempoMod = 5
-        jogo.timer_mod = 5
+        jogador.timer_mod = 5
         jogador.mods_comprados[0] = 0
     }
 
@@ -501,10 +501,10 @@ function sincronizaQtdModificadores() {
     }
 
     if (jogador.mods_comprados[0] == 1)
-        jogo.timer_mod = 10
+        jogador.timer_mod = 10
 
     document.getElementById("qtdMods").innerHTML = jogador.qtdMods
-    document.getElementById("timer_mod").innerHTML = jogo.timer_mod
+    document.getElementById("timer_mod").innerHTML = jogador.timer_mod
 }
 
 function sincronizaVezesModificadoresComprados() {

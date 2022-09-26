@@ -34,9 +34,9 @@ function desenha_chao_frente() {
     for (let i = 0; i < valor.length; i++)
         desenha_sombra(valor[i], chao.y + 20, 2)
 
-    if (estadoAtual != estados.perdeu)
+    if (jogo.status != estados.perdeu)
         if (jogador.chao_referencia != 650)
-            if (chao.muda_chao[0] < 2 || jogo.evento != 3)
+            if (chao.muda_chao[0] < 2 || eventos.evento != 3)
                 spriteSombraJogador.desenha(jogador.x - 48, 1000 - jogador.y)
             else if (jogador.y >= 500)
                 spriteSombraJogador.desenha(jogador.x - 48, jogador.y + 135)
@@ -48,11 +48,11 @@ function desenha_objeto(objeto_alvo, chao_alvo, local) {
 
         if (local == 2) {
             if (objeto_alvo.altura == 55) {
-                if (jogo.ultimo_evento == 0 || jogo.evento == 0) { // Área Densa
+                if (eventos.ultimo_evento == 0 || eventos.evento == 0) { // Área Densa
                     spritePoste1.desenha(objeto_alvo.x, chao_alvo - objeto_alvo.altura + 5, objeto_alvo.largura, objeto_alvo.altura)
                     transitador("poste1_noite", 20, objeto_alvo.x - 11, chao_alvo - 50, objeto_alvo.altura)
                     return
-                } else if (jogo.ultimo_evento == 2 || jogo.evento == 2) { // Parque
+                } else if (eventos.ultimo_evento == 2 || eventos.evento == 2) { // Parque
                     spritePoste2.desenha(objeto_alvo.x, chao_alvo - 40, objeto_alvo.largura, objeto_alvo.altura)
                     transitador("poste2_noite", 20, objeto_alvo.x - 10, chao_alvo - 50, objeto_alvo.altura)
                     return
@@ -61,7 +61,7 @@ function desenha_objeto(objeto_alvo, chao_alvo, local) {
         }
 
         if (local) {
-            if (jogo.evento == 0) {
+            if (eventos.evento == 0) {
                 if (objeto_alvo.altura > 80) {
                     if (objeto_alvo.altura > 110) { // Azul
                         spritePredio2_1_background.desenha(objeto_alvo.x, chao_alvo - objeto_alvo.altura + 50, objeto_alvo.largura, objeto_alvo.altura)
@@ -131,7 +131,7 @@ function desenha_objeto(objeto_alvo, chao_alvo, local) {
 function desenha_sombra(objeto_alvo, chao_alvo, local) {
 
     if (local) {
-        if (jogo.evento == 0) {
+        if (eventos.evento == 0) {
             if (objeto_alvo.altura > 80) {
                 if (objeto_alvo.altura > 90)
                     spriteSombraPredio1.desenha(objeto_alvo.x - 30, chao_alvo + 18, objeto_alvo.largura, objeto_alvo.altura)
@@ -151,10 +151,10 @@ function desenha_sombra(objeto_alvo, chao_alvo, local) {
     }
 
     if (objeto_alvo.altura >= 57 && objeto_alvo.altura < 60) {
-        if (local != 2 && (jogo.evento != 0 || jogo.evento != 2))
+        if (local != 2 && (eventos.evento != 0 || eventos.evento != 2))
             spriteSombraPisao2.desenha(objeto_alvo.x - 15, chao_alvo + 16, objeto_alvo.largura, objeto_alvo.altura)
     } else if (objeto_alvo.altura >= 55 && objeto_alvo.altura < 57) {
-        if (local != 2 && (jogo.evento != 0 || jogo.evento != 2))
+        if (local != 2 && (eventos.evento != 0 || eventos.evento != 2))
             spriteSombraPisao.desenha(objeto_alvo.x - 10, chao_alvo + 16, objeto_alvo.largura, objeto_alvo.altura)
     } else if (objeto_alvo.altura == 53)
         spriteSombraFonte.desenha(objeto_alvo.x - 4, chao_alvo + 18, objeto_alvo.largura, objeto_alvo.altura)

@@ -1,4 +1,4 @@
-var confirma_carregamento = 0, dispositivo = window.screen.width, faixa_tocar = 0, indice = 0, faixa = 0, progresso_sons = 0
+var confirma_carregamento = 0, dispositivo = window.screen.width, indice = 0
 
 function carrega_jogo(requisicao_auto) {
 

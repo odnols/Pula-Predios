@@ -1,9 +1,7 @@
 // Variáveis Globais
-var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 10, regula_velo, estadoAtual, recorde, inicia_game, mod = 0, var_timer_mod, libera_transitador, tempo_evento, contador_tempo_interno = 0, dev_op = 0, iniciando_evento = null, ativa_evento, contador_mortes = 0, controle = 0, segura_som = 0, data = new Date(), posicao = 913, estado_loja = 0, categoria_loja = null, segura_vento = 0, segura_fundo = 0, aleatorizadorProp = 0, estatistica_morte, estado_conquista = 0, cache_compra = [0, 0], cache_confirma, janelaConfirma = 0, segura_objeto_voador = 0, sessao_loja_ativa = 0, categoria_anterior = null, estado_log = 0, tamanho_barra_notificacao = null,
-
-    labelTexto = {
-        texto: "",
-    },
+var labelTexto = {
+    texto: "",
+},
 
     estados = {
         jogar: 0,
@@ -13,45 +11,77 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
         tutorial: 4,
     },
 
+    opcoes = {
+        inicia_game: 0,
+        dev_op: 0,
+        controle: 0,
+        canvas: null,
+        ctx: null,
+        altura: null,
+        largura: null,
+        posicao: 913
+    },
+
+    menus = {
+        cache_compra: [0, 0],
+        cache_confirma: null,
+        janelaConfirma: 0,
+        sessao_loja_ativa: 0,
+        categoria_anterior: null,
+        estado_loja: 0,
+        estado_log: 0,
+        estado_conquista: 0,
+        estatistica_morte: null,
+        tamanho_barra_notificacao: null
+    },
+
+    ambiente = {
+        aleatorizadorProp: 0,
+        libera_transitador: 0,
+        segura_som: 0,
+        segura_vento: 0,
+        segura_objeto_voador: 0
+    },
+
     background_predios = {
         predios: 0,
         montanhas: 0,
         montanhas2: 0,
 
         atualiza: function () {
-            this.predios -= velocidade_obs * 0.2
-            this.montanhas -= velocidade_obs * 0.22
-            this.montanhas2 -= velocidade_obs * 0.1
+            this.predios -= jogo.velocidade * 0.2
+            this.montanhas -= jogo.velocidade * 0.22
+            this.montanhas2 -= jogo.velocidade * 0.1
 
-            if (this.predios <= -Largura)
+            if (this.predios <= -opcoes.largura)
                 this.predios = 0
 
-            if (this.montanhas <= -Largura)
+            if (this.montanhas <= -opcoes.largura)
                 this.montanhas = 0
 
-            if (this.montanhas2 <= -Largura)
+            if (this.montanhas2 <= -opcoes.largura)
                 this.montanhas2 = 0
         },
 
         desenha: function () {
 
             spriteMontanhas.desenha(this.montanhas2, 480)
-            spriteMontanhas.desenha(this.montanhas2 + Largura, 480)
+            spriteMontanhas.desenha(this.montanhas2 + opcoes.largura, 480)
 
             transitador("montanhas_noite", 115, this.montanhas2, 483)
-            transitador("montanhas_noite", 115, this.montanhas2 + Largura, 483)
+            transitador("montanhas_noite", 115, this.montanhas2 + opcoes.largura, 483)
 
             spriteCidade.desenha(this.predios, 257)
-            spriteCidade.desenha(this.predios + Largura, 257)
+            spriteCidade.desenha(this.predios + opcoes.largura, 257)
 
             transitador("cidade_noite", 150, this.predios, 195)
-            transitador("cidade_noite", 150, this.predios + Largura, 195)
+            transitador("cidade_noite", 150, this.predios + opcoes.largura, 195)
 
             spriteMontanhas.desenha(this.montanhas, 510)
-            spriteMontanhas.desenha(this.montanhas + Largura, 510)
+            spriteMontanhas.desenha(this.montanhas + opcoes.largura, 510)
 
             transitador("montanhas_noite", 112, this.montanhas, 513)
-            transitador("montanhas_noite", 112, this.montanhas + Largura, 513)
+            transitador("montanhas_noite", 112, this.montanhas + opcoes.largura, 513)
         }
     },
 
@@ -76,15 +106,15 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
             if (hora > 6 && hora < 18 && this.astro[4] == 0 && this.tema == 0) { // Dia
                 this.astro[2] = 0
                 this.astro[4] = 1
-                libera_transitador = 0
+                ambiente.libera_transitador = 0
             } else if (this.astro[4] == 0 && this.tema == 0) { // Noite
                 this.astro[2] = 1
                 this.astro[4] = 1
-                libera_transitador = 1
+                ambiente.libera_transitador = 1
                 this.opacidade_noite = 1
             }
 
-            // Altera o Cenário automáticamente
+            // Altera o Cenário automaticamente
             Cenario(this.astro[2])
 
             if (this.tema == 0) { // Tema dinâmico
@@ -92,12 +122,12 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                 this.astro[0] += .5
             }
 
-            if (velocidade_obs > 5)
-                velocidade_interna = velocidade_obs
+            if (jogo.velocidade > 5)
+                velocidade_interna = jogo.velocidade
             else
                 velocidade_interna = 5
 
-            this.predios -= velocidade_obs * 0.2
+            this.predios -= jogo.velocidade * 0.2
             this.nuvem_camada1 -= velocidade_interna * 0.03
             this.nuvem_camada2 -= velocidade_interna * 0.04
             this.nuvem_camada3 -= velocidade_interna * 0.05
@@ -116,12 +146,12 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
             if (this.objeto_voador[3] > 0) {
                 if (this.objeto_voador[1] > 1366 && this.objeto_voador[3] == 1) { // Avião e dirigível
                     this.objeto_voador[3] = 0
-                    segura_objeto_voador = 0
+                    ambiente.segura_objeto_voador = 0
                 }
 
                 if (this.objeto_voador[1] < -200 && this.objeto_voador[3] != 1) { // Disco voador
                     this.objeto_voador[3] = 0
-                    segura_objeto_voador = 0
+                    ambiente.segura_objeto_voador = 0
                 }
             }
 
@@ -184,19 +214,19 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                 if (this.astro[3] == 1)
                     this.astro[3] = 0
 
-            if (this.predios <= -Largura)
+            if (this.predios <= -opcoes.largura)
                 this.predios = 0
 
-            if (this.nuvem_camada1 <= -Largura)
+            if (this.nuvem_camada1 <= -opcoes.largura)
                 this.nuvem_camada1 = 0
 
-            if (this.nuvem_camada2 <= -Largura)
+            if (this.nuvem_camada2 <= -opcoes.largura)
                 this.nuvem_camada2 = 0
 
-            if (this.nuvem_camada3 <= -Largura)
+            if (this.nuvem_camada3 <= -opcoes.largura)
                 this.nuvem_camada3 = 0
 
-            if (this.nuvem_camada4 <= -Largura)
+            if (this.nuvem_camada4 <= -opcoes.largura)
                 this.nuvem_camada4 = 0
         },
 
@@ -216,22 +246,22 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
             }
 
             spriteNuvens.desenha(this.nuvem_camada1, 280)
-            spriteNuvens.desenha(this.nuvem_camada1 + Largura, 280)
+            spriteNuvens.desenha(this.nuvem_camada1 + opcoes.largura, 280)
 
             transitador("nuvens1_noite", 135, this.nuvem_camada1, 280)
-            transitador("nuvens1_noite", 135, this.nuvem_camada1 + Largura, 280)
+            transitador("nuvens1_noite", 135, this.nuvem_camada1 + opcoes.largura, 280)
 
             spriteNuvensSup2.desenha(this.nuvem_camada3 + 10, 100)
-            spriteNuvensSup2.desenha(this.nuvem_camada3 + 10 + Largura, 100)
+            spriteNuvensSup2.desenha(this.nuvem_camada3 + 10 + opcoes.largura, 100)
 
             transitador("nuvens2_2_noite", 500, this.nuvem_camada3 + 60, 108)
-            transitador("nuvens2_2_noite", 500, this.nuvem_camada3 + 60 + Largura, 108)
+            transitador("nuvens2_2_noite", 500, this.nuvem_camada3 + 60 + opcoes.largura, 108)
 
             spriteNuvensSup.desenha(this.nuvem_camada4 + 90, 50)
-            spriteNuvensSup.desenha(this.nuvem_camada4 + 90 + Largura, 50)
+            spriteNuvensSup.desenha(this.nuvem_camada4 + 90 + opcoes.largura, 50)
 
             transitador("nuvens1_2_noite", 400, this.nuvem_camada4 + 90, 50)
-            transitador("nuvens1_2_noite", 400, this.nuvem_camada4 + 90 + Largura, 50)
+            transitador("nuvens1_2_noite", 400, this.nuvem_camada4 + 90 + opcoes.largura, 50)
 
             if (this.objeto_voador[3] == 1) { // Avião
                 spriteAviao.desenha(this.objeto_voador[1], this.objeto_voador[2])
@@ -245,19 +275,19 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
             }
 
             spriteNuvensSup.desenha(this.nuvem_camada3 + 500, 150)
-            spriteNuvensSup.desenha(this.nuvem_camada3 + 500 + Largura, 150)
+            spriteNuvensSup.desenha(this.nuvem_camada3 + 500 + opcoes.largura, 150)
 
             transitador("nuvens1_2_noite", 400, this.nuvem_camada3 + 500, 150)
-            transitador("nuvens1_2_noite", 400, this.nuvem_camada3 + 500 + Largura, 150)
+            transitador("nuvens1_2_noite", 400, this.nuvem_camada3 + 500 + opcoes.largura, 150)
 
             spriteNuvens2.desenha(this.nuvem_camada2, 330)
-            spriteNuvens2.desenha(this.nuvem_camada2 + Largura, 330)
+            spriteNuvens2.desenha(this.nuvem_camada2 + opcoes.largura, 330)
 
             transitador("nuvens2_noite", 126, this.nuvem_camada2, 330)
-            transitador("nuvens2_noite", 126, this.nuvem_camada2 + Largura, 330)
+            transitador("nuvens2_noite", 126, this.nuvem_camada2 + opcoes.largura, 330)
 
             spriteCidade.desenha(this.predios, 257)
-            spriteCidade.desenha(this.predios + Largura, 257)
+            spriteCidade.desenha(this.predios + opcoes.largura, 257)
         }
     },
 
@@ -289,19 +319,19 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
 
         atualiza: function () {
 
-            this.x -= velocidade_obs
-            this.x2 -= velocidade_obs * 0.8
-            this.x3 -= velocidade_obs * 1.2
+            this.x -= jogo.velocidade
+            this.x2 -= jogo.velocidade * 0.8
+            this.x3 -= jogo.velocidade * 1.2
 
             // Confirmando o evento aquático ou de lava
-            if (jogo.evento != 1 || jogo.evento != 3) {
+            if (eventos.evento != 1 || eventos.evento != 3) {
                 this.confirma[0] = 0
                 this.confirma[1] = 0
                 this.confirma[2] = 0
             }
 
             //  Sprite de Trás
-            if (this.x2 <= -Largura) {
+            if (this.x2 <= -opcoes.largura) {
                 this.x2 = 0
 
                 if (this.muda_chao[2] == 1)
@@ -316,11 +346,11 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                 if (this.reserva[2] == 1)
                     this.reserva[2] = 2
 
-                if (jogo.evento == 1 || jogo.evento == 3) {
+                if (eventos.evento == 1 || eventos.evento == 3) {
                     this.confirma[2] = 1
 
                     // Gatilho automático para retornar o chão ao normal em velocidades altas
-                    if (velocidade_obs >= 20 && jogo.contador_tempo_interno < 3 && this.reserva[2] == 0) {
+                    if (jogo.velocidade >= 20 && eventos.contador_tempo_interno < 3 && this.reserva[2] == 0) {
                         this.libera_volta_chao[2] = 1
                         this.reserva[2] = 1
                     }
@@ -340,7 +370,7 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
             }
 
             //  Sprite do Meio
-            if (this.x <= -Largura) {
+            if (this.x <= -opcoes.largura) {
                 this.x = 0
 
                 if (this.muda_chao[1] == 1)
@@ -355,11 +385,11 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                 if (this.reserva[1] == 1)
                     this.reserva[1] = 2
 
-                if (jogo.evento == 1 || jogo.evento == 3) {
+                if (eventos.evento == 1 || eventos.evento == 3) {
                     this.confirma[1] = 1
 
                     // Gatilho automático para retornar o chão ao normal em velocidades altas
-                    if (jogo.contador_tempo_interno < 3 && this.reserva[1] == 0) {
+                    if (eventos.contador_tempo_interno < 3 && this.reserva[1] == 0) {
                         this.libera_volta_chao[1] = 1
                         this.reserva[1] = 1
                     }
@@ -379,7 +409,7 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
             }
 
             //  Sprite da Frente
-            if (this.x3 <= -Largura) {
+            if (this.x3 <= -opcoes.largura) {
                 this.x3 = 0
 
                 if (this.muda_chao[0] == 1)
@@ -394,11 +424,11 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                 if (this.reserva[0] == 1)
                     this.reserva[0] = 2
 
-                if (jogo.evento == 1 || jogo.evento == 3) {
+                if (eventos.evento == 1 || eventos.evento == 3) {
                     this.confirma[0] = 1
 
                     // Gatilho automático para retornar o chão ao normal em velocidades altas
-                    if (velocidade_obs >= 20 && jogo.contador_tempo_interno < 3 && this.reserva[0] == 0) {
+                    if (jogo.velocidade >= 20 && eventos.contador_tempo_interno < 3 && this.reserva[0] == 0) {
                         this.libera_volta_chao[0] = 1
                         this.reserva[0] = 1
                     }
@@ -431,104 +461,37 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
         }
     },
 
-    jogo = {
-        dificuldade: 1,
-        estadoSom: 1,
-        ociosidade: 1,
-        estadoOcioso: 0,
-        seguraEventoOcioso: 0,
-
-        ultimo_evento: null,
-        inicia_evento: null,
-        penultimo_evento: null,
-        termina_evento: null,
+    eventos = {
         evento: null,
-        qtd_eventos: [8, 8, 8, 8],
         quantia_pixels: 0,
+        inicia_evento: null,
+        ultimo_evento: null,
+        termina_evento: null,
+        iniciando_evento: null,
+        penultimo_evento: null,
+        qtd_eventos: [10, 10, 10, 10],
         quantia_pixels_interno: 0,
 
-        contador_tempo: 0,
+        tempo_evento: 0,
+        ativa_evento: null,
+        seguraEventoOcioso: 0,
         contador_tempo_evento: 0,
         contador_tempo_evento_b: 0,
         contador_tempo_interno: 0,
 
-        tema_ativo: 1,
-        temas_comprados: [0, 1],
-        musica_tema: null,
-        musica_tema_ocioso: null,
-
-        timer_mod: 5,
-        liberaMod: 0,
-        anuncio_evento: [],
         saida_evento: [],
-        largura_barra: 0,
-        converte_barra: 0,
-        estatisticasNerds: 0,
-        notificaConquista: 1,
-        qualidadeGrafica: 1,
-
-        operador: function () {
-            if (dev_op == 0) {
-                ajusta_cores(3, 2)
-                document.getElementById("estado_mod").innerHTML = "DEV"
-                mod = 1
-                dev_op = 1
-            } else {
-                jogador.velocidade = 0
-
-                ajusta_cores(5, 2)
-                document.getElementById("estado_mod").innerHTML = "Seg"
-                mod = 0
-                dev_op = 0
-            }
-        },
-
-        recarrega_timer: function () {
-
-            if (this.estatisticasNerds)
-                if (idioma == "pt")
-                    console.log("Recarregando Modificador")
-                else
-                    console.log("Reloading Modifier")
-
-            document.getElementById("qtdMods").style.display = "none"
-
-            // Restaura a skin ao escolhido anteriormente depois do modificador
-            if (jogador.mod_em_uso == 1) {
-                anim_indices[5] = 0
-                limpa_ferrugem()
-            }
-
-            var_timer_recarrega = setInterval(function () {
-                if (jogo.timer_mod < jogador.tempoMod && mod == 0) {
-                    jogo.timer_mod++
-                } else {
-                    jogo.liberaMod = 0
-
-                    if (jogo.estatisticasNerds)
-                        if (idioma == "pt")
-                            console.log("Modificador pronto para uso novamente")
-                        else
-                            console.log("Modifier ready to use again")
-
-                    ajusta_cores(5, 2)
-                    clearInterval(var_timer_recarrega)
-                    document.getElementById("carregando").style.display = "none"
-                    document.getElementById("qtdMods").style.display = "block"
-                }
-            }, 2000)
-        },
+        anuncio_evento: [],
 
         relogio_eventos: function () {
             //  Define o tempo que o próximo evento demorará para começar
             // this.contador_tempo = 3
 
-            if (estadoAtual == estados.jogando)
+            if (jogo.status == estados.jogando)
                 if (this.dificuldade != 3)
                     this.contador_tempo = 5 + Math.round(5 * Math.random())
                 else
                     this.contador_tempo = 5
-            else if (estadoAtual == estados.ocioso)
+            else if (jogo.status == estados.ocioso)
                 this.contador_tempo = 3
 
             if (this.estatisticasNerds)
@@ -537,9 +500,9 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                 else
                     console.log("%cNext event in: " + this.contador_tempo + " seconds", "color: purple")
 
-            ativa_evento = setTimeout(() => {
-                jogo.eventos()
-                clearTimeout(ativa_evento)
+            this.ativa_evento = setTimeout(() => {
+                eventos.eventos()
+                clearTimeout(eventos.ativa_evento)
             }, this.contador_tempo * 1000)
 
             deleta_cronometro = setTimeout(() => {
@@ -549,7 +512,7 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                 limpa_chao()
 
                 document.getElementById("completa_timer").style.width = "0px"
-                jogo.quantia_pixels_interno = 0
+                eventos.quantia_pixels_interno = 0
 
                 clearTimeout(deleta_cronometro)
             }, 2000)
@@ -559,9 +522,8 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
             // Determina qual será o próximo evento aleatoriamente
             // Tempo aleatório que ficará ativo o evento
             this.inicia_evento = Math.round(3 * Math.random())
-            // this.inicia_evento = 0
 
-            if (this.estatisticasNerds)
+            if (jogo.estatisticasNerds)
                 if (idioma == "pt")
                     console.log("%cComeçando o evento: " + this.inicia_evento, "color: purple")
                 else
@@ -578,9 +540,9 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
 
             this.largura_barra = this.largura_barra.replace("px", "")
 
-            iniciando_evento = 5
+            this.iniciando_evento = 5
 
-            if (estadoAtual == estados.jogando)
+            if (jogo.status == estados.jogando)
                 executaSons("faixa_efeitos1", "Efeitos", "orb.ogg", 2)
 
             if (this.qtd_eventos[this.inicia_evento] == 0 || this.inicia_evento == this.ultimo_evento || this.inicia_evento == this.penultimo_evento && (this.dificuldade == 0 && (this.inicia_evento == 1 || this.inicia_evento == 3))) {
@@ -590,16 +552,16 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                     else
                         console.log("%cSkipped Event, choosing again", "color: red")
 
-                jogo.eventos()
+                eventos.eventos()
             } else
-                if (this.timer_mod < jogador.tempoMod && (this.inicia_evento == 1 || this.inicia_evento == 3)) {
-                    if (this.estatisticasNerds)
+                if (this.timer_mod < this.tempoMod && (this.inicia_evento == 1 || this.inicia_evento == 3)) {
+                    if (jogo.estatisticasNerds)
                         if (idioma == "pt")
                             console.log("%cEvento Pulado, escolhendo novamente", "color: red")
                         else
                             console.log("%cSkipped Event, choosing again", "color: red")
 
-                    jogo.eventos()
+                    eventos.eventos()
                 } else {
                     this.penultimo_evento = this.ultimo_evento
                     this.ultimo_evento = this.inicia_evento
@@ -608,25 +570,25 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                         ajusta_cores(0, 1)
                         this.qtd_eventos[0]--
 
-                        if (estadoAtual == estados.jogando)
+                        if (jogo.status == estados.jogando)
                             jogador.partida_evento_cidade++
 
                     } else if (this.inicia_evento == 1) { // Evento da Água
                         this.contador_tempo_evento = 12
-                        iniciando_evento = 3
+                        this.iniciando_evento = 3
                         ajusta_cores(1, 1)
                         this.qtd_eventos[1]--
 
-                        if (estadoAtual == estados.jogando)
+                        if (jogo.status == estados.jogando)
                             jogador.partida_evento_agua++
 
                     } else if (this.inicia_evento == 3) { // Evento da Lava
                         this.contador_tempo_evento = 12
-                        iniciando_evento = 3
+                        this.iniciando_evento = 3
                         ajusta_cores(3, 1)
                         this.qtd_eventos[3]--
 
-                        if (estadoAtual == estados.jogando)
+                        if (jogo.status == estados.jogando)
                             jogador.partida_evento_lava++
 
                     } else {                             // Evento do Parque
@@ -634,11 +596,11 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                         ajusta_cores(2, 1)
                         this.qtd_eventos[2]--
 
-                        if (estadoAtual == estados.jogando)
+                        if (jogo.status == estados.jogando)
                             jogador.partida_evento_parque++
 
                         parque_event = setTimeout(() => {
-                            if (estadoAtual == estados.jogando) {
+                            if (jogo.status == estados.jogando) {
                                 if (idioma == "pt")
                                     jogo.notifica("Hora de Pontuar!", "#14e11e")
                                 else
@@ -655,7 +617,7 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                         else
                             console.log("%cEvent duration time: " + this.contador_tempo_evento + " seconds", "color: purple")
 
-                    if (estadoAtual == estados.jogando) {
+                    if (jogo.status == estados.jogando) {
                         $("#temporizador").fadeIn()
                         $("#barra_loading").fadeIn()
                     }
@@ -668,31 +630,70 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                     if (this.inicia_evento == 1 || this.inicia_evento == 3)
                         preenche_barra()
 
-                    if (estadoAtual == estados.jogando)
+                    if (jogo.status == estados.jogando)
                         jogo.notifica(this.anuncio_evento[this.inicia_evento], "white")
 
                     setTimeout(() => {
 
-                        jogo.evento = jogo.inicia_evento
+                        eventos.evento = eventos.inicia_evento
 
-                        if (jogo.inicia_evento == 0 || jogo.inicia_evento == 2) {
+                        if (eventos.inicia_evento == 0 || eventos.inicia_evento == 2) {
                             preenche_barra()
                         }
 
-                        if (jogo.evento == 1 || jogo.evento == 3)
-                            jogo.contador_tempo_evento_b = 9
+                        if (eventos.evento == 1 || eventos.evento == 3)
+                            eventos.contador_tempo_evento_b = 9
                         else
-                            jogo.contador_tempo_evento_b = jogo.contador_tempo_evento
+                            eventos.contador_tempo_evento_b = eventos.contador_tempo_evento
 
-                        if (estadoAtual == estados.jogando || estadoAtual == estados.ocioso) {
+                        if (jogo.status == estados.jogando || jogo.status == estados.ocioso) {
                             tempo_evento = setTimeout(() => {
 
                                 finaliza_evento()
-                                termina_evento = jogo.evento
-                            }, (jogo.contador_tempo_evento_b - 1) * 1000)
+                                termina_evento = eventos.evento
+                            }, (eventos.contador_tempo_evento_b - 1) * 1000)
                         }
-                    }, iniciando_evento * 1000)
+                    }, eventos.iniciando_evento * 1000)
                 }
+        },
+    },
+
+    jogo = {
+        dificuldade: 1,
+        status: 0,
+        estadoSom: 1,
+        ociosidade: 1,
+        estadoOcioso: 0,
+        contador_tempo: 0,
+
+        gravidade: 1.6,
+        velocidade: 10,
+
+        tema_ativo: 1,
+        temas_comprados: [0, 1],
+        musica_tema: null,
+        musica_tema_ocioso: null,
+
+        largura_barra: 0,
+        converte_barra: 0,
+        estatisticasNerds: 0,
+        notificaConquista: 1,
+        qualidadeGrafica: 1,
+
+        operador: function () {
+            if (!opcoes.dev_op) {
+                ajusta_cores(3, 2)
+                document.getElementById("estado_mod").innerHTML = "DEV"
+                jogador.mod = 1
+                opcoes.dev_op = 1
+            } else {
+                jogador.velocidade = 0
+                
+                ajusta_cores(5, 2)
+                document.getElementById("estado_mod").innerHTML = "Seg"
+                jogador.mod = 0
+                opcoes.dev_op = 0
+            }
         },
 
         perdeu: function (causa) {
@@ -711,12 +712,12 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
 
             desliga_som3("faixa_musicas", 1)
 
-            if (velocidade_obs > 25)
+            if (jogo.velocidade > 25)
                 desliga_som2("faixa_ambiente", 2)
 
-            estadoAtual = estados.perdeu
+            this.status = estados.perdeu
 
-            contador_mortes++
+            jogador.contador_mortes++
 
             jogador.chao_referencia = chao.y
             jogador.qtdPulos = 0
@@ -729,8 +730,8 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
             else
                 jogador.qtdMods = 4
 
-            controle = 0
-            segura_som = 0
+            opcoes.controle = 0
+            ambiente.segura_som = 0
 
             alteraValorEstatisticaPartida("tempo_jogado_partida", jogador.partida_tempo_jogado)
             alteraValorEstatisticaPartida("distancia_percorrida_partida", jogador.partida_distancia_viajada)
@@ -740,7 +741,7 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
 
             limpa_intervalos()
 
-            clearTimeout(ativa_evento)
+            clearTimeout(eventos.ativa_evento)
 
             if (causa == 1) {
                 if (idioma == "pt")
@@ -806,14 +807,26 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
     jogador = {
         x: 50,
         y: -200,
-        altura: spriteJogador_Padrao.Altura - 15,
+
+        qtdPulos: 3,
         largura: 30,
         velocidade: 0,
         forcaDoPulo: 23.6,
-        qtdPulos: 3,
-        qtdMods: 5,
+        regula_velocidade: 0,
         chao_referencia: chao.y,
+        altura: spriteJogador_Padrao.Altura - 15,
 
+        contador_mortes: 0,
+
+        mod: 0,
+        qtdMods: 5,
+        timer_mod: 5,
+        liberaMod: 0,
+        var_timer_mod: null,
+        var_timer_modificador: null,
+        var_timer_recarrega: null,
+
+        recorde: 0,
         moedas: 0,
         moedas_coletadas: 0,
         moedas_gastas: 0,
@@ -854,27 +867,26 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
 
         atualiza: function () {
 
-            this.velocidade += gravidade
+            this.velocidade += jogo.gravidade
             this.y += this.velocidade
 
             // Descendo na água ou lava
             if (chao.muda_chao[1] == 2) {
                 if (this.mod_em_uso == 1 && this.y >= 433) {
-                    gravidade = .3
+                    jogo.gravidade = .3
                 }
 
-                if (estadoAtual != estados.ocioso && this.mod_em_uso != 100)
+                if (jogo.status != estados.ocioso && this.mod_em_uso != 100)
                     this.chao_referencia = 650
             } else if (this.mod_em_uso != 100 && chao.muda_chao[1] == 0) {
                 this.chao_referencia = chao.y
-                gravidade = 1.6
+                jogo.gravidade = 1.6
             }
 
-            if (this.mod_em_uso == 0 && mod == 1) {
+            if (this.mod_em_uso == 0 && this.mod == 1)
                 this.y -= this.velocidade
-            }
 
-            if (estadoAtual != estados.perdeu) {
+            if (jogo.status != estados.perdeu) {
                 if (this.y > this.chao_referencia - this.altura) {
                     this.y = this.chao_referencia - this.altura
 
@@ -889,7 +901,7 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
         },
 
         pula: function () {
-            if (this.qtdPulos > 0 && (this.mod_em_uso == 100 || mod != 1)) {
+            if (this.qtdPulos > 0 && (this.mod_em_uso == 100 || this.mod != 1)) {
                 this.pula_effect = 1 + Math.round(2 * Math.random())
                 executaSons2("faixa_efeitos2", "Efeitos", `Pulo${this.pula_effect}.ogg`, 2)
 
@@ -901,7 +913,7 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
             }
 
             // Simulador de Pulga
-            if (hist_pulos + jogador.partida_pulos_dados > 1000)
+            if (hist_pulos + this.partida_pulos_dados > 1000)
                 conquista(15, 0)
 
             // No Poder do Ódio
@@ -912,9 +924,9 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
 
         modificador: function () {
 
-            jogo.liberaMod = 1
+            this.liberaMod = 1
 
-            if ((estadoAtual == estados.jogando || estadoAtual == estados.tutorial) && jogo.timer_mod != 0 && mod != 1 && this.qtdMods > 0) {
+            if ((jogo.status == estados.jogando || jogo.status == estados.tutorial) && this.timer_mod != 0 && this.mod != 1 && this.qtdMods > 0) {
 
                 if (jogo.estatisticasNerds)
                     if (idioma == "pt")
@@ -931,12 +943,12 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                     conquista(22, 0)
                 }
 
-                // Modificadr de Gravidade Lunar
+                // Modificador de Gravidade Lunar
                 if (this.mod_em_uso == 100) {
                     conquista(19, 0)
-                    gravidade = 0.6
+                    jogo.gravidade = 0.6
                     this.forcaDoPulo = 18
-                    mod = 1
+                    this.mod = 1
                 }
 
                 // Decide qual será o modificador que será usado
@@ -949,7 +961,7 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                     if (this.y >= 380)
                         jogador.pula()
                     else
-                        mod = 1
+                        this.mod = 1
                 }
 
                 // De Aço
@@ -958,7 +970,7 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
 
                 if (this.mod_em_uso != 100) {
                     modificador_timer = setTimeout(() => {
-                        mod = 1    // Flutua
+                        jogador.mod = 1    // Flutua
                         clearTimeout(modificador_timer)
                     }, 200)
                 }
@@ -980,10 +992,10 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
         },
 
         timer: function () {
-            var_timer_modificador = setInterval(() => {
+            this.var_timer_modificador = setInterval(() => {
 
-                if (jogo.timer_mod > 0 && mod == 1) {
-                    jogo.timer_mod--
+                if (jogador.timer_mod > 0 && jogador.mod == 1) {
+                    jogador.timer_mod--
 
                     if (jogador.mod_em_uso == 0)
                         jogador.flutua()
@@ -997,34 +1009,70 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                         conquista(17, 0)
                 } else {
                     // Hack life p/ voar infinitamente, comente a linha abaixo \/
-                    clearInterval(var_timer_modificador)
+                    clearInterval(jogador.var_timer_modificador)
 
                     if (typeof tMf != "undefined")
                         clearInterval(tMf) // Desliga a animação de fogo abaixo do prédio
 
-                    mod = 0
+                    jogador.mod = 0
                     jogador.velocidade = 0
 
-                    gravidade = 1.6
+                    jogo.gravidade = 1.6
                     jogador.forcaDoPulo = 23.6
 
                     if (jogador.qtdMods != 0)
-                        jogo.recarrega_timer()
+                        jogador.recarrega_timer()
                 }
             }, 1000)
         },
 
         flutua: function () {
-            if (jogo.timer_mod % 1 == 0 && jogo.timer_mod % 3 == 0)
+            if (jogador.timer_mod % 1 == 0 && jogador.timer_mod % 3 == 0)
                 this.y += 6
             else
                 this.y -= 3
         },
 
+        recarrega_timer: function () {
+
+            if (this.estatisticasNerds)
+                if (idioma == "pt")
+                    console.log("Recarregando Modificador")
+                else
+                    console.log("Reloading Modifier")
+
+            document.getElementById("qtdMods").style.display = "none"
+
+            // Restaura a skin ao escolhido anteriormente depois do modificador
+            if (jogador.mod_em_uso == 1) {
+                anim_indices[5] = 0
+                limpa_ferrugem()
+            }
+
+            jogador.var_timer_recarrega = setInterval(() => {
+                if (jogador.timer_mod < jogador.tempoMod && jogador.mod == 0) {
+                    jogador.timer_mod++
+                } else {
+                    jogador.liberaMod = 0
+
+                    if (jogo.estatisticasNerds)
+                        if (idioma == "pt")
+                            console.log("Modificador pronto para uso novamente")
+                        else
+                            console.log("Modifier ready to use again")
+
+                    ajusta_cores(5, 2)
+                    clearInterval(jogador.var_timer_recarrega)
+                    document.getElementById("carregando").style.display = "none"
+                    document.getElementById("qtdMods").style.display = "block"
+                }
+            }, 2000)
+        },
+
         desenha: function () {
 
             // Desenha o fogo embaixo do prédio ao flutuar
-            if (this.mod_em_uso == 0 && mod == 1)
+            if (this.mod_em_uso == 0 && this.mod == 1)
                 spriteAdereco_combustao.desenha(this.x - 2, this.y + 145)
 
             if (this.skin == 0) {
@@ -1066,7 +1114,7 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
         y: 120,
 
         insere: function () {
-            if (velocidade_obs != 0)
+            if (jogo.velocidade != 0)
                 insere_propsfundo()
         },
 
@@ -1078,7 +1126,7 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
 
             for (let x = 0, tam = this._obsfundo.length; x < tam; x++) {
                 let obsb = this._obsfundo[x]
-                obsb.x -= velocidade_obs * 0.8
+                obsb.x -= jogo.velocidade * 0.8
 
                 if (obsb.x <= -obsb.largura - 90) {
                     this._obsfundo.splice(x, 1)
@@ -1101,7 +1149,7 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
         y: 120,
 
         insere: function () {
-            if (velocidade_obs != 0)
+            if (jogo.velocidade != 0)
                 insere_propsfrente()
         },
 
@@ -1113,7 +1161,7 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
 
             for (let x = 0, tam = this._obsfrente.length; x < tam; x++) {
                 let obsf = this._obsfrente[x]
-                obsf.x -= velocidade_obs * 1.2
+                obsf.x -= jogo.velocidade * 1.2
 
                 if (obsf.x <= -obsf.largura - 90) {
                     this._obsfrente.splice(x, 1)
@@ -1140,24 +1188,24 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
         y: 120,
 
         insere: function () {
-            if (velocidade_obs != 0)
+            if (jogo.velocidade != 0)
                 insere_obj()
         },
 
         atualiza: function () {
 
-            if (mod == 1 && jogador.mod_em_uso == 100 && jogador.y >= 432 && chao.muda_chao[1] == 2)
+            if (jogador.mod == 1 && jogador.mod_em_uso == 100 && jogador.y >= 432 && chao.muda_chao[1] == 2)
                 jogador.pula()
 
-            if (jogador.y >= 432 && chao.muda_chao[1] == 2 && ((jogo.timer_mod == 5 && jogador.mods_comprados[1] == 0) || (jogo.timer_mod == 10 && jogador.mods_comprados[0] == 1) || (jogo.timer_mod == 5 && jogador.mods_comprados[1] == 1)))
-                if (estadoAtual == estados.jogando || estadoAtual == estados.tutorial) {
-                    if (mod == 0) {
+            if (jogador.y >= 432 && chao.muda_chao[1] == 2 && ((jogador.timer_mod == 5 && jogador.mods_comprados[1] == 0) || (jogador.timer_mod == 10 && jogador.mods_comprados[0] == 1) || (jogador.timer_mod == 5 && jogador.mods_comprados[1] == 1)))
+                if (jogo.status == estados.jogando || jogo.status == estados.tutorial) {
+                    if (jogador.mod == 0) {
                         if (jogador.chao_referencia == 650 || chao.muda_chao[1] == 2)
-                            jogo.perdeu(jogo.inicia_evento)
+                            jogo.perdeu(eventos.inicia_evento)
                         else
                             jogo.perdeu(0)
 
-                        gravidade = .3
+                        jogo.gravidade = .3
                     }
                 }
 
@@ -1169,10 +1217,10 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
             for (let i = 0, tam = this._obs.length; i < tam; i++) {
                 let obs = this._obs[i]
 
-                obs.x -= velocidade_obs
+                obs.x -= jogo.velocidade
 
                 if (jogador.x < obs.x + obs.largura && jogador.x + jogador.largura >= obs.x && jogador.y + jogador.altura >= chao.y - obs.altura && obs.altura >= 55) {
-                    if ((mod == 1 || jogo.timer_mod < 1) && jogador.qtdMods > 0 && (estadoAtual == estados.jogando || estadoAtual == estados.tutorial)) {
+                    if ((jogador.mod == 1 || jogador.timer_mod < 1) && jogador.qtdMods > 0 && (jogo.status == estados.jogando || jogo.status == estados.tutorial)) {
 
                         if (obs.altura >= 55 && obs.altura < 60) {
                             pisao_neles()
@@ -1186,9 +1234,9 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                             this._obs.splice(i, 1)
                             tam--
                             i--
-                            contador_mortes++
+                            jogador.contador_mortes++
 
-                            if ((estadoAtual == estados.jogando || estadoAtual == estados.tutorial) && obs.altura > 60) {
+                            if ((jogo.status == estados.jogando || jogo.status == estados.tutorial) && obs.altura > 60) {
                                 if (jogador.mod_em_uso != 1) {
                                     if (idioma == "pt")
                                         jogo.notifica("Não Atropele os Prédios!", "red")
@@ -1213,12 +1261,12 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                                 executaSons("faixa_efeitos2", "Efeitos", "Batida.ogg", 2)
                             }
                         }
-                    } else if (estadoAtual == estados.jogando || estadoAtual == estados.tutorial) {
+                    } else if (jogo.status == estados.jogando || jogo.status == estados.tutorial) {
                         if (obs.altura >= 55 && obs.altura < 60) {
                             pisao_neles()
                         } else {
                             if (jogador.chao_referencia == 650 || chao.muda_chao[1] == 2)
-                                jogo.perdeu(jogo.evento)
+                                jogo.perdeu(eventos.evento)
                             else
                                 jogo.perdeu(0)
 
@@ -1230,7 +1278,7 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                         tam--
                         i--
                     }
-                } else if (obs.x <= 0 && (estadoAtual == estados.jogando || estadoAtual == estados.tutorial) && obs.altura >= 55 && !obs._scored) {
+                } else if (obs.x <= 0 && (jogo.status == estados.jogando || jogo.status == estados.tutorial) && obs.altura >= 55 && !obs._scored) {
                     // Soma 1 valor no Score a cada obstáculo pulado
                     jogador.partida_pontuacao++
                     obs._scored = true
@@ -1249,7 +1297,7 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
 
             for (let x = 0, tam = this._obsfundo.length; x < tam; x++) {
                 let obsb = this._obsfundo[x]
-                obsb.x -= velocidade_obs * 0.8
+                obsb.x -= jogo.velocidade * 0.8
 
                 if (obsb.x <= -obsb.largura - 90) {
                     this._obsfundo.splice(x, 1)
@@ -1269,23 +1317,23 @@ function main() {
 
     carrega_dados()
 
-    canvas = document.getElementById("canvas")
+    opcoes.canvas = document.getElementById("canvas")
     notificacoes = document.getElementById("notificacoes")
     filtro = document.getElementById("filtro")
     filtro2 = document.getElementById("filtro2")
 
-    Largura = 1366
-    Altura = 625
+    opcoes.largura = 1366
+    opcoes.altura = 625
 
-    ctx = canvas.getContext("2d")
-    document.body.appendChild(canvas)
+    opcoes.ctx = opcoes.canvas.getContext("2d")
+    document.body.appendChild(opcoes.canvas)
 
     filtro.addEventListener("mousedown", clique)
     filtro2.addEventListener("mousedown", clique)
     document.addEventListener("keypress", clique)
     notificacoes.addEventListener("mousedown", clique)
 
-    estadoAtual = estados.jogar
+    jogo.status = estados.jogar
 
     menu_inicial(1)
     roda()
@@ -1302,10 +1350,10 @@ function roda() {
 
 function atualiza() {
 
-    if (estadoAtual == estados.jogando || estadoAtual == estados.tutorial) {
+    if (jogo.status == estados.jogando || jogo.status == estados.tutorial) {
         menu_inicial(0)
 
-        if (estadoAtual == estados.jogando)
+        if (jogo.status == estados.jogando)
             obstaculos.atualiza()
     }
 
@@ -1319,13 +1367,13 @@ function atualiza() {
     chao.atualiza()
 
     // Executa o som de fundo de Vento em altas velocidades
-    if (velocidade_obs > 22.5 && segura_vento == 0 && estadoAtual == estados.jogando) {
+    if (jogo.velocidade > 18.5 && ambiente.segura_vento == 0 && jogo.status == estados.jogando) {
 
-        segura_vento = 1
+        ambiente.segura_vento = 1
         executaSons2("faixa_ambiente", "Efeitos", "Vento.ogg", 2)
 
         vento_delay = setInterval(() => {
-            segura_vento = 0
+            ambiente.segura_vento = 0
             setInterval(vento_delay)
         }, 53000)
     }
@@ -1340,43 +1388,44 @@ function desenha() {
 
     propsfundo.desenha()
 
-    ctx.fillStyle = "#fff"
-    ctx.font = "50px Minecraft"
+    opcoes.ctx.fillStyle = "#fff"
+    opcoes.ctx.font = "50px Minecraft"
 
-    if (estadoAtual == estados.perdeu) {
+    if (jogo.status == estados.perdeu) {
         document.getElementById("notifica_moeda").innerHTML = `$${jogador.moedas}`
         $("#notifica_moeda").fadeIn()
 
         if (Cenario_sprites.astro[2] == 0)
-            ctx.fillStyle = "rgba(0, 0, 0, .7)"
+            opcoes.ctx.fillStyle = "rgba(0, 0, 0, .7)"
         else
-            ctx.fillStyle = "rgba(255, 255, 255, .7)"
-        ctx.font = "70px Minecraftia"
+            opcoes.ctx.fillStyle = "rgba(255, 255, 255, .7)"
+        opcoes.ctx.font = "70px Minecraftia"
+
         // Resumo da pontuação final do Jogador
-        ctx.fillText(labelTexto.texto, canvas.width / 2 - ctx.measureText(labelTexto.texto).width / 2, Altura / 1.4 + 40)
+        opcoes.ctx.fillText(labelTexto.texto, opcoes.canvas.width / 2 - opcoes.ctx.measureText(labelTexto.texto).width / 2, opcoes.altura / 1.4 + 40)
 
         background_predios.desenha(0, 400)
 
         if (Cenario_sprites.astro[2] == 0)
-            ctx.fillStyle = "black"
+            opcoes.ctx.fillStyle = "black"
         else
-            ctx.fillStyle = "#fff"
+            opcoes.ctx.fillStyle = "#fff"
 
-        ctx.font = "40px Minecraftia"
-        if (jogador.partida_pontuacao < recorde)
+        opcoes.ctx.font = "40px Minecraftia"
+        if (jogador.partida_pontuacao < jogador.recorde)
             if (idioma == "pt")
-                ctx.fillText("Recorde Atual: " + recorde, canvas.width / 2 - ctx.measureText("Recorde Atual: " + recorde).width / 2, Altura / 1.3 + 50)
+                opcoes.ctx.fillText(`Recorde Atual: ${jogador.recorde}`, opcoes.canvas.width / 2 - opcoes.ctx.measureText(`Recorde Atual: ${jogador.recorde}`).width / 2, opcoes.altura / 1.3 + 50)
             else
-                ctx.fillText("Current Record: " + recorde, canvas.width / 2 - ctx.measureText("Current Record: " + recorde).width / 2, Altura / 1.3 + 50)
+                opcoes.ctx.fillText(`Current Record: ${jogador.recorde}`, opcoes.canvas.width / 2 - opcoes.ctx.measureText(`Current Record: ${jogador.recorde}`).width / 2, opcoes.altura / 1.3 + 50)
 
-        ctx.save()
-        ctx.translate(Largura / 2, Altura / 2)
+        opcoes.ctx.save()
+        opcoes.ctx.translate(opcoes.largura / 2, opcoes.altura / 2)
 
-        ctx.restore()
-    } if (estadoAtual == estados.jogando)
+        opcoes.ctx.restore()
+    } if (jogo.status == estados.jogando)
         obstaculos.desenha()
 
-    if (estadoAtual == estados.jogar || estadoAtual == estados.perdeu || estadoAtual == estados.ocioso || estadoAtual == estados.tutorial) {
+    if (jogo.status == estados.jogar || jogo.status == estados.perdeu || jogo.status == estados.ocioso || jogo.status == estados.tutorial) {
         propsfundo.desenha()
 
         obstaculos.atualiza()
@@ -1384,8 +1433,8 @@ function desenha() {
     }
 
     // Verifica se o jogador está ocioso e se a opção está ativa
-    if (estadoAtual == estados.jogar) {
-        if (jogo.estadoOcioso == 0 && jogo.ociosidade && confirma_carregamento) {
+    if (jogo.status == estados.jogar) {
+        if (!jogo.estadoOcioso && jogo.ociosidade && confirma_carregamento) {
             jogo.estadoOcioso = 1
 
             if (jogo.estatisticasNerds)
@@ -1395,7 +1444,7 @@ function desenha() {
                     console.log("%cIdle Mode will start in 10 seconds", "color: green")
 
             contagemOcioso = setTimeout(() => {
-                estadoAtual = estados.ocioso
+                jogo.status = estados.ocioso
 
                 estadoOcioso("auto")
                 clearTimeout(contagemOcioso)
@@ -1403,13 +1452,13 @@ function desenha() {
         }
     }
 
-    if (estadoAtual == estados.ocioso) {
-        if (jogo.seguraEventoOcioso == 0) {
+    if (jogo.status == estados.ocioso) {
+        if (eventos.seguraEventoOcioso == 0) {
 
-            jogo.seguraEventoOcioso = 1
+            eventos.seguraEventoOcioso = 1
 
-            jogo.relogio_eventos()
-            jogo.qtd_eventos = [99, 99, 99, 99]
+            eventos.relogio_eventos()
+            eventos.qtd_eventos = [99, 99, 99, 99]
         }
     }
 

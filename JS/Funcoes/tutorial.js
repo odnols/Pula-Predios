@@ -111,7 +111,7 @@ function executa_tutorial(requisicao_auto, especial) {
 
         $("#tutorial_em_jogo").fadeIn()
 
-        estadoAtual = estados.tutorial
+        jogo.status = estados.tutorial
 
         if (indice_tutorial == 2)
             freia_predio()
@@ -145,7 +145,7 @@ function controles_tutorial() {
 
     $("#placeholder_controles").fadeIn()
 
-    setTimeout(function () {
+    setTimeout(() => {
         $("#placeholder_controles").fadeOut()
         localStorage.setItem("tutorialCompleto", 1)
 

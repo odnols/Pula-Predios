@@ -5,7 +5,7 @@ function boasVindas() {
     $("#boas_vindas").fadeOut()
     $("#log_").fadeIn()
 
-    inicia_game = 1
+    opcoes.inicia_game = 1
     confirma_carregamento = 1
 
     localStorage.setItem("iniciaLoucura_1.1", 1)
@@ -56,23 +56,23 @@ function confirma_inicio_partida() {
     if (typeof altera_moeda != "undefined")
         clearInterval(altera_moeda)
 
-    estadoAtual = estados.jogando
-    jogo.ultimo_evento = null
+    jogo.status = estados.jogando
+    eventos.ultimo_evento = null
     toolTip()
     troca_descricao(0, 0, 0)
 
     // Ligando os motores
     conquista(0, 0)
 
-    if (!segura_som) { // Meme usado para começar
+    if (!ambiente.segura_som) { // Meme usado para começar
         executaSons("faixa_memes2", "Inicio", escolhe_som(1, 0), 3)
-        segura_som = 1
+        ambiente.segura_som = 1
     }
 
     cronometroTempoPartida = setInterval(() => {
         jogador.partida_tempo_jogado++
 
-        jogador.partida_distancia_viajada += velocidade_obs * 2
+        jogador.partida_distancia_viajada += jogo.velocidade * 2
     }, 1000)
 
     let faixa = ["main_1.ogg", "main_2.ogg", "main_3.ogg", "main_4.ogg"]
@@ -87,8 +87,8 @@ function confirma_inicio_partida() {
 
     botoes(600)
 
-    if (estadoAtual == estados.jogando)
-        jogo.relogio_eventos()
+    if (jogo.status == estados.jogando)
+        eventos.relogio_eventos()
 
     jogo.estadoOcioso = 0
 
@@ -99,7 +99,7 @@ function confirma_inicio_partida() {
     $(".pulos_trad").fadeIn()
     $("#qtdPulos").fadeIn()
 
-    clearInterval(var_timer_mod)
+    clearInterval(jogador.var_timer_mod)
 }
 
 function regula_velocidade() {
@@ -109,12 +109,12 @@ function regula_velocidade() {
 
     desliga_som("faixa_ambiente", 2)
 
-    regula_velo = setInterval(() => {
-        if (velocidade_obs > 11) {
-            velocidade_obs--
+    jogador.regula_velocidade = setInterval(() => {
+        if (jogo.velocidade > 11) {
+            jogo.velocidade--
         } else {
-            velocidade_obs = 10
-            clearInterval(regula_velo)
+            jogo.velocidade = 10
+            clearInterval(jogador.regula_velocidade)
         }
     }, 100)
 }
@@ -139,7 +139,7 @@ function limpa_chao() {
 
 function visualizar_log(caso) {
 
-    estado_log = caso
+    menus.estado_log = caso
 
     document.getElementById("transitador_sessao").style.display = "block"
     document.getElementById("transitador_sessao").style.animation = "transita_log .5s"
@@ -189,10 +189,10 @@ function abre_loja() {
 
     $("#loja").fadeToggle()
 
-    if (estado_loja == 0) {
-        estado_loja = 1
+    if (menus.estado_loja == 0) {
+        menus.estado_loja = 1
 
-        if (sessao_loja_ativa)
+        if (menus.sessao_loja_ativa)
             $("#rodape_loja").fadeIn()
 
         document.getElementById("loja").style.animation = "abre_loja .5s"
@@ -216,7 +216,7 @@ function abre_loja() {
         }, 71000)
     } else {
         verificaOciosidade(false, 1, 1)
-        estado_loja = 0
+        menus.estado_loja = 0
 
         fechador_loja = document.getElementsByClassName("fechador_loja")
         fechador_loja[0].style.animation = "none"
@@ -233,7 +233,7 @@ function abre_loja() {
 }
 
 function abre_loja_especial(aba_loja) {
-    categoria_anterior = aba_loja
+    menus.categoria_anterior = aba_loja
 
     abre_loja()
     carrega_dados_loja(aba_loja)
@@ -269,7 +269,7 @@ function pisao_neles() {
     jogador.partida_pisoes_pontuados++
     alteraValorEstatisticaPartida("quantidade_pisoes_partida", jogador.partida_pisoes_pontuados)
 
-    if (jogo.inicia_evento == 0)
+    if (eventos.inicia_evento == 0)
         if (jogo.dificuldade == 1)
             moeda_ev = 5
         else if (jogo.dificuldade == 2)
@@ -308,7 +308,7 @@ function pisao_neles() {
     } else {
 
         bambam = Math.round(1 * Math.random())
-        if (bambam == 0 && jogo.evento == 2)
+        if (bambam == 0 && eventos.evento == 2)
             executaSons("faixa_efeitos1", "Efeitos", "Batida.ogg", 2)
         else
             executaSons("faixa_memes1", "Memes", "bambam.ogg", 3)
@@ -347,8 +347,8 @@ function mostra_moedas(valor) {
 
 function finaliza_evento() {
 
-    if (estadoAtual == estados.jogando)
-        jogo.notifica(jogo.saida_evento[jogo.inicia_evento], "white")
+    if (jogo.status == estados.jogando)
+        jogo.notifica(eventos.saida_evento[eventos.inicia_evento], "white")
 
     if (jogo.estatisticasNerds)
         if (idioma == "pt")
@@ -357,34 +357,34 @@ function finaliza_evento() {
             console.log("%cEvent Finished", "color: red")
 
     // Selva de Concreto
-    if (jogo.evento == 0 && jogo.contador_tempo_evento >= 30 && jogo.dificuldade == 3)
+    if (eventos.evento == 0 && eventos.contador_tempo_evento >= 30 && jogo.dificuldade == 3)
         conquista(21, 0)
 
-    if (jogo.evento == 1 && jogador.bonus_vezes_usados[1] > 0) {
+    if (eventos.evento == 1 && jogador.bonus_vezes_usados[1] > 0) {
         ganha = 10 + Math.round(20 * Math.random())
 
         mostra_moedas(ganha)
     }
 
-    if (jogo.evento == 2 && estadoAtual == estados.jogando)
+    if (eventos.evento == 2 && jogo.status == estados.jogando)
         executaSons("faixa_memes2", "Memes", "bambam2.ogg", 3)
 
-    clearTimeout(tempo_evento)
-    clearTimeout(ativa_evento)
+    clearTimeout(eventos.tempo_evento)
+    clearTimeout(eventos.ativa_evento)
 
-    jogo.evento = null
-    jogo.inicia_evento = null
+    eventos.evento = null
+    eventos.inicia_evento = null
     chao.muda_chao = [0, 0, 0]
 
-    if (estadoAtual == estados.jogando)
-        jogo.relogio_eventos()
+    if (jogo.status == estados.jogando)
+        eventos.relogio_eventos()
 
-    if (estadoAtual == estados.jogando)
+    if (jogo.status == estados.jogando)
         executaSons2("faixa_efeitos3", "Efeitos", "levelup.ogg", 2)
 
     confirmaFechamento = setTimeout(() => {
-        jogo.termina_evento = null
-        jogo.seguraEventoOcioso = 0
+        eventos.termina_evento = null
+        eventos.seguraEventoOcioso = 0
         clearTimeout(confirmaFechamento)
     }, 3000)
 }
@@ -399,14 +399,14 @@ function cancela_evento() {
 
     clearInterval(cronometro)
 
-    if (estadoAtual == estados.jogando)
+    if (jogo.status == estados.jogando)
         clearInterval(cronometro2)
 
-    clearTimeout(tempo_evento)
-    clearTimeout(ativa_evento)
+    clearTimeout(eventos.tempo_evento)
+    clearTimeout(eventos.ativa_evento)
 
-    jogo.evento = null
-    jogo.inicia_evento = null
+    eventos.evento = null
+    eventos.inicia_evento = null
     chao.muda_chao = [0, 0, 0]
 
 }
@@ -414,36 +414,36 @@ function cancela_evento() {
 function encerra_modificador() {
 
     // Encerra o carregamento do modificador em caso de perca
-    if (typeof var_timer_modificador != "undefined")
-        clearInterval(var_timer_modificador)
+    if (typeof jogador.var_timer_modificador != "undefined")
+        clearInterval(jogador.var_timer_modificador)
 
-    if (typeof var_timer_recarrega != "undefined")
-        clearInterval(var_timer_recarrega)
+    if (typeof jogador.var_timer_recarrega != "undefined")
+        clearInterval(jogador.var_timer_recarrega)
 
-    mod = 0
+    jogador.mod = 0
     jogo.liberaMod = 0
 }
 
 function aleatorizaProp() {
     let prop = Math.round(8 * Math.random())
-    aleatorizadorProp = prop
+    ambiente.aleatorizadorProp = prop
 }
 
 function MsgPerdeu(causa) {
 
     // Filtro e animação
-    if (estatistica_morte)
+    if (menus.estatistica_morte)
         document.getElementById("filtro2").style.display = "block"
 
     if (causa != 1)
         if (causa != 3)
             executaSons2("faixa_efeitos1", "Efeitos", "Batida.ogg", 2)
 
-    if (controle == 0 && estadoAtual == estados.perdeu) {
+    if (!opcoes.controle && jogo.status == estados.perdeu) {
 
-        controle = 1
+        opcoes.controle = 1
 
-        if (jogador.partida_pontuacao > recorde)
+        if (jogador.partida_pontuacao > jogador.recorde)
             if (idioma == "pt")
                 labelTexto.texto = `New Record! ( ${jogador.partida_pontuacao} )`
             else
@@ -536,14 +536,14 @@ function estadoOcioso(caso) {
             else
                 console.log("%cIdle mode disabled", "color: green")
 
-        estadoAtual = estados.jogar
-        jogo.seguraEventoOcioso = 0
+        jogo.status = estados.jogar
+        eventos.seguraEventoOcioso = 0
         jogo.estadoOcioso = 0
 
         escondeInformacoes(0, 0)
 
         desliga_som("faixa_musicas", 1)
-        clearTimeout(ativa_evento)
+        clearTimeout(eventos.ativa_evento)
     }
 }
 
@@ -566,7 +566,7 @@ function impedeOcioso() {
 function verificaOciosidade(caso, local, valor) {
 
     if (local != undefined)
-        if (estado_loja)
+        if (menus.estado_loja)
             caso = 1
         else
             caso = 0
@@ -700,7 +700,7 @@ function alteraValorEstatisticaPartida(objeto, valor) {
         }
     } else {
 
-        if (estadoAtual != estados.jogando) {
+        if (jogo.status != estados.jogando) {
             cronometra = setTimeout(() => {
                 document.getElementById("causa_perca").innerHTML = "??"
 
@@ -802,21 +802,21 @@ function status_confirmacao(valor, requisicao_auto, objeto) {
 
     if (valor && !requisicao_auto) {
         if (objeto == "Loja") {
-            let categoria = cache_compra[0]
-            let item = cache_compra[1]
+            let categoria = menus.cache_compra[0]
+            let item = menus.cache_compra[1]
 
             confirma_compra(categoria, item, valor)
-            janelaConfirma = 0
+            menus.janelaConfirma = 0
         } else {
             apagaDados(valor)
-            janelaConfirma = 0
+            menus.janelaConfirma = 0
         }
     }
 }
 
 function quadro_confirma_compra(requisicao_auto) {
-    janelaConfirma = 1
-    cache_confirma = "Loja"
+    menus.janelaConfirma = 1
+    menus.cache_confirma = "Loja"
 
     if (requisicao_auto)
         $("#quadro_confirma_compra").fadeIn()
@@ -825,8 +825,8 @@ function quadro_confirma_compra(requisicao_auto) {
 }
 
 function quadro_confirma_exclusao() {
-    janelaConfirma = 1
-    cache_confirma = "Exclui"
+    menus.janelaConfirma = 1
+    menus.cache_confirma = "Exclui"
     $("#quadro_confirma_exclusao").fadeIn()
 }
 
@@ -890,8 +890,8 @@ function limpa_intervalos() {
     if (typeof cronometroTempoPartida != "undefined")
         clearInterval(cronometroTempoPartida)
 
-    if (typeof var_timer_mod != "undefined")
-        clearInterval(var_timer_mod)
+    if (typeof jogador.var_timer_mod != "undefined")
+        clearInterval(jogador.var_timer_mod)
 
     if (typeof tempo_evento != "undefined")
         clearTimeout(tempo_evento)
@@ -968,10 +968,10 @@ function altera_moedas(valor, total) {
 
 function objetosVoadores() {
 
-    if (segura_objeto_voador == 0) {
+    if (ambiente.segura_objeto_voador == 0) {
 
         animaLuzesGuia(0)
-        segura_objeto_voador = 1
+        ambiente.segura_objeto_voador = 1
 
         libera_objeto_voador = 1 + Math.round(5 * Math.random())
         setTimeout(() => {
@@ -989,7 +989,7 @@ function objetosVoadores() {
                 else if (Cenario_sprites.astro[2] == 1) // Gera um disco voador
                     Cenario_sprites.objeto_voador = [-8, 1400, 130, 2]
                 else
-                    segura_objeto_voador = 0
+                    ambiente.segura_objeto_voador = 0
 
                 clearTimeout(gera_objeto_voador)
 
@@ -1004,7 +1004,7 @@ function objetosVoadores() {
 function regula_sessao_loja(categoria) {
     let apelido_interno = "Skins"
 
-    if (sessao_loja_ativa != 1) {
+    if (menus.sessao_loja_ativa != 1) {
         if (categoria == "Modificadores") {
             executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
 
@@ -1016,16 +1016,16 @@ function regula_sessao_loja(categoria) {
 
         apelido_interno = sincronizaApelidoInterno(categoria)
 
-        categoria_anterior = categoria
+        menus.categoria_anterior = categoria
         document.getElementById("categoria_loja").innerHTML = apelido_interno
         carrega_vendas_loja(categoria)
 
         $("#rodape_loja").fadeIn()
         $("#sessao_loja").fadeIn()
-        sessao_loja_ativa = 1
+        menus.sessao_loja_ativa = 1
 
         altera_altura_fechador()
-    } else if (categoria != categoria_anterior) {
+    } else if (categoria != menus.categoria_anterior) {
 
         executaSons2("faixa_efeitos3", "Efeitos", "transitador_loja.ogg", 2)
 
@@ -1038,7 +1038,7 @@ function regula_sessao_loja(categoria) {
         $("#sessao_loja").fadeIn()
         $("#rodape_loja").fadeIn()
 
-        categoria_anterior = categoria
+        menus.categoria_anterior = categoria
         apelido_interno = sincronizaApelidoInterno(categoria)
 
         document.getElementById("transitador_sessao").style.display = "block"
@@ -1063,8 +1063,8 @@ function regula_sessao_loja(categoria) {
 
         $("#rodape_loja").fadeOut()
         $("#sessao_loja").fadeOut()
-        sessao_loja_ativa = 0
-        categoria_anterior = null
+        menus.sessao_loja_ativa = 0
+        menus.categoria_anterior = null
 
         altera_altura_fechador()
     }
@@ -1099,7 +1099,7 @@ function altera_altura_fechador() {
 
     fechador_loja = document.getElementsByClassName("fechador_loja")
 
-    if (sessao_loja_ativa) {
+    if (menus.sessao_loja_ativa) {
         // Animação do fechador da loja subindo
         fechador_loja[0].style.animation = "altera_posicao_fechador 1s"
 
@@ -1174,14 +1174,14 @@ function redireciona_notificacao(valor) {
 
 function tempo_notificacao() {
 
-    if (!tamanho_barra_notificacao)
-        tamanho_barra_notificacao = 0
+    if (!menus.tamanho_barra_notificacao)
+        menus.tamanho_barra_notificacao = 0
 
     preenche_barra_notificacao = setInterval(() => {
-        if (tamanho_barra_notificacao >= 100) {
-            tamanho_barra_notificacao = 100
+        if (menus.tamanho_barra_notificacao >= 100) {
+            menus.tamanho_barra_notificacao = 100
 
-            if (tamanho_barra_notificacao < 95)
+            if (menus.tamanho_barra_notificacao < 95)
                 clearInterval(preenche_barra_notificacao)
 
             document.getElementById("quadro_notificacoes").style.animation = "fecha_notificacao 1s"
@@ -1191,7 +1191,7 @@ function tempo_notificacao() {
                 clearTimeout(gatilho_fecha_notificacao)
 
                 document.getElementById("quadro_notificacoes").style.display = "none"
-                tamanho_barra_notificacao = 0
+                menus.tamanho_barra_notificacao = 0
                 segura_notificacao = 0
 
                 setTimeout(() => {
@@ -1201,9 +1201,9 @@ function tempo_notificacao() {
                 }, 1000)
             }, 1000)
         } else
-            tamanho_barra_notificacao++
+            menus.tamanho_barra_notificacao++
 
-        document.getElementById("status_barra_notificacoes").style.width = tamanho_barra_notificacao + "%"
+        document.getElementById("status_barra_notificacoes").style.width = menus.tamanho_barra_notificacao + "%"
     }, 60)
 }
 
@@ -1231,10 +1231,10 @@ function freia_predio() {
     clearTimeout(tRd)
 
     zera_velocidade = setInterval(() => {
-        if (velocidade_obs > 0)
-            velocidade_obs--
+        if (jogo.velocidade > 0)
+            jogo.velocidade--
         else {
-            velocidade_obs = 0
+            jogo.velocidade = 0
             clearInterval(zera_velocidade)
         }
     }, 40)
@@ -1246,10 +1246,10 @@ function acelera_predio() {
 
         volta_velocidade = setInterval(() => {
 
-            if (velocidade_obs < 10)
-                velocidade_obs++
+            if (jogo.velocidade < 10)
+                jogo.velocidade++
             else {
-                velocidade_obs = 10
+                jogo.velocidade = 10
                 clearInterval(volta_velocidade)
                 clearTimeout(vlt_velocidade)
             }

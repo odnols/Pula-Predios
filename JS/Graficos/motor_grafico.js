@@ -63,13 +63,13 @@ function transita_tempo(categoria) {
     if (categoria) {
         anoitecer()
         // Liga a função de Transição
-        libera_transitador = 1
+        ambiente.libera_transitador = 1
     } else {
         amanhecer()
 
         // Desliga a Função de Transição
         conometro_transitador = setTimeout(() => {
-            libera_transitador = 0
+            ambiente.libera_transitador = 0
 
             clearTimeout(conometro_transitador)
         }, 20000)
@@ -102,7 +102,7 @@ function amanhecer() {
 function transitador(elemento, altura, posicao_x, posicao_y) {
 
     // Verifica se está de noite para executar a função
-    if (libera_transitador == 1) {
+    if (ambiente.libera_transitador) {
 
         let img = document.getElementById(elemento)
         let canvas = document.getElementById("canvas")
@@ -135,7 +135,7 @@ function transitador(elemento, altura, posicao_x, posicao_y) {
 function inverte_tempo() {
     if (Cenario_sprites.astro[2] == 0) { // Noite
         Cenario_sprites.astro[2] = 1
-        libera_transitador = 1
+        ambiente.libera_transitador = 1
         Cenario_sprites.opacidade_noite = 1
 
         if (typeof tEst != "undefined")
@@ -148,7 +148,7 @@ function inverte_tempo() {
         animaEstrelas()
     } else { // Dia
         Cenario_sprites.astro[2] = 0
-        libera_transitador = 0
+        ambiente.libera_transitador = 0
         Cenario_sprites.opacidade_noite = 0
 
         if (typeof tEst != "undefined")
@@ -175,11 +175,11 @@ function animaMoeda() {
         tID = setTimeout(() => {
 
             sprites = [0, 912, 798, 684, 570, 456, 342, 228, 114]
-            posicao = ajusta_posicao_sprites(0, sprites)
+            opcoes.posicao = ajusta_posicao_sprites(0, sprites)
 
-            document.getElementById("moeda_img").style.backgroundPosition = `${posicao}px 0px`
+            document.getElementById("moeda_img").style.backgroundPosition = `${opcoes.posicao}px 0px`
 
-            if (posicao == 0) {
+            if (opcoes.posicao == 0) {
                 setTimeout(() => {
                     animaMoeda()
                 }, 1000)

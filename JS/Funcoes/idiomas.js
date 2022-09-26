@@ -2,9 +2,7 @@ var idioma = null, modificador_principal_trad = [], bonus_ativos_trad = []
 
 function define_idioma(idioma) {
 
-    verifica = localStorage.getItem("idioma")
-    if (verifica == null)
-        verifica = "pt"
+    verifica = localStorage.getItem("idioma") || "pt"
 
     if (verifica != idioma) {
         localStorage.setItem("idioma", idioma)
@@ -15,11 +13,7 @@ function define_idioma(idioma) {
 
 function carrega_idioma(caso) {
 
-    idioma = localStorage.getItem("idioma")
-
-    if (idioma == null)
-        idioma = "pt"
-
+    idioma = localStorage.getItem("idioma") || "pt"
     sincronizaNomeConquistas()
 
     if (caso)
@@ -57,8 +51,8 @@ function traduz() {
 
         nome_notificacoes = ["Você ganhou um <a href='#' onclick='abre_loja_especial(1)'>mod!</a>", "Você ganhou um <a href='#' onclick='abre_loja_especial(3)'>tema!</a>"]
 
-        jogo.anuncio_evento = ["Entrando em Área Densa", "Água em Frente, Cuidado!", "Entrando no Parque", "O Chão é Lava!"]
-        jogo.saida_evento = ["Saindo da Área", "Terra à Vista!", "Saindo do Parque", "Essa foi por pouco!"]
+        eventos.anuncio_evento = ["Entrando em Área Densa", "Água em Frente, Cuidado!", "Entrando no Parque", "O Chão é Lava!"]
+        eventos.saida_evento = ["Saindo da Área", "Terra à Vista!", "Saindo do Parque", "Essa foi por pouco!"]
 
         // Textos da loja
         descricao_Mods = ["Acrescenta mais tempo ao seu modificador", "Acrescenta mais vezes de uso por partida ao seu modificador", "Modificador Principal: Te transforma numa bigorna ambulante, destruindo tudo o que vê pela frente!", "Modificador Principal: Proporciona uma gravidade diferente ao jogo, tornando a partida um tanto quanto imprevisível."]
@@ -73,8 +67,8 @@ function traduz() {
 
         nome_notificacoes = ["You won a <a href='#' onclick='abre_loja_especial(1)'>mod!</a>"]
 
-        jogo.anuncio_evento = ["Entering Dense Area", "River in front, be careful!", "Entering the Park", "The Floor is Lava!"]
-        jogo.saida_evento = ["Leaving the Area", "Land in sight!", "Leaving the Park", "That was close!"]
+        eventos.anuncio_evento = ["Entering Dense Area", "River in front, be careful!", "Entering the Park", "The Floor is Lava!"]
+        eventos.saida_evento = ["Leaving the Area", "Land in sight!", "Leaving the Park", "That was close!"]
 
         // Textos da loja
         descricao_Mods = ["Adds more time to your modifier", "Adds more usage times per match to your modifier", "Main Modifier: Turns you into a walking anvil, destroying everything you see ahead!", "Main Modifier: Provides a different gravity to the game, making the game somewhat unpredictable."]

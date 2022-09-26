@@ -5,7 +5,7 @@ function Sprite_Cenario(x, y, Largura, Altura) {
     this.Altura = Altura
 
     this.desenha = function (xCanvas, yCanvas) {
-        ctx.drawImage(img_cenario, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
+        opcoes.ctx.drawImage(img_cenario, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
     }
 }
 
@@ -16,7 +16,7 @@ function Sprite_Agua(x, y, Largura, Altura) {
     this.Altura = Altura
 
     this.desenha = function (xCanvas, yCanvas) {
-        ctx.drawImage(img_agua, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
+        opcoes.ctx.drawImage(img_agua, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
     }
 }
 
@@ -27,7 +27,7 @@ function Sprite_Lava(x, y, Largura, Altura) {
     this.Altura = Altura
 
     this.desenha = function (xCanvas, yCanvas) {
-        ctx.drawImage(img_lava, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
+        opcoes.ctx.drawImage(img_lava, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
     }
 }
 
@@ -38,7 +38,7 @@ function Sprite_Jogador(x, y, Largura, Altura) {
     this.Altura = Altura
 
     this.desenha = function (xCanvas, yCanvas) {
-        ctx.drawImage(img_jogador, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
+        opcoes.ctx.drawImage(img_jogador, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
     }
 }
 
@@ -49,7 +49,7 @@ function Sprite_Objetos(x, y, Largura, Altura) {
     this.Altura = Altura
 
     this.desenha = function (xCanvas, yCanvas) {
-        ctx.drawImage(img_objs, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
+        opcoes.ctx.drawImage(img_objs, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
     }
 }
 
@@ -60,7 +60,7 @@ function Sprite_Ceu(x, y, Largura, Altura) {
     this.Altura = Altura
 
     this.desenha = function (xCanvas, yCanvas) {
-        ctx.drawImage(img_ceu, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
+        opcoes.ctx.drawImage(img_ceu, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
     }
 }
 
@@ -71,7 +71,7 @@ function Sprite_Astros(x, y, Largura, Altura) {
     this.Altura = Altura
 
     this.desenha = function (xCanvas, yCanvas) {
-        ctx.drawImage(img_astros, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
+        opcoes.ctx.drawImage(img_astros, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
     }
 }
 
@@ -82,7 +82,7 @@ function Sprite_Sombras(x, y, Largura, Altura) {
     this.Altura = Altura
 
     this.desenha = function (xCanvas, yCanvas) {
-        ctx.drawImage(img_sombra, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
+        opcoes.ctx.drawImage(img_sombra, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
     }
 }
 
@@ -93,7 +93,7 @@ function Adereco_Aco(x, y, Largura, Altura) {
     this.Altura = Altura
 
     this.desenha = function (xCanvas, yCanvas) {
-        ctx.drawImage(img_adereco_aco, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
+        opcoes.ctx.drawImage(img_adereco_aco, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
     }
 }
 
@@ -104,7 +104,7 @@ function Adereco_Fogo(x, y, Largura, Altura) {
     this.Altura = Altura
 
     this.desenha = function (xCanvas, yCanvas) {
-        ctx.drawImage(img_adereco_fogo, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
+        opcoes.ctx.drawImage(img_adereco_fogo, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
     }
 }
 
@@ -115,7 +115,7 @@ function Adereco_Roda(x, y, Largura, Altura) {
     this.Altura = Altura
 
     this.desenha = function (xCanvas, yCanvas) {
-        ctx.drawImage(img_adereco_roda, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
+        opcoes.ctx.drawImage(img_adereco_roda, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
     }
 }
 
@@ -126,7 +126,7 @@ function Adereco_Bandeira(x, y, Largura, Altura) {
     this.Altura = Altura
 
     this.desenha = function (xCanvas, yCanvas) {
-        ctx.drawImage(img_adereco_bandeira, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
+        opcoes.ctx.drawImage(img_adereco_bandeira, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
     }
 }
 
@@ -137,7 +137,7 @@ function Adereco_Combustao(x, y, Largura, Altura) {
     this.Altura = Altura
 
     this.desenha = function (xCanvas, yCanvas) {
-        ctx.drawImage(img_adereco_combustao, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
+        opcoes.ctx.drawImage(img_adereco_combustao, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
     }
 }
 
@@ -148,7 +148,7 @@ function Mascara_estrelas(x, y, Largura, Altura) {
     this.Altura = Altura
 
     this.desenha = function (xCanvas, yCanvas) {
-        ctx.drawImage(img_mascara_estrela, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
+        opcoes.ctx.drawImage(img_mascara_estrela, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
     }
 }
 
@@ -159,7 +159,7 @@ function Luzes_navegacao(x, y, Largura, Altura) {
     this.Altura = Altura
 
     this.desenha = function (xCanvas, yCanvas) {
-        ctx.drawImage(img_luzes_navegacao, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
+        opcoes.ctx.drawImage(img_luzes_navegacao, this.x, this.y, this.Largura, this.Altura, xCanvas, yCanvas, this.Largura, this.Altura)
     }
 }
 
