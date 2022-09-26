@@ -1,53 +1,38 @@
 function desenha_chao_fundo() {
 
-    for (let x = 0, tam = propsfundo._obsfundo.length; x < tam; x++) {
-        let obsb = propsfundo._obsfundo[x]
-
-        desenha_objeto(obsb, chao.y, 1)
-    }
+    const valor = propsfundo._obsfundo
+    for (let i = 0; i < valor.length; i++)
+        desenha_objeto(valor[i], chao.y, 1)
 
     chao.desenha()
 
-    for (let x = 0, tam = propsfundo._obsfundo.length; x < tam; x++) {
-        let obsb = propsfundo._obsfundo[x]
-
-        desenha_sombra(obsb, chao.y - 15, 1)
-    }
+    for (let i = 0; i < valor.length; i++)
+        desenha_sombra(valor[i], chao.y - 15, 1)
 }
 
 function desenha_chao_centro() {
 
-    for (let i = 0, tam = obstaculos._obs.length; i < tam; i++) {
-        let obs = obstaculos._obs[i]
-
-        desenha_objeto(obs, chao.y + 12)
-    }
+    const valor = obstaculos._obs
+    for (let i = 0; i < valor.length; i++)
+        desenha_objeto(valor[i], chao.y + 12)
 
     chao.desenha2()
     jogador.desenha()
 
-    for (let i = 0, tam = obstaculos._obs.length; i < tam; i++) {
-        let obs = obstaculos._obs[i]
-
-        desenha_sombra(obs, chao.y)
-    }
+    for (let i = 0; i < valor.length; i++)
+        desenha_sombra(valor[i], chao.y)
 }
 
 function desenha_chao_frente() {
 
-    for (let x = 0, tam = propsfrente._obsfrente.length; x < tam; x++) {
-        let obsf = propsfrente._obsfrente[x]
-
-        desenha_objeto(obsf, chao.y + 40, 2)
-    }
+    const valor = propsfrente._obsfrente
+    for (let i = 0; i < valor.length; i++)
+        desenha_objeto(valor[i], chao.y + 40, 2)
 
     chao.desenha3()
 
-    for (let x = 0, tam = propsfrente._obsfrente.length; x < tam; x++) {
-        let obsf = propsfrente._obsfrente[x]
-
-        desenha_sombra(obsf, chao.y + 20, 2)
-    }
+    for (let i = 0; i < valor.length; i++)
+        desenha_sombra(valor[i], chao.y + 20, 2)
 
     if (estadoAtual != estados.perdeu)
         if (jogador.chao_referencia != 650)

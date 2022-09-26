@@ -32,7 +32,7 @@ function sincroniza_api() {
     
         distancia_percorrida: hist_distancia,
         pontos_coletados: hist_pontos,
-        recorde: recorde,
+        recorde: parseInt(recorde),
     
         moedas: jogador.moedas,
         moedas_gastas: jogador.moedas_gastas,
@@ -53,9 +53,10 @@ function sincroniza_api() {
     // Enviando os dados para a API salvar
     const elemento = document.getElementById("flag_api")
 
-    fetch(`http://apisal.herokuapp.com/pula?token=placholder&save=1&token_user=9qH2vQSZpLC9tjpTKCJi2&data=${JSON.stringify(data_user)}`)
+    fetch(`https://apisal.herokuapp.com/pula?token=placholder&save=1&token_user=${localStorage.getItem("token_user")}&data=${JSON.stringify(data_user)}`)
         .then(res => res.json())
         .then(retorno => {
+
             if (retorno.status !== 404)
                 elemento.style.backgroundColor = "Green"
             else
@@ -68,10 +69,14 @@ function sincroniza_api() {
 
     setTimeout(() => {
         elemento.style.backgroundColor = "Gray"
-    }, 2000)
+    }, 3000)
 }
 
 function carrega_dados() {
+
+    let token = localStorage.getItem("token_user")
+    if(token)
+        usuario.token = token
 
     inicia_game = localStorage.getItem("iniciaLoucura_1.1")
     if (inicia_game == null)

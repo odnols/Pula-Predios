@@ -1,5 +1,5 @@
 // Variáveis Globais
-var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 10, regula_velo, estadoAtual, recorde, inicia_game, mod = 0, var_timer_mod, libera_transitador, tempo_evento, contador_tempo_interno = 0, dev_op = 0, iniciando_evento = null, ativa_evento, contador_mortes = 0, controle = 0, segura_som = 0, data = new Date(), log_ = 0, posicao = 913, estado_loja = 0, categoria_loja = null, segura_vento = 0, segura_fundo = 0, aleatorizadorProp = 0, estatistica_morte, tela_focada = true, estado_conquista = 0, cache_compra = [0, 0], cache_confirma, janelaConfirma = 0, segura_objeto_voador = 0, sessao_loja_ativa = 0, categoria_anterior = null, estado_log = 0, tamanho_barra_notificacao = null,
+var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 10, regula_velo, estadoAtual, recorde, inicia_game, mod = 0, var_timer_mod, libera_transitador, tempo_evento, contador_tempo_interno = 0, dev_op = 0, iniciando_evento = null, ativa_evento, contador_mortes = 0, controle = 0, segura_som = 0, data = new Date(), posicao = 913, estado_loja = 0, categoria_loja = null, segura_vento = 0, segura_fundo = 0, aleatorizadorProp = 0, estatistica_morte, estado_conquista = 0, cache_compra = [0, 0], cache_confirma, janelaConfirma = 0, segura_objeto_voador = 0, sessao_loja_ativa = 0, categoria_anterior = null, estado_log = 0, tamanho_barra_notificacao = null,
 
     labelTexto = {
         texto: "",
@@ -150,42 +150,39 @@ var canvas, ctx, Altura, Largura, Frame = 0, gravidade = 1.6, velocidade_obs = 1
                     this.astro[2] = 0
             }
 
-            // Verifica se a tela está focada para poder movimentar os astros
-            if (tela_focada) {
-                // Faz a animação de Subida suave dos Astros
-                if (this.astro[0] < 341)
-                    this.astro[1] -= .2
-                else if (this.astro[0] > 341 && this.astro[0] < 550)
-                    this.astro[1] -= .1
+            // Faz a animação de Subida suave dos Astros
+            if (this.astro[0] < 341)
+                this.astro[1] -= .2
+            else if (this.astro[0] > 341 && this.astro[0] < 550)
+                this.astro[1] -= .1
 
-                if (this.astro[0] > 920)
-                    this.astro[1] += .2
-                else if (this.astro[0] > 650 && this.astro[0] < 920) {
-                    this.astro[1] += .1
+            if (this.astro[0] > 920)
+                this.astro[1] += .2
+            else if (this.astro[0] > 650 && this.astro[0] < 920) {
+                this.astro[1] += .1
 
-                    if (this.astro[3] == 0 && this.astro[0] > 900 && this.astro[2] == 1) {
+                if (this.astro[3] == 0 && this.astro[0] > 900 && this.astro[2] == 1) {
 
-                        if (jogo.qualidadeGrafica == 2)
-                            document.getElementById("filtro").style.animation = "amanhecer 20s"
+                    if (jogo.qualidadeGrafica == 2)
+                        document.getElementById("filtro").style.animation = "amanhecer 20s"
 
-                        this.astro[3] = 1
-                        transita_tempo(0) // Amanhecer
-                        aleatorizaProp()
-                    }
+                    this.astro[3] = 1
+                    transita_tempo(0) // Amanhecer
+                    aleatorizaProp()
+                }
 
-                    if (this.astro[3] == 0 && this.astro[0] > 900 && this.astro[2] == 0) {
+                if (this.astro[3] == 0 && this.astro[0] > 900 && this.astro[2] == 0) {
 
-                        if (jogo.qualidadeGrafica == 2)
-                            document.getElementById("filtro").style.animation = "entardecer 20s"
+                    if (jogo.qualidadeGrafica == 2)
+                        document.getElementById("filtro").style.animation = "entardecer 20s"
 
-                        this.astro[3] = 1
-                        transita_tempo(1) // Anoitecer
-                        aleatorizaProp()
-                    }
-                } else
-                    if (this.astro[3] == 1)
-                        this.astro[3] = 0
-            }
+                    this.astro[3] = 1
+                    transita_tempo(1) // Anoitecer
+                    aleatorizaProp()
+                }
+            } else
+                if (this.astro[3] == 1)
+                    this.astro[3] = 0
 
             if (this.predios <= -Largura)
                 this.predios = 0

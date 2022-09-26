@@ -44,22 +44,9 @@
     <script src="JS/Externos/jquery.js"></script>
     <script src="JS/Externos/tooltip.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
-
-    <script type="text/javascript">
-        // Verifica se a tela está focada no game
-        document.addEventListener("DOMContentLoaded", function () {
-            document.addEventListener("visibilitychange", function () {
-                if (document.hidden)
-                    tela_focada = false
-                else
-                    tela_focada = true
-            })
-        })
-    </script>
 </head>
 
 <body>
-
     <!-- Usado para carregar os dados do jogo -->
     <div id="carrega_jogo">
 
@@ -108,10 +95,6 @@
         <button class="avancar_tuto_block avancar_trad"></button>
 
         <button class="pular_tuto pular_trad" onclick="pular_tutorial()"></button>
-    </div>
-
-    <div id="perfil_user">
-        <img src='source/images/Icones/perfil.png' style="width: 25px" onclick="checa_user()">
     </div>
 
     <div id="controles_tuto">
@@ -201,8 +184,6 @@
         <audio id="faixa_efeitos3"></audio>
     </div>
 
-    <div id="flag_api"></div>
-    
     <div id="conquistas">
         <img id="trofeu" src="source/images/Icones/trofeu.png">
 
@@ -683,6 +664,14 @@
     <div id="notificacoes"></div>
 
     <div id="barra_topo">
+
+        <div id="perfil_user">
+            <img src='source/images/Icones/perfil.png' style="width: 25px" onclick="checa_user()">
+        </div>
+
+        <div id="flag_api"></div>
+        <p id="fps_counter">555</p>
+
         <div id="pontuador"><span class="pontuador_trad"></span>
             <h3 id="pontuacao">0</h3>
         </div>
@@ -797,5 +786,7 @@
 
     <script> carrega_jogo(0) </script>
 </body>
+
+<script src="JS/Funcoes/frames.js"></script>
 
 </html>

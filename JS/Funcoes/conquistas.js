@@ -10,7 +10,7 @@ function sincronizaNomeConquistas() {
 }
 
 function conquista(conquista, modo) {
-    let tempo_conquista
+    let tempo_conquista = 3000
 
     if (lista_conquistas_ganhas[conquista] == 0 || modo == 1) {
         lista_conquistas_ganhas[conquista] = 1
@@ -22,7 +22,7 @@ function conquista(conquista, modo) {
                 console.log("Achievement Requested")
 
         // Remove a primeira posição do array
-        if (modo == 1)
+        if (modo)
             fila_conquistas.shift()
 
         // Trava a animação da conquista
@@ -69,7 +69,6 @@ function conquista(conquista, modo) {
                         document.getElementById("tipo_conquista").innerHTML = "Achievement Achieved!"
 
                     executaSons("faixa_conquistas", "Efeitos", "conquista.ogg", 2)
-                    tempo_conquista = 3000
                 }
 
                 fecha_conquista = setTimeout(() => {
@@ -100,7 +99,7 @@ function conquista(conquista, modo) {
             sincronizaQuadroConquistas()
 
             // Verifica se a lista de conquistas esgotou, e termina o intervalo de requisição
-            if (fila_conquistas.length == 0 && modo == 1)
+            if (fila_conquistas.length == 0 && modo)
                 if (typeof puxa_proxima != 'undefined')
                     clearInterval(puxa_proxima)
         } else {
@@ -189,7 +188,7 @@ function sincronizaConquistas() {
         conquista(8, 0)
 
     // Já Vi de Tudo
-    if (hist_parque >= 1 && hist_lava >= 1 && hist_agua >= 1 && hist_cidade >= 1)
+    if (hist_parque > 0 && hist_lava > 0 && hist_agua > 0 && hist_cidade > 0)
         conquista(7, 0)
 
     // Passando o tempo
@@ -205,7 +204,7 @@ function sincronizaConquistas() {
         conquista(10, 0)
 
     // Colhendo os Frutos
-    if ((lista_conquistas_ganhas[13] != 0) && (lista_conquistas_ganhas[8] != 0)) {
+    if (lista_conquistas_ganhas[13] && lista_conquistas_ganhas[8]) {
         conquista(26, 0)
     }
 }

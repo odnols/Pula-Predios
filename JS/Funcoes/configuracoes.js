@@ -64,11 +64,10 @@ function alteraEstadoEstatistica() {
 
     executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
 
-    if (jogo.estadoOcioso == 1) {
+    if (jogo.estadoOcioso)
         impedeOcioso()
-    }
 
-    if (estatistica_morte == 1) {
+    if (estatistica_morte) {
         estatistica_morte = 0
 
         if (idioma == "pt")
@@ -88,7 +87,7 @@ function alteraEstadoEstatistica() {
 }
 
 function sincronizaEstatisticaMorte(estado) {
-    if (estado == 1)
+    if (estado)
         if (idioma == "pt")
             document.getElementById("status_tela_estatisti").innerHTML = "Ativado"
         else
@@ -104,9 +103,8 @@ function alteraRelogio() {
 
     executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
 
-    if (jogo.estadoOcioso == 1) {
+    if (jogo.estadoOcioso)
         impedeOcioso()
-    }
 
     if (Cenario_sprites.tema == 0) {
         // Termina as transições entre dia e noite
@@ -175,7 +173,7 @@ function sincronizaRelogio() {
         if (idioma == "pt")
             document.getElementById("status_tema_atual").innerHTML = "Sempre Noite"
         else
-            document.getElementById("status_tema_atual").innerHTML = "Always night"
+            document.getElementById("status_tema_atual").innerHTML = "Always Night"
     } else
         if (idioma == "pt")
             document.getElementById("status_tema_atual").innerHTML = "Dinâmico"
@@ -333,9 +331,8 @@ function alteraDificuldade() {
 
     executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
 
-    if (jogo.estadoOcioso) {
+    if (jogo.estadoOcioso)
         impedeOcioso()
-    }
 
     if (jogo.dificuldade == 1) {
         jogo.dificuldade = 2
@@ -397,7 +394,7 @@ function alteraEstadoOcioso() {
 
     executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
 
-    if (jogo.estadoOcioso == 1)
+    if (jogo.estadoOcioso)
         impedeOcioso()
 
     if (jogo.ociosidade) {

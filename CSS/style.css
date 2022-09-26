@@ -2065,7 +2065,7 @@ img#trofeu {
     z-index: 5;
     width: 30px;
     height: 30px;
-    position: absolute;
+    position: fixed;
     background-color: gray;
     border: 1px black solid;
 }
@@ -2076,5 +2076,15 @@ img#trofeu {
     width: 25px;
     height: 25px;
     right: 1.25%;
-    top: 10%;
+    top: 8.5%;
+}
+
+#fps_counter {
+    position: fixed;
+    font-size: 20px;
+    color: white;
+    text-shadow: 1px 1px black;
+    z-index: 5;
+    left: 1%;
+    top: 2%;
 }

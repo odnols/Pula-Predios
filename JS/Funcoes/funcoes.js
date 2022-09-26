@@ -64,9 +64,9 @@ function confirma_inicio_partida() {
     // Ligando os motores
     conquista(0, 0)
 
-    if (segura_som == 0) { // Meme usado para começar
+    if (!segura_som) { // Meme usado para começar
         executaSons("faixa_memes2", "Inicio", escolhe_som(1, 0), 3)
-        segura_som++
+        segura_som = 1
     }
 
     cronometroTempoPartida = setInterval(() => {
@@ -1174,7 +1174,7 @@ function redireciona_notificacao(valor) {
 
 function tempo_notificacao() {
 
-    if (tamanho_barra_notificacao == null)
+    if (!tamanho_barra_notificacao)
         tamanho_barra_notificacao = 0
 
     preenche_barra_notificacao = setInterval(() => {
