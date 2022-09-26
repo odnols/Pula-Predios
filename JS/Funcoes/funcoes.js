@@ -1290,3 +1290,23 @@ function verifica_selecionado(local) {
         desliga_som("faixa_musicas", 1)
     }, 10000)
 }
+
+function altera_chao_referencia(valor_esperado) {
+
+    if (eventos.evento != 1 && eventos.evento != 3) return
+
+    chao.altera_referencia = 1
+
+    setTimeout(() => {
+
+        if (valor_esperado < jogador.chao_referencia) // Descendo
+            jogador.chao_referencia--
+        else // Subindo
+            jogador.chao_referencia++
+
+        if (valor_esperado != jogador.chao_referencia)
+            altera_chao_referencia(valor_esperado)
+        else// Destravando o chao
+            chao.altera_referencia = 0
+    }, 10)
+}

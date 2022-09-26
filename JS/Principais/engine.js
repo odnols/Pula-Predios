@@ -312,6 +312,8 @@ var labelTexto = {
         libera_volta_chao: [0, 0, 0],
         trava: [0, 0, 0],
 
+        altera_referencia: 0,
+
         reserva: [0, 0, 0],
         confirma: [0, 0, 0],
         muda_chao: [0, 0, 0],
@@ -688,7 +690,7 @@ var labelTexto = {
                 opcoes.dev_op = 1
             } else {
                 jogador.velocidade = 0
-                
+
                 ajusta_cores(5, 2)
                 document.getElementById("estado_mod").innerHTML = "Seg"
                 jogador.mod = 0
@@ -872,14 +874,17 @@ var labelTexto = {
 
             // Descendo na água ou lava
             if (chao.muda_chao[1] == 2) {
-                if (this.mod_em_uso == 1 && this.y >= 433) {
+                if (this.mod_em_uso == 1 && this.y >= 433)
                     jogo.gravidade = .3
-                }
 
-                if (jogo.status != estados.ocioso && this.mod_em_uso != 100)
-                    this.chao_referencia = 650
+                if (jogo.status != estados.ocioso && this.mod_em_uso != 100 && !chao.altera_referencia)
+                    jogador.chao_referencia = 650
+                // altera_chao_referencia(650) // Afunda o chão (em água / lava)
             } else if (this.mod_em_uso != 100 && chao.muda_chao[1] == 0) {
-                this.chao_referencia = chao.y
+                // if (!chao.altera_referencia)
+                // altera_chao_referencia(555)
+                jogador.chao_referencia = chao.y
+
                 jogo.gravidade = 1.6
             }
 
