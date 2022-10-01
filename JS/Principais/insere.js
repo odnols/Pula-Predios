@@ -6,48 +6,28 @@ function aleatorizadorInsercao() {
 
 function insere_propsfundo() {
 
-    altura_media = 45
-    variacao = 40
+    // Água ou Lava
+    if (eventos.evento == 1 || eventos.evento == 3) return
 
-    if (eventos.evento == 0) {       // Área Densa
-        if (jogo.dificuldade != 3) {
-            this.altura_media = 50
-            this.variacao = 65
-        } else {
-            this.altura_media = 55
-            this.variacao = 65
-        }
-    } else if (eventos.evento == 2) { // Parque
-        this.altura_media = 53
-        this.variacao = 3
-    } else {
-        this.altura_media = 40
-        this.variacao = 75
+    let altura_media = 15, variacao = 35
+
+    if (eventos.evento == 0) {     // Área Densa
+        altura_media = 30
+        variacao = 40
     }
 
-    if (jogo.status == estados.jogando) {
-        if (jogo.dificuldade != 3 && eventos.evento == null) {
-            this.altura_media = 40
-            this.variacao = 75
-        } else if (eventos.evento == null) {
-            this.altura_media = 50
-            this.variacao = 75
-        }
-    }
+    let altura_objeto = altura_media + Math.round(variacao * Math.random())
 
-    if (eventos.evento == 0 || eventos.evento == 2) {   // Evento de Área Densa
-        propsfundo._obsfundo.push({
-            x: opcoes.largura,
-            largura: 10,
-            altura: this.altura_media + Math.round(this.variacao * Math.random()),
-        })
-    } else if (eventos.evento == 0 || eventos.evento == 2 || eventos.evento == null) {
-        propsfundo._obsfundo.push({
-            x: opcoes.largura,
-            largura: 46,
-            altura: this.altura_media + Math.round((this.variacao - 60) * Math.random()),
-        })
-    }
+    if (jogo.status != estados.jogando)
+        altura_objeto = 20 + Math.round(30 * Math.random())
+
+    propsfundo.objetos.push({
+        x: opcoes.largura,
+        y: chao.y + 7,
+        largura: 15,
+        altura: altura_objeto,
+        nome: escolhe_objeto(altura_objeto, 3)
+    })
 
     // Aleatorizador de inserção
     probabilidade = aleatorizadorInsercao()
@@ -60,46 +40,41 @@ function insere_propsfundo() {
 
 function insere_obj() {
 
-    altura_media = 45
-    variacao = 40
+    // Água ou Lava
+    if (eventos.evento == 1 || eventos.evento == 3) return
 
-    if (eventos.evento == 0) {       // Área Densa
-        if (jogo.dificuldade != 3) {
-            this.altura_media = 50
-            this.variacao = 65
-        } else {
-            this.altura_media = 55
-            this.variacao = 65
-        }
-    } else if (eventos.evento == 2) { // Parque
-        this.altura_media = 53
-        this.variacao = 3
-    } else {
-        this.altura_media = 40
-        this.variacao = 75
+    let altura_media = 40, variacao = 40
+
+    if (eventos.evento == 0) {     // Área Densa
+        altura_media = 50
+        variacao = 65
     }
 
-    if (jogo.status == estados.jogando) {
-        if (jogo.dificuldade != 3 && eventos.evento == null) {
-            this.altura_media = 40
-            this.variacao = 75
-        } else if (eventos.evento == null) {
-            this.altura_media = 50
-            this.variacao = 75
-        }
+    if (eventos.evento == 2) { // Parque
+        altura_media = 15
+        variacao = 35
     }
+
+    let altura_objeto = altura_media + Math.round(variacao * Math.random())
+
+    if (jogo.status != estados.jogando)
+        altura_objeto = 20 + Math.round(30 * Math.random())
 
     if (jogo.status == estados.jogando && (eventos.inicia_evento == 0 || eventos.inicia_evento == 2 || eventos.evento == null)) {
-        obstaculos._obs.push({
+        obstaculos.objetos.push({
             x: opcoes.largura,
+            y: chao.y + 20,
             largura: 46,
-            altura: this.altura_media + Math.round(this.variacao * Math.random()),
+            altura: altura_objeto,
+            nome: escolhe_objeto(altura_objeto, 2)
         })
     } else if (eventos.evento == 0 || eventos.evento == 2 || eventos.evento == null && jogo.status != estados.tutorial) { // Diferente do Evento de Água ou lava
-        obstaculos._obs.push({
+        obstaculos.objetos.push({
             x: opcoes.largura,
+            y: chao.y + 20,
             largura: 10,
-            altura: this.altura_media + Math.round((this.variacao - 60) * Math.random()),
+            altura: altura_objeto,
+            nome: escolhe_objeto(altura_objeto, 2)
         })
     }
 
@@ -131,40 +106,18 @@ function insere_obj() {
 
 function insere_propsfrente() {
 
-    altura_media = 45
-    variacao = 40
+    // Água ou Lava
+    if (eventos.evento == 1 || eventos.evento == 3) return
 
-    if (jogo.status == estados.ocioso) {
-        if (eventos.evento == 0) {       // Área Densa
-            this.altura_media = 50
-            this.variacao = 65
-        } else if (eventos.evento == 2) { // Parque
-            this.altura_media = 52
-            this.variacao = 7
-        }
-    } else {
-        if (eventos.evento == 0 || eventos.evento == 2) { // Área Densa e Parque
-            this.altura_media = 50
-            this.variacao = 65
-        } else if (eventos.evento == null) {
-            this.altura_media = 30
-            this.variacao = 24
-        }
-    }
+    let altura_objeto = 15 + Math.round(30 * Math.random())
 
-    if (eventos.evento == 0 || eventos.evento == 2) { // Área Densa e Parque
-        propsfrente._obsfrente.push({
-            x: opcoes.largura,
-            largura: 15,
-            altura: 55,
-        })
-    } else if (eventos.evento == 0 || eventos.evento == 2 || eventos.evento == null) {
-        propsfrente._obsfrente.push({
-            x: opcoes.largura,
-            largura: 15,
-            altura: this.altura_media + Math.round(this.variacao * Math.random()),
-        })
-    }
+    propsfrente.objetos.push({
+        x: opcoes.largura,
+        y: chao.y + 36,
+        largura: 15,
+        altura: altura_objeto,
+        nome: escolhe_objeto(altura_objeto, 1)
+    })
 
     if (eventos.evento == 0 || eventos.evento == 2) {
         if (jogo.velocidade < 30)
@@ -180,4 +133,34 @@ function insere_propsfrente() {
         else
             propsfrente.tempoInsere = 10 + Math.round(40 * Math.random())
     }
+}
+
+function escolhe_objeto(altura, local) {
+
+    const props = ['spriteArbusto', 'spriteArvore', 'spriteArvore2', 'spriteArvore_frutifera', 'spriteFonte', 'spritePoste1', 'spritePoste2']
+
+    const predios = ['spritePredio1_1', 'spritePredio1_2', 'spritePredio2_1', 'spritePredio2_2', 'spritePredio3']
+    const predios_fundo = ['spritePredio1_1_background', 'spritePredio1_2_background', 'spritePredio2_1_background', 'spritePredio2_2_background', 'spritePredio3_background']
+
+    const pisoes = ['spritePisao', 'spritePisao2']
+
+    if (altura > 50 && local !== 1)
+        if (local == 3)
+            return predios_fundo[Math.round((predios_fundo.length - 1) * Math.random())]
+        else
+            return predios[Math.round((predios.length - 1) * Math.random())]
+
+    // Local = 1 (frente) && evento = 2 (parque) || evento = 0 (densidade)
+    if (local == 1 && eventos.evento == 2) return props[6]
+    if (local == 1 && eventos.evento == 0) return props[5]
+
+    if (altura > 40 && altura < 51)
+        if (local == 2) // Parque
+            return pisoes[0]
+        else if (local == 0) // Densidade
+            return pisoes[1]
+        else
+            return pisoes[Math.round((pisoes.length - 1) * Math.random())]
+
+    return props[Math.round((props.length - 3) * Math.random())]
 }

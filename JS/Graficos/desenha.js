@@ -1,18 +1,18 @@
 function desenha_chao_fundo() {
 
-    const valor = propsfundo._obsfundo
+    const valor = propsfundo.objetos
     for (let i = 0; i < valor.length; i++)
-        desenha_objeto(valor[i], chao.y, 1)
+        desenha_objeto(valor[i])
 
     chao.desenha()
 
     for (let i = 0; i < valor.length; i++)
-        desenha_sombra(valor[i], chao.y - 15, 1)
+        desenha_sombra(valor[i], chao.y - 15)
 }
 
 function desenha_chao_centro() {
 
-    const valor = obstaculos._obs
+    const valor = obstaculos.objetos
     for (let i = 0; i < valor.length; i++)
         desenha_objeto(valor[i], chao.y + 12)
 
@@ -25,14 +25,14 @@ function desenha_chao_centro() {
 
 function desenha_chao_frente() {
 
-    const valor = propsfrente._obsfrente
+    const valor = propsfrente.objetos
     for (let i = 0; i < valor.length; i++)
-        desenha_objeto(valor[i], chao.y + 40, 2)
+        desenha_objeto(valor[i])
 
     chao.desenha3()
 
     for (let i = 0; i < valor.length; i++)
-        desenha_sombra(valor[i], chao.y + 20, 2)
+        desenha_sombra(valor[i], chao.y + 20)
 
     if (jogo.status != estados.perdeu)
         if (jogador.chao_referencia != 650)
@@ -42,126 +42,30 @@ function desenha_chao_frente() {
                 spriteSombraJogador.desenha(jogador.x - 48, jogador.y + 135)
 }
 
-function desenha_objeto(objeto_alvo, chao_alvo, local) {
+function desenha_objeto(objeto) {
 
-    if (objeto_alvo.altura >= 55) {
+    if (!objeto.sprite) {
+        objeto.sprite = presets[objeto.nome].sprite
+        objeto.y -= objeto.sprite.Altura
+    }
 
-        if (local == 2) {
-            if (objeto_alvo.altura == 55) {
-                if (eventos.ultimo_evento == 0 || eventos.evento == 0) { // Área Densa
-                    spritePoste1.desenha(objeto_alvo.x, chao_alvo - objeto_alvo.altura + 5, objeto_alvo.largura, objeto_alvo.altura)
-                    transitador("poste1_noite", 20, objeto_alvo.x - 11, chao_alvo - 50, objeto_alvo.altura)
-                    return
-                } else if (eventos.ultimo_evento == 2 || eventos.evento == 2) { // Parque
-                    spritePoste2.desenha(objeto_alvo.x, chao_alvo - 40, objeto_alvo.largura, objeto_alvo.altura)
-                    transitador("poste2_noite", 20, objeto_alvo.x - 10, chao_alvo - 50, objeto_alvo.altura)
-                    return
-                }
-            }
-        }
-
-        if (local) {
-            if (eventos.evento == 0) {
-                if (objeto_alvo.altura > 80) {
-                    if (objeto_alvo.altura > 110) { // Azul
-                        spritePredio2_1_background.desenha(objeto_alvo.x, chao_alvo - objeto_alvo.altura + 50, objeto_alvo.largura, objeto_alvo.altura)
-                        transitador("predio2_1_background", 100, objeto_alvo.x, chao_alvo - objeto_alvo.altura + 48, objeto_alvo.largura, objeto_alvo.altura)
-                    } else if (objeto_alvo.altura > 100) { // Ciano
-                        spritePredio1_1_background.desenha(objeto_alvo.x, chao_alvo - objeto_alvo.altura + 25, objeto_alvo.largura, objeto_alvo.altura)
-                        transitador("predio1_1_background", 100, objeto_alvo.x - 1, chao_alvo - objeto_alvo.altura + 23, objeto_alvo.largura, objeto_alvo.altura)
-                    } else if (objeto_alvo.altura > 90) { // Azul com Antena
-                        spritePredio2_2_background.desenha(objeto_alvo.x, chao_alvo - objeto_alvo.altura + 25, objeto_alvo.largura, objeto_alvo.altura)
-                        transitador("predio2_2_background", 100, objeto_alvo.x, chao_alvo - objeto_alvo.altura + 15, objeto_alvo.largura, objeto_alvo.altura)
-                    } else { // Ciano com Antena
-                        spritePredio1_2_background.desenha(objeto_alvo.x, chao_alvo - objeto_alvo.altura + 25, objeto_alvo.largura, objeto_alvo.altura)
-                        transitador("predio1_2_background", 100, objeto_alvo.x, chao_alvo - objeto_alvo.altura + 15, objeto_alvo.largura, objeto_alvo.altura)
-                    }
-                } else if (objeto_alvo.altura >= 60) {
-                    spritePredio3_background.desenha(objeto_alvo.x, chao_alvo - objeto_alvo.altura + 25, objeto_alvo.largura, objeto_alvo.altura)
-                    transitador("predio3_background", 100, objeto_alvo.x - 1, chao_alvo - objeto_alvo.altura + 24, objeto_alvo.largura, objeto_alvo.altura)
-                }
-            }
-        } else if (typeof alvo == "undefined") {
-            if (objeto_alvo.altura > 80) {
-                if (objeto_alvo.altura > 110) { // Amarelo
-                    spritePredio2_1.desenha(objeto_alvo.x, chao_alvo - objeto_alvo.altura + 50, objeto_alvo.largura, objeto_alvo.altura)
-                    transitador("predio2_1", 100, objeto_alvo.x, chao_alvo - objeto_alvo.altura + 48, objeto_alvo.largura, objeto_alvo.altura)
-                } else if (objeto_alvo.altura > 100) { // Vermelho
-                    spritePredio1_1.desenha(objeto_alvo.x, chao_alvo - objeto_alvo.altura + 25, objeto_alvo.largura, objeto_alvo.altura)
-                    transitador("predio1_1", 100, objeto_alvo.x - 1, chao_alvo - objeto_alvo.altura + 23, objeto_alvo.largura, objeto_alvo.altura)
-                } else if (objeto_alvo.altura > 90) { // Amarelo com Antena
-                    spritePredio2_2.desenha(objeto_alvo.x, chao_alvo - objeto_alvo.altura + 25, objeto_alvo.largura, objeto_alvo.altura)
-                    transitador("predio2_2", 100, objeto_alvo.x, chao_alvo - objeto_alvo.altura + 15, objeto_alvo.largura, objeto_alvo.altura)
-                } else { // Vermelho com Antena
-                    spritePredio1_2.desenha(objeto_alvo.x, chao_alvo - objeto_alvo.altura + 25, objeto_alvo.largura, objeto_alvo.altura)
-                    transitador("predio1_2", 100, objeto_alvo.x, chao_alvo - objeto_alvo.altura + 15, objeto_alvo.largura, objeto_alvo.altura)
-                }
-
-            } else if (objeto_alvo.altura >= 60) {
-                spritePredio3.desenha(objeto_alvo.x, chao_alvo - objeto_alvo.altura + 25, objeto_alvo.largura, objeto_alvo.altura)
-                transitador("predio3", 100, objeto_alvo.x - 1, chao_alvo - objeto_alvo.altura + 24, objeto_alvo.largura, objeto_alvo.altura)
-            }
-        }
-
-        if (objeto_alvo.altura >= 57 && objeto_alvo.altura < 60) { // Diferente do Parque 
-            spritePisao2.desenha(objeto_alvo.x, chao_alvo - 27, objeto_alvo.largura, objeto_alvo.altura)
-            transitador("pisao2_noite", 100, objeto_alvo.x - 4, chao_alvo - 43, objeto_alvo.largura, objeto_alvo.altura)
-        } else if (objeto_alvo.altura < 60) {
-            spritePisao.desenha(objeto_alvo.x, chao_alvo - 40, objeto_alvo.largura, objeto_alvo.altura)
-            transitador("pisao_noite", 100, objeto_alvo.x, chao_alvo - 40, objeto_alvo.largura, objeto_alvo.altura)
-        }
-    } else if (objeto_alvo.altura == 53) {
-        spriteFonte.desenha(objeto_alvo.x, chao_alvo - 30, objeto_alvo.largura, objeto_alvo.altura)
-        transitador("fonte_noite", 20, objeto_alvo.x, chao_alvo - 30, objeto_alvo.largura, objeto_alvo.altura)
-    } else if (objeto_alvo.altura >= 50 && objeto_alvo.altura < 55) {
-        spriteArvore.desenha(objeto_alvo.x, chao_alvo - objeto_alvo.altura + 8, objeto_alvo.largura, objeto_alvo.altura)
-        transitador("arvore1", 20, objeto_alvo.x, chao_alvo - objeto_alvo.altura + 8, objeto_alvo.largura, objeto_alvo.altura)
-    } else if (objeto_alvo.altura >= 45 && objeto_alvo.altura < 50) {
-        spriteArvore_frutifera.desenha(objeto_alvo.x, chao_alvo - objeto_alvo.altura + 13, objeto_alvo.largura, objeto_alvo.altura)
-        transitador("arvore_frutifera", 20, objeto_alvo.x, chao_alvo - objeto_alvo.altura + 13, objeto_alvo.largura, objeto_alvo.altura)
-    } else if (objeto_alvo.altura >= 35 && objeto_alvo.altura < 45) {
-        spriteArvore2.desenha(objeto_alvo.x, chao_alvo - 50, objeto_alvo.largura, objeto_alvo.altura)
-        transitador("arvore2", 20, objeto_alvo.x, chao_alvo - 50, objeto_alvo.largura, objeto_alvo.altura)
+    // + presets[objeto.nome].x é utilizado para alinhar os sprites noturnos e diurnos
+    if (objeto.altura > 50) {
+        objeto.sprite.desenha(objeto.x + presets[objeto.nome].x, chao.y - objeto.altura + presets[objeto.nome].y, objeto.largura, objeto.altura)
+        transitador(objeto.nome, objeto.x, chao.y - objeto.altura)
+    } else if (objeto.altura > 40) {
+        objeto.sprite.desenha(objeto.x + presets[objeto.nome].x, objeto.y + 100, objeto.largura, objeto.altura)
+        transitador(objeto.nome, objeto.x, objeto.y + 100)
     } else {
-        spriteArbusto.desenha(objeto_alvo.x, chao_alvo - objeto_alvo.altura + 18, objeto_alvo.largura, objeto_alvo.altura)
-        transitador("arbusto", 20, objeto_alvo.x, chao_alvo - objeto_alvo.altura + 18, objeto_alvo.largura, objeto_alvo.altura)
+        objeto.sprite.desenha(objeto.x + presets[objeto.nome].x, objeto.y, objeto.largura, objeto.altura)
+        transitador(objeto.nome, objeto.x, objeto.y)
     }
 }
 
-function desenha_sombra(objeto_alvo, chao_alvo, local) {
+function desenha_sombra(objeto, chao_alvo) {
 
-    if (local) {
-        if (eventos.evento == 0) {
-            if (objeto_alvo.altura > 80) {
-                if (objeto_alvo.altura > 90)
-                    spriteSombraPredio1.desenha(objeto_alvo.x - 30, chao_alvo + 18, objeto_alvo.largura, objeto_alvo.altura)
-                else
-                    spriteSombraPredio_Antena.desenha(objeto_alvo.x - 18, chao_alvo + 15, objeto_alvo.largura, objeto_alvo.altura)
-            } else if (objeto_alvo.altura >= 60)
-                spriteSombraPredio2_1.desenha(objeto_alvo.x - 15, chao_alvo + 15, objeto_alvo.largura, objeto_alvo.altura)
-        }
-    } else {
-        if (objeto_alvo.altura > 80) {
-            if (objeto_alvo.altura > 90)
-                spriteSombraPredio1.desenha(objeto_alvo.x - 30, chao_alvo + 18, objeto_alvo.largura, objeto_alvo.altura)
-            else
-                spriteSombraPredio_Antena.desenha(objeto_alvo.x - 18, chao_alvo + 15, objeto_alvo.largura, objeto_alvo.altura)
-        } else if (objeto_alvo.altura >= 60)
-            spriteSombraPredio2_1.desenha(objeto_alvo.x - 15, chao_alvo + 15, objeto_alvo.largura, objeto_alvo.altura)
-    }
+    if (!presets[objeto.nome].sombra) return
 
-    if (objeto_alvo.altura >= 57 && objeto_alvo.altura < 60) {
-        if (local != 2 && (eventos.evento != 0 || eventos.evento != 2))
-            spriteSombraPisao2.desenha(objeto_alvo.x - 15, chao_alvo + 16, objeto_alvo.largura, objeto_alvo.altura)
-    } else if (objeto_alvo.altura >= 55 && objeto_alvo.altura < 57) {
-        if (local != 2 && (eventos.evento != 0 || eventos.evento != 2))
-            spriteSombraPisao.desenha(objeto_alvo.x - 10, chao_alvo + 16, objeto_alvo.largura, objeto_alvo.altura)
-    } else if (objeto_alvo.altura == 53)
-        spriteSombraFonte.desenha(objeto_alvo.x - 4, chao_alvo + 18, objeto_alvo.largura, objeto_alvo.altura)
-    else if (objeto_alvo.altura >= 50 && objeto_alvo.altura < 55)
-        spriteSombra_Arvore.desenha(objeto_alvo.x - 10, chao_alvo + 12, objeto_alvo.largura, objeto_alvo.altura)
-    else if (objeto_alvo.altura >= 45 && objeto_alvo.altura < 50)
-        spriteSombra_ArvoreFrutifera.desenha(objeto_alvo.x + 5, chao_alvo + 10, objeto_alvo.largura, objeto_alvo.altura)
-    else if (objeto_alvo.altura >= 35 && objeto_alvo.altura < 45)
-        spriteSombra_Arvore2.desenha(objeto_alvo.x - 14, chao_alvo + 10, objeto_alvo.largura, objeto_alvo.altura)
+    const sprites_sombra = presets[objeto.nome].sombra
+    sprites_sombra.sprite.desenha(objeto.x + sprites_sombra.x, chao_alvo + sprites_sombra.y, objeto.largura, objeto.altura)
 }

@@ -68,20 +68,20 @@ var labelTexto = {
             spriteMontanhas.desenha(this.montanhas2, 480)
             spriteMontanhas.desenha(this.montanhas2 + opcoes.largura, 480)
 
-            transitador("montanhas_noite", 115, this.montanhas2, 483)
-            transitador("montanhas_noite", 115, this.montanhas2 + opcoes.largura, 483)
+            transitador("montanhas_noite", this.montanhas2, 483)
+            transitador("montanhas_noite", this.montanhas2 + opcoes.largura, 483)
 
             spriteCidade.desenha(this.predios, 257)
             spriteCidade.desenha(this.predios + opcoes.largura, 257)
 
-            transitador("cidade_noite", 150, this.predios, 195)
-            transitador("cidade_noite", 150, this.predios + opcoes.largura, 195)
+            transitador("cidade_noite", this.predios, 195)
+            transitador("cidade_noite", this.predios + opcoes.largura, 195)
 
             spriteMontanhas.desenha(this.montanhas, 510)
             spriteMontanhas.desenha(this.montanhas + opcoes.largura, 510)
 
-            transitador("montanhas_noite", 112, this.montanhas, 513)
-            transitador("montanhas_noite", 112, this.montanhas + opcoes.largura, 513)
+            transitador("montanhas_noite", this.montanhas, 513)
+            transitador("montanhas_noite", this.montanhas + opcoes.largura, 513)
         }
     },
 
@@ -242,49 +242,49 @@ var labelTexto = {
 
             if (this.objeto_voador[3] == 2) { // Disco voador
                 spriteOvni.desenha(this.objeto_voador[1], this.objeto_voador[2])
-                transitador("disco_voador_noite", 102, this.objeto_voador[1], this.objeto_voador[2] - 2)
+                transitador("disco_voador_noite", this.objeto_voador[1], this.objeto_voador[2] - 2)
             }
 
             spriteNuvens.desenha(this.nuvem_camada1, 280)
             spriteNuvens.desenha(this.nuvem_camada1 + opcoes.largura, 280)
 
-            transitador("nuvens1_noite", 135, this.nuvem_camada1, 280)
-            transitador("nuvens1_noite", 135, this.nuvem_camada1 + opcoes.largura, 280)
+            transitador("nuvens1_noite", this.nuvem_camada1, 280)
+            transitador("nuvens1_noite", this.nuvem_camada1 + opcoes.largura, 280)
 
             spriteNuvensSup2.desenha(this.nuvem_camada3 + 10, 100)
             spriteNuvensSup2.desenha(this.nuvem_camada3 + 10 + opcoes.largura, 100)
 
-            transitador("nuvens2_2_noite", 500, this.nuvem_camada3 + 60, 108)
-            transitador("nuvens2_2_noite", 500, this.nuvem_camada3 + 60 + opcoes.largura, 108)
+            transitador("nuvens2_2_noite", this.nuvem_camada3 + 60, 108)
+            transitador("nuvens2_2_noite", this.nuvem_camada3 + 60 + opcoes.largura, 108)
 
             spriteNuvensSup.desenha(this.nuvem_camada4 + 90, 50)
             spriteNuvensSup.desenha(this.nuvem_camada4 + 90 + opcoes.largura, 50)
 
-            transitador("nuvens1_2_noite", 400, this.nuvem_camada4 + 90, 50)
-            transitador("nuvens1_2_noite", 400, this.nuvem_camada4 + 90 + opcoes.largura, 50)
+            transitador("nuvens1_2_noite", this.nuvem_camada4 + 90, 50)
+            transitador("nuvens1_2_noite", this.nuvem_camada4 + 90 + opcoes.largura, 50)
 
             if (this.objeto_voador[3] == 1) { // Avião
                 spriteAviao.desenha(this.objeto_voador[1], this.objeto_voador[2])
-                transitador("aviao_noite", 200, this.objeto_voador[1] + 2, this.objeto_voador[2] + 4)
+                transitador("aviao_noite", this.objeto_voador[1] + 2, this.objeto_voador[2] + 4)
                 spriteLuzes_navegacao.desenha(this.objeto_voador[1], this.objeto_voador[2])
             }
 
             if (this.objeto_voador[3] == 3) { // Dirigível
                 spriteDirigivel.desenha(this.objeto_voador[1], this.objeto_voador[2])
-                transitador("dirigivel_noite", 200, this.objeto_voador[1] - 120, this.objeto_voador[2] - 45)
+                transitador("dirigivel_noite", this.objeto_voador[1] - 120, this.objeto_voador[2] - 45)
             }
 
             spriteNuvensSup.desenha(this.nuvem_camada3 + 500, 150)
             spriteNuvensSup.desenha(this.nuvem_camada3 + 500 + opcoes.largura, 150)
 
-            transitador("nuvens1_2_noite", 400, this.nuvem_camada3 + 500, 150)
-            transitador("nuvens1_2_noite", 400, this.nuvem_camada3 + 500 + opcoes.largura, 150)
+            transitador("nuvens1_2_noite", this.nuvem_camada3 + 500, 150)
+            transitador("nuvens1_2_noite", this.nuvem_camada3 + 500 + opcoes.largura, 150)
 
             spriteNuvens2.desenha(this.nuvem_camada2, 330)
             spriteNuvens2.desenha(this.nuvem_camada2 + opcoes.largura, 330)
 
-            transitador("nuvens2_noite", 126, this.nuvem_camada2, 330)
-            transitador("nuvens2_noite", 126, this.nuvem_camada2 + opcoes.largura, 330)
+            transitador("nuvens2_noite", this.nuvem_camada2, 330)
+            transitador("nuvens2_noite", this.nuvem_camada2 + opcoes.largura, 330)
 
             spriteCidade.desenha(this.predios, 257)
             spriteCidade.desenha(this.predios + opcoes.largura, 257)
@@ -295,7 +295,7 @@ var labelTexto = {
         desenha: function () {
             spriteCeu.desenha(0, 0)
 
-            transitador("ceu_noite", 750, 0, 0)
+            transitador("ceu_noite", 0, 0)
 
             if (Cenario_sprites.astro[2] == 1 && Cenario_sprites.astro[0] < 1200)
                 spriteMascara_estrelas.desenha(0, 0)
@@ -1082,25 +1082,25 @@ var labelTexto = {
 
             if (this.skin == 0) {
                 spriteJogador_Vermelho.desenha(this.x, this.y + 15)
-                transitador("jogador1_noite", 112, this.x, this.y + 15)
+                transitador("jogador1_noite", this.x, this.y + 15)
             } else if (this.skin == 1) {
                 spriteJogador_Branco.desenha(this.x, this.y + 15)
-                transitador("jogador2_noite", 112, this.x, this.y + 15)
+                transitador("jogador2_noite", this.x, this.y + 15)
             } else if (this.skin == 2) {
                 spriteJogador_Amarelo.desenha(this.x, this.y + 15)
-                transitador("jogador3_noite", 112, this.x, this.y + 15)
+                transitador("jogador3_noite", this.x, this.y + 15)
             } else if (this.skin == 3) {
                 spriteJogador_Azul.desenha(this.x, this.y + 15)
-                transitador("jogador4_noite", 112, this.x, this.y + 15)
+                transitador("jogador4_noite", this.x, this.y + 15)
             } else if (this.skin == 4) {
                 spriteJogador_Roxo.desenha(this.x, this.y + 15)
-                transitador("jogador5_noite", 112, this.x, this.y + 15)
+                transitador("jogador5_noite", this.x, this.y + 15)
             } else if (this.skin == 5) {
                 spriteJogador_Verde.desenha(this.x, this.y + 15)
-                transitador("jogador6_noite", 112, this.x, this.y + 15)
+                transitador("jogador6_noite", this.x, this.y + 15)
             } else {
                 spriteJogador_Padrao.desenha(this.x, this.y + 17)
-                transitador("jogador7_noite", 112, this.x, this.y + 15)
+                transitador("jogador7_noite", this.x, this.y + 15)
             }
 
             spriteAdereco_aco.desenha(this.x + 8, this.y + 24)
@@ -1113,7 +1113,7 @@ var labelTexto = {
     },
 
     propsfundo = {
-        _obsfundo: [],
+        objetos: [],
         tempoInsere: 0,
         qtdObjetos: 0,
         y: 120,
@@ -1129,12 +1129,12 @@ var labelTexto = {
             else
                 this.tempoInsere--
 
-            for (let x = 0, tam = this._obsfundo.length; x < tam; x++) {
-                let obsb = this._obsfundo[x]
+            for (let x = 0, tam = this.objetos.length; x < tam; x++) {
+                let obsb = this.objetos[x]
                 obsb.x -= jogo.velocidade * 0.8
 
                 if (obsb.x <= -obsb.largura - 90) {
-                    this._obsfundo.splice(x, 1)
+                    this.objetos.splice(x, 1)
 
                     tam--
                     x--
@@ -1148,7 +1148,7 @@ var labelTexto = {
     },
 
     propsfrente = {
-        _obsfrente: [],
+        objetos: [],
         tempoInsere: 0,
         qtdObjetos: 0,
         y: 120,
@@ -1164,12 +1164,12 @@ var labelTexto = {
             else
                 this.tempoInsere--
 
-            for (let x = 0, tam = this._obsfrente.length; x < tam; x++) {
-                let obsf = this._obsfrente[x]
+            for (let x = 0, tam = this.objetos.length; x < tam; x++) {
+                let obsf = this.objetos[x]
                 obsf.x -= jogo.velocidade * 1.2
 
                 if (obsf.x <= -obsf.largura - 90) {
-                    this._obsfrente.splice(x, 1)
+                    this.objetos.splice(x, 1)
 
                     tam--
                     x--
@@ -1183,7 +1183,7 @@ var labelTexto = {
     },
 
     obstaculos = {
-        _obs: [],
+        objetos: [],
         _obsfundo: [],
         _obsfrente: [],
         _scored: false,
@@ -1219,24 +1219,24 @@ var labelTexto = {
             else
                 this.tempoInsere--
 
-            for (let i = 0, tam = this._obs.length; i < tam; i++) {
-                let obs = this._obs[i]
+            for (let i = 0, tam = this.objetos.length; i < tam; i++) {
+                let obs = this.objetos[i]
 
                 obs.x -= jogo.velocidade
 
-                if (jogador.x < obs.x + obs.largura && jogador.x + jogador.largura >= obs.x && jogador.y + jogador.altura >= chao.y - obs.altura && obs.altura >= 55) {
+                if (jogador.x < obs.x + obs.largura && jogador.x + jogador.largura >= obs.x && jogador.y + jogador.altura >= chao.y - obs.altura && obs.altura > 40) {
                     if ((jogador.mod == 1 || jogador.timer_mod < 1) && jogador.qtdMods > 0 && (jogo.status == estados.jogando || jogo.status == estados.tutorial)) {
 
-                        if (obs.altura >= 55 && obs.altura < 60) {
+                        if (obs.altura > 40 && obs.altura < 51) {
                             pisao_neles()
 
-                            this._obs.splice(i, 1)
+                            this.objetos.splice(i, 1)
                             tam--
                             i--
                         } else {
 
                             //  Subtrai pontos caso o jogador Bata em alguma construção
-                            this._obs.splice(i, 1)
+                            this.objetos.splice(i, 1)
                             tam--
                             i--
                             jogador.contador_mortes++
@@ -1267,9 +1267,9 @@ var labelTexto = {
                             }
                         }
                     } else if (jogo.status == estados.jogando || jogo.status == estados.tutorial) {
-                        if (obs.altura >= 55 && obs.altura < 60) {
+                        if (obs.altura > 40 && obs.altura < 51)
                             pisao_neles()
-                        } else {
+                        else {
                             if (jogador.chao_referencia == 650 || chao.muda_chao[1] == 2)
                                 jogo.perdeu(eventos.evento)
                             else
@@ -1279,7 +1279,7 @@ var labelTexto = {
                             alteraValorEstatisticaPartida("quantidade_predios_partida", jogador.partida_predios_atropelados)
                         }
 
-                        this._obs.splice(i, 1)
+                        this.objetos.splice(i, 1)
                         tam--
                         i--
                     }
@@ -1294,7 +1294,7 @@ var labelTexto = {
 
                     alteraValorEstatisticaPartida("pontuacao_partida", jogador.partida_pontuacao)
                 } else if (obs.x <= -obs.largura - 90) {
-                    this._obs.splice(i, 1)
+                    this.objetos.splice(i, 1)
                     tam--
                     i--
                 }

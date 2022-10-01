@@ -99,7 +99,7 @@ function amanhecer() {
     }, 180)
 }
 
-function transitador(elemento, altura, posicao_x, posicao_y) {
+function transitador(elemento, posicao_x, posicao_y) {
 
     // Verifica se está de noite para executar a função
     if (ambiente.libera_transitador) {

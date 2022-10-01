@@ -445,7 +445,7 @@ function MsgPerdeu(causa) {
 
         if (jogador.partida_pontuacao > jogador.recorde)
             if (idioma == "pt")
-                labelTexto.texto = `New Record! ( ${jogador.partida_pontuacao} )`
+                labelTexto.texto = `Novo Recorde! ( ${jogador.partida_pontuacao} )`
             else
                 labelTexto.texto = `New Record! ( ${jogador.partida_pontuacao} )`
         else {
