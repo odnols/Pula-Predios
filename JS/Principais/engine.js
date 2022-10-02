@@ -304,162 +304,61 @@ var labelTexto = {
 
     chao = {
         y: 555,
-        x: 0,
-        x2: 0,
-        x3: 0,
-
+        xc: 0,
+        xb: 0,
+        xf: 0,
+        
         // Responsáveis por fazer o controle das transições entre os sprites dos chãos
-        libera_volta_chao: [0, 0, 0],
-        trava: [0, 0, 0],
+        pisos_b: [],
+        pisos_c: [],
+        pisos_f: [],
 
         altera_referencia: 0,
 
-        reserva: [0, 0, 0],
-        confirma: [0, 0, 0],
-        muda_chao: [0, 0, 0],
-        volta_chao: [0, 0, 0],
-
         atualiza: function () {
 
-            this.x -= jogo.velocidade
-            this.x2 -= jogo.velocidade * 0.8
-            this.x3 -= jogo.velocidade * 1.2
+            this.xc -= jogo.velocidade
+            this.xb -= jogo.velocidade * 0.8
+            this.xf -= jogo.velocidade * 1.2
 
-            // Confirmando o evento aquático ou de lava
-            if (eventos.evento != 1 || eventos.evento != 3) {
-                this.confirma[0] = 0
-                this.confirma[1] = 0
-                this.confirma[2] = 0
+            //  Chão do Fundo
+            if (this.xb <= -opcoes.largura) {
+                insere_piso(this.pisos_b, 3)
+                this.xb = 0
             }
 
-            //  Sprite de Trás
-            if (this.x2 <= -opcoes.largura) {
-                this.x2 = 0
-
-                if (this.muda_chao[2] == 1)
-                    this.muda_chao[2] = 2
-
-                if (this.reserva[2] == 1 || this.volta_chao[2] == 2) {
-                    this.muda_chao[2] = 0
-                    this.volta_chao[2] = 0
-                    this.libera_volta_chao[2] = 0
-                }
-
-                if (this.reserva[2] == 1)
-                    this.reserva[2] = 2
-
-                if (eventos.evento == 1 || eventos.evento == 3) {
-                    this.confirma[2] = 1
-
-                    // Gatilho automático para retornar o chão ao normal em velocidades altas
-                    if (jogo.velocidade >= 20 && eventos.contador_tempo_interno < 3 && this.reserva[2] == 0) {
-                        this.libera_volta_chao[2] = 1
-                        this.reserva[2] = 1
-                    }
-
-                    if (this.muda_chao[2] == 0)
-                        this.muda_chao[2] = 1
-                }
-
-                if (this.volta_chao[2] == 1) {
-                    this.volta_chao[2] = 2
-                    this.trava[2] = 1
-                }
-
-                if (this.libera_volta_chao[2] == 1 && this.muda_chao[2] == 2) {
-                    this.volta_chao[2] = 1
-                }
+            //  Chão do Meio
+            if (this.xc <= -opcoes.largura) {
+                insere_piso(this.pisos_c, 2)
+                this.xc = 0
             }
 
-            //  Sprite do Meio
-            if (this.x <= -opcoes.largura) {
-                this.x = 0
-
-                if (this.muda_chao[1] == 1)
-                    this.muda_chao[1] = 2
-
-                if (this.reserva[1] == 1 || this.volta_chao[1] == 2) {
-                    this.muda_chao[1] = 0
-                    this.volta_chao[1] = 0
-                    this.libera_volta_chao[1] = 0
-                }
-
-                if (this.reserva[1] == 1)
-                    this.reserva[1] = 2
-
-                if (eventos.evento == 1 || eventos.evento == 3) {
-                    this.confirma[1] = 1
-
-                    // Gatilho automático para retornar o chão ao normal em velocidades altas
-                    if (eventos.contador_tempo_interno < 3 && this.reserva[1] == 0) {
-                        this.libera_volta_chao[1] = 1
-                        this.reserva[1] = 1
-                    }
-
-                    if (this.muda_chao[1] == 0)
-                        this.muda_chao[1] = 1
-                }
-
-                if (this.volta_chao[1] == 1) {
-                    this.volta_chao[1] = 2
-                    this.trava[1] = 1
-                }
-
-                if (this.libera_volta_chao[1] == 1 && this.muda_chao[1] == 2) {
-                    this.volta_chao[1] = 1
-                }
+            //  Chão da Frente
+            if (this.xf <= -opcoes.largura) {
+                insere_piso(this.pisos_f, 1)
+                this.xf = 0
             }
 
-            //  Sprite da Frente
-            if (this.x3 <= -opcoes.largura) {
-                this.x3 = 0
+            if (this.pisos_b.length > 2)
+                this.pisos_b.shift()
 
-                if (this.muda_chao[0] == 1)
-                    this.muda_chao[0] = 2
+            if (this.pisos_c.length > 2)
+                this.pisos_c.shift()
 
-                if (this.reserva[0] == 1 || this.volta_chao[0] == 2) {
-                    this.muda_chao[0] = 0
-                    this.volta_chao[0] = 0
-                    this.libera_volta_chao[0] = 0
-                }
-
-                if (this.reserva[0] == 1)
-                    this.reserva[0] = 2
-
-                if (eventos.evento == 1 || eventos.evento == 3) {
-                    this.confirma[0] = 1
-
-                    // Gatilho automático para retornar o chão ao normal em velocidades altas
-                    if (jogo.velocidade >= 20 && eventos.contador_tempo_interno < 3 && this.reserva[0] == 0) {
-                        this.libera_volta_chao[0] = 1
-                        this.reserva[0] = 1
-                    }
-
-                    if (this.muda_chao[0] == 0)
-                        this.muda_chao[0] = 1
-                }
-
-                if (this.volta_chao[0] == 1) {
-                    this.volta_chao[0] = 2
-                    this.trava[0] = 1
-                }
-
-                if (this.libera_volta_chao[0] == 1 && this.muda_chao[0] == 2) {
-                    this.volta_chao[0] = 1
-                }
-            }
+            if (this.pisos_f.length > 2)
+                this.pisos_f.shift()
         },
 
-        desenha: function () {
-            desenha_chao1()
+        desenha_b: function () {
+            desenha_piso(3)
         },
 
-        desenha2: function () {
-            desenha_chao2()
+        desenha_c: function () {
+            desenha_piso(2)
         },
 
-        desenha3: function () {
-            desenha_chao3()
+        desenha_f: function () {
+            desenha_piso(1)
         }
     },
 
@@ -873,14 +772,14 @@ var labelTexto = {
             this.y += this.velocidade
 
             // Descendo na água ou lava
-            if (chao.muda_chao[1] == 2) {
+            if (chao.pisos_c[0]?.type == 1) {
                 if (this.mod_em_uso == 1 && this.y >= 433)
                     jogo.gravidade = .3
 
                 if (jogo.status != estados.ocioso && this.mod_em_uso != 100 && !chao.altera_referencia)
                     jogador.chao_referencia = 650
                 // altera_chao_referencia(650) // Afunda o chão (em água / lava)
-            } else if (this.mod_em_uso != 100 && chao.muda_chao[1] == 0) {
+            } else if (this.mod_em_uso != 100 && chao.pisos_c[0]?.type == 0) {
                 // if (!chao.altera_referencia)
                 // altera_chao_referencia(555)
                 jogador.chao_referencia = chao.y
@@ -1199,13 +1098,13 @@ var labelTexto = {
 
         atualiza: function () {
 
-            if (jogador.mod == 1 && jogador.mod_em_uso == 100 && jogador.y >= 432 && chao.muda_chao[1] == 2)
+            if (jogador.mod == 1 && jogador.mod_em_uso == 100 && jogador.y >= 432 && chao.pisos_c[1]?.type == 1)
                 jogador.pula()
 
-            if (jogador.y >= 432 && chao.muda_chao[1] == 2 && ((jogador.timer_mod == 5 && jogador.mods_comprados[1] == 0) || (jogador.timer_mod == 10 && jogador.mods_comprados[0] == 1) || (jogador.timer_mod == 5 && jogador.mods_comprados[1] == 1)))
+            if (jogador.y >= 432 && chao.pisos_c[0]?.type == 1 && ((jogador.timer_mod == 5 && jogador.mods_comprados[1] == 0) || (jogador.timer_mod == 10 && jogador.mods_comprados[0] == 1) || (jogador.timer_mod == 5 && jogador.mods_comprados[1] == 1)))
                 if (jogo.status == estados.jogando || jogo.status == estados.tutorial) {
                     if (jogador.mod == 0) {
-                        if (jogador.chao_referencia == 650 || chao.muda_chao[1] == 2)
+                        if (jogador.chao_referencia == 650 || chao.pisos_c[0]?.type == 1)
                             jogo.perdeu(eventos.inicia_evento)
                         else
                             jogo.perdeu(0)
@@ -1270,7 +1169,7 @@ var labelTexto = {
                         if (obs.altura > 40 && obs.altura < 51)
                             pisao_neles()
                         else {
-                            if (jogador.chao_referencia == 650 || chao.muda_chao[1] == 2)
+                            if (jogador.chao_referencia == 650 || chao.pisos_c[0]?.type == 1)
                                 jogo.perdeu(eventos.evento)
                             else
                                 jogo.perdeu(0)

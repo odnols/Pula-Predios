@@ -7,7 +7,7 @@ function aleatorizadorInsercao() {
 function insere_propsfundo() {
 
     // Água ou Lava
-    if (eventos.evento == 1 || eventos.evento == 3) return
+    if (chao.pisos_b[0]?.type == 1 || chao.pisos_b[1]?.type == 1) return
 
     let altura_media = 15, variacao = 35
 
@@ -41,7 +41,7 @@ function insere_propsfundo() {
 function insere_obj() {
 
     // Água ou Lava
-    if (eventos.evento == 1 || eventos.evento == 3) return
+    if (chao.pisos_c[0]?.type == 1 || chao.pisos_c[1]?.type == 1) return
 
     let altura_media = 40, variacao = 40
 
@@ -107,7 +107,7 @@ function insere_obj() {
 function insere_propsfrente() {
 
     // Água ou Lava
-    if (eventos.evento == 1 || eventos.evento == 3) return
+    if (chao.pisos_f[0]?.type == 1 || chao.pisos_f[1]?.type == 1) return
 
     let altura_objeto = 15 + Math.round(30 * Math.random())
 

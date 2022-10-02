@@ -17,9 +17,11 @@ function carrega_jogo(requisicao_auto) {
             document.getElementById("button_inicia_game").innerHTML = "Start"
             document.getElementById("versao_trad").innerHTML = "Version 1.1"
         }
+
         return 0
     } else {
 
+        popula_pisos()
         idioma = carrega_idioma(0)
 
         $("#status_carregamento").fadeIn()
@@ -31,7 +33,7 @@ function carrega_jogo(requisicao_auto) {
             document.getElementById("texto_carregamento").innerHTML = "Starting the engines"
 
         if (dispositivo >= 1366) {
-            iniciaAnimacao()
+            animaMoeda()
             $("#button_animacoes_pc").fadeIn()
             $("#button_animacoes_cell").fadeOut()
         }

@@ -1,139 +1,68 @@
-function desenha_chao1() {
-    if (((eventos.evento != 1 && eventos.evento != 3) || chao.muda_chao[2] < 2) && (chao.volta_chao[2] == 0 || chao.trava[2] == 1 || chao.reserva[0] == 2)) {
-        spriteChao.desenha(chao.x2, chao.y - 5)
-        transitador("chao_noite", chao.x2, chao.y - 5)
-    }
+function popula_pisos(){
 
-    // Chão no momento de transição
-    if (eventos.evento == 1 && chao.muda_chao[2] != 0 && chao.reserva[2] < 2) {
-        spriteAgua.desenha(chao.x2 + opcoes.largura, chao.y + 10)
-        transitador("agua_noite", chao.x2 + opcoes.largura, chao.y + 10)
-
-    } else if (eventos.evento == 3 && chao.muda_chao[2] != 0 && chao.reserva[2] < 2)
-        spriteLava.desenha(chao.x2 + opcoes.largura, chao.y + 10)
-
-    else {
-        spriteChao.desenha(chao.x2 + opcoes.largura, chao.y - 5)
-        transitador("chao_noite", chao.x2 + opcoes.largura, chao.y - 5)
-    }
-
-    // Chão no meio do evento
-    if (chao.muda_chao[2] == 2 || chao.libera_volta_chao[2] == 1 && chao.trava[2] == 0) {
-        if (chao.reserva[2] <= 1) {
-            if (eventos.ultimo_evento == 1) {
-                spriteAgua.desenha(chao.x2, chao.y + 10)
-                transitador("agua_noite", chao.x2, chao.y + 10)
-
-            } else if (eventos.ultimo_evento == 3)
-                spriteLava.desenha(chao.x2, chao.y + 10)
-        }
-    }
-
-    // Chão retornando e fazendo transição
-    if (chao.volta_chao[2] == 1 && chao.libera_volta_chao[2] == 1) {
-        spriteChao.desenha(chao.x2 + opcoes.largura, chao.y - 5)
-        transitador("chao_noite", chao.x2 + opcoes.largura, chao.y - 5)
-    }
-
-    if (chao.reserva[2] == 1) {
-        spriteChao.desenha(chao.x2 + opcoes.largura, chao.y - 5)
-        transitador("chao_noite", chao.x2 + opcoes.largura, chao.y - 5)
+    // Inicia os pisos ao carregar o jogo
+    for(let i = 0; i < 2; i++){
+        insere_piso(chao.pisos_b, 3)
+        insere_piso(chao.pisos_c, 2)
+        insere_piso(chao.pisos_f, 1)
     }
 }
 
-function desenha_chao2() {
-    if (((eventos.evento != 1 && eventos.evento != 3) || chao.muda_chao[1] < 2) && (chao.volta_chao[1] == 0 || chao.trava[1] == 1 || chao.reserva[1] == 2)) {
-        spriteChao.desenha(chao.x, chao.y + 10)
-        transitador("chao_noite", chao.x, chao.y + 10)
+function insere_piso(array, local) {
+
+    const y = [chao.y + 27, chao.y + 10, chao.y - 5]
+
+    if (eventos.evento !== 1 && eventos.evento !== 3 || (local == 2 && jogo.status == estados.ocioso)) {
+        array.push({
+            nome: 'chao_noite',
+            type: 0,
+            x: 2,
+            y: y[local - 1]
+        })
     }
 
+    // Impede que lava e água aparecam no piso do jogador, no modo ocioso
+    if (local == 2 && jogo.status == estados.ocioso) return
 
-    if (chao.muda_chao[1] != 0 && chao.reserva[1] < 2 && jogo.status != estados.ocioso) {
-        if (eventos.evento == 1) {
-            spriteAgua.desenha(chao.x + opcoes.largura, chao.y + 22)
-            transitador("agua_noite", chao.x + opcoes.largura, chao.y + 22)
-
-        } else if (eventos.evento == 3 && chao.muda_chao[1] != 0 && chao.reserva[1] < 2)
-            spriteLava.desenha(chao.x + opcoes.largura, chao.y + 22)
-
-    } else {
-        spriteChao.desenha(chao.x + opcoes.largura, chao.y + 10)
-        transitador("chao_noite", chao.x + opcoes.largura, chao.y + 10)
+    if (eventos.evento == 1) {
+        array.push({
+            nome: 'agua_noite',
+            type: 1,
+            x: 2,
+            y: y[local - 1]
+        })
     }
 
-    if (chao.muda_chao[1] == 2 || chao.libera_volta_chao[1] == 1 && chao.trava[1] == 0) {
-        if (chao.reserva[1] <= 1 && jogo.status != estados.ocioso) {
-            if (eventos.ultimo_evento == 1) {
-                spriteAgua.desenha(chao.x, chao.y + 22)
-                transitador("agua_noite", chao.x, chao.y + 22)
-
-            } else if (eventos.ultimo_evento == 3)
-                spriteLava.desenha(chao.x, chao.y + 22)
-        }
-    }
-
-    if (jogo.status == estados.ocioso) {
-        spriteChao.desenha(chao.x, chao.y + 10)
-        transitador("chao_noite", chao.x, chao.y + 10)
-    }
-
-    if (chao.volta_chao[1] == 1 && chao.libera_volta_chao[1] == 1) {
-        spriteChao.desenha(chao.x + opcoes.largura, chao.y + 10)
-        transitador("chao_noite", chao.x + opcoes.largura, chao.y + 10)
-    }
-
-    if (chao.reserva[1] == 1) {
-        spriteChao.desenha(chao.x + opcoes.largura, chao.y + 10)
-        transitador("chao_noite", chao.x + opcoes.largura, chao.y + 10)
-    }
-    if (chao.reserva[1] == 2) {
-        spriteChao.desenha(chao.x + opcoes.largura, chao.y + 10)
-        transitador("chao_noite", chao.x + opcoes.largura, chao.y + 10)
+    if (eventos.evento == 3) {
+        array.push({
+            nome: 'lava',
+            type: 1,
+            x: 2,
+            y: y[local - 1]
+        })
     }
 }
 
-function desenha_chao3() {
-    if (((eventos.evento != 1 && eventos.evento != 3) || chao.muda_chao[0] < 2) && (chao.volta_chao[0] == 0 || chao.trava[0] == 1)) {
-        spriteChao.desenha(chao.x3, chao.y + 27)
-        transitador("chao_noite", chao.x3, chao.y + 27)
-    }
+function desenha_piso(caso) {
 
-    if (chao.muda_chao[0] != 0 && chao.reserva[0] < 2) {
-        if (eventos.evento == 1) {
-            spriteAgua.desenha(chao.x3 + opcoes.largura, chao.y + 40)
-            transitador("agua_noite", chao.x3 + opcoes.largura, chao.y + 40)
+    const alvos = [chao.pisos_f, chao.pisos_c, chao.pisos_b]
 
-        } else if (eventos.evento == 3 && chao.muda_chao[0] != 0 && chao.reserva[0] < 2)
-            spriteLava.desenha(chao.x3 + opcoes.largura, chao.y + 35)
+    if (!presets[alvos[caso - 1][0]?.nome]) return
 
-    } else {
-        spriteChao.desenha(chao.x3 + opcoes.largura, chao.y + 27)
-        transitador("chao_noite", chao.x3 + opcoes.largura, chao.y + 27)
-    }
+    for (let i = 0; i < alvos[caso - 1].length; i++) {
 
-    if (chao.muda_chao[0] == 2 || chao.libera_volta_chao[0] == 1 && chao.trava[0] == 0) {
-        if (chao.reserva[0] <= 1) {
-            if (eventos.ultimo_evento == 1) {
-                spriteAgua.desenha(chao.x3, chao.y + 40)
-                transitador("agua_noite", chao.x3, chao.y + 40)
-            }
+        const piso = alvos[caso - 1][i]
+        const chao_alvo = presets[piso.nome]
+        let desnivel = piso.nome !== 'chao_noite' ? 15 : 0 // desnível para água / lava
 
-            if (eventos.ultimo_evento == 3)
-                spriteLava.desenha(chao.x3, chao.y + 35)
-        }
-    }
+        if (piso.x == 2 && i == 0) // Altera a posição do piso para o primeiro indice
+            piso.x = 1
 
-    if (chao.volta_chao[0] == 1 && chao.libera_volta_chao[0] == 1) {
-        spriteChao.desenha(chao.x3 + opcoes.largura, chao.y + 27)
-        transitador("chao_noite", chao.x3 + opcoes.largura, chao.y + 27)
-    }
+        const pos_chao = [chao.xf, chao.xc, chao.xb]
+        const pos_x = piso.x == 1 ? pos_chao[caso - 1] : pos_chao[caso - 1] + 1366
+        chao_alvo.sprite.desenha(pos_x, piso.y + desnivel)
 
-    if (chao.reserva[0] == 1) {
-        spriteChao.desenha(chao.x3 + opcoes.largura, chao.y + 27)
-        transitador("chao_noite", chao.x3 + opcoes.largura, chao.y + 27)
-    }
-    if (chao.reserva[0] == 2) {
-        spriteChao.desenha(chao.x3 + opcoes.largura, chao.y + 27)
-        transitador("chao_noite", chao.x3 + opcoes.largura, chao.y + 27)
+        if (piso.nome !== "lava")
+            transitador(piso.nome, pos_x, piso.y + desnivel)
     }
 }

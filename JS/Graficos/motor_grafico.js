@@ -158,10 +158,6 @@ function inverte_tempo() {
     animaLuzesGuia(0)
 }
 
-function iniciaAnimacao() {
-    animaMoeda()
-}
-
 function voltaAnimacao() {
     if (jogo.qualidadeGrafica != 0 && dispositivo >= 1366) {
         animaBandeira()

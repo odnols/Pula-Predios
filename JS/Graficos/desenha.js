@@ -4,7 +4,7 @@ function desenha_chao_fundo() {
     for (let i = 0; i < valor.length; i++)
         desenha_objeto(valor[i])
 
-    chao.desenha()
+    chao.desenha_b()
 
     for (let i = 0; i < valor.length; i++)
         desenha_sombra(valor[i], chao.y - 15)
@@ -16,7 +16,7 @@ function desenha_chao_centro() {
     for (let i = 0; i < valor.length; i++)
         desenha_objeto(valor[i], chao.y + 12)
 
-    chao.desenha2()
+    chao.desenha_c()
     jogador.desenha()
 
     for (let i = 0; i < valor.length; i++)
@@ -29,14 +29,14 @@ function desenha_chao_frente() {
     for (let i = 0; i < valor.length; i++)
         desenha_objeto(valor[i])
 
-    chao.desenha3()
+    chao.desenha_f()
 
     for (let i = 0; i < valor.length; i++)
         desenha_sombra(valor[i], chao.y + 20)
 
     if (jogo.status != estados.perdeu)
         if (jogador.chao_referencia != 650)
-            if (chao.muda_chao[0] < 2 || eventos.evento != 3)
+            if (chao.pisos_c[0]?.type < 2 || eventos.evento != 3)
                 spriteSombraJogador.desenha(jogador.x - 48, 1000 - jogador.y)
             else if (jogador.y >= 500)
                 spriteSombraJogador.desenha(jogador.x - 48, jogador.y + 135)

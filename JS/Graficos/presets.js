@@ -173,5 +173,14 @@ const presets = {
         sprite: spriteArbusto,
         x: 0,
         y: 0
+    },
+    'chao_noite': {
+        sprite: spriteChao
+    },
+    'agua_noite': {
+        sprite: spriteAgua
+    },
+    'lava': {
+        sprite: spriteLava
     }
 }
