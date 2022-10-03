@@ -147,11 +147,16 @@
         <img class="sprite_noite" id="spritePredio2_2" src="source/images/Sprites/Cidade/Predio2_2.png">
         <img class="sprite_noite" id="spritePredio3" src="source/images/Sprites/Cidade/Predio3.png">
 
-        <img class="sprite_noite" id="spritePredio1_1_background" src="source/images/Sprites/Cidade/Predio1_1_background.png">
-        <img class="sprite_noite" id="spritePredio1_2_background" src="source/images/Sprites/Cidade/Predio1_2_background.png">
-        <img class="sprite_noite" id="spritePredio2_1_background" src="source/images/Sprites/Cidade/Predio2_1_background.png">
-        <img class="sprite_noite" id="spritePredio2_2_background" src="source/images/Sprites/Cidade/Predio2_2_background.png">
-        <img class="sprite_noite" id="spritePredio3_background" src="source/images/Sprites/Cidade/Predio3_background.png">
+        <img class="sprite_noite" id="spritePredio1_1_background"
+            src="source/images/Sprites/Cidade/Predio1_1_background.png">
+        <img class="sprite_noite" id="spritePredio1_2_background"
+            src="source/images/Sprites/Cidade/Predio1_2_background.png">
+        <img class="sprite_noite" id="spritePredio2_1_background"
+            src="source/images/Sprites/Cidade/Predio2_1_background.png">
+        <img class="sprite_noite" id="spritePredio2_2_background"
+            src="source/images/Sprites/Cidade/Predio2_2_background.png">
+        <img class="sprite_noite" id="spritePredio3_background"
+            src="source/images/Sprites/Cidade/Predio3_background.png">
 
         <img class="sprite_noite" id="spritePisao" src="source/images/Sprites/Cidade/Pisao_noite.png">
         <img class="sprite_noite" id="spritePisao2" src="source/images/Sprites/Cidade/Pisao2_noite.png">
@@ -372,12 +377,12 @@
             <br><br><br>
             <p class="tecla">X</p>
             <p class="espacador"></p>
-            <p class="controle_text"> -> <span class="loja_trad"></span></p>
+            <p class="controle_text">-> <span class="loja_trad"></span></p>
 
             <br><br><br>
             <p class="tecla">Z</p>
             <p class="espacador"></p>
-            <p class="controle_text"> -> <span class="opcoes_trad"></span></p>
+            <p class="controle_text">-> <span class="opcoes_trad"></span></p>
 
             <br><br><br>
             <p class="tecla">T</p>
@@ -509,7 +514,6 @@
     </div>
 
     <div id="configuracoes"><br>
-
         <span id="fecha_janela_c" onclick="botoes(81)">X</span>
 
         <center>
@@ -647,9 +651,6 @@
         </div>
     </div>
 
-    <!-- Tela atrás do canvas, troca a cor dependendo do tema -->
-    <div id="fundo"></div>
-
     <!-- Log de Mudanças e Apresentações -->
     <div id="boas_vindas">
         <div id="pag1"><br>
@@ -665,7 +666,6 @@
     <div id="notificacoes"></div>
 
     <div id="barra_topo">
-
         <div id="perfil_user">
             <img src='source/images/Icones/perfil.png' style="width: 25px" onclick="checa_user()">
         </div>
@@ -706,6 +706,11 @@
         <div id="moeda_img"></div>
     </div>
 
+    <div id="faixas_menu_ini">
+        <div class="faixa_menu fx_cima"></div>
+        <div class="faixa_menu fx_baixo"></div>
+    </div>
+
     <div id="menu_inicial">
         <center>
             <h3 class="iniciar_" onclick="clique()"></h3>
@@ -721,6 +726,7 @@
     <!-- Menus da Loja -->
     <p id="puxador_loja" onclick="abre_loja()" onMouseOver="toolTip_trad(3, 0)" onmouseout="toolTip()"><img
             src="source/images/Icones/loja.png" id="icone_puxador_loja"></p>
+
     <div id="loja"><br>
 
         <p class="fechador_loja" onclick="abre_loja()"></p>

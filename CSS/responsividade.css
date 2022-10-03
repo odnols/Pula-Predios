@@ -1,10 +1,5 @@
 /* telas entre 1367 e 1700 */
 @media only screen and (min-width: 1367px) and (max-width: 1920px) {
-	canvas {
-		width: 1376px;
-		height: 625px;
-		position: absolute;
-	}
 
 	#bandeira {
 		display: none;
@@ -15,10 +10,10 @@
 	}
 
 	h3#tempo_cro {
-		position: absolute;
+		top: 160%;
 		left: 3.5%;
 		font-size: 18px;
-		top: 160%;
+		position: absolute;
 	}
 
 	#botoes_menu {
@@ -38,15 +33,15 @@
 	}
 
 	#opcoes {
-		left: 20%;
 		top: 25%;
+		left: 20%;
 		width: 60%;
 		height: 50%;
 	}
 
 	#estatistic {
-		left: 25%;
 		top: 25%;
+		left: 25%;
 		width: 50%;
 		height: 50%;
 	}
@@ -59,15 +54,15 @@
 	}
 
 	.marcador {
+		left: 60px;
 		width: 826px;
 		bottom: 6.5%;
-		left: 60px;
 	}
 
 	#alerta_teclas {
-		position: absolute;
-		bottom: 4%;
 		left: 15%;
+		bottom: 4%;
+		position: absolute;
 	}
 }
 
@@ -82,30 +77,30 @@
 	}
 
 	.marcador {
-		width: 473px;
-		height: 165px;
-		bottom: 25px;
 		left: 35px;
+		width: 473px;
+		bottom: 25px;
+		height: 165px;
 	}
 
 	#estatistic {
-		left: 25%;
 		top: 10%;
+		left: 25%;
 		width: 50%;
 		height: 80%;
 	}
 
 	#configuracoes {
-		left: 10%;
 		top: 10%;
+		left: 10%;
 		width: 80%;
 		height: 85%;
 	}
 
 	#alerta_teclas {
-		position: absolute;
-		bottom: 5px;
 		left: 5%;
+		bottom: 5px;
+		position: absolute;
 	}
 
 	#fechador_log {
@@ -115,11 +110,6 @@
 
 /* telas com largura entre 0px e 767px  980 Celulares */
 @media only screen and (min-width: 0px) and (max-width: 720px) {
-	canvas {
-		position: absolute;
-		left: 0px;
-		bottom: 0px;
-	}
 
 	#fimdejogo {
 		font-size: 20px;
@@ -150,8 +140,8 @@
 	}
 
 	#centraliza {
-		width: 100%;
 		left: 0%;
+		width: 100%;
 		position: absolute;
 	}
 

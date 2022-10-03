@@ -121,10 +121,13 @@ function regula_velocidade() {
 
 function menu_inicial(argu) {
 
-    if (argu)
+    if (argu) {
         $("#menu_inicial").fadeIn()
-    else
+        $("#faixas_menu_ini").fadeIn()
+    } else {
         $("#menu_inicial").fadeOut()
+        $("#faixas_menu_ini").fadeOut()
+    }
 }
 
 function limpa_chao() {
@@ -189,7 +192,7 @@ function abre_loja() {
 
     $("#loja").fadeToggle()
 
-    if (menus.estado_loja == 0) {
+    if (!menus.estado_loja) {
         menus.estado_loja = 1
 
         if (menus.sessao_loja_ativa)
@@ -201,7 +204,7 @@ function abre_loja() {
 
         // Verifica se há músicas sendo encerradas
         verificaDesligamentos()
-        escondeInformacoes(1, 0)
+        escondeInformacoes(1, 0, 1)
         novidadesLoja(0)
 
         executaSons("faixa_musicas", "Musicas", "loja.ogg", 1)
@@ -224,7 +227,7 @@ function abre_loja() {
         document.getElementById("moedas").style.animation = "volta_moeda 1s"
         document.getElementById("moedas").style.right = "15%"
 
-        escondeInformacoes(0, 0)
+        escondeInformacoes(0, 0, 1)
         desliga_som2("faixa_musicas", 1)
 
         clearTimeout(altera_novidade)
@@ -488,7 +491,7 @@ function MsgPerdeu(causa) {
     }
 }
 
-function escondeInformacoes(caso, loja) {
+function escondeInformacoes(caso, loja, menu) {
 
     if (caso) {
         $("#menu_inicial").fadeOut()
@@ -497,11 +500,17 @@ function escondeInformacoes(caso, loja) {
         if (loja)
             $("#moedas").fadeOut()
 
+        if (menu)
+            $("#faixas_menu_ini").fadeOut()
+
         $("#tutorial").fadeOut()
         $("#puxador_loja").fadeOut()
         $("#icones_aquisicoes").fadeOut()
     } else {
         $("#rodape_loja").fadeOut()
+
+        if (menu)
+            $("#faixas_menu_ini").fadeIn()
 
         $("#menu_inicial").fadeIn()
         $("#barra_topo").fadeIn()
