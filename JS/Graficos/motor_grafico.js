@@ -79,22 +79,22 @@ function transita_tempo(categoria) {
 //  Função para fazer anoitecer
 function anoitecer() {
     estrelificador = setInterval(() => {
-        if (Cenario_sprites.opacidade_noite <= 0.99)
-            Cenario_sprites.opacidade_noite += 0.01
+        if (ambiente.opacidade_noite <= 0.99)
+            ambiente.opacidade_noite += 0.01
         else {  // Matando o intervalo
             clearInterval(estrelificador)
-            Cenario_sprites.opacidade_noite = 1.0
+            ambiente.opacidade_noite = 1.0
         }
     }, 180)
 }
 
 function amanhecer() {
     dializador = setInterval(() => {
-        if (Cenario_sprites.opacidade_noite >= 0.0)
-            Cenario_sprites.opacidade_noite -= 0.01
+        if (ambiente.opacidade_noite >= 0.0)
+            ambiente.opacidade_noite -= 0.01
         else {  // Matando o intervalo
             clearInterval(dializador)
-            Cenario_sprites.opacidade_noite = 0.0
+            ambiente.opacidade_noite = 0.0
         }
     }, 180)
 }
@@ -109,14 +109,14 @@ function transitador(elemento, posicao_x, posicao_y) {
         let ctxi = canvas.getContext("2d")
         let pat = ctxi.createPattern(img, 'repeat')
 
-        document.getElementById(elemento).style.opacity = Cenario_sprites.opacidade_noite
+        document.getElementById(elemento).style.opacity = ambiente.opacidade_noite
 
-        ctxi.globalAlpha = Cenario_sprites.opacidade_noite
+        ctxi.globalAlpha = ambiente.opacidade_noite
 
         ctxi.fillStyle = pat
 
         // Verifica se a Opacidade está correta e exibe na tela
-        if (Cenario_sprites.opacidade_noite >= 0.0 && Cenario_sprites.opacidade_noite <= 1.0) {
+        if (ambiente.opacidade_noite >= 0.0 && ambiente.opacidade_noite <= 1.0) {
             ctxi.beginPath()
             ctxi.drawImage(img, posicao_x, posicao_y)
             ctxi.fill()
@@ -133,28 +133,32 @@ function transitador(elemento, posicao_x, posicao_y) {
 }
 
 function inverte_tempo() {
-    if (Cenario_sprites.astro[2] == 0) { // Noite
-        Cenario_sprites.astro[2] = 1
+
+    if (ambiente.astro[2] == 0) { // Noite
+        ambiente.astro[2] = 1
+        ambiente.tema = 2
         ambiente.libera_transitador = 1
-        Cenario_sprites.opacidade_noite = 1
+        ambiente.opacidade_noite = 1
 
         if (typeof tEst != "undefined")
             clearTimeout(tEst)
 
         // Verifica se as luzes de navegação estão ativas com o avião voando
-        if (typeof tLuzN == "undefined" && Cenario_sprites.objeto_voador[3] == 1 && dispositivo >= 1366)
+        if (typeof tLuzN == "undefined" && ambiente.objeto_voador[3] == 1 && dispositivo >= 1366)
             animaLuzesGuia(1)
 
         animaEstrelas()
     } else { // Dia
-        Cenario_sprites.astro[2] = 0
+        ambiente.astro[2] = 0
+        ambiente.tema = 1
         ambiente.libera_transitador = 0
-        Cenario_sprites.opacidade_noite = 0
+        ambiente.opacidade_noite = 0
 
         if (typeof tEst != "undefined")
             clearTimeout(tEst)
     }
 
+    alteraRelogio()
     animaLuzesGuia(0)
 }
 

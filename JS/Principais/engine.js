@@ -40,60 +40,12 @@ var labelTexto = {
         libera_transitador: 0,
         segura_som: 0,
         segura_vento: 0,
-        segura_objeto_voador: 0
-    },
+        segura_objeto_voador: 0,
 
-    background_predios = {
-        predios: 0,
-        montanhas: 0,
-        montanhas2: 0,
-
-        atualiza: function () {
-            this.predios -= jogo.velocidade * 0.2
-            this.montanhas -= jogo.velocidade * 0.22
-            this.montanhas2 -= jogo.velocidade * 0.1
-
-            if (this.predios <= -opcoes.largura)
-                this.predios = 0
-
-            if (this.montanhas <= -opcoes.largura)
-                this.montanhas = 0
-
-            if (this.montanhas2 <= -opcoes.largura)
-                this.montanhas2 = 0
-        },
-
-        desenha: function () {
-
-            spriteMontanhas.desenha(this.montanhas2, 480)
-            spriteMontanhas.desenha(this.montanhas2 + opcoes.largura, 480)
-
-            transitador("montanhas_noite", this.montanhas2, 483)
-            transitador("montanhas_noite", this.montanhas2 + opcoes.largura, 483)
-
-            spriteCidade.desenha(this.predios, 257)
-            spriteCidade.desenha(this.predios + opcoes.largura, 257)
-
-            transitador("cidade_noite", this.predios, 195)
-            transitador("cidade_noite", this.predios + opcoes.largura, 195)
-
-            spriteMontanhas.desenha(this.montanhas, 510)
-            spriteMontanhas.desenha(this.montanhas + opcoes.largura, 510)
-
-            transitador("montanhas_noite", this.montanhas, 513)
-            transitador("montanhas_noite", this.montanhas + opcoes.largura, 513)
-        }
-    },
-
-    Cenario_sprites = {
-
-        astro: [-250, 400, 0, 0, 0], // 0 (Localização), 1 (Altura), 2 (Astro), 3 (Transições), 4 (Controle)
-        tema: 0,
+        tema: 0, // Define será dinamico, sempre dia ou sempre noite
         opacidade_noite: 0.0,
-        nuvem_camada1: 0,
-        nuvem_camada2: 0,
-        nuvem_camada3: 0,
-        nuvem_camada4: 0,
+        nuvem_camada: [0, 0, 0, 0],
+        astro: [-250, 400, 0, 0, 0], // 0 (Localização), 1 (Altura), 2 (Astro), 3 (Transições), 4 (Controle)
         objeto_voador: [0, 0, 0, 0], // 0 (Velocidade), 1 (Posição), 2 (Altura), 3 (Objeto)
 
         atualiza: function () {
@@ -128,10 +80,10 @@ var labelTexto = {
                 velocidade_interna = 5
 
             this.predios -= jogo.velocidade * 0.2
-            this.nuvem_camada1 -= velocidade_interna * 0.03
-            this.nuvem_camada2 -= velocidade_interna * 0.04
-            this.nuvem_camada3 -= velocidade_interna * 0.05
-            this.nuvem_camada4 -= velocidade_interna * 0.06
+            this.nuvem_camada[0] -= velocidade_interna * 0.03
+            this.nuvem_camada[1] -= velocidade_interna * 0.04
+            this.nuvem_camada[2] -= velocidade_interna * 0.05
+            this.nuvem_camada[3] -= velocidade_interna * 0.06
 
             // Controla a posição no eixo X do objeto voador
             if (this.objeto_voador[3] != 0 && this.objeto_voador[3] != 3)
@@ -217,17 +169,9 @@ var labelTexto = {
             if (this.predios <= -opcoes.largura)
                 this.predios = 0
 
-            if (this.nuvem_camada1 <= -opcoes.largura)
-                this.nuvem_camada1 = 0
-
-            if (this.nuvem_camada2 <= -opcoes.largura)
-                this.nuvem_camada2 = 0
-
-            if (this.nuvem_camada3 <= -opcoes.largura)
-                this.nuvem_camada3 = 0
-
-            if (this.nuvem_camada4 <= -opcoes.largura)
-                this.nuvem_camada4 = 0
+            for (let i = 0; i < this.nuvem_camada.length; i++)
+                if (this.nuvem_camada[i] <= -opcoes.largura)
+                    this.nuvem_camada[i] = 0
         },
 
         desenha: function () {
@@ -245,23 +189,23 @@ var labelTexto = {
                 transitador("disco_voador_noite", this.objeto_voador[1], this.objeto_voador[2] - 2)
             }
 
-            spriteNuvens.desenha(this.nuvem_camada1, 280)
-            spriteNuvens.desenha(this.nuvem_camada1 + opcoes.largura, 280)
+            spriteNuvens.desenha(this.nuvem_camada[0], 280)
+            spriteNuvens.desenha(this.nuvem_camada[0] + opcoes.largura, 280)
 
-            transitador("nuvens1_noite", this.nuvem_camada1, 280)
-            transitador("nuvens1_noite", this.nuvem_camada1 + opcoes.largura, 280)
+            transitador("nuvens1_noite", this.nuvem_camada[0], 280)
+            transitador("nuvens1_noite", this.nuvem_camada[0] + opcoes.largura, 280)
 
-            spriteNuvensSup2.desenha(this.nuvem_camada3 + 10, 100)
-            spriteNuvensSup2.desenha(this.nuvem_camada3 + 10 + opcoes.largura, 100)
+            spriteNuvensSup2.desenha(this.nuvem_camada[2] + 10, 100)
+            spriteNuvensSup2.desenha(this.nuvem_camada[2] + 10 + opcoes.largura, 100)
 
-            transitador("nuvens2_2_noite", this.nuvem_camada3 + 60, 108)
-            transitador("nuvens2_2_noite", this.nuvem_camada3 + 60 + opcoes.largura, 108)
+            transitador("nuvens2_2_noite", this.nuvem_camada[2] + 60, 108)
+            transitador("nuvens2_2_noite", this.nuvem_camada[2] + 60 + opcoes.largura, 108)
 
-            spriteNuvensSup.desenha(this.nuvem_camada4 + 90, 50)
-            spriteNuvensSup.desenha(this.nuvem_camada4 + 90 + opcoes.largura, 50)
+            spriteNuvensSup.desenha(this.nuvem_camada[3] + 90, 50)
+            spriteNuvensSup.desenha(this.nuvem_camada[3] + 90 + opcoes.largura, 50)
 
-            transitador("nuvens1_2_noite", this.nuvem_camada4 + 90, 50)
-            transitador("nuvens1_2_noite", this.nuvem_camada4 + 90 + opcoes.largura, 50)
+            transitador("nuvens1_2_noite", this.nuvem_camada[3] + 90, 50)
+            transitador("nuvens1_2_noite", this.nuvem_camada[3] + 90 + opcoes.largura, 50)
 
             if (this.objeto_voador[3] == 1) { // Avião
                 spriteAviao.desenha(this.objeto_voador[1], this.objeto_voador[2])
@@ -274,20 +218,59 @@ var labelTexto = {
                 transitador("dirigivel_noite", this.objeto_voador[1] - 120, this.objeto_voador[2] - 45)
             }
 
-            spriteNuvensSup.desenha(this.nuvem_camada3 + 500, 150)
-            spriteNuvensSup.desenha(this.nuvem_camada3 + 500 + opcoes.largura, 150)
+            spriteNuvensSup.desenha(this.nuvem_camada[2] + 500, 150)
+            spriteNuvensSup.desenha(this.nuvem_camada[2] + 500 + opcoes.largura, 150)
 
-            transitador("nuvens1_2_noite", this.nuvem_camada3 + 500, 150)
-            transitador("nuvens1_2_noite", this.nuvem_camada3 + 500 + opcoes.largura, 150)
+            transitador("nuvens1_2_noite", this.nuvem_camada[2] + 500, 150)
+            transitador("nuvens1_2_noite", this.nuvem_camada[2] + 500 + opcoes.largura, 150)
 
-            spriteNuvens2.desenha(this.nuvem_camada2, 330)
-            spriteNuvens2.desenha(this.nuvem_camada2 + opcoes.largura, 330)
+            spriteNuvens2.desenha(this.nuvem_camada[1], 330)
+            spriteNuvens2.desenha(this.nuvem_camada[1] + opcoes.largura, 330)
 
-            transitador("nuvens2_noite", this.nuvem_camada2, 330)
-            transitador("nuvens2_noite", this.nuvem_camada2 + opcoes.largura, 330)
+            transitador("nuvens2_noite", this.nuvem_camada[1], 330)
+            transitador("nuvens2_noite", this.nuvem_camada[1] + opcoes.largura, 330)
 
             spriteCidade.desenha(this.predios, 257)
             spriteCidade.desenha(this.predios + opcoes.largura, 257)
+        }
+    },
+
+    background_predios = {
+        predios: 0,
+        montanhas: [0, 0],
+
+        atualiza: function () {
+            this.predios -= jogo.velocidade * 0.2
+            this.montanhas[0] -= jogo.velocidade * 0.22
+            this.montanhas[1] -= jogo.velocidade * 0.1
+
+            if (this.predios <= -opcoes.largura)
+                this.predios = 0
+
+            for (let i = 0; i < this.montanhas.length; i++)
+                if (this.montanhas[i] <= -opcoes.largura)
+                    this.montanhas[i] = 0
+        },
+
+        desenha: function () {
+
+            spriteMontanhas.desenha(this.montanhas[1], 480)
+            spriteMontanhas.desenha(this.montanhas[1] + opcoes.largura, 480)
+
+            transitador("montanhas_noite", this.montanhas[1], 483)
+            transitador("montanhas_noite", this.montanhas[1] + opcoes.largura, 483)
+
+            spriteCidade.desenha(this.predios, 257)
+            spriteCidade.desenha(this.predios + opcoes.largura, 257)
+
+            transitador("cidade_noite", this.predios, 195)
+            transitador("cidade_noite", this.predios + opcoes.largura, 195)
+
+            spriteMontanhas.desenha(this.montanhas[0], 510)
+            spriteMontanhas.desenha(this.montanhas[0] + opcoes.largura, 510)
+
+            transitador("montanhas_noite", this.montanhas[0], 513)
+            transitador("montanhas_noite", this.montanhas[0] + opcoes.largura, 513)
         }
     },
 
@@ -297,7 +280,7 @@ var labelTexto = {
 
             transitador("ceu_noite", 0, 0)
 
-            if (Cenario_sprites.astro[2] == 1 && Cenario_sprites.astro[0] < 1200)
+            if (ambiente.astro[2] == 1 && ambiente.astro[0] < 1200)
                 spriteMascara_estrelas.desenha(0, 0)
         }
     },
@@ -307,7 +290,7 @@ var labelTexto = {
         xc: 0,
         xb: 0,
         xf: 0,
-        
+
         // Responsáveis por fazer o controle das transições entre os sprites dos chãos
         pisos_b: [],
         pisos_c: [],
@@ -695,7 +678,7 @@ var labelTexto = {
             if (typeof limpar_notificacao != "undefined")
                 clearTimeout(limpar_notificacao)
 
-            if (Cenario_sprites.astro[2] == 0)
+            if (ambiente.astro[2] == 0)
                 document.getElementById("notificacoes").style.color = "rgba(0, 0, 0, .8)"
 
             limpar_notificacao = setTimeout(() => {
@@ -1265,7 +1248,7 @@ function atualiza() {
 
     propsfundo.atualiza()
     propsfrente.atualiza()
-    Cenario_sprites.atualiza()
+    ambiente.atualiza()
     background_predios.atualiza()
 
     chao.atualiza()
@@ -1287,7 +1270,7 @@ function desenha() {
 
     propsfrente.desenha()
     background_ceu.desenha()
-    Cenario_sprites.desenha()
+    ambiente.desenha()
     background_predios.desenha()
 
     propsfundo.desenha()
@@ -1299,7 +1282,7 @@ function desenha() {
         document.getElementById("notifica_moeda").innerHTML = `$${jogador.moedas}`
         $("#notifica_moeda").fadeIn()
 
-        if (Cenario_sprites.astro[2] == 0)
+        if (ambiente.astro[2] == 0)
             opcoes.ctx.fillStyle = "rgba(0, 0, 0, .7)"
         else
             opcoes.ctx.fillStyle = "rgba(255, 255, 255, .7)"
@@ -1310,7 +1293,7 @@ function desenha() {
 
         background_predios.desenha(0, 400)
 
-        if (Cenario_sprites.astro[2] == 0)
+        if (ambiente.astro[2] == 0)
             opcoes.ctx.fillStyle = "black"
         else
             opcoes.ctx.fillStyle = "#fff"
@@ -1363,6 +1346,9 @@ function desenha() {
 
             eventos.relogio_eventos()
             eventos.qtd_eventos = [99, 99, 99, 99]
+
+            if (jogo.velocidade == 0)
+                acelera_predio()
         }
     }
 

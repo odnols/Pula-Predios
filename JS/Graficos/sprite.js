@@ -192,7 +192,7 @@ var spriteCidade = new Sprite_Cenario(0, 0, 1366, 337),
     spriteJogador_Roxo = new Sprite_Jogador(320, 0, 59, 138),
     spriteJogador_Verde = new Sprite_Jogador(384, 0, 59, 138),
 
-    spritePisao = new Sprite_Objetos(6, 503, 65, 146),
+    spritePisao = new Sprite_Objetos(6, 503, 65, 46),
     spritePisao2 = new Sprite_Objetos(253, 464, 58, 30),
     spritePredio2_1 = new Sprite_Objetos(7, 155, 46, 366),              // Vermelho
     spritePredio1_1 = new Sprite_Objetos(60, 155, 46, 366),             // Amarelo

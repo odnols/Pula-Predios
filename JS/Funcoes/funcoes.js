@@ -992,17 +992,17 @@ function objetosVoadores() {
 
                 if (caso == 1 && jogo.tema_ativo == 1) // Gera um avião
                     // Apenas cria o avião se o tema for o padrão
-                    Cenario_sprites.objeto_voador = [3, -200, 90, 1]
+                    ambiente.objeto_voador = [3, -200, 90, 1]
                 else if (caso == 2) // Gera um dirigível
-                    Cenario_sprites.objeto_voador = [-.057, 1370, 300, 3]
-                else if (Cenario_sprites.astro[2] == 1) // Gera um disco voador
-                    Cenario_sprites.objeto_voador = [-8, 1400, 130, 2]
+                    ambiente.objeto_voador = [-.057, 1370, 300, 3]
+                else if (ambiente.astro[2] == 1) // Gera um disco voador
+                    ambiente.objeto_voador = [-8, 1400, 130, 2]
                 else
                     ambiente.segura_objeto_voador = 0
 
                 clearTimeout(gera_objeto_voador)
 
-                if (Cenario_sprites.astro[2] == 1 && Cenario_sprites.objeto_voador[3] == 1)
+                if (ambiente.astro[2] == 1 && ambiente.objeto_voador[3] == 1)
                     animaLuzesGuia(1)
 
             }, tempo * 100)
@@ -1237,7 +1237,9 @@ function verifica_tema() {
 }
 
 function freia_predio() {
-    clearTimeout(tRd)
+
+    if (typeof tRd !== "undefined")
+        clearTimeout(tRd)
 
     zera_velocidade = setInterval(() => {
         if (jogo.velocidade > 0)

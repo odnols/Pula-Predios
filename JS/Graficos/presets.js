@@ -121,12 +121,12 @@ const presets = {
     },
     'spritePisao2': {
         sprite: spritePisao2,
-        x: 4,
-        y: 16,
+        x: 0,
+        y: 0,
         sombra: {
             sprite: spriteSombraPisao2,
             x: -15,
-            y: 16
+            y: 17
         }
     },
     'spriteFonte': {
@@ -155,7 +155,7 @@ const presets = {
         y: 0,
         sombra: {
             sprite: spriteSombra_ArvoreFrutifera,
-            x: 5,
+            x: -5,
             y: 10
         }
     },

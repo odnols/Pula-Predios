@@ -235,13 +235,12 @@ function carrega_dados() {
     // Sincroniza a configuração de tema atual
     config_temaEscolhido = localStorage.getItem("TemaEscolhido")
     if (config_temaEscolhido == null)
-        Cenario_sprites.tema = 0
+        ambiente.tema = 0
     else
-        Cenario_sprites.tema = parseInt(config_temaEscolhido)
+        ambiente.tema = parseInt(config_temaEscolhido)
 
-    if (Cenario_sprites.tema != 0)
+    if (ambiente.tema != 0)
         sincronizaRelogio()
-
 
     // Sincroniza as estatísticas para nerds através do console
     estatisticasNerds = localStorage.getItem("estatisticasNerds")

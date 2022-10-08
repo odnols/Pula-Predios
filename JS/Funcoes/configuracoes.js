@@ -106,11 +106,11 @@ function alteraRelogio() {
     if (jogo.estadoOcioso)
         impedeOcioso()
 
-    if (Cenario_sprites.tema == 0) {
+    if (ambiente.tema == 0) {
         // Termina as transições entre dia e noite
         verifica_tema()
 
-        Cenario_sprites.tema = 1
+        ambiente.tema = 1 // Sempre dia
 
         if (idioma == "pt")
             document.getElementById("status_tema_atual").innerHTML = "Sempre Dia"
@@ -119,22 +119,22 @@ function alteraRelogio() {
 
         animaLuzesGuia(0)
 
-    } else if (Cenario_sprites.tema == 1) {
+    } else if (ambiente.tema == 1) {
         // Termina as transições entre dia e noite
         verifica_tema()
 
-        Cenario_sprites.tema = 2
+        ambiente.tema = 2 // Sempre noite
 
         if (idioma == "pt")
             document.getElementById("status_tema_atual").innerHTML = "Sempre Noite"
         else
             document.getElementById("status_tema_atual").innerHTML = "Always night"
 
-        if (Cenario_sprites.objeto_voador[3] == 1)
+        if (ambiente.objeto_voador[3] == 1)
             animaLuzesGuia(1)
 
-    } else if (Cenario_sprites.tema == 2) {
-        Cenario_sprites.tema = 0
+    } else if (ambiente.tema == 2) {
+        ambiente.tema = 0
         if (idioma == "pt")
             document.getElementById("status_tema_atual").innerHTML = "Dinâmico"
         else
@@ -142,14 +142,14 @@ function alteraRelogio() {
     }
 
     sincronizaRelogio()
-    localStorage.setItem("TemaEscolhido", Cenario_sprites.tema)
+    localStorage.setItem("TemaEscolhido", ambiente.tema)
 }
 
 function sincronizaRelogio() {
 
-    if (Cenario_sprites.tema == 1) { // Sempre Dia
-        Cenario_sprites.astro[2] = 0
-        Cenario_sprites.opacidade_noite = 0.0
+    if (ambiente.tema == 1) { // Sempre Dia
+        ambiente.astro[2] = 0
+        ambiente.opacidade_noite = 0.0
         ambiente.libera_transitador = 0
 
         // Desliga a animação das estrelas
@@ -160,9 +160,9 @@ function sincronizaRelogio() {
             document.getElementById("status_tema_atual").innerHTML = "Sempre Dia"
         else
             document.getElementById("status_tema_atual").innerHTML = "Always Day"
-    } else if (Cenario_sprites.tema == 2) { // Sempre Noite
-        Cenario_sprites.astro[2] = 1
-        Cenario_sprites.opacidade_noite = 1
+    } else if (ambiente.tema == 2) { // Sempre Noite
+        ambiente.astro[2] = 1
+        ambiente.opacidade_noite = 1
         ambiente.libera_transitador = 1
 
         if (typeof tEst != "undefined")

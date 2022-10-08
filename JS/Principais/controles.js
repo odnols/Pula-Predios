@@ -13,6 +13,8 @@ function botoes(tecla) {
         if (jogo.estadoOcioso)
             impedeOcioso()
 
+        console.log(tecla)
+
         if (opcoes.inicia_game) {
             switch (tecla) {
                 case 76:  // l
@@ -60,6 +62,16 @@ function botoes(tecla) {
                 case 83:  // S
                     if (menus.estado_loja)
                         regula_sessao_loja("Temas")
+                    break
+                case 49: // 1
+                    inverte_tempo()
+                    break
+                case 112: // p
+                case 80: // P
+                    if (jogo.velocidade == 0)
+                        acelera_predio()
+                    else
+                        freia_predio()
                     break
                 case 122: // z
                 case 90:  // Z
@@ -206,9 +218,9 @@ function clique(evento) {
                         break
                     case 114: // r
                     case 82:  // R
-                        if(jogador.timer_mod >= 5)
+                        if (jogador.timer_mod >= 5)
                             jogo.operador()
-                    break
+                        break
                 }
 
             } else if (jogo.status == estados.jogar && (tecla == 32 || tecla == 87 || tecla == 119) && !menus.estado_loja && !menus.estado_log)

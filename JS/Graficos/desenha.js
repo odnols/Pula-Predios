@@ -53,9 +53,6 @@ function desenha_objeto(objeto) {
     if (objeto.altura > 50) {
         objeto.sprite.desenha(objeto.x + presets[objeto.nome].x, chao.y - objeto.altura + presets[objeto.nome].y, objeto.largura, objeto.altura)
         transitador(objeto.nome, objeto.x, chao.y - objeto.altura)
-    } else if (objeto.altura > 40) {
-        objeto.sprite.desenha(objeto.x + presets[objeto.nome].x, objeto.y + 100, objeto.largura, objeto.altura)
-        transitador(objeto.nome, objeto.x, objeto.y + 100)
     } else {
         objeto.sprite.desenha(objeto.x + presets[objeto.nome].x, objeto.y, objeto.largura, objeto.altura)
         transitador(objeto.nome, objeto.x, objeto.y)
