@@ -553,6 +553,8 @@ var labelTexto = {
         gravidade: 1.6,
         velocidade: 10,
 
+        bioma: 0,
+
         tema_ativo: 1,
         temas_comprados: [0, 1],
         musica_tema: null,
@@ -1347,7 +1349,7 @@ function desenha() {
             eventos.relogio_eventos()
             eventos.qtd_eventos = [99, 99, 99, 99]
 
-            if (jogo.velocidade == 0)
+            if (jogo.velocidade == 0 && dispositivo >= 1366)
                 acelera_predio()
         }
     }

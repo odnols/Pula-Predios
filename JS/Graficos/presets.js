@@ -177,6 +177,9 @@ const presets = {
     'chao_noite': {
         sprite: spriteChao
     },
+    'areia_noite': {
+        sprite: spriteAreia
+    },
     'agua_noite': {
         sprite: spriteAgua
     },

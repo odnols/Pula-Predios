@@ -374,7 +374,7 @@ button {
     width: 120%;
     height: 100%;
     box-shadow: inset 0px 0px 25px black;
-    animation: muda_cor_loja 30s infinite;
+    animation: muda_cor_loja 30s infinite linear;
 }
 
 #sprite_jogador_loja {
@@ -402,7 +402,7 @@ button {
     grid-area: skin;
     overflow: hidden;
     background-size: cover !important;
-    animation: background_skins 10s infinite;
+    animation: background_skins 10s infinite linear;
     background-image: url("../source/images/Loja/skins.png") !important;
 }
 

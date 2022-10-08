@@ -12,8 +12,8 @@ function insere_propsfundo() {
     let altura_media = 15, variacao = 35
 
     if (eventos.evento == 0) {     // Área Densa
-        altura_media = 30
-        variacao = 40
+        altura_media = 40
+        variacao = 50
     }
 
     let altura_objeto = altura_media + Math.round(variacao * Math.random())
@@ -139,16 +139,24 @@ function escolhe_objeto(altura, local) {
 
     const props = ['spriteArbusto', 'spriteArvore', 'spriteArvore2', 'spriteArvore_frutifera', 'spriteFonte', 'spritePoste1', 'spritePoste2']
 
-    const predios = ['spritePredio1_1', 'spritePredio1_2', 'spritePredio2_1', 'spritePredio2_2', 'spritePredio3']
-    const predios_fundo = ['spritePredio1_1_background', 'spritePredio1_2_background', 'spritePredio2_1_background', 'spritePredio2_2_background', 'spritePredio3_background']
+    const predios_altos = ['spritePredio1_1', 'spritePredio1_2', 'spritePredio2_1', 'spritePredio2_2']
+    const predios_baixos = ['spritePredio3', 'spritePredio3_background']
+
+    const predios_fundo = ['spritePredio1_1_background', 'spritePredio1_2_background', 'spritePredio2_1_background', 'spritePredio2_2_background']
 
     const pisoes = ['spritePisao', 'spritePisao2']
 
-    if (altura > 50 && local !== 1)
+    if (altura > 60 && local !== 1)
         if (local == 3)
             return predios_fundo[Math.round((predios_fundo.length - 1) * Math.random())]
         else
-            return predios[Math.round((predios.length - 1) * Math.random())]
+            return predios_altos[Math.round((predios_altos.length - 1) * Math.random())]
+
+    if (altura > 51 && local !== 1) // Prédios menores
+        if (local == 3)
+            return predios_baixos[1]
+        else
+            return predios_baixos[0]
 
     // Local = 1 (frente) && evento = 2 (parque) || evento = 0 (densidade)
     if (local == 1 && eventos.evento == 2) return props[6]

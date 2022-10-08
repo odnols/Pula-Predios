@@ -13,8 +13,6 @@ function botoes(tecla) {
         if (jogo.estadoOcioso)
             impedeOcioso()
 
-        console.log(tecla)
-
         if (opcoes.inicia_game) {
             switch (tecla) {
                 case 76:  // l
