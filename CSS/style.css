@@ -221,17 +221,20 @@ a.estat {
     height: 50px;
     width: 200px;
     font-size: 30px;
-    padding-top: 20px;
     overflow: hidden;
+    padding-top: 20px;
     transition: .5s transform;
 }
 
-#log_ {
-    right: 3%;
-    bottom: 10px;
-    display: none;
-    position: fixed;
+#log_button {
+    float: right;
+    margin-right: 1%;
     transition: .5s transform;
+}
+
+#log_button,
+.reload_button {
+    margin-top: 8px;
 }
 
 button {
@@ -248,17 +251,19 @@ button {
 }
 
 .reload_button:hover,
+#log_button:hover {
+    color: yellow;
+}
+
 #opcoes_button:hover,
-#log_:hover,
 #opcoes_:hover {
     color: yellow;
     transform: scale(1.2);
 }
 
 .reload_button {
-    left: 3%;
-    bottom: 10px;
-    position: fixed;
+    float: left;
+    margin-left: 1%;
     transition: 1s transform;
 }
 
@@ -1062,7 +1067,7 @@ h3#qtdPulos {
 #conquistas_mapa {
     top: 10%;
     left: 10%;
-    z-index: 5;
+    z-index: 6;
     width: 80%;
     height: 85%;
     color: white;
@@ -1131,7 +1136,7 @@ h3#qtdPulos {
 #tutorial {
     top: 10%;
     left: 10%;
-    z-index: 5;
+    z-index: 6;
     width: 80%;
     height: 85%;
     color: white;
@@ -1398,7 +1403,7 @@ h3#qtdPulos {
 #opcoes {
     top: 10%;
     left: 10%;
-    z-index: 5;
+    z-index: 6;
     width: 80%;
     height: 85%;
     color: white;
@@ -1926,13 +1931,48 @@ img#trofeu {
     height: 40%;
     position: fixed;
     background-color: black;
+    box-shadow: 0px 0px 5px black;
 }
 
 .fx_cima {
     top: 0px;
+    overflow: hidden;
 }
 
 .fx_baixo {
-    height: 5%;
+    height: 6%;
     bottom: 0px;
+    padding-top: 5px;
+}
+
+section {
+    position: relative;
+    width: 100%;
+}
+
+.text_parallax {
+    position: relative;
+    transform: skewY(345deg) translateY(-100px);
+    animation: animateColor 5s linear infinite;
+}
+
+.text_parallax h2 {
+    position: relative;
+    width: 100%;
+    font-size: 8em;
+    pointer-events: none;
+    line-height: 1em;
+    white-space: nowrap;
+    text-shadow: calc(var(--x)) 100px 0 rgba(255, 255, 255, .1);
+    transform: translateX(calc(0% - var(--x) * var(--i)));
+}
+
+.text_parallax h2 span {
+    color: #0f0;
+    margin: 0 10px;
+}
+
+.text_parallax h2 span:nth-child(even) {
+    color: transparent;
+    -webkit-text-stroke: 2px #fff;
 }

@@ -152,7 +152,7 @@ function escolhe_objeto(altura, local) {
         else
             return predios_altos[Math.round((predios_altos.length - 1) * Math.random())]
 
-    if (altura > 51 && local !== 1) // Prédios menores
+    if (altura > 50 && local !== 1) // Prédios menores
         if (local == 3)
             return predios_baixos[1]
         else

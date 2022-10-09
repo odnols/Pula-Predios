@@ -17,7 +17,7 @@
 	}
 
 	#botoes_menu {
-		top: 75%;
+		bottom: 5%;
 		width: 100%;
 		position: fixed;
 	}

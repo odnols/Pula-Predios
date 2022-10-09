@@ -82,7 +82,7 @@ function carrega_dados() {
     if (opcoes.inicia_game == null)
         $("#boas_vindas").fadeIn()
     else
-        $("#log_").fadeIn()
+        $("#log_button").fadeIn()
 
     tutorial_completo = localStorage.getItem("tutorialCompleto")
     if (tutorial_completo == null)

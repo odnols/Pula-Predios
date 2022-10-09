@@ -368,3 +368,9 @@ function showtext(el, text, local) {
         el.innerHTML += next
     }, 50)
 }
+
+// Responsável pelo banner parallax do inicio
+const position = document.documentElement;
+position.addEventListener("mousemove", e => {
+    position.style.setProperty('--x', `${e.clientX}px`)
+})

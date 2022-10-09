@@ -3,7 +3,7 @@ var nome_notificacoes = [], fila_notificacoes = [], segura_notificacao = 0
 function boasVindas() {
 
     $("#boas_vindas").fadeOut()
-    $("#log_").fadeIn()
+    $("#log_button").fadeIn()
 
     opcoes.inicia_game = 1
     confirma_carregamento = 1

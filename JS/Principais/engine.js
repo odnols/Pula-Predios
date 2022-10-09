@@ -423,7 +423,6 @@ var labelTexto = {
             this.largura_barra = $("#barra_loading").css("width")
 
             this.largura_barra = this.largura_barra.replace("px", "")
-
             this.iniciando_evento = 5
 
             if (jogo.status == estados.jogando)
@@ -437,7 +436,7 @@ var labelTexto = {
                         console.log("%cSkipped Event, choosing again", "color: red")
 
                 eventos.eventos()
-            } else
+            } else {
                 if (this.timer_mod < this.tempoMod && (this.inicia_evento == 1 || this.inicia_evento == 3)) {
                     if (jogo.estatisticasNerds)
                         if (idioma == "pt")
@@ -539,6 +538,7 @@ var labelTexto = {
                         }
                     }, eventos.iniciando_evento * 1000)
                 }
+            }
         },
     },
 
@@ -553,7 +553,7 @@ var labelTexto = {
         gravidade: 1.6,
         velocidade: 10,
 
-        bioma: 0,
+        bioma: 0, // 0 - Terra, 1 - Praia
 
         tema_ativo: 1,
         temas_comprados: [0, 1],
@@ -672,6 +672,8 @@ var labelTexto = {
         },
 
         notifica: function (mensagem, cor) {
+
+            if(!mensagem) return
 
             $("#notificacoes").fadeIn(300, "linear")
             document.getElementById("notificacoes").style.color = cor
