@@ -113,6 +113,8 @@ function carrega_dados() {
     else
         hist_pulos = parseInt(hist_pulos)
 
+    jogo.bioma = parseInt(localStorage.getItem("jogo_bioma"))
+
     hist_pontos = localStorage.getItem("qtdPontos")
     if (hist_pontos == null)
         hist_pontos = 0

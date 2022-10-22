@@ -174,6 +174,21 @@ var labelTexto = {
                     this.nuvem_camada[i] = 0
         },
 
+        biomas: function () {
+
+            const biomas = ["Campos", "Praia"], tempo = Math.floor(20000 + (Math.random() * 60000))
+            console.log(`Entrando no bioma de ${biomas[jogo.bioma == 0 ? 1 : 0]} em ${tempo / 1000} segundos`)
+
+            setTimeout(() => {
+                jogo.bioma = jogo.bioma == 0 ? 1 : 0
+                console.log(`No bioma de ${biomas[jogo.bioma]}`)
+
+                localStorage.setItem("jogo_bioma", jogo.bioma)
+
+                ambiente.biomas()
+            }, tempo)
+        },
+
         desenha: function () {
 
             if (this.astro[2] == 0) {
@@ -673,7 +688,7 @@ var labelTexto = {
 
         notifica: function (mensagem, cor) {
 
-            if(!mensagem) return
+            if (!mensagem) return
 
             $("#notificacoes").fadeIn(300, "linear")
             document.getElementById("notificacoes").style.color = cor
@@ -1207,6 +1222,7 @@ var labelTexto = {
 function main() {
 
     carrega_dados()
+    ambiente.biomas() // Inicia a função para trocar entre biomas
 
     opcoes.canvas = document.getElementById("canvas")
     notificacoes = document.getElementById("notificacoes")

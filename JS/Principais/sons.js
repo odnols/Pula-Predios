@@ -19,14 +19,15 @@ function escolhe_som(ocasiao, evento) {
 
 function executaSons(elemento, localizacao, nomeSom, tipo) {
     if (jogo.estadoSom != 0) { // Verifica se a reprodução de sons não está desativada
-        if (tipo == 1)       // Músicas
-            var volume_interno = localStorage.getItem("volMusica")
-        else if (tipo == 2)  // Efeitos
-            var volume_interno = localStorage.getItem("volEfeito")
-        else if (tipo == 3) // Memes
-            var volume_interno = localStorage.getItem("volMemes")
 
-        var audio = document.getElementById(elemento)
+        let volume_interno = localStorage.getItem("volMusica")
+
+        if (tipo == 2)  // Efeitos
+            volume_interno = localStorage.getItem("volEfeito")
+        else if (tipo == 3) // Memes
+            volume_interno = localStorage.getItem("volMemes")
+
+        let audio = document.getElementById(elemento)
         audio.volume = volume_interno / 100
 
         audio.src = `source/songs/${localizacao}/${nomeSom}`
@@ -36,14 +37,15 @@ function executaSons(elemento, localizacao, nomeSom, tipo) {
 
 function executaSons2(elemento, localizacao, nomeSom, tipo) {
     if (jogo.estadoSom != 0) { // Verifica se a reprodução de sons não está desativada
-        if (tipo == 1)       // Músicas
-            var volume_interno = localStorage.getItem("volMusica")
-        else if (tipo == 2)  // Efeitos
-            var volume_interno = localStorage.getItem("volEfeito")
-        else if (tipo == 3) // Memes
-            var volume_interno = localStorage.getItem("volMemes")
 
-        var audio = document.getElementById(elemento)
+        let volume_interno = localStorage.getItem("volMusica")
+
+        if (tipo == 2)  // Efeitos
+            volume_interno = localStorage.getItem("volEfeito")
+        else if (tipo == 3) // Memes
+            volume_interno = localStorage.getItem("volMemes")
+
+        let audio = document.getElementById(elemento)
         audio.volume = volume_interno / 100
 
         audio.src = `source/songs/${localizacao}/${nomeSom}`
@@ -57,8 +59,10 @@ function alteraVolume(volume, entidade, auto) {
     if (jogo.estadoOcioso)
         impedeOcioso()
 
+    let audio
+
     if (entidade == 1) {       // Músicas
-        var audio = document.getElementById("faixa_musicas")
+        audio = document.getElementById("faixa_musicas")
         localStorage.setItem("volMusica", volume)
 
         if (auto != null)
@@ -72,7 +76,7 @@ function alteraVolume(volume, entidade, auto) {
                 executaSons("faixa_musicas", "Musicas", "intro_3.ogg", 1)
         }
     } else if (entidade == 2) { // Efeitos
-        var audio = document.getElementById("faixa_efeitos1")
+        audio = document.getElementById("faixa_efeitos1")
         localStorage.setItem("volEfeito", volume)
 
         let audio2 = document.getElementById("faixa_efeitos2")
@@ -90,7 +94,7 @@ function alteraVolume(volume, entidade, auto) {
         if (auto != null)
             executaSons("faixa_efeitos1", "Efeitos", "pop.ogg", 2)
     } else if (entidade == 3) { // Memes
-        var audio = document.getElementById("faixa_memes1")
+        audio = document.getElementById("faixa_memes1")
         localStorage.setItem("volMemes", volume)
 
         let audio2 = document.getElementById("faixa_memes2")
@@ -122,12 +126,15 @@ function carrega_volume(volume, entidade) {
 }
 
 function desliga_som(entidade, tipo) {
+
+    let volume_interno
+
     if (tipo == 1)      // Músicas
-        var volume_interno = localStorage.getItem("volMusica")
+        volume_interno = localStorage.getItem("volMusica")
     else if (tipo == 2) // Efeitos
-        var volume_interno = localStorage.getItem("volEfeito")
+        volume_interno = localStorage.getItem("volEfeito")
     else               // Memes
-        var volume_interno = localStorage.getItem("volMemes")
+        volume_interno = localStorage.getItem("volMemes")
 
     let pausa_som = document.getElementById(entidade)
     let salva_volume = volume_interno
@@ -154,12 +161,14 @@ function desliga_som(entidade, tipo) {
 }
 
 function desliga_som2(entidade, tipo) {
-    if (tipo == 1)
-        var volume_interno = localStorage.getItem("volMusica")
-    else if (tipo == 2)
-        var volume_interno = localStorage.getItem("volEfeito")
-    else
-        var volume_interno = localStorage.getItem("volMemes")
+    let volume_interno
+
+    if (tipo == 1)      // Músicas
+        volume_interno = localStorage.getItem("volMusica")
+    else if (tipo == 2) // Efeitos
+        volume_interno = localStorage.getItem("volEfeito")
+    else               // Memes
+        volume_interno = localStorage.getItem("volMemes")
 
     let pausa_som = document.getElementById(entidade)
     let salva_volume = volume_interno
@@ -186,12 +195,14 @@ function desliga_som2(entidade, tipo) {
 }
 
 function desliga_som3(entidade, tipo) {
-    if (tipo == 1)
-        var volume_interno = localStorage.getItem("volMusica")
-    else if (tipo == 2)
-        var volume_interno = localStorage.getItem("volEfeito")
-    else
-        var volume_interno = localStorage.getItem("volMemes")
+    let volume_interno
+
+    if (tipo == 1)      // Músicas
+        volume_interno = localStorage.getItem("volMusica")
+    else if (tipo == 2) // Efeitos
+        volume_interno = localStorage.getItem("volEfeito")
+    else               // Memes
+        volume_interno = localStorage.getItem("volMemes")
 
     let pausa_som = document.getElementById(entidade)
     let salva_volume = volume_interno
@@ -260,5 +271,5 @@ function executaSomCarrega() {
     let lista_entradas = ["bambam3", "daciolo", "jailson_3", "jailson_4", "parque2"]
     i = Math.round((lista_entradas.length - 1) * Math.random())
 
-    executaSons("faixa_memes1", "Memes", lista_entradas[i] + ".ogg", 3)
+    executaSons("faixa_memes1", "Memes", `${lista_entradas[i]}.ogg`, 3)
 }

@@ -517,7 +517,7 @@ function fechar_sessao_loja() {
     menus.sessao_loja_ativa = 0
     altera_altura_fechador()
 
-    setTimeout(function () {
+    setTimeout(() => {
         document.getElementById("mensagem_teaser").style.display = "none"
     }, 300)
 }
