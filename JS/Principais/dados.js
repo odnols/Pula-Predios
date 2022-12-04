@@ -53,7 +53,7 @@ function sincroniza_api() {
     // Enviando os dados para a API salvar
     const elemento = document.getElementById("flag_api")
 
-    fetch(`https://apisal.herokuapp.com/pula?token=placholder&save=1&token_user=${localStorage.getItem("token_user")}&data=${JSON.stringify(data_user)}`)
+    fetch(`https://alonpi.discloud.app/pula?token=placholder&save=1&token_user=${localStorage.getItem("token_user")}&data=${JSON.stringify(data_user)}`)
         .then(res => res.json())
         .then(retorno => {
 

@@ -124,9 +124,11 @@ function menu_inicial(argu) {
     if (argu) {
         $("#menu_inicial").fadeIn()
         $("#faixas_menu_ini").fadeIn()
+        $("#flag_api").fadeIn()
     } else {
         $("#menu_inicial").fadeOut()
         $("#faixas_menu_ini").fadeOut()
+        $("#flag_api").fadeOut()
     }
 }
 

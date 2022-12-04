@@ -10,7 +10,7 @@ function checa_user() {
 
 function create_user() {
 
-    fetch('https://apisal.herokuapp.com/pula?token=placholder&new=1')
+    fetch('https://alonpi.discloud.app/pula?token=placholder&new=1')
         .then(res => res.json())
         .then(retorno => {
 
