@@ -23,64 +23,64 @@ function ajusta_cores(ajustadeira, funcao) {
     if (funcao == 1) { // Barra de Eventos
         switch (ajustadeira) {
             case 0:
-                document.getElementById("temporizador").style.color = "#9a01c0"
-                document.getElementById("barra_loading").style.animation = "brilha_bloco 1s"
-                document.getElementById("completa_timer").style.backgroundColor = "rgba(154, 1, 192, .8)"
+                get_element("temporizador").style.color = "#9a01c0"
+                get_element("barra_loading").style.animation = "brilha_bloco 1s"
+                get_element("completa_timer").style.backgroundColor = "rgba(154, 1, 192, .8)"
                 break
             case 1:
-                document.getElementById("temporizador").style.color = "Cyan"
-                document.getElementById("barra_loading").style.animation = "brilha_bloco2 1s"
-                document.getElementById("completa_timer").style.backgroundColor = "rgba(0, 255, 255, .8)"
+                get_element("temporizador").style.color = "Cyan"
+                get_element("barra_loading").style.animation = "brilha_bloco2 1s"
+                get_element("completa_timer").style.backgroundColor = "rgba(0, 255, 255, .8)"
                 break
             case 2:
-                document.getElementById("temporizador").style.color = "#14e11e"
-                document.getElementById("barra_loading").style.animation = "brilha_bloco3 1s"
-                document.getElementById("completa_timer").style.backgroundColor = "rgba(20, 225, 30, .8)"
+                get_element("temporizador").style.color = "#14e11e"
+                get_element("barra_loading").style.animation = "brilha_bloco3 1s"
+                get_element("completa_timer").style.backgroundColor = "rgba(20, 225, 30, .8)"
                 break
             case 3:
-                document.getElementById("temporizador").style.color = "#ff3300"
-                document.getElementById("barra_loading").style.animation = "brilha_bloco4 1s"
-                document.getElementById("completa_timer").style.backgroundColor = "rgba(204, 51, 0, .8)"
+                get_element("temporizador").style.color = "#ff3300"
+                get_element("barra_loading").style.animation = "brilha_bloco4 1s"
+                get_element("completa_timer").style.backgroundColor = "rgba(204, 51, 0, .8)"
                 break
         }
     } else if (funcao == 2) { // Barra de Modificadores
         switch (ajustadeira) {
             case 1:
-                document.getElementById("estado_mod").innerHTML = "Seg"
-                document.getElementById("timer_mod").style.color = "Yellow"
-                document.getElementById("estado_mod").style.color = "Yellow"
+                get_element("estado_mod").innerHTML = "Seg"
+                get_element("timer_mod").style.color = "Yellow"
+                get_element("estado_mod").style.color = "Yellow"
                 break
             case 2:
-                document.getElementById("carregando").style.display = "block"
-                document.getElementById("timer_mod").style.color = "Cyan"
-                document.getElementById("estado_mod").style.color = "Cyan"
+                get_element("carregando").style.display = "block"
+                get_element("timer_mod").style.color = "Cyan"
+                get_element("estado_mod").style.color = "Cyan"
                 break
             case 3:
-                document.getElementById("timer_mod").style.color = "Red"
-                document.getElementById("estado_mod").style.color = "Red"
+                get_element("timer_mod").style.color = "Red"
+                get_element("estado_mod").style.color = "Red"
                 break
             case 4:
-                document.getElementById("qtdMods").style.color = "greenyellow"
+                get_element("qtdMods").style.color = "greenyellow"
                 break
             default:
-                document.getElementById("timer_mod").style.color = "White"
-                document.getElementById("estado_mod").style.color = "White"
+                get_element("timer_mod").style.color = "White"
+                get_element("estado_mod").style.color = "White"
                 break
         }
     } else {
         if (ajustadeira == 1)
-            document.getElementById("qtdPulos").style.color = "Red"
+            get_element("qtdPulos").style.color = "Red"
         else
-            document.getElementById("qtdPulos").style.color = "White"
+            get_element("qtdPulos").style.color = "White"
     }
 }
 
 function pisca_barra() {
 
-    document.getElementById("barra_loading").style.animation = `pisca_barra${eventos.inicia_evento} .5s`
+    get_element("barra_loading").style.animation = `pisca_barra${eventos.inicia_evento} .5s`
 
     crono = setTimeout(() => {
-        document.getElementById("barra_loading").style.animation = "none"
+        get_element("barra_loading").style.animation = "none"
         clearTimeout(crono)
     }, 500)
 }
@@ -89,9 +89,9 @@ function preenche_barra() {
     cronometro = setInterval(() => {
         if (eventos.contador_tempo_interno >= 0 && (jogo.status == estados.jogando || jogo.status == estados.ocioso)) {
             if (eventos.contador_tempo_interno < 10)
-                document.getElementById("cronometro").innerHTML = `0${eventos.contador_tempo_interno}`
+                get_element("cronometro").innerHTML = `0${eventos.contador_tempo_interno}`
             else
-                document.getElementById("cronometro").innerHTML = eventos.contador_tempo_interno
+                get_element("cronometro").innerHTML = eventos.contador_tempo_interno
 
             if (eventos.contador_tempo_interno <= 3 && eventos.contador_tempo_interno != 0)
                 if (eventos.contador_tempo_interno > 1 && jogo.status == estados.jogando)
@@ -121,7 +121,7 @@ function preenche_barra() {
                 eventos.quantia_pixels_interno = 100
 
             if (eventos.contador_tempo_interno < eventos.contador_tempo_evento) {
-                document.getElementById("completa_timer").style.width = `${eventos.quantia_pixels_interno}%`
+                get_element("completa_timer").style.width = `${eventos.quantia_pixels_interno}%`
                 pisca_barra()
             }
         } else

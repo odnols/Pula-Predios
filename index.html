@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <title>Pula Prédios</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <link rel="shortcut icon" href="source/images/Icones/Icone.png">
+    <link rel="shortcut icon" href="source/images/icons/Icone.png">
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
@@ -19,6 +19,8 @@
     <!-- Bootstrap -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
         crossorigin="anonymous">
+
+    <script src="JS/Funcoes/operacionais.js"></script>
 
     <script src="JS/Graficos/sprite.js"></script>
     <script src="JS/Graficos/motor_grafico.js"></script>
@@ -42,8 +44,8 @@
     <script src="JS/Principais/sons.js"></script>
     <script src="JS/Funcoes/tutorial.js"></script>
 
-    <script src="JS/Externos/jquery.js"></script>
-    <script src="JS/Externos/tooltip.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="JS/Funcoes/tooltip.js"></script>
     <script src="https://d3js.org/d3.v4.min.js"></script>
 </head>
 
@@ -64,7 +66,7 @@
                 </div>
             </div>
 
-            <h4 style="position: absolute; right: 2%; bottom: 2%" id="versao_trad">Versão 1.1</h4>
+            <h4 style="position: absolute; right: 2%; bottom: 2%" id="versao_trad">Versão 1.2</h4>
         </div>
 
         <div id="status_carregamento">
@@ -191,7 +193,7 @@
     </div>
 
     <div id="conquistas">
-        <img id="trofeu" src="source/images/Icones/trofeu.png">
+        <img id="trofeu" src="source/images/icons/trofeu.png">
 
         <div id="texto_conquista">
             <h3 id="tipo_conquista"></h3>
@@ -210,28 +212,27 @@
 
     <!-- Itens comprados na loja -->
     <div id="icones_aquisicoes">
-
         <div id="icon_modificadores">
-            <img class="mods_icon mod_principal" id="mod_0" src="source/images/Loja/Mods/Flutua.png"
+            <img class="mods_icon mod_principal" id="mod_0" src="source/images/store/Mods/Flutua.png"
                 onMouseOver="toolTip_trad(0, 0)" onmouseout="toolTip()">
-            <img class="mods_icon mod_principal" id="mod_3" src="source/images/Loja/Mods/Aco.png"
+            <img class="mods_icon mod_principal" id="mod_3" src="source/images/store/Mods/Aco.png"
                 onMouseOver="toolTip_trad(0, 1)" onmouseout="toolTip()">
-            <img class="mods_icon mod_principal" id="mod_4" src="source/images/Loja/Mods/Lunar.png"
+            <img class="mods_icon mod_principal" id="mod_4" src="source/images/store/Mods/Lunar.png"
                 onMouseOver="toolTip_trad(0, 2)" onmouseout="toolTip()">
             <br>
 
-            <img class="mods_icon" id="mod_1" src="source/images/Loja/Mods/relogio.gif" onMouseOver="toolTip_trad(0, 3)"
+            <img class="mods_icon" id="mod_1" src="source/images/store/Mods/relogio.gif" onMouseOver="toolTip_trad(0, 3)"
                 onmouseout="toolTip()">
-            <img class="mods_icon" id="mod_2" src="source/images/Loja/Mods/Jump_Boost.png"
+            <img class="mods_icon" id="mod_2" src="source/images/store/Mods/Jump_Boost.png"
                 onMouseOver="toolTip_trad(0, 4)" onmouseout="toolTip()">
         </div>
 
         <div id="icon_bonus">
-            <img class="bonus_icon" id="bonus_1" src="source/images/Loja/Bonus/pisao2x.png" onMouseOver="toolTip('2x$')"
+            <img class="bonus_icon" id="bonus_1" src="source/images/store/Bonus/pisao2x.png" onMouseOver="toolTip('2x$')"
                 onmouseout="toolTip()">
-            <img class="bonus_icon" id="bonus_2" src="source/images/Loja/Bonus/Garimpeiro.png"
+            <img class="bonus_icon" id="bonus_2" src="source/images/store/Bonus/Garimpeiro.png"
                 onMouseOver="toolTip_trad(1, 0)" onmouseout="toolTip()">
-            <img class="bonus_icon" id="bonus_3" src="source/images/Loja/Bonus/vento_estocado.png"
+            <img class="bonus_icon" id="bonus_3" src="source/images/store/Bonus/vento_estocado.png"
                 onMouseOver="toolTip_trad(1, 1)" onmouseout="toolTip()">
         </div>
     </div>
@@ -429,15 +430,15 @@
         <div class="opcoes_esquerda_2">
             <h4 class="problemas_descri_trad"></h4>
 
-            <a href="https://twitter.com/slndtk" target="_blank"><img src="source/images/Icones/Twitter.png"
+            <a href="https://twitter.com/slndtk" target="_blank"><img src="source/images/icons/Twitter.png"
                     style="width: 250px"></a>
         </div>
 
-        <div class="opcoes_direita">
+        <!-- <div class="opcoes_direita">
             <iframe src="https://discord.com/widget?id=666465457565335563&theme=dark" width="350" height="360"
-                allowtransparency="true" frameborder="0"
-                sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-        </div>
+            allowtransparency="true" frameborder="0"
+            sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+        </div> -->
     </div>
 
     <div id="suporte_jogo"><br>
@@ -452,11 +453,11 @@
             <h4 class="suporte_descri_1"></h4><br>
 
             <h4 class="suporte_descri_2"></h4><br>
-            << <a href="https://picpay.me/slondo" target="_blank">PicPay</a> >>
+            << <a href="https://picpay.me/slondotk" target="_blank">PicPay</a> >>
         </div>
 
         <div class="opcoes_direita">
-            <img src="source/images/Icones/picpay.png" style="width: 300px; box-shadow: 0px 0px 15px black;">
+            <img src="source/images/icons/picpay.png" style="width: 300px; box-shadow: 0px 0px 15px black;">
         </div>
     </div>
 
@@ -465,7 +466,7 @@
         <span class="fecha_janela" onclick="botoes(81)">X</span>
 
         <div id="excluirdados" onclick="quadro_confirma_exclusao(1)">
-            <img src="source/images/Icones/lixeira.png" id="iconlixeira">
+            <img src="source/images/icons/lixeira.png" id="iconlixeira">
 
             <span class="excluir_dados_trad"></span>
         </div>
@@ -599,8 +600,8 @@
 
                 <br>
                 <h4 class="texto">
-                    <center class="sons_trad"></center><button id="status_volume_som" class="button_opcoes"
-                        onclick="alteraEstadoSom()"></button>
+                    <center class="sons_trad"></center>
+                    <button id="status_volume_som" class="button_opcoes" onclick="alteraEstadoSom()"></button>
                 </h4>
 
                 <div>
@@ -639,7 +640,7 @@
             <div>
                 <button class="button_opcoes_t opcoes_trad" onclick="botoes(90)"></button>
                 <button class="button_trad" onclick="menu_opcoes(4, 1)"><img id="img_trad"
-                        src="source/images/Icones/Globo.png"></button>
+                        src="source/images/icons/globo.png"></button>
             </div>
         </div>
 
@@ -667,7 +668,7 @@
 
     <div id="barra_topo">
         <div id="perfil_user">
-            <img src='source/images/Icones/perfil.png' style="width: 25px" onclick="checa_user()">
+            <img src='source/images/icons/perfil.png' style="width: 25px" onclick="checa_user()">
         </div>
 
         <div id="flag_api"></div>
@@ -739,7 +740,7 @@
 
     <!-- Menus da Loja -->
     <p id="puxador_loja" onclick="abre_loja()" onMouseOver="toolTip_trad(3, 0)" onmouseout="toolTip()"><img
-            src="source/images/Icones/loja.png" id="icone_puxador_loja"></p>
+            src="source/images/icons/loja.png" id="icone_puxador_loja"></p>
 
     <div id="loja"><br>
 
@@ -749,11 +750,11 @@
 
         <div id="quadro_novidades_loja">
             <fieldset id="colore_loja">
-                <img id="sprite_jogador_loja" src="source/images/Loja/Skins/Jogador7_noite.png"
+                <img id="sprite_jogador_loja" src="source/images/store/Skins/Jogador7_noite.png"
                     animation="loja_move_jogador 5s">
 
                 <div id="text_novidades_loja"></div>
-                <img id="icon_loja_novidades" src="source/images/Icones/loja.png">
+                <img id="icon_loja_novidades" src="source/images/icons/loja.png">
             </fieldset>
         </div>
 
@@ -795,7 +796,6 @@
             <div id="quadro_vendas">
                 <div id="placeholder_loja"></div>
             </div>
-
         </div>
     </div>
 
@@ -804,10 +804,9 @@
     <div id="rodape_loja">
         <h3 id="mensagem_teaser"></h3>
     </div>
-
-    <script> carrega_jogo(0) </script>
 </body>
 
 <script src="JS/Funcoes/frames.js"></script>
+<script> (() => carrega_jogo())() </script>
 
 </html>

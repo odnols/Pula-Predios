@@ -8,10 +8,10 @@ function boasVindas() {
     opcoes.inicia_game = 1
     confirma_carregamento = 1
 
-    localStorage.setItem("iniciaLoucura_1.1", 1)
+    localStorage.setItem("iniciaLoucura_1.2", 1)
     executaSons("faixa_musicas", "Musicas", "intro_1.ogg", 1)
 
-    valida_jogador = localStorage.getItem("iniciaLoucura_1.1")
+    valida_jogador = localStorage.getItem("iniciaLoucura_1.2")
     if (valida_jogador != null) {
         jogo.temas_comprados = [1, 1]
         localStorage.setItem("temasComprados", jogo.temas_comprados)
@@ -146,8 +146,8 @@ function visualizar_log(caso) {
 
     menus.estado_log = caso
 
-    document.getElementById("transitador_sessao").style.display = "block"
-    document.getElementById("transitador_sessao").style.animation = "transita_log .5s"
+    get_element("transitador_sessao").style.display = "block"
+    get_element("transitador_sessao").style.animation = "transita_log .5s"
 
     if (caso) {
         verificaOciosidade(true)
@@ -164,27 +164,27 @@ function visualizar_log(caso) {
 
     primeira_transicao = setTimeout(() => {
 
-        document.getElementById("transitador_sessao").style.height = "100%"
-        document.getElementById("transitador_sessao").style.width = "100%"
+        get_element("transitador_sessao").style.height = "100%"
+        get_element("transitador_sessao").style.width = "100%"
 
-        document.getElementById("transitador_sessao").style.animation = "transita_log2 .5s"
-        fechador_loja = document.getElementsByClassName("fechador_log")
+        get_element("transitador_sessao").style.animation = "transita_log2 .5s"
+        let fechador_loja = get_element("fechador_log")
 
         if (caso) {
-            document.getElementById("log_imbutido").style.display = "block"
+            get_element("log_imbutido").style.display = "block"
             fechador_loja[0].style.display = "block"
             $("#log_imbutido").animate({ scrollTop: 0 }, "slow")
         } else {
 
             verificaOciosidade(false)
-            document.getElementById("log_imbutido").style.display = "none"
+            get_element("log_imbutido").style.display = "none"
             fechador_loja[0].style.display = "none"
         }
         clearTimeout(primeira_transicao)
     }, 500)
 
     segunda_transicao = setTimeout(() => {
-        document.getElementById("transitador_sessao").style.display = "none"
+        get_element("transitador_sessao").style.display = "none"
 
         clearTimeout(segunda_transicao)
     }, 1000)
@@ -200,9 +200,9 @@ function abre_loja() {
         if (menus.sessao_loja_ativa)
             $("#rodape_loja").fadeIn()
 
-        document.getElementById("loja").style.animation = "abre_loja .5s"
-        document.getElementById("moedas").style.animation = "move_moeda 1s"
-        document.getElementById("moedas").style.right = "5%"
+        get_element("loja").style.animation = "abre_loja .5s"
+        get_element("moedas").style.animation = "move_moeda 1s"
+        get_element("moedas").style.right = "5%"
 
         // Verifica se há músicas sendo encerradas
         verificaDesligamentos()
@@ -212,7 +212,7 @@ function abre_loja() {
         executaSons("faixa_musicas", "Musicas", "loja.ogg", 1)
 
         altera_anim_loja = setTimeout(() => {
-            document.getElementById("loja").style.animation = "muda_cor_fundo_loja 50s infinite"
+            get_element("loja").style.animation = "muda_cor_fundo_loja 50s infinite"
             clearTimeout(altera_anim_loja)
         }, 600)
 
@@ -223,11 +223,11 @@ function abre_loja() {
         verificaOciosidade(false, 1, 1)
         menus.estado_loja = 0
 
-        fechador_loja = document.getElementsByClassName("fechador_loja")
+        let fechador_loja = get_element("fechador_loja")
         fechador_loja[0].style.animation = "none"
 
-        document.getElementById("moedas").style.animation = "volta_moeda 1s"
-        document.getElementById("moedas").style.right = "15%"
+        get_element("moedas").style.animation = "volta_moeda 1s"
+        get_element("moedas").style.right = "15%"
 
         escondeInformacoes(0, 0, 1)
         desliga_som2("faixa_musicas", 1)
@@ -256,7 +256,7 @@ function novidadesLoja(indice) {
     else
         indice_interno = indice
 
-    document.getElementById("text_novidades_loja").innerHTML = novidades_loja[indice_interno]
+    get_element("text_novidades_loja").innerHTML = novidades_loja[indice_interno]
 
     altera_novidade = setTimeout(() => {
         novidadesLoja(indice_interno + 1)
@@ -337,7 +337,7 @@ function pisao_neles() {
 
 function mostra_moedas(valor) {
 
-    document.getElementById("notifica_moeda").innerHTML = `+${valor}`
+    get_element("notifica_moeda").innerHTML = `+${valor}`
     $("#notifica_moeda").fadeIn()
 
     if (typeof esconde_moeda != "undefined")
@@ -438,7 +438,7 @@ function MsgPerdeu(causa) {
 
     // Filtro e animação
     if (menus.estatistica_morte)
-        document.getElementById("filtro2").style.display = "block"
+        get_element("filtro2").style.display = "block"
 
     if (causa != 1)
         if (causa != 3)
@@ -688,7 +688,7 @@ function alteraValorEstatisticaPartida(objeto, valor) {
     if (objeto != "reset") {
 
         if (objeto != "distancia_percorrida_partida" && objeto != "tempo_jogado_partida" && objeto != "tempo_eventos_partida")
-            document.getElementById(objeto).innerHTML = valor
+            get_element(objeto).innerHTML = valor
         else if (objeto == "distancia_percorrida_partida") { // Distância percorrida
             metrica = verificaMetrica(jogador.partida_distancia_viajada)
 
@@ -697,28 +697,28 @@ function alteraValorEstatisticaPartida(objeto, valor) {
             else
                 hist_distancia_preview = jogador.partida_distancia_viajada
 
-            document.getElementById("distancia_percorrida_partida").innerHTML = `${hist_distancia_preview} ${metrica}`
+            get_element("distancia_percorrida_partida").innerHTML = `${hist_distancia_preview} ${metrica}`
         } else if (objeto == "tempo_jogado_partida") {
             nomenclatura = verificaTempo(jogador.partida_tempo_jogado)
             tempo_jogado = calculaTempo(jogador.partida_tempo_jogado)
-            document.getElementById("tempo_jogado_partida").innerHTML = `${tempo_jogado} ${nomenclatura}`
+            get_element("tempo_jogado_partida").innerHTML = `${tempo_jogado} ${nomenclatura}`
         }
 
         if (objeto == "tempo_eventos_partida") {
             nomenclatura = verificaTempo(jogador.partida_tempo_em_eventos)
             tempo_jogado = calculaTempo(jogador.partida_tempo_em_eventos)
-            document.getElementById("tempo_eventos_partida").innerHTML = `${tempo_jogado} ${nomenclatura}`
+            get_element("tempo_eventos_partida").innerHTML = `${tempo_jogado} ${nomenclatura}`
         }
     } else {
 
         if (jogo.status != estados.jogando) {
             cronometra = setTimeout(() => {
-                document.getElementById("causa_perca").innerHTML = "??"
+                get_element("causa_perca").innerHTML = "??"
 
                 const alvos_reseta = ["pontuacao_partida", "tempo_jogado_partida", "distancia_percorrida_partida", "quantidade_mods_partida", "moedas_coletadas_partida", "quantidade_pulos_partida", "quantidade_pisoes_partida", "quantidade_predios_partida", "eventos_concluidos_partida", "tempo_eventos_partida", "quantidade_cidade_partida", "quantidade_parque_partida", "quantidade_agua_partida", "quantidade_lava_partida"]
 
                 for (let i = 0; i < alvos_reseta.length; i++) {
-                    document.getElementById(alvos_reseta[i]).innerHTML = 0
+                    get_element(alvos_reseta[i]).innerHTML = 0
                 }
             }, 1500)
         }
@@ -729,11 +729,11 @@ function alteraValorEstatisticaPartida(objeto, valor) {
 
 function carrega_estatisticas_evento() {
 
-    document.getElementById("eventos_concluidos_partida").innerHTML = jogador.partida_eventos_concluidos
-    document.getElementById("quantidade_cidade_partida").innerHTML = jogador.partida_evento_cidade
-    document.getElementById("quantidade_parque_partida").innerHTML = jogador.partida_evento_parque
-    document.getElementById("quantidade_agua_partida").innerHTML = jogador.partida_evento_agua
-    document.getElementById("quantidade_lava_partida").innerHTML = jogador.partida_evento_lava
+    get_element("eventos_concluidos_partida").innerHTML = jogador.partida_eventos_concluidos
+    get_element("quantidade_cidade_partida").innerHTML = jogador.partida_evento_cidade
+    get_element("quantidade_parque_partida").innerHTML = jogador.partida_evento_parque
+    get_element("quantidade_agua_partida").innerHTML = jogador.partida_evento_agua
+    get_element("quantidade_lava_partida").innerHTML = jogador.partida_evento_lava
 }
 
 function troca_descricao(primeira, segunda, modo) {
@@ -773,9 +773,9 @@ function altera_modificador(novo) {
     carrega_vendas_loja("Modificadores")
 
     if (idioma == "pt")
-        document.getElementById("mensagem_teaser").innerHTML = "Modificador alterado."
+        get_element("mensagem_teaser").innerHTML = "Modificador alterado."
     else
-        document.getElementById("mensagem_teaser").innerHTML = "Modifier changed."
+        get_element("mensagem_teaser").innerHTML = "Modifier changed."
 
     exibe_teaser("Modificador alterado", "cyan")
     pisca_loja("0, 255, 255, .2")
@@ -789,15 +789,15 @@ function pisca_loja(cor) {
     if (typeof pisca_fundo_loja2 != "undefined")
         clearTimeout(pisca_fundo_loja2)
 
-    document.getElementById("filtro_alerta_loja").style.backgroundColor = `rgba(${cor})`
-    document.getElementById("filtro_alerta_loja").style.display = "block"
+    get_element("filtro_alerta_loja").style.backgroundColor = `rgba(${cor})`
+    get_element("filtro_alerta_loja").style.display = "block"
 
     pisca_fundo_loja = setTimeout(() => {
         $("#filtro_alerta_loja").fadeOut()
         clearTimeout(pisca_fundo_loja)
 
         pisca_fundo_loja2 = setTimeout(() => {
-            document.getElementById("filtro_alerta_loja").style.display = "none"
+            get_element("filtro_alerta_loja").style.display = "none"
             clearTimeout(pisca_fundo_loja2)
         }, 500)
     }, 500)
@@ -846,8 +846,8 @@ function exibe_teaser(mensagem, cor) {
     if (typeof esconde_teaser != "undefined")
         clearTimeout(esconde_teaser)
 
-    document.getElementById("mensagem_teaser").style.color = cor
-    document.getElementById("mensagem_teaser").innerHTML = mensagem
+    get_element("mensagem_teaser").style.color = cor
+    get_element("mensagem_teaser").innerHTML = mensagem
 
     $("#mensagem_teaser").fadeIn()
 
@@ -872,7 +872,7 @@ function soma_pontuacao(somar) {
         }
 
         // Atualiza a pontuação em caso de perca antes de completamento
-        document.getElementById("pontuacao_partida").innerHTML = jogador.partida_pontuacao
+        get_element("pontuacao_partida").innerHTML = jogador.partida_pontuacao
 
         if (contador == somar)
             clearInterval(somador)
@@ -944,7 +944,7 @@ function registra_compra(item, requisicao_auto) {
         registra_compra(0, 1)
     } else {
         for (let i = 0; i < 3; i++) {
-            document.getElementById(identificadores[i]).innerHTML = variaveis[i]
+            get_element(identificadores[i]).innerHTML = variaveis[i]
         }
     }
 }
@@ -968,11 +968,11 @@ function altera_moedas(valor, total) {
         else if (valor > montante)
             montante++
 
-        document.getElementById("notifica_moeda").innerHTML = `$${total + montante}`
+        get_element("notifica_moeda").innerHTML = `$${total + montante}`
 
         if (valor == montante) {
             clearInterval(altera_moeda)
-            document.getElementById("notifica_moeda").innerHTML = `$${jogador.moedas}`
+            get_element("notifica_moeda").innerHTML = `$${jogador.moedas}`
         }
     }, 10)
 }
@@ -1028,7 +1028,7 @@ function regula_sessao_loja(categoria) {
         apelido_interno = sincronizaApelidoInterno(categoria)
 
         menus.categoria_anterior = categoria
-        document.getElementById("categoria_loja").innerHTML = apelido_interno
+        get_element("categoria_loja").innerHTML = apelido_interno
         carrega_vendas_loja(categoria)
 
         $("#rodape_loja").fadeIn()
@@ -1052,21 +1052,21 @@ function regula_sessao_loja(categoria) {
         menus.categoria_anterior = categoria
         apelido_interno = sincronizaApelidoInterno(categoria)
 
-        document.getElementById("transitador_sessao").style.display = "block"
-        document.getElementById("transitador_sessao").style.backgroundColor = "rgb(3, 73, 64)"
-        document.getElementById("transitador_sessao").style.animation = "transita_loja .5s"
+        get_element("transitador_sessao").style.display = "block"
+        get_element("transitador_sessao").style.backgroundColor = "rgb(3, 73, 64)"
+        get_element("transitador_sessao").style.animation = "transita_loja .5s"
 
         primeira_transicao = setTimeout(() => {
-            document.getElementById("transitador_sessao").style.width = "100%"
-            document.getElementById("transitador_sessao").style.animation = "transita_loja2 .5s"
+            get_element("transitador_sessao").style.width = "100%"
+            get_element("transitador_sessao").style.animation = "transita_loja2 .5s"
 
-            document.getElementById("categoria_loja").innerHTML = apelido_interno
+            get_element("categoria_loja").innerHTML = apelido_interno
             carrega_vendas_loja(categoria)
             clearTimeout(primeira_transicao)
         }, 500)
 
         segunda_transicao = setTimeout(() => {
-            document.getElementById("transitador_sessao").style.display = "none"
+            get_element("transitador_sessao").style.display = "none"
 
             clearTimeout(segunda_transicao)
         }, 1000)
@@ -1108,7 +1108,7 @@ function sincronizaApelidoInterno(apelido) {
 
 function altera_altura_fechador() {
 
-    fechador_loja = document.getElementsByClassName("fechador_loja")
+    let fechador_loja = get_element("fechador_loja")
 
     if (menus.sessao_loja_ativa) {
         // Animação do fechador da loja subindo
@@ -1142,13 +1142,13 @@ function notificacao(item, modo) {
             else
                 console.log("Processing notification: " + nome_notificacoes[item])
 
-        descricao = document.getElementsByClassName("texto_notificacoes_trad")
+        descricao = get_element("texto_notificacoes_trad")
         descricao[0].innerHTML = nome_notificacoes[item]
 
-        document.getElementById("quadro_notificacoes").style.animation = "abre_notificacao 1s"
+        get_element("quadro_notificacoes").style.animation = "abre_notificacao 1s"
         $("#quadro_notificacoes").fadeIn()
 
-        document.getElementById("status_barra_notificacoes").style.width = "0%"
+        get_element("status_barra_notificacoes").style.width = "0%"
 
         executaSons("faixa_memes3", "Memes", "gas.ogg", 3)
 
@@ -1195,13 +1195,13 @@ function tempo_notificacao() {
             if (menus.tamanho_barra_notificacao < 95)
                 clearInterval(preenche_barra_notificacao)
 
-            document.getElementById("quadro_notificacoes").style.animation = "fecha_notificacao 1s"
+            get_element("quadro_notificacoes").style.animation = "fecha_notificacao 1s"
 
             gatilho_fecha_notificacao = setTimeout(() => {
                 clearInterval(preenche_barra_notificacao)
                 clearTimeout(gatilho_fecha_notificacao)
 
-                document.getElementById("quadro_notificacoes").style.display = "none"
+                get_element("quadro_notificacoes").style.display = "none"
                 menus.tamanho_barra_notificacao = 0
                 segura_notificacao = 0
 
@@ -1214,7 +1214,7 @@ function tempo_notificacao() {
         } else
             menus.tamanho_barra_notificacao++
 
-        document.getElementById("status_barra_notificacoes").style.width = menus.tamanho_barra_notificacao + "%"
+        get_element("status_barra_notificacoes").style.width = menus.tamanho_barra_notificacao + "%"
     }, 60)
 }
 
@@ -1276,9 +1276,9 @@ function verifica_selecionado(local) {
         clearTimeout(desliga_preview)
 
     if (local)
-        componente = document.getElementById("seleciona_tema").value
+        componente = get_element("seleciona_tema").value
     else
-        componente = document.getElementById("seleciona_ocioso").value
+        componente = get_element("seleciona_ocioso").value
 
     if (componente == "random") {
         jogo.musica_tema = null

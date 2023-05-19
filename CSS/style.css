@@ -139,7 +139,7 @@ canvas {
     height: 70%;
     width: 450px;
     text-align: center;
-    background: url("../source/images/Fundo/Update.png");
+    background: url("../source/images/background/Update.png");
 }
 
 #stats_2 {
@@ -148,7 +148,7 @@ canvas {
     width: 450px;
     overflow-y: auto;
     text-align: center;
-    background: url("../source/images/Fundo/Update.png");
+    background: url("../source/images/background/Update.png");
 }
 
 a#log_click {
@@ -284,7 +284,7 @@ button {
     height: 115px;
     position: relative;
     transform: scale(.3);
-    background: url('../source/images/Icones/moeda.png') 0px 0px;
+    background: url('../source/images/icons/moeda.png') 0px 0px;
 }
 
 #notifica_moeda {
@@ -366,7 +366,7 @@ button {
     height: 120px;
     overflow: hidden;
     animation: move_img_loja 30s infinite;
-    background: url("../source/images/Fundo/Quadrantes.png");
+    background: url("../source/images/background/Quadrantes.png");
 }
 
 #text_novidades_loja {
@@ -400,7 +400,7 @@ button {
 .item_grid_loja_1 {
     grid-area: tema;
     background-size: cover !important;
-    background-image: url("../source/images/Loja/Temas/1900s.jpg") !important;
+    background-image: url("../source/images/store/Temas/1900s.jpg") !important;
 }
 
 .item_grid_loja_2 {
@@ -408,20 +408,20 @@ button {
     overflow: hidden;
     background-size: cover !important;
     animation: background_skins 10s infinite linear;
-    background-image: url("../source/images/Loja/skins.png") !important;
+    background-image: url("../source/images/store/skins.png") !important;
 }
 
 .item_grid_loja_3 {
     grid-area: mod;
     background-position: 0px 100px;
     background-size: cover !important;
-    background-image: url("../source/images/Loja/mods.gif") !important;
+    background-image: url("../source/images/store/mods.gif") !important;
 }
 
 .item_grid_loja_4 {
     grid-area: bonus;
     background-size: cover !important;
-    background-image: url("../source/images/Loja/bonus.gif") !important;
+    background-image: url("../source/images/store/bonus.gif") !important;
 }
 
 #quadros_loja_grid {
@@ -451,7 +451,7 @@ button {
     background-color: rgb(3, 73, 64);
     box-shadow: inset 0px 0px 15px black;
     transition: background-color .5s, box-shadow .2s;
-    background: url("../source/images/Fundo/Quadrantes.png");
+    background: url("../source/images/background/Quadrantes.png");
 }
 
 .quadros_loja:hover {
@@ -480,7 +480,7 @@ button {
     overflow: hidden;
     box-shadow: 0px 0px 15px black;
     transition: box-shadow .3s, transform .5s;
-    background-image: url("../source/images/Fundo/Quadrantes.png");
+    background-image: url("../source/images/background/Quadrantes.png");
 }
 
 .tema_caixa_ativo {
@@ -526,7 +526,7 @@ button {
     overflow: hidden;
     box-shadow: inset 0px 0px 15px black;
     transition: transform .5s box-shadow .2s;
-    background: url("../source/images/Fundo/Quadrantes.png");
+    background: url("../source/images/background/Quadrantes.png");
 }
 
 #sessao_loja {
@@ -569,7 +569,7 @@ button {
     text-shadow: 1px 1px 2px grey;
     box-shadow: 0px 0px 15px black;
     background-color: rgba(255, 0, 0, .8);
-    background-image: url("../source/images/Fundo/Geometria.png");
+    background-image: url("../source/images/background/Geometria.png");
 }
 
 #quadro_confirma_compra {
@@ -583,7 +583,7 @@ button {
     position: fixed;
     border: 1px solid black;
     background-color: rgba(0, 0, 0, .6);
-    background-image: url("../source/images/Fundo/Geometria.png");
+    background-image: url("../source/images/background/Geometria.png");
 }
 
 .cancela_compra {
@@ -684,7 +684,7 @@ button {
     background-color: midnightblue;
     box-shadow: 0px 0px 15px black;
     transition: box-shadow .3s, transform .5s;
-    background-image: url("../source/images/Fundo/Quadrantes.png");
+    background-image: url("../source/images/background/Quadrantes.png");
 }
 
 .item_venda:hover {
@@ -734,7 +734,7 @@ button {
     background-color: yellow;
     transition: box-shadow .3s;
     box-shadow: 0px 0px 15px black;
-    background-image: url("../source/images/Fundo/Quadrantes.png");
+    background-image: url("../source/images/background/Quadrantes.png");
 }
 
 .item_equipado:hover {
@@ -772,7 +772,7 @@ button {
     position: absolute;
     background-color: red;
     box-shadow: inset 0px 0px 15px black;
-    background-image: url("../source/images/Fundo/Quadrantes.png");
+    background-image: url("../source/images/background/Quadrantes.png");
 }
 
 #mod_esquerda_principal {
@@ -856,7 +856,7 @@ button {
     background-color: midnightblue;
     box-shadow: 0px 0px 15px black;
     transition: box-shadow .3s, transform .5s;
-    background-image: url("../source/images/Fundo/Quadrantes.png");
+    background-image: url("../source/images/background/Quadrantes.png");
 }
 
 .mod_venda:hover {
@@ -874,7 +874,7 @@ button {
     background-color: red;
     box-shadow: 0px 0px 15px black;
     transition: box-shadow .3s, transform .5s;
-    background-image: url("../source/images/Fundo/Quadrantes.png");
+    background-image: url("../source/images/background/Quadrantes.png");
 }
 
 .mod_principal_venda:hover {
@@ -896,7 +896,7 @@ button {
     background-color: yellow;
     box-shadow: 0px 0px 15px black;
     transition: box-shadow .3s, transform .5s;
-    background-image: url("../source/images/Fundo/Quadrantes.png");
+    background-image: url("../source/images/background/Quadrantes.png");
 }
 
 #notificacoes {
@@ -1091,7 +1091,7 @@ h3#qtdPulos {
     border: solid 2px black;
     box-shadow: inset 0px 0px 15px black;
     background-color: rgba(255, 255, 255, .1);
-    background: url("../source/images/Fundo/Geometria.png");
+    background: url("../source/images/background/Geometria.png");
 }
 
 #placeholder_conquista {
@@ -1165,7 +1165,7 @@ h3#qtdPulos {
     position: absolute;
     background-color: rgba(0, 0, 0, .5);
     box-shadow: inset 0px 0px 15px black;
-    background-image: url("../source/images/Fundo/Mosaico.png");
+    background-image: url("../source/images/background/Mosaico.png");
 }
 
 .opcao_tutorial {
@@ -1397,7 +1397,6 @@ h3#qtdPulos {
     height: 48px;
     cursor: pointer;
     position: relative;
-    -webkit-appearance: none;
 }
 
 #opcoes {
@@ -1754,7 +1753,7 @@ img#trofeu {
     height: 100%;
     background-color: yellow;
     box-shadow: inset 0px 0px 15px black;
-    background-image: url("../source/images/Fundo/Update.png");
+    background-image: url("../source/images/background/Update.png");
 }
 
 #historia_jogo {

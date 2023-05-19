@@ -9,7 +9,7 @@ function refreshLoop() {
         }
 
         times.push(now)
-        document.getElementById("fps_counter").innerHTML = times.length
+        get_element("fps_counter").innerHTML = times.length
         refreshLoop()
     })
 }

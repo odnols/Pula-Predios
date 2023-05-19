@@ -1,5 +1,5 @@
 body {
-    background-image: url("../source/images/Fundo/log.png");
+    background-image: url("../source/images/background/log.png");
     overflow-x: hidden;
     animation: fundo_log 100s infinite;
     touch-action: manipulation;

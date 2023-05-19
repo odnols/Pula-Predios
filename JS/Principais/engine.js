@@ -146,7 +146,7 @@ var labelTexto = {
                 if (this.astro[3] == 0 && this.astro[0] > 900 && this.astro[2] == 1) {
 
                     if (jogo.qualidadeGrafica == 2)
-                        document.getElementById("filtro").style.animation = "amanhecer 20s"
+                        get_element("filtro").style.animation = "amanhecer 20s"
 
                     this.astro[3] = 1
                     transita_tempo(0) // Amanhecer
@@ -156,7 +156,7 @@ var labelTexto = {
                 if (this.astro[3] == 0 && this.astro[0] > 900 && this.astro[2] == 0) {
 
                     if (jogo.qualidadeGrafica == 2)
-                        document.getElementById("filtro").style.animation = "entardecer 20s"
+                        get_element("filtro").style.animation = "entardecer 20s"
 
                     this.astro[3] = 1
                     transita_tempo(1) // Anoitecer
@@ -410,7 +410,7 @@ var labelTexto = {
 
                 limpa_chao()
 
-                document.getElementById("completa_timer").style.width = "0px"
+                get_element("completa_timer").style.width = "0px"
                 eventos.quantia_pixels_interno = 0
 
                 clearTimeout(deleta_cronometro)
@@ -523,7 +523,7 @@ var labelTexto = {
                     this.quantia_pixels = 1024.5 / (this.contador_tempo_evento * 204)
                     this.contador_tempo_interno = this.contador_tempo_evento - 1
 
-                    document.getElementById("cronometro").innerHTML = this.contador_tempo_evento
+                    get_element("cronometro").innerHTML = this.contador_tempo_evento
 
                     if (this.inicia_evento == 1 || this.inicia_evento == 3)
                         preenche_barra()
@@ -584,14 +584,14 @@ var labelTexto = {
         operador: function () {
             if (!opcoes.dev_op) {
                 ajusta_cores(3, 2)
-                document.getElementById("estado_mod").innerHTML = "DEV"
+                get_element("estado_mod").innerHTML = "DEV"
                 jogador.mod = 1
                 opcoes.dev_op = 1
             } else {
                 jogador.velocidade = 0
 
                 ajusta_cores(5, 2)
-                document.getElementById("estado_mod").innerHTML = "Seg"
+                get_element("estado_mod").innerHTML = "Seg"
                 jogador.mod = 0
                 opcoes.dev_op = 0
             }
@@ -691,14 +691,14 @@ var labelTexto = {
             if (!mensagem) return
 
             $("#notificacoes").fadeIn(300, "linear")
-            document.getElementById("notificacoes").style.color = cor
-            document.getElementById("notificacoes").innerHTML = mensagem
+            get_element("notificacoes").style.color = cor
+            get_element("notificacoes").innerHTML = mensagem
 
             if (typeof limpar_notificacao != "undefined")
                 clearTimeout(limpar_notificacao)
 
             if (ambiente.astro[2] == 0)
-                document.getElementById("notificacoes").style.color = "rgba(0, 0, 0, .8)"
+                get_element("notificacoes").style.color = "rgba(0, 0, 0, .8)"
 
             limpar_notificacao = setTimeout(() => {
                 $("#notificacoes").fadeOut()
@@ -841,10 +841,10 @@ var labelTexto = {
                         console.log("Modifier activated")
 
                 this.qtdMods--
-                document.getElementById("qtdMods").innerHTML = this.qtdMods
+                get_element("qtdMods").innerHTML = this.qtdMods
 
                 if (this.qtdMods == 0 && this.mod_em_uso == 0) {
-                    document.getElementById("qtdMods").style.color = "red"
+                    get_element("qtdMods").style.color = "red"
                     // Clube de milhas aéreas
                     conquista(22, 0)
                 }
@@ -947,7 +947,7 @@ var labelTexto = {
                 else
                     console.log("Reloading Modifier")
 
-            document.getElementById("qtdMods").style.display = "none"
+            get_element("qtdMods").style.display = "none"
 
             // Restaura a skin ao escolhido anteriormente depois do modificador
             if (jogador.mod_em_uso == 1) {
@@ -969,8 +969,8 @@ var labelTexto = {
 
                     ajusta_cores(5, 2)
                     clearInterval(jogador.var_timer_recarrega)
-                    document.getElementById("carregando").style.display = "none"
-                    document.getElementById("qtdMods").style.display = "block"
+                    get_element("carregando").style.display = "none"
+                    get_element("qtdMods").style.display = "block"
                 }
             }, 2000)
         },
@@ -1224,10 +1224,10 @@ function main() {
     carrega_dados()
     ambiente.biomas() // Inicia a função para trocar entre biomas
 
-    opcoes.canvas = document.getElementById("canvas")
-    notificacoes = document.getElementById("notificacoes")
-    filtro = document.getElementById("filtro")
-    filtro2 = document.getElementById("filtro2")
+    opcoes.canvas = get_element("canvas")
+    notificacoes = get_element("notificacoes")
+    filtro = get_element("filtro")
+    filtro2 = get_element("filtro2")
 
     opcoes.largura = 1366
     opcoes.altura = 625
@@ -1299,7 +1299,7 @@ function desenha() {
     opcoes.ctx.font = "50px Minecraft"
 
     if (jogo.status == estados.perdeu) {
-        document.getElementById("notifica_moeda").innerHTML = `$${jogador.moedas}`
+        get_element("notifica_moeda").innerHTML = `$${jogador.moedas}`
         $("#notifica_moeda").fadeIn()
 
         if (ambiente.astro[2] == 0)

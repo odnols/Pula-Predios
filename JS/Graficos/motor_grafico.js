@@ -57,7 +57,7 @@ function Cenario(astro) {
         const alvos = ["canvas", "icones_aquisicoes", "conquistas", "carrega_jogo", "quadro_notificacoes", "barra_loading", "temporizador", "moedas", "mod", "notificacoes", "menu_inicial"]
 
         for (let i = 0; i < alvos.length; i++)
-            document.getElementById(alvos[i]).style.filter = "grayscale(1)"
+            get_element(alvos[i]).style.filter = "grayscale(1)"
     }
 }
 
@@ -106,12 +106,12 @@ function transitador(elemento, posicao_x, posicao_y) {
     // Verifica se está de noite para executar a função
     if (ambiente.libera_transitador) {
 
-        let img = document.getElementById(elemento)
-        let canvas = document.getElementById("canvas")
+        let img = get_element(elemento)
+        let canvas = get_element("canvas")
         let ctxi = canvas.getContext("2d")
         let pat = ctxi.createPattern(img, 'repeat')
 
-        document.getElementById(elemento).style.opacity = ambiente.opacidade_noite
+        get_element(elemento).style.opacity = ambiente.opacidade_noite
 
         ctxi.globalAlpha = ambiente.opacidade_noite
 
@@ -179,7 +179,7 @@ function animaMoeda() {
             sprites = [0, 912, 798, 684, 570, 456, 342, 228, 114]
             opcoes.posicao = ajusta_posicao_sprites(0, sprites)
 
-            document.getElementById("moeda_img").style.backgroundPosition = `${opcoes.posicao}px 0px`
+            get_element("moeda_img").style.backgroundPosition = `${opcoes.posicao}px 0px`
 
             if (opcoes.posicao == 0) {
                 setTimeout(() => {
@@ -338,15 +338,15 @@ function showtext(el, text, local) {
         clearInterval(typer)
 
         if (local == 0)
-            limpa = document.getElementById("texto_historia")
+            limpa = get_element("texto_historia")
         else
-            limpa = document.getElementById("frase_tuto_em_game")
+            limpa = get_element("frase_tuto_em_game")
 
         limpa.innerHTML = ""
     }
 
     if (local == 1) {
-        tuto = document.getElementsByClassName("avancar_tuto")
+        tuto = get_element("avancar_tuto")
         tuto[0].style.display = "none"
     }
 

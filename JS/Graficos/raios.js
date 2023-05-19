@@ -1,4 +1,4 @@
-// var c = document.getElementById("canvas")
+// var c = get_element("canvas")
 // c.width = 1366
 // c.height = 625
 // var ctx = c.getContext("2d")

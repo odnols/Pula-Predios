@@ -6,16 +6,16 @@ function carrega_jogo(requisicao_auto) {
     if (dispositivo < 1366)
         $("#botoes_acessibilidade").fadeIn()
 
-    verifica = localStorage.getItem("iniciaLoucura_1.1")
+    verifica = localStorage.getItem("iniciaLoucura_1.2")
 
     if (requisicao_auto == 0 && verifica == null) {
-        document.getElementById("primeiro_logon").style.display = "block"
+        get_element("primeiro_logon").style.display = "block"
 
         idioma = carrega_idioma(0)
 
         if (idioma == "en") {
-            document.getElementById("button_inicia_game").innerHTML = "Start"
-            document.getElementById("versao_trad").innerHTML = "Version 1.1"
+            get_element("button_inicia_game").innerHTML = "Start"
+            get_element("versao_trad").innerHTML = "Version 1.2"
         }
 
         return 0
@@ -28,9 +28,9 @@ function carrega_jogo(requisicao_auto) {
         $("#primeiro_logon").fadeOut()
 
         if (idioma == "pt")
-            document.getElementById("texto_carregamento").innerHTML = "Ligando os motores"
+            get_element("texto_carregamento").innerHTML = "Ligando os motores"
         else if (idioma == "en")
-            document.getElementById("texto_carregamento").innerHTML = "Starting the engines"
+            get_element("texto_carregamento").innerHTML = "Starting the engines"
 
         if (dispositivo >= 1366) {
             animaMoeda()
@@ -57,13 +57,13 @@ function carrega_jogo(requisicao_auto) {
 
             carregar_departaments = setInterval(() => {
                 if (idioma == "pt")
-                    document.getElementById("texto_carregamento").innerHTML = texto_feedback_pt[indice]
+                    get_element("texto_carregamento").innerHTML = texto_feedback_pt[indice]
                 else
-                    document.getElementById("texto_carregamento").innerHTML = texto_feedback_en[indice]
+                    get_element("texto_carregamento").innerHTML = texto_feedback_en[indice]
                 indice++
 
-                document.getElementById("progresso_barra_carregamento").style.width = `${(indice * 8.33).toFixed(2)}%`
-                document.getElementById("porcentagem_carregada").innerHTML = `${(indice * 8.33).toFixed(2)}%`
+                get_element("progresso_barra_carregamento").style.width = `${(indice * 8.33).toFixed(2)}%`
+                get_element("porcentagem_carregada").innerHTML = `${(indice * 8.33).toFixed(2)}%`
 
                 if (indice >= carregar_departamentos.length) {
                     clearInterval(carregar_departaments)
@@ -72,15 +72,15 @@ function carrega_jogo(requisicao_auto) {
                 }
             }, 1000)
         } else {
-            document.getElementById("texto_carregamento").style.color = "Yellow"
+            get_element("texto_carregamento").style.color = "Yellow"
 
             if (idioma == "pt") {
-                document.getElementById("texto_carregamento").innerHTML = "Carregamento Rápido"
-                document.getElementById("porcentagem_carregada").innerHTML = "Uma Odisseia pulatória"
+                get_element("texto_carregamento").innerHTML = "Carregamento Rápido"
+                get_element("porcentagem_carregada").innerHTML = "Uma Odisseia pulatória"
             } else {
-                document.getElementById("texto_carregamento").innerHTML = "Fast load"
+                get_element("texto_carregamento").innerHTML = "Fast load"
 
-                document.getElementById("porcentagem_carregada").innerHTML = "An Odyssey full of heels"
+                get_element("porcentagem_carregada").innerHTML = "An Odyssey full of heels"
             }
             for (let i = 0; i < carregar_departamentos.length; i++) {
                 carregar_departamentos[i]
@@ -90,7 +90,7 @@ function carrega_jogo(requisicao_auto) {
 
                 executaSomCarrega()
 
-                document.getElementById("carrega_jogo").style.animation = "termina_carregamento2 1s"
+                get_element("carrega_jogo").style.animation = "termina_carregamento2 1s"
                 $("#carrega_jogo").fadeOut(1000)
 
                 if (verifica == null)
@@ -107,9 +107,9 @@ function carrega_jogo(requisicao_auto) {
 function ultimo_estagio_carregamento() {
 
     if (idioma == "pt")
-        document.getElementById("texto_carregamento").innerHTML = "Sincronizando tudo e iniciando"
+        get_element("texto_carregamento").innerHTML = "Sincronizando tudo e iniciando"
     else
-        document.getElementById("texto_carregamento").innerHTML = "Syncing everything and getting started"
+        get_element("texto_carregamento").innerHTML = "Syncing everything and getting started"
 
     largura_barra = $("#progresso_barra_carregamento").css("width")
 
@@ -122,18 +122,18 @@ function ultimo_estagio_carregamento() {
     sincronizacao_final = setInterval(() => {
 
         fracao_restante++
-        fraca_formatada = (75 + fracao_restante).toFixed(2)
+        fracao_formatada = (75 + fracao_restante).toFixed(2)
 
-        document.getElementById("progresso_barra_carregamento").style.width = `${(75 + fracao_restante)}%`
-        document.getElementById("porcentagem_carregada").innerHTML = `${fraca_formatada}%`
+        get_element("progresso_barra_carregamento").style.width = `${(75 + fracao_restante)}%`
+        get_element("porcentagem_carregada").innerHTML = `${fracao_formatada}%`
 
         if (fracao_restante > 25) {
-            document.getElementById("porcentagem_carregada").innerHTML = "100%"
+            get_element("porcentagem_carregada").innerHTML = "100%"
 
             executaSomCarrega()
 
             clearInterval(sincronizacao_final)
-            document.getElementById("carrega_jogo").style.animation = "termina_carregamento 1s"
+            get_element("carrega_jogo").style.animation = "termina_carregamento 1s"
             $("#carrega_jogo").fadeOut(1000)
             confirma_carregamento = 1
 

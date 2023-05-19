@@ -1,15 +1,15 @@
 function valores() {
-    document.getElementById("pontuacao").innerHTML = jogador.partida_pontuacao
-    document.getElementById("velocity").innerHTML = jogo.velocidade * 2
-    document.getElementById("timer_mod").innerHTML = jogador.timer_mod
-    document.getElementById("qtdPulos").innerHTML = jogador.qtdPulos
+    get_element("pontuacao").innerHTML = jogador.partida_pontuacao
+    get_element("velocity").innerHTML = jogo.velocidade * 2
+    get_element("timer_mod").innerHTML = jogador.timer_mod
+    get_element("qtdPulos").innerHTML = jogador.qtdPulos
 
     if (mod == 1) {
         ajusta_cores(1, 2)
 
         if (opcoes.dev_op) {
             ajusta_cores(3, 2)
-            document.getElementById("estado_mod").innerHTML = "DEV"
+            get_element("estado_mod").innerHTML = "DEV"
         }
     } else if (mod == 0 & jogador.timer_mod < 5 && jogo.status == estados.jogando && jogador.qtdMods > 0) // Verifica se a qtd do modificador é maior que 0 para poder recarregar
         ajusta_cores(2, 2)
@@ -51,7 +51,7 @@ function sincroniza_api() {
 
     // EXPERIMENTAL
     // Enviando os dados para a API salvar
-    const elemento = document.getElementById("flag_api")
+    const elemento = get_element("flag_api")
 
     fetch(`https://alonpi.discloud.app/pula?token=placholder&save=1&token_user=${localStorage.getItem("token_user")}&data=${JSON.stringify(data_user)}`)
         .then(res => res.json())
@@ -78,7 +78,7 @@ function carrega_dados() {
     if (token)
         usuario.token = token
 
-    opcoes.inicia_game = localStorage.getItem("iniciaLoucura_1.1")
+    opcoes.inicia_game = localStorage.getItem("iniciaLoucura_1.2")
     if (opcoes.inicia_game == null)
         $("#boas_vindas").fadeIn()
     else
@@ -467,32 +467,32 @@ function carrega_dados() {
     nomenclatura = verificaTempo(hist_tempo_jogado)
     tempo_jogado = calculaTempo(hist_tempo_jogado)
 
-    document.getElementById("tempo_jogado").innerHTML = `${tempo_jogado} ${nomenclatura}`
-    document.getElementById("distancia_percorrida").innerHTML = `${hist_distancia_preview} ${metrica}`
-    document.getElementById("quantidade_pulos").innerHTML = hist_pulos
-    document.getElementById("quantidade_pontos").innerHTML = hist_pontos
-    document.getElementById("quantidade_mods").innerHTML = hist_mod
-    document.getElementById("quantidade_mortes").innerHTML = hist_mortes
-    document.getElementById("quantidade_pisoes").innerHTML = hist_pisoes
-    document.getElementById("recorde").innerHTML = jogador.recorde
+    get_element("tempo_jogado").innerHTML = `${tempo_jogado} ${nomenclatura}`
+    get_element("distancia_percorrida").innerHTML = `${hist_distancia_preview} ${metrica}`
+    get_element("quantidade_pulos").innerHTML = hist_pulos
+    get_element("quantidade_pontos").innerHTML = hist_pontos
+    get_element("quantidade_mods").innerHTML = hist_mod
+    get_element("quantidade_mortes").innerHTML = hist_mortes
+    get_element("quantidade_pisoes").innerHTML = hist_pisoes
+    get_element("recorde").innerHTML = jogador.recorde
 
-    document.getElementById("notifica_moeda").innerHTML = `$${jogador.moedas}`
-    document.getElementById("moedas_coletadas").innerHTML = jogador.moedas_coletadas
-    document.getElementById("moedas_gastas").innerHTML = jogador.moedas_gastas
+    get_element("notifica_moeda").innerHTML = `$${jogador.moedas}`
+    get_element("moedas_coletadas").innerHTML = jogador.moedas_coletadas
+    get_element("moedas_gastas").innerHTML = jogador.moedas_gastas
 
     // Converte o tempo total em eventos
     nomenclatura = verificaTempo(hist_tempo_eventos)
     tempo_jogado = calculaTempo(hist_tempo_eventos)
 
     // Estatísticas de Eventos
-    document.getElementById("eventos_concluidos").innerHTML = hist_eventos_concluidos
-    document.getElementById("tempo_eventos").innerHTML = `${tempo_jogado} ${nomenclatura}`
-    document.getElementById("quantidade_cidade").innerHTML = hist_cidade
-    document.getElementById("quantidade_parque").innerHTML = hist_parque
-    document.getElementById("quantidade_agua").innerHTML = hist_agua
-    document.getElementById("quantidade_lava").innerHTML = hist_lava
+    get_element("eventos_concluidos").innerHTML = hist_eventos_concluidos
+    get_element("tempo_eventos").innerHTML = `${tempo_jogado} ${nomenclatura}`
+    get_element("quantidade_cidade").innerHTML = hist_cidade
+    get_element("quantidade_parque").innerHTML = hist_parque
+    get_element("quantidade_agua").innerHTML = hist_agua
+    get_element("quantidade_lava").innerHTML = hist_lava
 
-    document.getElementById("qtdMods").innerHTML = jogador.qtdMods
+    get_element("qtdMods").innerHTML = jogador.qtdMods
 
     sincronizaBotoesConfigs(menus.estatistica_morte)
 }
@@ -519,7 +519,7 @@ function reseta() {
     if (jogador.partida_moedas_coletadas > 0)
         altera_moedas(jogador.partida_moedas_coletadas, jogador.moedas)
     else
-        document.getElementById("notifica_moeda").innerHTML = `$${jogador.moedas}`
+        get_element("notifica_moeda").innerHTML = `$${jogador.moedas}`
 
     // Dados Gerais
     jogador.moedas += jogador.partida_moedas_coletadas
@@ -604,11 +604,11 @@ function reseta() {
 
     eventos.qtd_eventos = [8, 8, 8, 8]
     eventos.quantia_pixels_interno = 0
-    document.getElementById("completa_timer").style.width = "0px"
+    get_element("completa_timer").style.width = "0px"
 
-    document.getElementById("qtdMods").innerHTML = jogador.qtdMods
-    document.getElementById("carregando").style.display = "none"
-    document.getElementById("qtdMods").style.display = "block"
+    get_element("qtdMods").innerHTML = jogador.qtdMods
+    get_element("carregando").style.display = "none"
+    get_element("qtdMods").style.display = "block"
 
     eventos.iniciando_evento = null
     chao.muda_chao = [0, 0, 0]

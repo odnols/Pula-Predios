@@ -288,7 +288,7 @@ function menu_opcoes(valor, caso) {
             $(".opcoes_esquerda").fadeOut()
         }
 
-        document.getElementById("fecha_janela_c").onclick = () => menu_opcoes(90)
+        get_element("fecha_janela_c").onclick = () => menu_opcoes(90)
 
         if (jogo.status == estados.jogar && valor != 91)
             executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
@@ -303,7 +303,7 @@ function menu_opcoes(valor, caso) {
                     $(".opcoes_direita").fadeIn()
                     $(".opcoes_esquerda").fadeIn()
 
-                    document.getElementById("fecha_janela_c").onclick = () => botoes(81)
+                    get_element("fecha_janela_c").onclick = () => botoes(81)
                     break
             }
         } else {
@@ -316,7 +316,7 @@ function menu_opcoes(valor, caso) {
                 $(".opcoes_direita").fadeIn()
                 $(".opcoes_esquerda").fadeIn()
 
-                document.getElementById("fecha_janela_c").onclick = () => botoes(81)
+                get_element("fecha_janela_c").onclick = () => botoes(81)
             }
 
             tela_opcao_aberta = 0

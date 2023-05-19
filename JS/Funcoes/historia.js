@@ -4,12 +4,12 @@ function historia(texto_especial, requisicao_auto) {
 
     tela_historia = 1
 
-    document.getElementById("historia_jogo").style.display = "block"
+    get_element("historia_jogo").style.display = "block"
 
     carrega_idioma(1)
 
-    avancar_hist = document.getElementsByClassName("avancar_hist")
-    avancar_hist_block = document.getElementsByClassName("avancar_hist_block")
+    avancar_hist = get_element("avancar_hist")
+    avancar_hist_block = get_element("avancar_hist_block")
 
     let textos = ["Recebendo transmissão . . .", "Olá testador!", "Parabéns, você foi selecionado para nossos testes super secretos!", "Estamos criando um veículo anormal e você ajudará a fazer parte da história!", "Tudo o que precisa fazer é pilotar! fácil não?", "Iremos começar os testes em daqui a pouco", "Esperamos por você"]
 
@@ -26,7 +26,7 @@ function historia(texto_especial, requisicao_auto) {
             avancar_hist_block[0].style.display = "block"
 
         // Executa o efeito de escrita na tela
-        let el = document.getElementById("texto_historia")
+        let el = get_element("texto_historia")
 
         if (!requisicao_auto || !texto_especial)
             el.innerHTML = ""
@@ -86,7 +86,7 @@ function pular_hist() {
 function confirma_hist() {
 
     aguarda_confirmacao = true
-    document.getElementById("escolhas_hist").style.display = "none"
+    get_element("escolhas_hist").style.display = "none"
 
     let confirmacoes = ["Excelente!"]
 
@@ -99,7 +99,7 @@ function confirma_hist() {
 function nega_hist() {
 
     aguarda_confirmacao = true
-    document.getElementById("escolhas_hist").style.display = "none"
+    get_element("escolhas_hist").style.display = "none"
 
     let negacoes = ["Negar não é uma opção."]
 

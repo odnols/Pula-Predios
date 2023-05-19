@@ -46,41 +46,41 @@ function conquista(conquista, modo) {
             if (jogo.notificaConquista) {
 
                 menus.estado_conquista = 1
-                document.getElementById("nome_conquista").innerHTML = lista_conquistas[conquista]
+                get_element("nome_conquista").innerHTML = lista_conquistas[conquista]
 
                 // Atualizando o nome da conquista para exibição
-                document.getElementById("conquistas").style.display = "block"
-                document.getElementById("conquistas").style.animation = "conquista_obtida 2s"
-                document.getElementById("texto_conquista").style.display = "block"
+                get_element("conquistas").style.display = "block"
+                get_element("conquistas").style.animation = "conquista_obtida 2s"
+                get_element("texto_conquista").style.display = "block"
 
                 // Verifica se a conquista é secreta ou não
                 if (conquistas_secretas.includes(conquista)) {
                     if (idioma == "pt")
-                        document.getElementById("tipo_conquista").innerHTML = "Conquista Secreta!"
+                        get_element("tipo_conquista").innerHTML = "Conquista Secreta!"
                     else
-                        document.getElementById("tipo_conquista").innerHTML = "Secret achievement!"
+                        get_element("tipo_conquista").innerHTML = "Secret achievement!"
 
                     executaSons("faixa_conquistas", "Efeitos", "conquista_secreta.ogg", 2)
                     tempo_conquista = 9000
                 } else {
                     if (idioma == "pt")
-                        document.getElementById("tipo_conquista").innerHTML = "Conquista Obtida!"
+                        get_element("tipo_conquista").innerHTML = "Conquista Obtida!"
                     else
-                        document.getElementById("tipo_conquista").innerHTML = "Achievement Achieved!"
+                        get_element("tipo_conquista").innerHTML = "Achievement Achieved!"
 
                     executaSons("faixa_conquistas", "Efeitos", "conquista.ogg", 2)
                 }
 
                 fecha_conquista = setTimeout(() => {
-                    document.getElementById("conquistas").style.animation = "fecha_conquista 2s"
-                    document.getElementById("texto_conquista").style.animation = "esconde_texto 1s"
+                    get_element("conquistas").style.animation = "fecha_conquista 2s"
+                    get_element("texto_conquista").style.animation = "esconde_texto 1s"
 
                     setTimeout(() => {
-                        document.getElementById("texto_conquista").style.display = "none"
+                        get_element("texto_conquista").style.display = "none"
                     }, 1000)
 
                     setTimeout(() => {
-                        document.getElementById("conquistas").style.display = "none"
+                        get_element("conquistas").style.display = "none"
                     }, 1900)
 
                     clearTimeout(fecha_conquista)
@@ -92,8 +92,8 @@ function conquista(conquista, modo) {
                     clearTimeout(solta_conquista)
                 }, tempo_conquista + 2000)
 
-                document.getElementById("conquistas").style.animation = ""
-                document.getElementById("texto_conquista").style.animation = ""
+                get_element("conquistas").style.animation = ""
+                get_element("texto_conquista").style.animation = ""
             }
 
             sincronizaQuadroConquistas()
@@ -139,16 +139,16 @@ function sincronizaQuadroConquistas() {
 
     sincronizaEstatisticasConquistas()
 
-    document.getElementById("placeholder_conquista").innerHTML = ""
+    get_element("placeholder_conquista").innerHTML = ""
 
     for (let i = 0; i < lista_conquistas.length; i++) {
         if (lista_conquistas_ganhas[i] == 0) {
             if (conquistas_secretas.includes(i))
-                document.getElementById("placeholder_conquista").innerHTML += "<img class='img_conquista' src='source/images/Conquistas/secreta.jpg'>"
+                get_element("placeholder_conquista").innerHTML += "<img class='img_conquista' src='source/images/achievements/secreta.jpg'>"
             else
-                document.getElementById("placeholder_conquista").innerHTML += "<img  onMouseOver='troca_descricao(" + 'lista_conquistas[' + i + ']' + "," + 'lista_descricao[' + i + ']' + ", 1)' onmouseout='troca_descricao(0, 0, 0)' class='img_conquista' src='source/images/Conquistas/" + i + ".jpg'></div>"
+                get_element("placeholder_conquista").innerHTML += "<img  onMouseOver='troca_descricao(" + 'lista_conquistas[' + i + ']' + "," + 'lista_descricao[' + i + ']' + ", 1)' onmouseout='troca_descricao(0, 0, 0)' class='img_conquista' src='source/images/achievements/" + i + ".jpg'></div>"
         } else
-            document.getElementById("placeholder_conquista").innerHTML += "<img onMouseOver='troca_descricao(" + 'lista_conquistas[' + i + ']' + "," + 'lista_descricao[' + i + ']' + ", 1)' onmouseout='troca_descricao(0, 0, 0)' class='img_conquista_obtida' src='source/images/Conquistas/" + i + ".jpg'>"
+            get_element("placeholder_conquista").innerHTML += "<img onMouseOver='troca_descricao(" + 'lista_conquistas[' + i + ']' + "," + 'lista_descricao[' + i + ']' + ", 1)' onmouseout='troca_descricao(0, 0, 0)' class='img_conquista_obtida' src='source/images/achievements/" + i + ".jpg'>"
     }
 }
 
@@ -164,7 +164,7 @@ function sincronizaEstatisticasConquistas() {
     jogador.conquistas = obtidas
     jogador.consquistas_total = lista_conquistas.length
 
-    document.getElementById("conquistas_obtidas").innerHTML = `${obtidas}/${lista_conquistas.length}`
+    get_element("conquistas_obtidas").innerHTML = `${obtidas}/${lista_conquistas.length}`
 
 }
 function sincronizaConquistas() {

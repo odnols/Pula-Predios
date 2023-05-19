@@ -27,7 +27,7 @@ function executaSons(elemento, localizacao, nomeSom, tipo) {
         else if (tipo == 3) // Memes
             volume_interno = localStorage.getItem("volMemes")
 
-        let audio = document.getElementById(elemento)
+        let audio = get_element(elemento)
         audio.volume = volume_interno / 100
 
         audio.src = `source/songs/${localizacao}/${nomeSom}`
@@ -45,7 +45,7 @@ function executaSons2(elemento, localizacao, nomeSom, tipo) {
         else if (tipo == 3) // Memes
             volume_interno = localStorage.getItem("volMemes")
 
-        let audio = document.getElementById(elemento)
+        let audio = get_element(elemento)
         audio.volume = volume_interno / 100
 
         audio.src = `source/songs/${localizacao}/${nomeSom}`
@@ -62,7 +62,7 @@ function alteraVolume(volume, entidade, auto) {
     let audio
 
     if (entidade == 1) {       // Músicas
-        audio = document.getElementById("faixa_musicas")
+        audio = get_element("faixa_musicas")
         localStorage.setItem("volMusica", volume)
 
         if (auto != null)
@@ -76,28 +76,28 @@ function alteraVolume(volume, entidade, auto) {
                 executaSons("faixa_musicas", "Musicas", "intro_3.ogg", 1)
         }
     } else if (entidade == 2) { // Efeitos
-        audio = document.getElementById("faixa_efeitos1")
+        audio = get_element("faixa_efeitos1")
         localStorage.setItem("volEfeito", volume)
 
-        let audio2 = document.getElementById("faixa_efeitos2")
+        let audio2 = get_element("faixa_efeitos2")
         audio2.volume = volume / 100
 
-        let audio3 = document.getElementById("faixa_efeitos3")
+        let audio3 = get_element("faixa_efeitos3")
         audio3.volume = volume / 100
 
-        let ambiente = document.getElementById("faixa_ambiente")
+        let ambiente = get_element("faixa_ambiente")
         ambiente.volume = volume / 100
 
-        let pisoes = document.getElementById("faixa_pisoes")
+        let pisoes = get_element("faixa_pisoes")
         pisoes.volume = volume / 100
 
         if (auto != null)
             executaSons("faixa_efeitos1", "Efeitos", "pop.ogg", 2)
     } else if (entidade == 3) { // Memes
-        audio = document.getElementById("faixa_memes1")
+        audio = get_element("faixa_memes1")
         localStorage.setItem("volMemes", volume)
 
-        let audio2 = document.getElementById("faixa_memes2")
+        let audio2 = get_element("faixa_memes2")
         audio2.volume = volume / 100
 
         if (auto != null) {
@@ -116,11 +116,11 @@ function alteraVolume(volume, entidade, auto) {
 function carrega_volume(volume, entidade) {
 
     if (entidade == 1)
-        document.getElementById("volume_musica").value = volume
+        get_element("volume_musica").value = volume
     else if (entidade == 2)
-        document.getElementById("volume_efeitos").value = volume
+        get_element("volume_efeitos").value = volume
     else
-        document.getElementById("volume_memes").value = volume
+        get_element("volume_memes").value = volume
 
     alteraVolume(volume, entidade)
 }
@@ -136,7 +136,7 @@ function desliga_som(entidade, tipo) {
     else               // Memes
         volume_interno = localStorage.getItem("volMemes")
 
-    let pausa_som = document.getElementById(entidade)
+    let pausa_som = get_element(entidade)
     let salva_volume = volume_interno
 
     regulador_som = setInterval(() => {
@@ -170,7 +170,7 @@ function desliga_som2(entidade, tipo) {
     else               // Memes
         volume_interno = localStorage.getItem("volMemes")
 
-    let pausa_som = document.getElementById(entidade)
+    let pausa_som = get_element(entidade)
     let salva_volume = volume_interno
 
     regulador_som2 = setInterval(() => {
@@ -204,7 +204,7 @@ function desliga_som3(entidade, tipo) {
     else               // Memes
         volume_interno = localStorage.getItem("volMemes")
 
-    let pausa_som = document.getElementById(entidade)
+    let pausa_som = get_element(entidade)
     let salva_volume = volume_interno
 
     regulador_som3 = setInterval(() => {
