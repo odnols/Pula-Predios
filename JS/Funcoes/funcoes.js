@@ -24,6 +24,9 @@ function inicia_jogo() {
     // Inicia apenas quando a pontuação estiver igualada a zero
     if (jogador.partida_pontuacao == 0) {
 
+        // Escondendo outras telas que estiverem abertas
+        esconde_telas()
+
         if (tut_complet == 0) {
             executa_tutorial()
         } else {
@@ -150,16 +153,9 @@ function visualizar_log(caso) {
     get_element("transitador_sessao").style.animation = "transita_log .5s"
 
     if (caso) {
+        esconde_telas()
         verificaOciosidade(true)
-
         executaSons("faixa_musicas", "Musicas", "log.ogg", 1)
-
-        $("#conquistas_mapa").fadeOut("slow", "linear")
-        $("#tutorial").fadeOut("slow", "linear")
-        $("#controles").fadeOut("slow", "linear")
-        $("#estatisticas").fadeOut("slow", "linear")
-        $("#configuracoes").fadeOut("slow", "linear")
-        $("#opcoes").fadeOut("slow", "linear")
     }
 
     primeira_transicao = setTimeout(() => {
@@ -188,6 +184,17 @@ function visualizar_log(caso) {
 
         clearTimeout(segunda_transicao)
     }, 1000)
+}
+
+function esconde_telas() {
+
+    // Esconde todas as telas que estiverem abertas
+    $("#conquistas_mapa").fadeOut("slow", "linear")
+    $("#tutorial").fadeOut("slow", "linear")
+    $("#controles").fadeOut("slow", "linear")
+    $("#estatisticas").fadeOut("slow", "linear")
+    $("#configuracoes").fadeOut("slow", "linear")
+    $("#opcoes").fadeOut("slow", "linear")
 }
 
 function abre_loja() {
@@ -499,6 +506,8 @@ function escondeInformacoes(caso, loja, menu) {
         $("#menu_inicial").fadeOut()
         $("#barra_topo").fadeOut()
 
+        $("#faixas_menu_ini").fadeOut()
+
         if (loja)
             $("#moedas").fadeOut()
 
@@ -513,6 +522,9 @@ function escondeInformacoes(caso, loja, menu) {
 
         if (menu)
             $("#faixas_menu_ini").fadeIn()
+
+
+        $("#faixas_menu_ini").fadeIn()
 
         $("#menu_inicial").fadeIn()
         $("#barra_topo").fadeIn()

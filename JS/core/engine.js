@@ -1246,11 +1246,19 @@ function main() {
     roda()
 }
 
-function roda() {
+const FPS = 95
+const frameTime = 1000 / FPS
+let lastTime = 0
 
-    atualiza()
-    desenha()
-    valores()
+function roda(time) {
+
+    if (time - lastTime >= frameTime) {
+        atualiza()
+        desenha()
+        valores()
+
+        lastTime = time
+    }
 
     requestAnimationFrame(roda)
 }
@@ -1306,6 +1314,7 @@ function desenha() {
             opcoes.ctx.fillStyle = "rgba(0, 0, 0, .7)"
         else
             opcoes.ctx.fillStyle = "rgba(255, 255, 255, .7)"
+
         opcoes.ctx.font = "70px Minecraftia"
 
         // Resumo da pontuação final do Jogador
