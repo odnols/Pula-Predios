@@ -127,11 +127,11 @@ function menu_inicial(argu) {
     if (argu) {
         $("#menu_inicial").fadeIn()
         $("#faixas_menu_ini").fadeIn()
-        $("#flag_api").fadeIn()
+        $("#perfil_user").fadeIn()
     } else {
         $("#menu_inicial").fadeOut()
         $("#faixas_menu_ini").fadeOut()
-        $("#flag_api").fadeOut()
+        $("#perfil_user").fadeOut()
     }
 }
 
@@ -505,6 +505,7 @@ function escondeInformacoes(caso, loja, menu) {
     if (caso) {
         $("#menu_inicial").fadeOut()
         $("#barra_topo").fadeOut()
+        $("#perfil_user").fadeOut()
 
         $("#faixas_menu_ini").fadeOut()
 
@@ -528,6 +529,8 @@ function escondeInformacoes(caso, loja, menu) {
 
         $("#menu_inicial").fadeIn()
         $("#barra_topo").fadeIn()
+        $("#perfil_user").fadeIn()
+
         $("#moedas").fadeIn()
         $("#puxador_loja").fadeIn()
         $("#mods_comprados").fadeIn()

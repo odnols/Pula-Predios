@@ -319,21 +319,21 @@
         <hr style="width: 50%">
 
         <div id="tutoriais_1">
-            <a class="opcao_tutorial historia_trad" href="#" onclick="exibeTutorial(15)"></a><br><br>
-            <a class="opcao_tutorial como_jogar_trad" href="#" onclick="exibeTutorial(1)"></a><br><br>
-            <a class="opcao_tutorial mod_trad" href="#" onclick="exibeTutorial(2)"></a><br><br>
-            <a class="opcao_tutorial bonus_trad" href="#" onclick="exibeTutorial(14)"></a><br><br>
-            <a class="opcao_tutorial inimigos_trad" href="#" onclick="exibeTutorial(3)"></a><br><br>
-            <a class="opcao_tutorial eventos_trad" href="#" onclick="exibeTutorial(4)"></a><br><br>
-            <a class="opcao_tutorial dificuldade_trad" href="#" onclick="exibeTutorial(8)"></a><br><br>
-            <a class="opcao_tutorial conquistas_trad" href="#" onclick="exibeTutorial(13)"></a><br><br>
-            <a class="opcao_tutorial moedas_trad" href="#" onclick="exibeTutorial(5)"></a><br><br>
-            <a class="opcao_tutorial loja_trad" href="#" onclick="exibeTutorial(6)"></a><br><br>
-            <a class="opcao_tutorial" href="#" onclick="exibeTutorial(12)">Upgrades</a><br><br>
-            <a class="opcao_tutorial atalhos_trad" href="#" onclick="exibeTutorial(7)"></a><br><br>
-            <a class="opcao_tutorial opcoes_trad" href="#" onclick="exibeTutorial(9)"></a><br><br>
-            <a class="opcao_tutorial" href="#" onclick="exibeTutorial(10)">Experimental</a><br><br>
-            <a class="opcao_tutorial" href="#" onclick="exibeTutorial(11)">Feedbacks</a>
+            <h3 class="opcao_tutorial historia_trad" href="#" onclick="exibeTutorial(15)"></h3><br><br>
+            <h3 class="opcao_tutorial como_jogar_trad" href="#" onclick="exibeTutorial(1)"></h3><br><br>
+            <h3 class="opcao_tutorial mod_trad" href="#" onclick="exibeTutorial(2)"></h3><br><br>
+            <h3 class="opcao_tutorial bonus_trad" href="#" onclick="exibeTutorial(14)"></h3><br><br>
+            <h3 class="opcao_tutorial inimigos_trad" href="#" onclick="exibeTutorial(3)"></h3><br><br>
+            <h3 class="opcao_tutorial eventos_trad" href="#" onclick="exibeTutorial(4)"></h3><br><br>
+            <h3 class="opcao_tutorial dificuldade_trad" href="#" onclick="exibeTutorial(8)"></h3><br><br>
+            <h3 class="opcao_tutorial conquistas_trad" href="#" onclick="exibeTutorial(13)"></h3><br><br>
+            <h3 class="opcao_tutorial moedas_trad" href="#" onclick="exibeTutorial(5)"></h3><br><br>
+            <h3 class="opcao_tutorial loja_trad" href="#" onclick="exibeTutorial(6)"></h3><br><br>
+            <h3 class="opcao_tutorial" href="#" onclick="exibeTutorial(12)">Upgrades</h3><br><br>
+            <h3 class="opcao_tutorial atalhos_trad" href="#" onclick="exibeTutorial(7)"></h3><br><br>
+            <h3 class="opcao_tutorial opcoes_trad" href="#" onclick="exibeTutorial(9)"></h3><br><br>
+            <h3 class="opcao_tutorial" href="#" onclick="exibeTutorial(10)">Experimental</h3><br><br>
+            <h3 class="opcao_tutorial" href="#" onclick="exibeTutorial(11)">Feedbacks</h3>
         </div>
 
         <div id="tutoriais_2">
@@ -542,6 +542,9 @@
                         class="animacoes_trad"></span></h4>
                 <h4 class="texto" id="button_animacoes_pc"><button id="status_animacoes" class="button_opcoes"
                         onclick="alteraQualidadeGrafica()"></button> : <span class="animacoes_trad"></span></h4>
+
+                <h4 class="texto"><button id="status_parallax" class="button_opcoes"
+                        onclick="alteraParallax()"></button> : <span class="parallax_trad"></span></h4>
             </div>
         </div>
 
@@ -666,10 +669,9 @@
     <!-- Usado para notificar o jogador sobre eventos -->
     <div id="notificacoes"></div>
 
+    <img id="perfil_user" src='source/images/icons/perfil.png' style="width: 25px" onclick="checa_user()">
+
     <div id="barra_topo">
-        <div id="perfil_user">
-            <img src='source/images/icons/perfil.png' style="width: 25px" onclick="checa_user()">
-        </div>
 
         <div id="flag_api"></div>
         <p id="fps_counter"></p>
@@ -739,7 +741,7 @@
     </div>
 
     <!-- Menus da Loja -->
-    <p id="puxador_loja" onclick="abre_loja()" onMouseOver="toolTip_trad(3, 0)" onmouseout="toolTip()"><img
+    <p id="puxador_loja" onclick="abre_loja()" onMouseOver="toolTip_trad(0, 0, 1)" onmouseout="toolTip()"><img
             src="source/images/icons/loja.png" id="icone_puxador_loja"></p>
 
     <div id="loja"><br>

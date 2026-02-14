@@ -287,6 +287,7 @@ function alteraQualidadeGrafica() {
 }
 
 function sincronizaQualidadeGrafica() {
+
     if (jogo.qualidadeGrafica == 0) {
         if (idioma == "pt")
             get_element("status_animacoes").innerHTML = "Mínimas"
@@ -324,6 +325,25 @@ function sincronizaQualidadeGrafica() {
                 console.log("Ligando animações")
             else
                 console.log("Starting animations")
+
+        if (jogo.parallax) {
+
+            get_element("fx_cima")[0].style.display = "Block"
+
+            if (idioma == "pt")
+                get_element("status_parallax").innerHTML = "Ativado"
+            else
+                get_element("status_parallax").innerHTML = "Activated"
+
+        } else {
+
+            get_element("fx_cima")[0].style.display = "None"
+
+            if (idioma == "pt")
+                get_element("status_parallax").innerHTML = "Desativado"
+            else
+                get_element("status_parallax").innerHTML = "Disabled"
+        }
     }
 }
 
@@ -414,6 +434,34 @@ function alteraEstadoOcioso() {
     }
 
     localStorage.setItem("ociosidade", jogo.ociosidade)
+}
+
+function alteraParallax() {
+
+    executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
+
+    if (jogo.parallax) {
+
+        if (idioma == "pt")
+            get_element("status_parallax").innerHTML = "Desativado"
+        else
+            get_element("status_parallax").innerHTML = "Disabled"
+
+        jogo.parallax = 0
+        $(".fx_cima").fadeOut()
+
+    } else {
+
+        if (idioma == "pt")
+            get_element("status_parallax").innerHTML = "Ativado"
+        else
+            get_element("status_parallax").innerHTML = "Activated"
+
+        jogo.parallax = 1
+        $(".fx_cima").fadeIn()
+    }
+
+    localStorage.setItem("menu_parallax", jogo.parallax)
 }
 
 function sincronizaOciosidade() {

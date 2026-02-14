@@ -278,6 +278,11 @@ function carrega_dados() {
     else
         jogo.ociosidade = parseInt(ociosidade)
 
+    // Sincroniza a configuração do paralaxe do menu
+    parallax = localStorage.getItem("menu_parallax")
+    if (parallax == null) jogo.parallax = 0
+    else jogo.parallax = parseInt(parallax)
+
     // Sincronizando a skin selecionada atualmente
     skinAtual = localStorage.getItem("skinAtual")
     if (skinAtual == null)

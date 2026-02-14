@@ -580,6 +580,7 @@ var labelTexto = {
         estatisticasNerds: 0,
         notificaConquista: 1,
         qualidadeGrafica: 1,
+        parallax: 0,
 
         operador: function () {
             if (!opcoes.dev_op) {

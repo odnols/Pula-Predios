@@ -100,7 +100,7 @@ function preenche_barra() {
             eventos.contador_tempo_interno--
 
             if (jogo.status == estados.jogando)
-                eventos.partida_tempo_em_eventos++
+                jogador.partida_tempo_em_eventos++
 
             if (eventos.contador_tempo_interno == 2 && (eventos.evento == 1 || eventos.evento == 3))
                 chao.libera_volta_chao = [1, 1, 1] // Alterar o chão para grama novamente
@@ -108,7 +108,7 @@ function preenche_barra() {
             clearInterval(cronometro)
 
             if (jogo.status == estados.jogando)
-                eventos.partida_eventos_concluidos++
+                jogador.partida_eventos_concluidos++
         }
     }, 1000)
 
