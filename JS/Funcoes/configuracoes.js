@@ -39,9 +39,9 @@ function alteraEstadoSom() {
             get_element("status_volume_som").innerHTML = "Activated"
 
         if (Math.round(2 * Math.random()) > 1)
-            executaSons("faixa_musicas", "Musicas", "intro_2.ogg", 1)
+            executaSons("faixa_musicas", "musicas", "intro_2.ogg", 1)
         else
-            executaSons("faixa_musicas", "Musicas", "intro_3.ogg", 1)
+            executaSons("faixa_musicas", "musicas", "intro_3.ogg", 1)
     }
 
     localStorage.setItem("pul4Pr3dios-efeitosSom", jogo.estadoSom)
@@ -62,7 +62,7 @@ function sincronizaEfeitosSom() {
 
 function alteraEstadoEstatistica() {
 
-    executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
+    executaSons2("faixa_efeitos1", "efeitos", "hat.ogg", 2)
 
     if (jogo.estadoOcioso)
         impedeOcioso()
@@ -101,7 +101,7 @@ function sincronizaEstatisticaMorte(estado) {
 
 function alteraRelogio() {
 
-    executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
+    executaSons2("faixa_efeitos1", "efeitos", "hat.ogg", 2)
 
     if (jogo.estadoOcioso)
         impedeOcioso()
@@ -183,7 +183,7 @@ function sincronizaRelogio() {
 
 function alteraEstatisticasNerds() {
 
-    executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
+    executaSons2("faixa_efeitos1", "efeitos", "hat.ogg", 2)
 
     if (!jogo.estatisticasNerds) {
         jogo.estatisticasNerds = 1
@@ -218,7 +218,7 @@ function sincronizaEstatisticasNerds() {
 }
 
 function alteraNotificacoesConquistas() {
-    executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
+    executaSons2("faixa_efeitos1", "efeitos", "hat.ogg", 2)
 
     if (jogo.notificaConquista == 0) {
         jogo.notificaConquista = 1
@@ -253,7 +253,7 @@ function sincronizaNotificacoesConquistas() {
 }
 
 function alteraQualidadeGrafica() {
-    executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
+    executaSons2("faixa_efeitos1", "efeitos", "hat.ogg", 2)
 
     if (jogo.qualidadeGrafica == 0) {
         jogo.qualidadeGrafica = 1
@@ -349,7 +349,7 @@ function sincronizaQualidadeGrafica() {
 
 function alteraDificuldade() {
 
-    executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
+    executaSons2("faixa_efeitos1", "efeitos", "hat.ogg", 2)
 
     if (jogo.estadoOcioso)
         impedeOcioso()
@@ -412,7 +412,7 @@ function sincronizaDificuldade() {
 
 function alteraEstadoOcioso() {
 
-    executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
+    executaSons2("faixa_efeitos1", "efeitos", "hat.ogg", 2)
 
     if (jogo.estadoOcioso)
         impedeOcioso()
@@ -438,7 +438,7 @@ function alteraEstadoOcioso() {
 
 function alteraParallax() {
 
-    executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
+    executaSons2("faixa_efeitos1", "efeitos", "hat.ogg", 2)
 
     if (jogo.parallax) {
 

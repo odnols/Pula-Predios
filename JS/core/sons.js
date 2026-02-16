@@ -71,9 +71,9 @@ function alteraVolume(volume, entidade, auto) {
 
         if (auto != null) {
             if (Math.round(2 * Math.random()) > 1)
-                executaSons("faixa_musicas", "Musicas", "intro_2.ogg", 1)
+                executaSons("faixa_musicas", "musicas", "intro_2.ogg", 1)
             else
-                executaSons("faixa_musicas", "Musicas", "intro_3.ogg", 1)
+                executaSons("faixa_musicas", "musicas", "intro_3.ogg", 1)
         }
     } else if (entidade == 2) { // Efeitos
         audio = get_element("faixa_efeitos1")
@@ -92,7 +92,7 @@ function alteraVolume(volume, entidade, auto) {
         pisoes.volume = volume / 100
 
         if (auto != null)
-            executaSons("faixa_efeitos1", "Efeitos", "pop.ogg", 2)
+            executaSons("faixa_efeitos1", "efeitos", "pop.ogg", 2)
     } else if (entidade == 3) { // Memes
         audio = get_element("faixa_memes1")
         localStorage.setItem("pul4Pr3dios-volMemes", volume)
@@ -103,9 +103,9 @@ function alteraVolume(volume, entidade, auto) {
         if (auto != null) {
 
             if (Math.round(2 * Math.random()) > 1)
-                executaSons("faixa_memes1", "Memes", "jailson_1.ogg", 3)
+                executaSons("faixa_memes1", "memes", "jailson_1.ogg", 3)
             else
-                executaSons("faixa_memes1", "Memes", "jailson_2.ogg", 3)
+                executaSons("faixa_memes1", "memes", "jailson_2.ogg", 3)
         }
     }
 
@@ -263,7 +263,7 @@ function executaSomPerca(causa) {
     if (jogador.partida_pontuacao >= 300)
         nome = "morreu_13.ogg"
 
-    executaSons("faixa_memes1", "Final", nome, 3) // Usado para o Som de meme ao morrer
+    executaSons("faixa_memes1", "final", nome, 3) // Usado para o Som de meme ao morrer
 }
 
 function executaSomCarrega() {
@@ -271,5 +271,5 @@ function executaSomCarrega() {
     let lista_entradas = ["bambam3", "daciolo", "jailson_3", "jailson_4", "parque2"]
     i = Math.round((lista_entradas.length - 1) * Math.random())
 
-    executaSons("faixa_memes1", "Memes", `${lista_entradas[i]}.ogg`, 3)
+    executaSons("faixa_memes1", "memes", `${lista_entradas[i]}.ogg`, 3)
 }

@@ -95,7 +95,7 @@ function preenche_barra() {
 
             if (eventos.contador_tempo_interno <= 3 && eventos.contador_tempo_interno != 0)
                 if (eventos.contador_tempo_interno > 1 && jogo.status == estados.jogando)
-                    executaSons("faixa_efeitos3", "Efeitos", "snare.ogg", 2)
+                    executaSons("faixa_efeitos3", "efeitos", "snare.ogg", 2)
 
             eventos.contador_tempo_interno--
 

@@ -8,7 +8,7 @@ function botoes(tecla) {
         let alvo = "placeholder"
 
         if (jogo.status == estados.jogar && !menus.sessao_loja_ativa)
-            executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
+            executaSons2("faixa_efeitos1", "efeitos", "hat.ogg", 2)
 
         if (jogo.estadoOcioso)
             impedeOcioso()
@@ -291,7 +291,7 @@ function menu_opcoes(valor, caso) {
         get_element("fecha_janela_c").onclick = () => menu_opcoes(90)
 
         if (jogo.status == estados.jogar && valor != 91)
-            executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
+            executaSons2("faixa_efeitos1", "efeitos", "hat.ogg", 2)
 
         if (!tela_opcao_aberta) {
             switch (valor) {

@@ -9,7 +9,7 @@ function boasVindas() {
     confirma_carregamento = 1
 
     localStorage.setItem("pul4Pr3dios-iniciaLoucura_1.2", 1)
-    executaSons("faixa_musicas", "Musicas", "intro_1.ogg", 1)
+    executaSons("faixa_musicas", "musicas", "intro_1.ogg", 1)
 
     valida_jogador = localStorage.getItem("pul4Pr3dios-iniciaLoucura_1.2")
     if (valida_jogador != null) {
@@ -68,7 +68,7 @@ function confirma_inicio_partida() {
     conquista(0, 0)
 
     if (!ambiente.segura_som) { // Meme usado para começar
-        executaSons("faixa_memes2", "Inicio", escolhe_som(1, 0), 3)
+        executaSons("faixa_memes2", "inicio", escolhe_som(1, 0), 3)
         ambiente.segura_som = 1
     }
 
@@ -80,11 +80,11 @@ function confirma_inicio_partida() {
 
     if (jogo.tema_ativo != 0) {
         if (jogo.musica_tema === "random.ogg")
-            executaSons2("faixa_musicas", "Musicas", `main_${(1 + (3 * Math.random())).toFixed(0)}.ogg`, 1)
+            executaSons2("faixa_musicas", "musicas", `main_${(1 + (3 * Math.random())).toFixed(0)}.ogg`, 1)
         else
-            executaSons2("faixa_musicas", "Musicas", jogo.musica_tema, 1)
+            executaSons2("faixa_musicas", "musicas", jogo.musica_tema, 1)
     } else
-        executaSons2("faixa_musicas", "Musicas", "main_old.ogg", 1)
+        executaSons2("faixa_musicas", "musicas", "main_old.ogg", 1)
 
     botoes(600)
 
@@ -153,7 +153,7 @@ function visualizar_log(caso) {
     if (caso) {
         esconde_telas()
         verificaOciosidade(true)
-        executaSons("faixa_musicas", "Musicas", "log.ogg", 1)
+        executaSons("faixa_musicas", "musicas", "log.ogg", 1)
     }
 
     primeira_transicao = setTimeout(() => {
@@ -214,7 +214,7 @@ function abre_loja() {
         escondeInformacoes(1, 0, 1)
         novidadesLoja(0)
 
-        executaSons("faixa_musicas", "Musicas", "loja.ogg", 1)
+        executaSons("faixa_musicas", "musicas", "loja.ogg", 1)
 
         altera_anim_loja = setTimeout(() => {
             get_element("loja").style.animation = "muda_cor_fundo_loja 50s infinite"
@@ -222,7 +222,7 @@ function abre_loja() {
         }, 600)
 
         loop_loja = setInterval(() => {
-            executaSons("faixa_musicas", "Musicas", "loja.ogg", 1)
+            executaSons("faixa_musicas", "musicas", "loja.ogg", 1)
         }, 71000)
     } else {
         verificaOciosidade(false, 1, 1)
@@ -312,16 +312,16 @@ function pisao_neles() {
         jogador.partida_moedas_coletadas += ganha
         alteraValorEstatisticaPartida("moedas_coletadas_partida", jogador.partida_moedas_coletadas)
 
-        executaSons("faixa_pisoes", "Efeitos", "moeda.ogg", 2)
+        executaSons("faixa_pisoes", "efeitos", "moeda.ogg", 2)
 
         mostra_moedas(ganha)
     } else {
 
         bambam = Math.round(1 * Math.random())
         if (bambam == 0 && eventos.evento == 2)
-            executaSons("faixa_efeitos1", "Efeitos", "Batida.ogg", 2)
+            executaSons("faixa_efeitos1", "efeitos", "batida.ogg", 2)
         else
-            executaSons("faixa_memes1", "Memes", "bambam.ogg", 3)
+            executaSons("faixa_memes1", "memes", "bambam.ogg", 3)
     }
 
     if (jogo.estatisticasNerds)
@@ -377,7 +377,7 @@ function finaliza_evento() {
     }
 
     if (eventos.evento == 2 && jogo.status == estados.jogando)
-        executaSons("faixa_memes2", "Memes", "bambam2.ogg", 3)
+        executaSons("faixa_memes2", "memes", "bambam2.ogg", 3)
 
     clearTimeout(eventos.tempo_evento)
     clearTimeout(eventos.ativa_evento)
@@ -390,7 +390,7 @@ function finaliza_evento() {
         eventos.relogio_eventos()
 
     if (jogo.status == estados.jogando)
-        executaSons2("faixa_efeitos3", "Efeitos", "levelup.ogg", 2)
+        executaSons2("faixa_efeitos3", "efeitos", "levelup.ogg", 2)
 
     confirmaFechamento = setTimeout(() => {
         eventos.termina_evento = null
@@ -447,7 +447,7 @@ function MsgPerdeu(causa) {
 
     if (causa != 1)
         if (causa != 3)
-            executaSons2("faixa_efeitos1", "Efeitos", "Batida.ogg", 2)
+            executaSons2("faixa_efeitos1", "efeitos", "batida.ogg", 2)
 
     if (!opcoes.controle && jogo.status == estados.perdeu) {
 
@@ -543,11 +543,11 @@ function estadoOcioso(caso) {
 
         if (jogo.tema_ativo != 0)
             if (jogo.musica_tema_ocioso === "random.ogg")
-                executaSons2("faixa_musicas", "Musicas", `ocioso_${(1 + (2 * Math.random())).toFixed(0)}.ogg`, 1)
+                executaSons2("faixa_musicas", "musicas", `ocioso_${(1 + (2 * Math.random())).toFixed(0)}.ogg`, 1)
             else
-                executaSons2("faixa_musicas", "Musicas", jogo.musica_tema_ocioso, 1)
+                executaSons2("faixa_musicas", "musicas", jogo.musica_tema_ocioso, 1)
         else
-            executaSons2("faixa_musicas", "Musicas", "ocioso_old.ogg", 1)
+            executaSons2("faixa_musicas", "musicas", "ocioso_old.ogg", 1)
     } else {
         // Retorna o jogo do modo ocioso
         cancela_evento()
@@ -775,7 +775,7 @@ function troca_descricao(primeira, segunda, modo) {
 
 function altera_modificador(novo) {
 
-    executaSons2("faixa_efeitos2", "Efeitos", "pop.ogg", 2)
+    executaSons2("faixa_efeitos2", "efeitos", "pop.ogg", 2)
 
     jogador.mod_em_uso = novo
     localStorage.setItem("pul4Pr3dios-modEmUso", jogador.mod_em_uso)
@@ -962,7 +962,7 @@ function registra_compra(item, requisicao_auto) {
 
 function falas_dilma() {
     trecho = 1 + Math.round(3 * Math.random())
-    executaSons2("faixa_memes1", "Memes", "dilma_vento_" + trecho + ".ogg", 2)
+    executaSons2("faixa_memes1", "memes", "dilma_vento_" + trecho + ".ogg", 2)
 }
 
 function altera_moedas(valor, total) {
@@ -1028,7 +1028,7 @@ function regula_sessao_loja(categoria) {
 
     if (menus.sessao_loja_ativa != 1) {
         if (categoria == "Modificadores") {
-            executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
+            executaSons2("faixa_efeitos1", "efeitos", "hat.ogg", 2)
 
             apelido_interno = categoria
 
@@ -1049,7 +1049,7 @@ function regula_sessao_loja(categoria) {
         altera_altura_fechador()
     } else if (categoria != menus.categoria_anterior) {
 
-        executaSons2("faixa_efeitos3", "Efeitos", "transitador_loja.ogg", 2)
+        executaSons2("faixa_efeitos3", "efeitos", "transitador_loja.ogg", 2)
 
         if (typeof primeira_transicao != "undefined")
             clearTimeout(primeira_transicao)
@@ -1161,7 +1161,7 @@ function notificacao(item, modo) {
 
         get_element("status_barra_notificacoes").style.width = "0%"
 
-        executaSons("faixa_memes3", "Memes", "gas.ogg", 3)
+        executaSons("faixa_memes3", "memes", "gas.ogg", 3)
 
         setTimeout(() => {
             tempo_notificacao()
@@ -1298,7 +1298,7 @@ function verifica_selecionado(local) {
         else jogo.musica_tema_ocioso = `${selecao}.ogg`
 
     // Salvando a faixa e reproduzindo
-    executaSons2("faixa_musicas", "Musicas", `${selecao}.ogg`, 1)
+    executaSons2("faixa_musicas", "musicas", `${selecao}.ogg`, 1)
     localStorage.setItem(`pul4Pr3dios-${alvo}`, faixa)
 
     desliga_preview = setTimeout(() => {

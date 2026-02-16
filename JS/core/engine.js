@@ -441,7 +441,7 @@ var labelTexto = {
             this.iniciando_evento = 5
 
             if (jogo.status == estados.jogando)
-                executaSons("faixa_efeitos1", "Efeitos", "orb.ogg", 2)
+                executaSons("faixa_efeitos1", "efeitos", "orb.ogg", 2)
 
             if (this.qtd_eventos[this.inicia_evento] == 0 || this.inicia_evento == this.ultimo_evento || this.inicia_evento == this.penultimo_evento && (this.dificuldade == 0 && (this.inicia_evento == 1 || this.inicia_evento == 3))) {
                 if (this.estatisticasNerds)
@@ -504,7 +504,7 @@ var labelTexto = {
                                 else
                                     jogo.notifica("Time to Score!", "#14e11e")
 
-                                executaSons("faixa_efeitos3", "Memes", "parque.ogg", 3)
+                                executaSons("faixa_efeitos3", "memes", "parque.ogg", 3)
                             }
                         }, 3000)
                     }
@@ -810,7 +810,7 @@ var labelTexto = {
         pula: function () {
             if (this.qtdPulos > 0 && (this.mod_em_uso == 100 || this.mod != 1)) {
                 this.pula_effect = 1 + Math.round(2 * Math.random())
-                executaSons2("faixa_efeitos2", "Efeitos", `Pulo${this.pula_effect}.ogg`, 2)
+                executaSons2("faixa_efeitos2", "efeitos", `pulo${this.pula_effect}.ogg`, 2)
 
                 this.velocidade = -this.forcaDoPulo
                 this.qtdPulos--
@@ -860,7 +860,7 @@ var labelTexto = {
 
                 // Decide qual será o modificador que será usado
                 if (this.mod_em_uso == 0) { // Flutuando
-                    executaSons("faixa_efeitos3", "Efeitos", "flutua.ogg", 2)
+                    executaSons("faixa_efeitos3", "efeitos", "flutua.ogg", 2)
 
                     // Animação de fogo embaixo do prédio
                     AnimaModFlutuando()
@@ -885,7 +885,7 @@ var labelTexto = {
                 if (this.mod_em_uso == 1) {    // Modificador: De Aço
                     modificador_timer_som = setInterval(() => {
                         if (jogador.y >= 432) {
-                            executaSons2("faixa_efeitos3", "Efeitos", "bigorna.ogg", 2)
+                            executaSons2("faixa_efeitos3", "efeitos", "bigorna.ogg", 2)
                             clearInterval(modificador_timer_som)
                         }
                     }, 100)
@@ -1165,7 +1165,7 @@ var labelTexto = {
                                 jogador.partida_predios_atropelados++
                                 alteraValorEstatisticaPartida("quantidade_predios_partida", jogador.partida_predios_atropelados)
 
-                                executaSons("faixa_efeitos2", "Efeitos", "Batida.ogg", 2)
+                                executaSons("faixa_efeitos2", "efeitos", "batida.ogg", 2)
                             }
                         }
                     } else if (jogo.status == estados.jogando || jogo.status == estados.tutorial) {
@@ -1286,7 +1286,7 @@ function atualiza() {
     if (jogo.velocidade > 18.5 && ambiente.segura_vento == 0 && jogo.status == estados.jogando) {
 
         ambiente.segura_vento = 1
-        executaSons2("faixa_ambiente", "Efeitos", "Vento.ogg", 2)
+        executaSons2("faixa_ambiente", "efeitos", "vento.ogg", 2)
 
         vento_delay = setInterval(() => {
             ambiente.segura_vento = 0
@@ -1305,7 +1305,7 @@ function desenha() {
     propsfundo.desenha()
 
     opcoes.ctx.fillStyle = "#fff"
-    opcoes.ctx.font = "50px minecraft"
+    opcoes.ctx.font = "50px Minecraft"
 
     if (jogo.status == estados.perdeu) {
         get_element("notifica_moeda").innerHTML = `$${jogador.moedas}`
@@ -1316,7 +1316,7 @@ function desenha() {
         else
             opcoes.ctx.fillStyle = "rgba(255, 255, 255, .7)"
 
-        opcoes.ctx.font = "70px minecraftia"
+        opcoes.ctx.font = "70px Minecraftia"
 
         // Resumo da pontuação final do Jogador
         opcoes.ctx.fillText(labelTexto.texto, opcoes.canvas.width / 2 - opcoes.ctx.measureText(labelTexto.texto).width / 2, opcoes.altura / 1.4 + 40)
@@ -1328,7 +1328,7 @@ function desenha() {
         else
             opcoes.ctx.fillStyle = "#fff"
 
-        opcoes.ctx.font = "40px minecraftia"
+        opcoes.ctx.font = "40px Minecraftia"
         if (jogador.partida_pontuacao < jogador.recorde)
             if (idioma == "pt")
                 opcoes.ctx.fillText(`Recorde Atual: ${jogador.recorde}`, opcoes.canvas.width / 2 - opcoes.ctx.measureText(`Recorde Atual: ${jogador.recorde}`).width / 2, opcoes.altura / 1.3 + 50)

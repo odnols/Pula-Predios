@@ -638,7 +638,7 @@ function apagaDados(valor) {
     // Apagando todos os dados armazenados em cache no navegador
 
     if (valor) {
-        executaSons2("faixa_memes2", "Memes", "Sumiu.ogg", 1)
+        executaSons2("faixa_memes2", "memes", "sumiu.ogg", 1)
 
         localStorage.clear()
 

@@ -79,7 +79,6 @@ function carrega_jogo(requisicao_auto) {
                 get_element("porcentagem_carregada").innerHTML = "Uma Odisseia pulatória"
             } else {
                 get_element("texto_carregamento").innerHTML = "Fast load"
-
                 get_element("porcentagem_carregada").innerHTML = "An Odyssey full of heels"
             }
             for (let i = 0; i < carregar_departamentos.length; i++) {

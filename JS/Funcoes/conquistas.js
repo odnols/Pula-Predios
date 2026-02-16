@@ -60,7 +60,7 @@ function conquista(conquista, modo) {
                     else
                         get_element("tipo_conquista").innerHTML = "Secret achievement!"
 
-                    executaSons("faixa_conquistas", "Efeitos", "conquista_secreta.ogg", 2)
+                    executaSons("faixa_conquistas", "efeitos", "conquista_secreta.ogg", 2)
                     tempo_conquista = 9000
                 } else {
                     if (idioma == "pt")
@@ -68,7 +68,7 @@ function conquista(conquista, modo) {
                     else
                         get_element("tipo_conquista").innerHTML = "Achievement Achieved!"
 
-                    executaSons("faixa_conquistas", "Efeitos", "conquista.ogg", 2)
+                    executaSons("faixa_conquistas", "efeitos", "conquista.ogg", 2)
                 }
 
                 fecha_conquista = setTimeout(() => {

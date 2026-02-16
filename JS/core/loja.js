@@ -233,7 +233,7 @@ function confirma_compra(categoria, item, confirmacao) {
             jogador.skin = item
             localStorage.setItem("pul4Pr3dios-skinAtual", jogador.skin)
 
-            executaSons("faixa_efeitos1", "Efeitos", "skin.ogg", 2)
+            executaSons("faixa_efeitos1", "efeitos", "skin.ogg", 2)
             carrega_vendas_loja("Skins")
         }
     } else if (categoria == 2) { // Modificadores
@@ -313,7 +313,7 @@ function confirma_compra(categoria, item, confirmacao) {
                 if (item == 3)
                     jogador.mod_em_uso = 100
 
-                executaSons2("faixa_efeitos2", "Efeitos", "pop.ogg", 2)
+                executaSons2("faixa_efeitos2", "efeitos", "pop.ogg", 2)
 
                 if (idioma == "pt")
                     exibe_teaser("Modificador alterado", "cyan")
@@ -337,7 +337,7 @@ function confirma_compra(categoria, item, confirmacao) {
         carrega_vendas_loja("Modificadores")
     } else if (categoria == 3) { // Bônus
 
-        executaSons("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
+        executaSons("faixa_efeitos1", "efeitos", "hat.ogg", 2)
 
         if (jogador.bonus_comprados[item] == 0) {
             if (jogador.moedas >= listaPrecos_Bonus[item]) {
@@ -357,7 +357,7 @@ function confirma_compra(categoria, item, confirmacao) {
                     localStorage.setItem("pul4Pr3dios-bonusVezesUsados", jogador.bonus_vezes_usados)
 
                     if (item == 2) // Vento estocado
-                        executaSons2("faixa_memes1", "Memes", "dilma_vento_1.ogg", 2)
+                        executaSons2("faixa_memes1", "memes", "dilma_vento_1.ogg", 2)
 
                     debita_compra(listaPrecos_Bonus[item], "Bônus", 1)
 
@@ -392,7 +392,7 @@ function confirma_compra(categoria, item, confirmacao) {
         }
     } else { // Temas
 
-        executaSons("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
+        executaSons("faixa_efeitos1", "efeitos", "hat.ogg", 2)
 
         if (jogo.temas_comprados[item] == 0) {
             if (jogador.moedas >= listaPrecos_Temas[item]) {
@@ -457,7 +457,7 @@ function confirma_compra(categoria, item, confirmacao) {
 function debita_compra(valor, item, caso) {
 
     if (caso == 1) { // Caso seja uma compra legítima
-        executaSons2("faixa_efeitos3", "Efeitos", "compra.ogg", 2)
+        executaSons2("faixa_efeitos3", "efeitos", "compra.ogg", 2)
 
         if (jogo.estatisticasNerds == 1)
             if (valor > 0)
@@ -501,7 +501,7 @@ function debita_compra(valor, item, caso) {
 
         pisca_loja("255, 0, 0, .2")
 
-        executaSons2("faixa_memes1", "Memes", "falencia.ogg", 3)
+        executaSons2("faixa_memes1", "memes", "falencia.ogg", 3)
     }
 
     // Limpa a descricao do item à venda

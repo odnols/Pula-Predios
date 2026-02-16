@@ -12,13 +12,13 @@
 }
 
 @font-face {
-    font-family: minecraft;
-    src: url('../source/fonts/minecraft.ttf');
+    font-family: "Minecraft";
+    src: url('../source/fonts/Minecraft.ttf');
 }
 
 @font-face {
-    font-family: minecraftia;
-    src: url('../source/fonts/minecraftia.ttf');
+    font-family: "Minecraftia";
+    src: url('../source/fonts/Minecraftia.ttf');
 }
 
 body {
@@ -31,7 +31,7 @@ body {
 
     /* Desabilita o zoom com duplo clique */
     touch-action: manipulation;
-    font-family: minecraftia !important;
+    font-family: "Minecraftia" !important;
 }
 
 hr {
@@ -928,7 +928,7 @@ button {
     left: 0%;
     font-size: 50px;
     position: absolute;
-    font-family: minecraft;
+    font-family: "Minecraft";
 }
 
 #mod {
@@ -942,7 +942,7 @@ h3#timer_mod {
     top: 60%;
     font-size: 50px;
     position: absolute;
-    font-family: minecraft;
+    font-family: "Minecraft";
 }
 
 h3#estado_mod {
@@ -980,7 +980,7 @@ h3#velocity {
     top: 60%;
     font-size: 50px;
     position: absolute;
-    font-family: minecraft;
+    font-family: "Minecraft";
 }
 
 h3#metros_s {
@@ -1004,7 +1004,7 @@ h3#cronometro {
     width: 100%;
     font-size: 50px;
     position: absolute;
-    font-family: minecraft;
+    font-family: "Minecraft";
 }
 
 h3#tempo_cro {

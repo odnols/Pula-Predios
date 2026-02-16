@@ -55,7 +55,7 @@ function historia(texto_especial, requisicao_auto) {
         }
 
         if (indice_historia != 0 && texto_especial == null && requisicao_auto != null)
-            executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
+            executaSons2("faixa_efeitos1", "efeitos", "hat.ogg", 2)
 
         // Regula se será um texto especial ou não
         if (texto_especial != null)
