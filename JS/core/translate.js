@@ -1,7 +1,7 @@
 let translations = {}
 
 async function loadLanguage(lang) {
-    const res = await fetch(`https://raw.githubusercontent.com/odnols/pula-predios/master/source/lang/${lang}.json`)
+    const res = await fetch(`https://raw.githubusercontent.com/odnols/Pula-Predios/master/source/lang/${lang}.json`)
     translations = await res.json()
     applyTranslations()
 }
@@ -14,6 +14,3 @@ function applyTranslations() {
         }
     })
 }
-
-// idioma padrão
-loadLanguage('pt-br')

@@ -1,3 +1,14 @@
 {
-    "menu.play": "Jogar"
+    "tutorial.historia": "História",
+    "tutorial.como_jogar": "Como jogar",
+    "tutorial.modificadores": "Modificadores",
+    "tutorial.bonus": "Bônus",
+    "tutorial.inimigos": "Inimigos",
+    "tutorial.eventos": "Eventos",
+    "tutorial.dificuldade": "Dificuldade",
+    "tutorial.conquistas": "Conquistas",
+    "tutorial.moedas": "Moedas",
+    "tutorial.loja": "Loja",
+    "tutorial.atalhos": "Atalhos",
+    "tutorial.opcoes": "Opções"
 }

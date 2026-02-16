@@ -11,7 +11,7 @@ function carrega_jogo(requisicao_auto) {
     if (requisicao_auto == 0 && verifica == null) {
         get_element("primeiro_logon").style.display = "block"
 
-        idioma = carrega_idioma(0)
+        idioma = carrega_idioma()
 
         if (idioma == "en") {
             get_element("button_inicia_game").innerHTML = "Start"
@@ -22,7 +22,7 @@ function carrega_jogo(requisicao_auto) {
     } else {
 
         popula_pisos()
-        idioma = carrega_idioma(0)
+        idioma = carrega_idioma()
 
         $("#status_carregamento").fadeIn()
         $("#primeiro_logon").fadeOut()

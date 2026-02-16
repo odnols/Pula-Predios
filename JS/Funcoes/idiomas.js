@@ -2,7 +2,7 @@ var idioma = null, modificador_principal_trad = [], bonus_ativos_trad = []
 
 function define_idioma(idioma) {
 
-    verifica = localStorage.getItem("pul4Pr3dios-idioma") || "pt"
+    verifica = localStorage.getItem("pul4Pr3dios-idioma") || "pt-br"
 
     if (verifica != idioma) {
         localStorage.setItem("pul4Pr3dios-idioma", idioma)
@@ -13,11 +13,15 @@ function define_idioma(idioma) {
 
 function carrega_idioma(caso) {
 
-    idioma = localStorage.getItem("pul4Pr3dios-idioma") || "pt"
+    idioma = localStorage.getItem("pul4Pr3dios-idioma") || "pt-br"
+    jogo.idioma = idioma
+
     sincronizaNomeConquistas()
 
-    if (caso) traduz()
-    else return idioma
+    if (caso) return idioma
+
+    traduz()
+    loadLanguage(idioma)
 }
 
 function traduz() {
@@ -26,6 +30,8 @@ function traduz() {
 
     let idioma_array = ["Iniciar ( W )", "Voltar ao jogo >>", "Fim de jogo", "Velocidade", "Modificador", "Pontuação", "Tempo", "Versão 1.2", "Pulos", "Recarregar ( R )", "Resumo da Partida", "Pontuação", "Tempo correndo", "Distância", "de Pulos", "Mods. Utilizados", "Moedas coletadas", "de Pisões", "Prédios atropelados", "Causa da perda", "Eventos", "Eventos concluídos", "Tempo em eventos", "Cidade", "Parque", "Água", "Conquistas", "Controles", "Problemas", "Suporte", "Estatísticas", "de Mortes", "Moedas Gastas", "Skins Compradas", "Mods Comprados", "Bônus Comprados", "Pontos Obtidos", "Melhor Partida", "Ponto(s)", "Opções", "Excluir Dados", "Geral", "Loja", "Espaço", "Pular", "Cancelar", "Confirmar", "Sons", "Gráficos", "Idiomas", "Bônus", "Moedas", "Atalhos", "Dificuldade", "Inimigos", "Como Jogar", "Não esperamos por bugs, mas caso aconteça me avise no Twitter ou no Discord!", "Ajude a desenvolver este jogo, cada doação será muito bem-vinda para eu :D", "Você pode ajudar escaneando o QR Code ao lado ou acessando o link abaixo ;)", "Confirma sua compra?", "Deseja realmente apagar seus dados?", "Bem Vindo(a) a Loja!", "Fechar a Loja >>", "Voltar", "Músicas", "Efeitos", "Modo ocioso", "Notificações de Conquistas", "Estatísticas p/ Nerds", "Estatísticas ao morrer", "Definir Tempo", "Animações", "Temas", "Avançar", "Não", "Sim", "Olá! Bem-vindo(a)", "Sons ativados! Ajuste o volume ;)", "Beleuza!", "Essa é a 1.2!<center><img id='ibagem' src='source/images/updates/bullshit.gif'><br><br></center> Cuidado com os bugs! <br>Não esperamos, mas pode acontecer :P", "História", "Pular", "Desativadas", "Pular", "Paralaxe Inicial"]
 
+
+    console.log(idioma)
     if (idioma == "en")
         idioma_array = ["Start ( W )", "Return to the game >>", "End of the line", "Velocity", "Modifier", "Score", "Duration", "Version 1.2", "Jumps", "Reload ( R )", "Match Summary", "Score", "Time Played", "Distance", "of Jumps", "Used Mods", "Coins Collected", "of Kicks", "Demolished buildings", "Cause of loss", "Events", "Completed events", "Time in events", "City", "Park", "Water", "Achievements", "Controls", "Issues", "Support", "Statistics", "of Deaths", "Spent Coins", "Purchased skins", "Purchased Mods", "Purchased Bonuses", "Points Earned", "Best Match", "Point(s)", "Options", "Erase Data", "General", "Shop", "Space", "Jump", "Cancel", "Confirm", "Sounds", "Graphics", "Language", "Bonuses", "Coins", "Hotkeys", "Difficulty", "Enemies", "How to Play", "We don't wait for bugs, but if it does, let me know on Twitter or Discord!", "Help to develop this game, each donation will be very welcome to me :D", "You can help by scanning the QR Code on the side or by accessing the link below ;)", "Confirm your purchase?", "Do you really want to erase your data?", "Welcome to the Store!", "Close the Store >>", "Return", "Songs", "Effects", "Idle mode", "Achievement Notifications", "Statistics for Nerds", "Statistics when dying", "Set Time", "Animations", "Themes", "Next", "No", "Yes", "Hi! Welcome", "Sounds activated! adjust the volume ;)", "Ok!", "This is 1.2!<center><img id='ibagem' src='source/images/updates/bullshit.gif'><br><br></center> Watch out for bugs! <br> We don't expect it, but it can happen :P", "Story", "Jump", "Disabled", "Skip", "Menu Parallax"]
 
@@ -34,14 +40,15 @@ function traduz() {
         alvos = get_element(textos[i]);
 
         // Traduz os itens da tela conforme a quantidade de itens iguais
-        for (let j = 0; j < alvos.length; j++) {
-            alvos[j].innerHTML = idioma_array[i]
-        }
+        if (alvos)
+            for (let j = 0; j < alvos.length; j++) {
+                alvos[j].innerHTML = idioma_array[i]
+            }
     }
 
     pulos_trad = get_element("pulos_trad")
 
-    if (idioma == "pt") {
+    if (idioma == "pt-br") {
         pulos_trad[0].style.left = "10%"
 
         modificador_principal_trad = ["Modificador Principal: Flutuante", "Modificador Principal: De Aço", "Modificador Principal: Gravidade Lunar", "+ Tempo", "+ Vezes"]
@@ -83,7 +90,7 @@ function toolTip_trad(categoria, alvo, loja) {
         else if (categoria)
             toolTip(bonus_ativos_trad[alvo])
     } else
-        if (idioma == "pt")
+        if (idioma == "pt-br")
             toolTip("Abrir a loja")
         else
             toolTip("Open the store")
