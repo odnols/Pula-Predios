@@ -8,8 +8,8 @@ function historia(texto_especial, requisicao_auto) {
 
     carrega_idioma(1)
 
-    avancar_hist = get_element("avancar_hist")
-    avancar_hist_block = get_element("avancar_hist_block")
+    let avancar_hist = get_element("avancar_hist")
+    let avancar_hist_block = get_element("avancar_hist_block")
 
     let textos = ["Recebendo transmissão . . .", "Olá testador!", "Parabéns, você foi selecionado para nossos testes super secretos!", "Estamos criando um veículo anormal e você ajudará a fazer parte da história!", "Tudo o que precisa fazer é pilotar! fácil não?", "Iremos começar os testes em daqui a pouco", "Esperamos por você"]
 
@@ -45,19 +45,17 @@ function historia(texto_especial, requisicao_auto) {
 
             if (aguarda_confirmacao) {
                 aguarda_confirmacao = false
+
                 setTimeout(() => {
                     indice_historia++
                     historia(null, null)
                 }, 2000)
-            }
-            else
-                if (indice_historia == 4)
-                    $("#escolhas_hist").fadeIn()
+            } else if (indice_historia == 4)
+                $("#escolhas_hist").fadeIn()
         }
 
-        if (indice_historia != 0)
-            if (texto_especial == null && requisicao_auto != null)
-                executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
+        if (indice_historia != 0 && texto_especial == null && requisicao_auto != null)
+            executaSons2("faixa_efeitos1", "Efeitos", "hat.ogg", 2)
 
         // Regula se será um texto especial ou não
         if (texto_especial != null)

@@ -8,13 +8,13 @@ function boasVindas() {
     opcoes.inicia_game = 1
     confirma_carregamento = 1
 
-    localStorage.setItem("iniciaLoucura_1.2", 1)
+    localStorage.setItem("pul4Pr3dios-iniciaLoucura_1.2", 1)
     executaSons("faixa_musicas", "Musicas", "intro_1.ogg", 1)
 
-    valida_jogador = localStorage.getItem("iniciaLoucura_1.2")
+    valida_jogador = localStorage.getItem("pul4Pr3dios-iniciaLoucura_1.2")
     if (valida_jogador != null) {
         jogo.temas_comprados = [1, 1]
-        localStorage.setItem("temasComprados", jogo.temas_comprados)
+        localStorage.setItem("pul4Pr3dios-temasComprados", jogo.temas_comprados)
         notificacao(1, 0)
     }
 }
@@ -79,7 +79,7 @@ function confirma_inicio_partida() {
     }, 1000)
 
     if (jogo.tema_ativo != 0) {
-        if (jogo.musica_tema === "random")
+        if (jogo.musica_tema === "random.ogg")
             executaSons2("faixa_musicas", "Musicas", `main_${(1 + (3 * Math.random())).toFixed(0)}.ogg`, 1)
         else
             executaSons2("faixa_musicas", "Musicas", jogo.musica_tema, 1)
@@ -542,7 +542,7 @@ function estadoOcioso(caso) {
         escondeInformacoes(1, 1)
 
         if (jogo.tema_ativo != 0)
-            if (jogo.musica_tema_ocioso === "random")
+            if (jogo.musica_tema_ocioso === "random.ogg")
                 executaSons2("faixa_musicas", "Musicas", `ocioso_${(1 + (2 * Math.random())).toFixed(0)}.ogg`, 1)
             else
                 executaSons2("faixa_musicas", "Musicas", jogo.musica_tema_ocioso, 1)
@@ -605,7 +605,7 @@ function verificaOciosidade(caso, local, valor) {
     } else {
         toolTip()
 
-        ociosidade = localStorage.getItem("ociosidade")
+        ociosidade = localStorage.getItem("pul4Pr3dios-ociosidade")
         if (ociosidade == null)
             jogo.ociosidade = 0
         else
@@ -778,7 +778,7 @@ function altera_modificador(novo) {
     executaSons2("faixa_efeitos2", "Efeitos", "pop.ogg", 2)
 
     jogador.mod_em_uso = novo
-    localStorage.setItem("modEmUso", jogador.mod_em_uso)
+    localStorage.setItem("pul4Pr3dios-modEmUso", jogador.mod_em_uso)
 
     sincronizaModificadoresComprados(1)
     carrega_vendas_loja("Modificadores")
@@ -939,17 +939,17 @@ function registra_compra(item, requisicao_auto) {
     if (requisicao_auto == 0) {
         if (item == "Skins") {
             jogador.tt_skins_compradas++
-            localStorage.setItem("tt_skins_compradas", jogador.tt_skins_compradas)
+            localStorage.setItem("pul4Pr3dios-tt_skins_compradas", jogador.tt_skins_compradas)
         }
 
         if (item == "Modificadores") {
             jogador.tt_mods_comprados++
-            localStorage.setItem("tt_mods_comprados", jogador.tt_mods_comprados)
+            localStorage.setItem("pul4Pr3dios-tt_mods_comprados", jogador.tt_mods_comprados)
         }
 
         if (item == "Bônus") {
             jogador.tt_bonus_comprados++
-            localStorage.setItem("tt_bonus_comprados", jogador.tt_bonus_comprados)
+            localStorage.setItem("pul4Pr3dios-tt_bonus_comprados", jogador.tt_bonus_comprados)
         }
 
         registra_compra(0, 1)
@@ -1299,7 +1299,7 @@ function verifica_selecionado(local) {
 
     // Salvando a faixa e reproduzindo
     executaSons2("faixa_musicas", "Musicas", `${selecao}.ogg`, 1)
-    localStorage.setItem(alvo, faixa)
+    localStorage.setItem(`pul4Pr3dios-${alvo}`, faixa)
 
     desliga_preview = setTimeout(() => {
         desliga_som("faixa_musicas", 1)

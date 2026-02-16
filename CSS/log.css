@@ -7,13 +7,13 @@ body {
 }
 
 @font-face {
-    font-family: Minecraft;
-    src: url('../Fontes/Minecraft.ttf');
+    font-family: minecraft;
+    src: url('../fontes/minecraft.ttf');
 }
 
 @font-face {
-    font-family: Minecraftia;
-    src: url('../Fontes/Minecraftia.ttf');
+    font-family: minecraftia;
+    src: url('../fontes/minecraftia.ttf');
 }
 
 #tela_log_completa {
@@ -33,7 +33,7 @@ body {
 }
 
 h2#log_text {
-    font-family: "Minecraftia";
+    font-family: "minecraftia";
     position: absolute;
     z-index: 2;
     color: white;
@@ -50,7 +50,7 @@ h2#log_text {
 
 .destaques {
     color: white;
-    font-family: "Minecraftia";
+    font-family: "minecraftia";
     text-shadow: 1px 1px 3px black;
     text-align: center;
     font-size: 30px;
@@ -76,7 +76,7 @@ h2#log_text {
 
 .fechador_log {
     display: none;
-    font-family: "Minecraftia";
+    font-family: "minecraftia";
     padding: 15px;
     z-index: 8;
     top: 24%;
@@ -100,6 +100,6 @@ h2#log_text {
     text-align: center;
     color: white;
     padding-top: 5px;
-    font-family: "Minecraftia";
+    font-family: "minecraftia";
     width: 100%;
 }

@@ -1,5 +1,8 @@
 function popula_pisos() {
 
+    // Verificando o bioma atual antes de popular o terreno
+    jogo.bioma = parseInt(localStorage.getItem("pul4Pr3dios-jogo_bioma")) || 0
+
     // Inicia os pisos ao carregar o jogo
     for (let i = 0; i < 2; i++) {
         insere_piso(chao.pisos_b, 3)
@@ -71,7 +74,7 @@ function desenha_piso(caso) {
         const pos_x = piso.x == 1 ? pos_chao[caso - 1] : pos_chao[caso - 1] + 1366
         chao_alvo.sprite.desenha(pos_x, piso.y + desnivel)
 
-        if (piso.nome !== "lava" && piso.nome !== "areia_noite")
+        if (piso.nome !== "lava")
             transitador(piso.nome, pos_x, piso.y + desnivel)
     }
 }

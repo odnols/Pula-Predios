@@ -18,7 +18,7 @@ function create_user() {
                 return alert("Houve um erro com a APISAL")
 
             usuario.token = retorno.token
-            localStorage.setItem("token_user", usuario.token)
+            localStorage.setItem("pul4Pr3dios-token_user", usuario.token)
 
             alert(`Use este token com o Alonsal: ${retorno.token}`)
         })

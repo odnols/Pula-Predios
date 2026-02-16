@@ -20,12 +20,12 @@ function escolhe_som(ocasiao, evento) {
 function executaSons(elemento, localizacao, nomeSom, tipo) {
     if (jogo.estadoSom != 0) { // Verifica se a reprodução de sons não está desativada
 
-        let volume_interno = localStorage.getItem("volMusica")
+        let volume_interno = localStorage.getItem("pul4Pr3dios-volMusica")
 
         if (tipo == 2)  // Efeitos
-            volume_interno = localStorage.getItem("volEfeito")
+            volume_interno = localStorage.getItem("pul4Pr3dios-volEfeito")
         else if (tipo == 3) // Memes
-            volume_interno = localStorage.getItem("volMemes")
+            volume_interno = localStorage.getItem("pul4Pr3dios-volMemes")
 
         let audio = get_element(elemento)
         audio.volume = volume_interno / 100
@@ -38,12 +38,12 @@ function executaSons(elemento, localizacao, nomeSom, tipo) {
 function executaSons2(elemento, localizacao, nomeSom, tipo) {
     if (jogo.estadoSom != 0) { // Verifica se a reprodução de sons não está desativada
 
-        let volume_interno = localStorage.getItem("volMusica")
+        let volume_interno = localStorage.getItem("pul4Pr3dios-volMusica")
 
         if (tipo == 2)  // Efeitos
-            volume_interno = localStorage.getItem("volEfeito")
+            volume_interno = localStorage.getItem("pul4Pr3dios-volEfeito")
         else if (tipo == 3) // Memes
-            volume_interno = localStorage.getItem("volMemes")
+            volume_interno = localStorage.getItem("pul4Pr3dios-volMemes")
 
         let audio = get_element(elemento)
         audio.volume = volume_interno / 100
@@ -63,7 +63,7 @@ function alteraVolume(volume, entidade, auto) {
 
     if (entidade == 1) {       // Músicas
         audio = get_element("faixa_musicas")
-        localStorage.setItem("volMusica", volume)
+        localStorage.setItem("pul4Pr3dios-volMusica", volume)
 
         if (auto != null)
             // Verifica se há músicas sendo encerradas
@@ -77,7 +77,7 @@ function alteraVolume(volume, entidade, auto) {
         }
     } else if (entidade == 2) { // Efeitos
         audio = get_element("faixa_efeitos1")
-        localStorage.setItem("volEfeito", volume)
+        localStorage.setItem("pul4Pr3dios-volEfeito", volume)
 
         let audio2 = get_element("faixa_efeitos2")
         audio2.volume = volume / 100
@@ -95,7 +95,7 @@ function alteraVolume(volume, entidade, auto) {
             executaSons("faixa_efeitos1", "Efeitos", "pop.ogg", 2)
     } else if (entidade == 3) { // Memes
         audio = get_element("faixa_memes1")
-        localStorage.setItem("volMemes", volume)
+        localStorage.setItem("pul4Pr3dios-volMemes", volume)
 
         let audio2 = get_element("faixa_memes2")
         audio2.volume = volume / 100
@@ -130,11 +130,11 @@ function desliga_som(entidade, tipo) {
     let volume_interno
 
     if (tipo == 1)      // Músicas
-        volume_interno = localStorage.getItem("volMusica")
+        volume_interno = localStorage.getItem("pul4Pr3dios-volMusica")
     else if (tipo == 2) // Efeitos
-        volume_interno = localStorage.getItem("volEfeito")
+        volume_interno = localStorage.getItem("pul4Pr3dios-volEfeito")
     else               // Memes
-        volume_interno = localStorage.getItem("volMemes")
+        volume_interno = localStorage.getItem("pul4Pr3dios-volMemes")
 
     let pausa_som = get_element(entidade)
     let salva_volume = volume_interno
@@ -164,11 +164,11 @@ function desliga_som2(entidade, tipo) {
     let volume_interno
 
     if (tipo == 1)      // Músicas
-        volume_interno = localStorage.getItem("volMusica")
+        volume_interno = localStorage.getItem("pul4Pr3dios-volMusica")
     else if (tipo == 2) // Efeitos
-        volume_interno = localStorage.getItem("volEfeito")
+        volume_interno = localStorage.getItem("pul4Pr3dios-volEfeito")
     else               // Memes
-        volume_interno = localStorage.getItem("volMemes")
+        volume_interno = localStorage.getItem("pul4Pr3dios-volMemes")
 
     let pausa_som = get_element(entidade)
     let salva_volume = volume_interno
@@ -198,11 +198,11 @@ function desliga_som3(entidade, tipo) {
     let volume_interno
 
     if (tipo == 1)      // Músicas
-        volume_interno = localStorage.getItem("volMusica")
+        volume_interno = localStorage.getItem("pul4Pr3dios-volMusica")
     else if (tipo == 2) // Efeitos
-        volume_interno = localStorage.getItem("volEfeito")
+        volume_interno = localStorage.getItem("pul4Pr3dios-volEfeito")
     else               // Memes
-        volume_interno = localStorage.getItem("volMemes")
+        volume_interno = localStorage.getItem("pul4Pr3dios-volMemes")
 
     let pausa_som = get_element(entidade)
     let salva_volume = volume_interno

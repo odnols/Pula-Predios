@@ -183,7 +183,7 @@ var labelTexto = {
                 jogo.bioma = jogo.bioma == 0 ? 1 : 0
                 console.log(`No bioma de ${biomas[jogo.bioma]}`)
 
-                localStorage.setItem("jogo_bioma", jogo.bioma)
+                localStorage.setItem("pul4Pr3dios-jogo_bioma", jogo.bioma)
 
                 ambiente.biomas()
             }, tempo)
@@ -912,7 +912,7 @@ var labelTexto = {
                         jogador.partida_tempo_flutuando++
 
                     // É um Pássaro!
-                    if ((jogador.partida_tempo_flutuando + parseInt(localStorage.getItem("tempoFlutuando"))) >= 500)
+                    if ((jogador.partida_tempo_flutuando + parseInt(localStorage.getItem("pul4Pr3dios-tempoFlutuando"))) >= 500)
                         conquista(17, 0)
                 } else {
                     // Hack life p/ voar infinitamente, comente a linha abaixo \/
@@ -1011,7 +1011,7 @@ var labelTexto = {
             spriteAdereco_fogo.desenha(this.x + 3, this.y + 108)
 
             spriteAdereco_roda.desenha(this.x, this.y + 130)
-        },
+        }
     },
 
     propsfundo = {
@@ -1305,7 +1305,7 @@ function desenha() {
     propsfundo.desenha()
 
     opcoes.ctx.fillStyle = "#fff"
-    opcoes.ctx.font = "50px Minecraft"
+    opcoes.ctx.font = "50px minecraft"
 
     if (jogo.status == estados.perdeu) {
         get_element("notifica_moeda").innerHTML = `$${jogador.moedas}`
@@ -1316,7 +1316,7 @@ function desenha() {
         else
             opcoes.ctx.fillStyle = "rgba(255, 255, 255, .7)"
 
-        opcoes.ctx.font = "70px Minecraftia"
+        opcoes.ctx.font = "70px minecraftia"
 
         // Resumo da pontuação final do Jogador
         opcoes.ctx.fillText(labelTexto.texto, opcoes.canvas.width / 2 - opcoes.ctx.measureText(labelTexto.texto).width / 2, opcoes.altura / 1.4 + 40)
@@ -1328,7 +1328,7 @@ function desenha() {
         else
             opcoes.ctx.fillStyle = "#fff"
 
-        opcoes.ctx.font = "40px Minecraftia"
+        opcoes.ctx.font = "40px minecraftia"
         if (jogador.partida_pontuacao < jogador.recorde)
             if (idioma == "pt")
                 opcoes.ctx.fillText(`Recorde Atual: ${jogador.recorde}`, opcoes.canvas.width / 2 - opcoes.ctx.measureText(`Recorde Atual: ${jogador.recorde}`).width / 2, opcoes.altura / 1.3 + 50)

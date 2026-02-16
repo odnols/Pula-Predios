@@ -44,7 +44,7 @@ function alteraEstadoSom() {
             executaSons("faixa_musicas", "Musicas", "intro_3.ogg", 1)
     }
 
-    localStorage.setItem("efeitosSom", jogo.estadoSom)
+    localStorage.setItem("pul4Pr3dios-efeitosSom", jogo.estadoSom)
 }
 
 function sincronizaEfeitosSom() {
@@ -83,7 +83,7 @@ function alteraEstadoEstatistica() {
             get_element("status_tela_estatisti").innerHTML = "Activated"
     }
 
-    localStorage.setItem("estatisticaMorte", menus.estatistica_morte)
+    localStorage.setItem("pul4Pr3dios-estatisticaMorte", menus.estatistica_morte)
 }
 
 function sincronizaEstatisticaMorte(estado) {
@@ -142,7 +142,7 @@ function alteraRelogio() {
     }
 
     sincronizaRelogio()
-    localStorage.setItem("TemaEscolhido", ambiente.tema)
+    localStorage.setItem("pul4Pr3dios-TemaEscolhido", ambiente.tema)
 }
 
 function sincronizaRelogio() {
@@ -201,7 +201,7 @@ function alteraEstatisticasNerds() {
             get_element("status_estatisticas_nerds").innerHTML = "Disabled"
     }
 
-    localStorage.setItem("estatisticasNerds", jogo.estatisticasNerds)
+    localStorage.setItem("pul4Pr3dios-estatisticasNerds", jogo.estatisticasNerds)
 }
 
 function sincronizaEstatisticasNerds() {
@@ -236,7 +236,7 @@ function alteraNotificacoesConquistas() {
             get_element("status_conquistas_notifc").innerHTML = "Disabled"
     }
 
-    localStorage.setItem("notificaConquistas", jogo.notificaConquista)
+    localStorage.setItem("pul4Pr3dios-notificaConquistas", jogo.notificaConquista)
 }
 
 function sincronizaNotificacoesConquistas() {
@@ -282,7 +282,7 @@ function alteraQualidadeGrafica() {
             get_element("status_animacoes").innerHTML = "Minimum"
     }
 
-    localStorage.setItem("qualidadeGrafica", jogo.qualidadeGrafica)
+    localStorage.setItem("pul4Pr3dios-qualidadeGrafica", jogo.qualidadeGrafica)
     sincronizaQualidadeGrafica()
 }
 
@@ -366,8 +366,8 @@ function alteraDificuldade() {
 
         get_element("status_dificuldade").innerHTML = "Expert"
 
-        get_element("stats_dead").style.backgroundImage = "url('source/images/icons/Icone.gif')"
-        get_element("stats_dead2").style.backgroundImage = "url('source/images/icons/Icone.gif')"
+        get_element("stats_dead").style.backgroundImage = "url('source/images/icons/icone.gif')"
+        get_element("stats_dead2").style.backgroundImage = "url('source/images/icons/icone.gif')"
     } else if (jogo.dificuldade == 3) {
         jogo.dificuldade = 0
 
@@ -384,7 +384,7 @@ function alteraDificuldade() {
     }
 
     sincronizaQtdModificadores()
-    localStorage.setItem("dificuldadeJogo", jogo.dificuldade)
+    localStorage.setItem("pul4Pr3dios-dificuldadeJogo", jogo.dificuldade)
 }
 
 function sincronizaDificuldade() {
@@ -400,8 +400,8 @@ function sincronizaDificuldade() {
 
         get_element("status_dificuldade").innerHTML = "Expert"
 
-        get_element("stats_dead").style.backgroundImage = "url('source/images/icons/Icone.gif')"
-        get_element("stats_dead2").style.backgroundImage = "url('source/images/icons/Icone.gif')"
+        get_element("stats_dead").style.backgroundImage = "url('source/images/icons/icone.gif')"
+        get_element("stats_dead2").style.backgroundImage = "url('source/images/icons/icone.gif')"
     } else if (jogo.dificuldade == 0) { // Fácil   = 0
         if (idioma == "pt")
             get_element("status_dificuldade").innerHTML = "Fácil"
@@ -433,7 +433,7 @@ function alteraEstadoOcioso() {
             get_element("status_modo_ocioso").innerHTML = "Activated"
     }
 
-    localStorage.setItem("ociosidade", jogo.ociosidade)
+    localStorage.setItem("pul4Pr3dios-ociosidade", jogo.ociosidade)
 }
 
 function alteraParallax() {
@@ -461,7 +461,7 @@ function alteraParallax() {
         $(".fx_cima").fadeIn()
     }
 
-    localStorage.setItem("menu_parallax", jogo.parallax)
+    localStorage.setItem("pul4Pr3dios-menu_parallax", jogo.parallax)
 }
 
 function sincronizaOciosidade() {
@@ -522,10 +522,10 @@ function sincronizaModificadoresComprados(requisicao_auto) {
     else
         get_element("mod_4").style.display = "none"
 
-    localStorage.setItem("modsComprados", jogador.mods_comprados)
+    localStorage.setItem("pul4Pr3dios-modsComprados", jogador.mods_comprados)
 
     if (requisicao_auto == 0)
-        localStorage.setItem("modsCompradosUsados", jogador.mods_vezes_usados)
+        localStorage.setItem("pul4Pr3dios-modsCompradosUsados", jogador.mods_vezes_usados)
 
     sincronizaQtdModificadores()
 }
@@ -600,9 +600,9 @@ function sincronizaVezesModificadoresComprados() {
         }
     }
 
-    localStorage.setItem("modEmUso", jogador.mod_em_uso)
-    localStorage.setItem("modsComprados", jogador.mods_comprados)
-    localStorage.setItem("modsCompradosUsados", jogador.mods_vezes_usados)
+    localStorage.setItem("pul4Pr3dios-modEmUso", jogador.mod_em_uso)
+    localStorage.setItem("pul4Pr3dios-modsComprados", jogador.mods_comprados)
+    localStorage.setItem("pul4Pr3dios-modsCompradosUsados", jogador.mods_vezes_usados)
 }
 
 function sincroniza_bonus(requisicao_auto) {
@@ -624,8 +624,8 @@ function sincroniza_bonus(requisicao_auto) {
         if (jogador.bonus_vezes_usados[2] == 0)
             jogador.bonus_comprados[2] = 0
 
-        localStorage.setItem("bonusComprados", jogador.bonus_comprados)
-        localStorage.setItem("bonusVezesUsados", jogador.bonus_vezes_usados)
+        localStorage.setItem("pul4Pr3dios-bonusComprados", jogador.bonus_comprados)
+        localStorage.setItem("pul4Pr3dios-bonusVezesUsados", jogador.bonus_vezes_usados)
     }
 
     // Icones de bônus adquiridos

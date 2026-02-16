@@ -42,27 +42,25 @@ function carrega_vendas_loja(caso) {
         get_element("placeholder_loja").innerHTML = ""
 
         if (jogador.skin != 7)
-            get_element("placeholder_loja").innerHTML += "<div class='item_comprado' onclick='confirma_compra(1, 7)'><img class='img_skin_venda' src='source/images/Sprites/Jogador/Jogador7_noite.png'><br><br>Padrão</div>"
+            get_element("placeholder_loja").innerHTML += "<div class='item_comprado' onclick='confirma_compra(1, 7)'><img class='img_skin_venda' src='source/images/sprites/jogador/jogador7_noite.png'><br><br>Padrão</div>"
         else
-            get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onclick='confirma_compra(1, 7)'><img class='img_skin_venda' src='source/images/Sprites/Jogador/Jogador7_noite.png'><br><br>Padrão</div>"
+            get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onclick='confirma_compra(1, 7)'><img class='img_skin_venda' src='source/images/sprites/jogador/jogador7_noite.png'><br><br>Padrão</div>"
 
         for (var i = 0; i < 6; i++) {
             if (jogador.skins_compradas[i] != 1) // Item a venda
-                get_element("placeholder_loja").innerHTML += `<div class='item_venda' onclick='confirma_compra(1, ${i}, 55)'> <img class='img_skin_venda' src='source/images/Sprites/Jogador/Jogador${i + 1}_noite.png'><br><br>${nomeSkins[i]}<div class='preco_item'>$${listaPrecos_Skins[i]}</div></div>`
+                get_element("placeholder_loja").innerHTML += `<div class='item_venda' onclick='confirma_compra(1, ${i}, 55)'> <img class='img_skin_venda' src='source/images/sprites/jogador/jogador${i + 1}_noite.png'><br><br>${nomeSkins[i]}<div class='preco_item'>$${listaPrecos_Skins[i]}</div></div>`
             else if (jogador.skin != [i]) // Item Comprado
-                get_element("placeholder_loja").innerHTML += `<div class='item_comprado' onclick='confirma_compra(1, ${i}, 55)'><img class='img_skin_venda' src='source/images/Sprites/Jogador/Jogador${i + 1}_noite.png'><br><br>${nomeSkins[i]}</div>`
+                get_element("placeholder_loja").innerHTML += `<div class='item_comprado' onclick='confirma_compra(1, ${i}, 55)'><img class='img_skin_venda' src='source/images/sprites/jogador/jogador${i + 1}_noite.png'><br><br>${nomeSkins[i]}</div>`
             else                         // Item Equipado
-                get_element("placeholder_loja").innerHTML += `<div class='item_equipado' onclick='confirma_compra(1, ${i}, 55)'><img class='img_skin_venda' src='source/images/Sprites/Jogador/Jogador${i + 1}_noite.png'><br><br>${nomeSkins[i]}</div>`
+                get_element("placeholder_loja").innerHTML += `<div class='item_equipado' onclick='confirma_compra(1, ${i}, 55)'><img class='img_skin_venda' src='source/images/sprites/jogador/jogador${i + 1}_noite.png'><br><br>${nomeSkins[i]}</div>`
         }
 
     } else if (caso == "Modificadores") {
 
-        if (jogador.mod_em_uso == 0)
-            var nome_img = "Flutua"
-        else if (jogador.mod_em_uso == 1)
-            var nome_img = "Aco"
-        else
-            var nome_img = "Lunar"
+        var nome_img = "lunar"
+
+        if (jogador.mod_em_uso == 0) nome_img = "flutua"
+        else if (jogador.mod_em_uso == 1) nome_img = "aco"
 
         if (idioma == "pt")
             get_element("categoria_teaser").innerHTML = "Bota mod em tudo!"
@@ -70,33 +68,33 @@ function carrega_vendas_loja(caso) {
             get_element("categoria_teaser").innerHTML = "Puts mod on everything!"
 
         if (idioma == "pt")
-            get_element("categoria_teaser").innerHTML += `<br><div id='mod_em_uso'><h3 style='float: left'>Modificador Principal</h3><h3 style='float: right'>Modificadores Adquiridos</h3><div id='barra_mods_loja'><div id='mod_esquerda_principal'>Ativo: &nbsp; <img class='icon_mod_loja' src='source/images/store/Mods/${nome_img}.png'></div><div id='mod_direita_principal'></div></div></div>`
+            get_element("categoria_teaser").innerHTML += `<br><div id='mod_em_uso'><h3 style='float: left'>Modificador Principal</h3><h3 style='float: right'>Modificadores Adquiridos</h3><div id='barra_mods_loja'><div id='mod_esquerda_principal'>Ativo: &nbsp; <img class='icon_mod_loja' src='source/images/store/mods/${nome_img}.png'></div><div id='mod_direita_principal'></div></div></div>`
         else
-            get_element("categoria_teaser").innerHTML += `<br><div id='mod_em_uso'><h3 style='float: left'>Main Modifier</h3><h3 style='float: right'>Purchased Modifiers</h3><div id='barra_mods_loja'><div id='mod_esquerda_principal'>Active: &nbsp; <img class='icon_mod_loja' src='source/images/store/Mods/${nome_img}.png'></div> <div id='mod_direita_principal'></div></div></div>`
+            get_element("categoria_teaser").innerHTML += `<br><div id='mod_em_uso'><h3 style='float: left'>Main Modifier</h3><h3 style='float: right'>Purchased Modifiers</h3><div id='barra_mods_loja'><div id='mod_esquerda_principal'>Active: &nbsp; <img class='icon_mod_loja' src='source/images/store/mods/${nome_img}.png'></div> <div id='mod_direita_principal'></div></div></div>`
 
         get_element("mod_direita_principal").innerHTML = ""
 
         if (jogador.mod_em_uso != 0)
-            get_element("mod_direita_principal").innerHTML += "<img id='restaura_modificador' src='source/images/store/Mods/Flutua.png' onclick='altera_modificador(0)'>"
+            get_element("mod_direita_principal").innerHTML += "<img id='restaura_modificador' src='source/images/store/mods/flutua.png' onclick='altera_modificador(0)'>"
 
         if (jogador.mod_em_uso == 1 && jogador.mods_comprados[3] == 1)
-            get_element("mod_direita_principal").innerHTML += "<img id='restaura_modificador' src='source/images/store/Mods/Lunar.png' onclick='altera_modificador(100)'>"
+            get_element("mod_direita_principal").innerHTML += "<img id='restaura_modificador' src='source/images/store/mods/lunar.png' onclick='altera_modificador(100)'>"
 
         if (jogador.mod_em_uso == 100 && jogador.mods_comprados[2] == 1)
-            get_element("mod_direita_principal").innerHTML += "<img id='restaura_modificador' src='source/images/store/Mods/Aco.png' onclick='altera_modificador(1)'>"
+            get_element("mod_direita_principal").innerHTML += "<img id='restaura_modificador' src='source/images/store/mods/aco.png' onclick='altera_modificador(1)'>"
 
         if (jogador.mod_em_uso == 0 && jogador.mods_comprados[2] == 1)
-            get_element("mod_direita_principal").innerHTML += "<img id='restaura_modificador' src='source/images/store/Mods/Aco.png' onclick='altera_modificador(1)'>"
+            get_element("mod_direita_principal").innerHTML += "<img id='restaura_modificador' src='source/images/store/mods/aco.png' onclick='altera_modificador(1)'>"
 
         if (jogador.mod_em_uso == 0 && jogador.mods_comprados[3] == 1)
-            get_element("mod_direita_principal").innerHTML += "<img id='restaura_modificador' src='source/images/store/Mods/Lunar.png' onclick='altera_modificador(100)'>"
+            get_element("mod_direita_principal").innerHTML += "<img id='restaura_modificador' src='source/images/store/mods/lunar.png' onclick='altera_modificador(100)'>"
 
         if (idioma == "pt")
             var descricao = ["+ Tempo", "+ Vezes", "De Aço"]
         else
             var descricao = ["+ Time", "+ Turns", "Of steel"]
 
-        var nomeImagem = ["relogio.gif", "Jump_Boost.png", "Aco.png"]
+        var nomeImagem = ["relogio.gif", "jump_boost.png", "aco.png"]
 
         get_element("placeholder_loja").innerHTML = ""
 
@@ -104,25 +102,25 @@ function carrega_vendas_loja(caso) {
         for (var i = 0; i < descricao.length; i++) {
             if (jogador.mods_comprados[i] == 0) { // Item a venda
                 if (i != 2)
-                    get_element("placeholder_loja").innerHTML += "<div class='mod_venda' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/Mods/" + nomeImagem[i] + "'><br><br>" + descricao[i] + " <div class='preco_item'> $" + listaPrecos_Mods[i] + "</div> </div>"
+                    get_element("placeholder_loja").innerHTML += "<div class='mod_venda' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + descricao[i] + " <div class='preco_item'> $" + listaPrecos_Mods[i] + "</div> </div>"
                 else
-                    get_element("placeholder_loja").innerHTML += "<div class='mod_principal_venda' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/Mods/" + nomeImagem[i] + "'><br><br>" + descricao[i] + " <div class='preco_item'> $" + listaPrecos_Mods[i] + "</div> </div>"
+                    get_element("placeholder_loja").innerHTML += "<div class='mod_principal_venda' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + descricao[i] + " <div class='preco_item'> $" + listaPrecos_Mods[i] + "</div> </div>"
             } else {
                 if (jogador.mods_comprados[i] == 1 && jogador.mod_em_uso != 1) // Item Comprado
                     if (jogador.mods_comprados[i] == 1 && i < 2)
-                        get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/Mods/" + nomeImagem[i] + "'><br><br>" + descricao[i] + "</div>"
+                        get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + descricao[i] + "</div>"
                     else
-                        get_element("placeholder_loja").innerHTML += "<div class='item_comprado' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/Mods/" + nomeImagem[i] + "'><br><br>" + descricao[i] + "</div>"
+                        get_element("placeholder_loja").innerHTML += "<div class='item_comprado' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + descricao[i] + "</div>"
                 else // Comprado e equipado
-                    get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()'> <img class='img_mod_venda' src='source/images/store/Mods/" + nomeImagem[i] + "'><br><br>" + descricao[i] + "</div>"
+                    get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + descricao[i] + "</div>"
             }
         }
 
         if (lista_conquistas_ganhas[26] != 0) {
             if (jogador.mod_em_uso == 100)
-                get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip(" + 'descricao_Mods[3]' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, 3, 55)'><img class='img_mod_venda' src='source/images/store/Mods/Lunar.png'><br><br>Gravidade Lunar</div>"
+                get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip(" + 'descricao_Mods[3]' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, 3, 55)'><img class='img_mod_venda' src='source/images/store/mods/lunar.png'><br><br>Gravidade Lunar</div>"
             else
-                get_element("placeholder_loja").innerHTML += "<div class='item_comprado_lendario' onMouseOver='toolTip(" + 'descricao_Mods[3]' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, 3, 55)'><img class='img_mod_venda' src='source/images/store/Mods/Lunar.png'><br><br>Gravidade Lunar</div>"
+                get_element("placeholder_loja").innerHTML += "<div class='item_comprado_lendario' onMouseOver='toolTip(" + 'descricao_Mods[3]' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, 3, 55)'><img class='img_mod_venda' src='source/images/store/mods/lunar.png'><br><br>Gravidade Lunar</div>"
         }
     } else if (caso == "Bônus") { // Bônus
         if (idioma == "pt")
@@ -130,7 +128,7 @@ function carrega_vendas_loja(caso) {
         else
             var descricao = ["2x$", "Gold miner", "Stocked Wind"]
 
-        var nomeImagem = ["pisao2x.png", "Garimpeiro.png", "vento_estocado.png"]
+        var nomeImagem = ["pisao2x.png", "garimpeiro.png", "vento_estocado.png"]
 
         if (idioma == "pt")
             get_element("categoria_teaser").innerHTML = "Adquira Bônus!"
@@ -141,9 +139,9 @@ function carrega_vendas_loja(caso) {
 
         for (var i = 0; i < descricao.length; i++) {
             if (jogador.bonus_comprados[i] != 1) // Item a venda
-                get_element("placeholder_loja").innerHTML += "<div class='mod_venda' onMouseOver='toolTip(" + 'descricao_Bonus[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(3, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/Bonus/" + nomeImagem[i] + "'><br><br>" + descricao[i] + " <div class='preco_item'> $" + listaPrecos_Bonus[i] + "</div></div>"
+                get_element("placeholder_loja").innerHTML += "<div class='mod_venda' onMouseOver='toolTip(" + 'descricao_Bonus[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(3, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/bonus/" + nomeImagem[i] + "'><br><br>" + descricao[i] + " <div class='preco_item'> $" + listaPrecos_Bonus[i] + "</div></div>"
             else // Item Comprado
-                get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip(" + 'descricao_Bonus[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(3, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/Bonus/" + nomeImagem[i] + "'><br><br>" + descricao[i] + "</div>"
+                get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip(" + 'descricao_Bonus[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(3, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/bonus/" + nomeImagem[i] + "'><br><br>" + descricao[i] + "</div>"
         }
     } else {
         if (idioma == "pt")
@@ -151,7 +149,7 @@ function carrega_vendas_loja(caso) {
         else
             var descricao = ["1900's", "Standard"]
 
-        var nomeImagem = ["1900s.jpg", "Padrao.jpg"]
+        var nomeImagem = ["1900s.jpg", "padrao.jpg"]
 
         if (idioma == "pt")
             get_element("categoria_teaser").innerHTML = "Viagem no tempo!"
@@ -163,12 +161,12 @@ function carrega_vendas_loja(caso) {
 
         for (var i = 0; i < descricao.length; i++) {
             if (jogo.temas_comprados[i] != 1) { // Temas não comprados
-                get_element("placeholder_loja").innerHTML += "<div class='tema_caixa' onclick='confirma_compra(4, " + i + ", 55)' onMouseOver='toolTip(" + 'descricao_Tema[' + i + ']' + ")' onmouseout='toolTip()'><img class='img_preview_tema' src='source/images/store/Temas/" + nomeImagem[i] + "'><div class='info_tema'><br><br>" + descricao[i] + " <div class='preco_tema'> $" + listaPrecos_Temas[i] + "</div></div></div>"
+                get_element("placeholder_loja").innerHTML += "<div class='tema_caixa' onclick='confirma_compra(4, " + i + ", 55)' onMouseOver='toolTip(" + 'descricao_Tema[' + i + ']' + ")' onmouseout='toolTip()'><img class='img_preview_tema' src='source/images/store/temas/" + nomeImagem[i] + "'><div class='info_tema'><br><br>" + descricao[i] + " <div class='preco_tema'> $" + listaPrecos_Temas[i] + "</div></div></div>"
             } else {
                 if (jogo.tema_ativo != i) { // Tema comprado e não ativo
-                    get_element("placeholder_loja").innerHTML += "<div class='tema_caixa' onclick='confirma_compra(4, " + i + ", 55)' onMouseOver='toolTip(" + 'descricao_Tema[' + i + ']' + ")' onmouseout='toolTip()'><img class='img_preview_tema' src='source/images/store/Temas/" + nomeImagem[i] + "'><div class='info_tema'><br><br>" + descricao[i] + "</div></div>"
+                    get_element("placeholder_loja").innerHTML += "<div class='tema_caixa' onclick='confirma_compra(4, " + i + ", 55)' onMouseOver='toolTip(" + 'descricao_Tema[' + i + ']' + ")' onmouseout='toolTip()'><img class='img_preview_tema' src='source/images/store/temas/" + nomeImagem[i] + "'><div class='info_tema'><br><br>" + descricao[i] + "</div></div>"
                 } else {                    // Tema comprado e ativo
-                    get_element("placeholder_loja").innerHTML += "<div class='tema_caixa_ativo' onclick='confirma_compra(4, " + i + ", 55)' onMouseOver='toolTip(" + 'descricao_Tema[' + i + ']' + ")' onmouseout='toolTip()'><img class='img_preview_tema' src='source/images/store/Temas/" + nomeImagem[i] + "'><div class='info_tema'><br><br>" + descricao[i] + "</div></div>"
+                    get_element("placeholder_loja").innerHTML += "<div class='tema_caixa_ativo' onclick='confirma_compra(4, " + i + ", 55)' onMouseOver='toolTip(" + 'descricao_Tema[' + i + ']' + ")' onmouseout='toolTip()'><img class='img_preview_tema' src='source/images/store/temas/" + nomeImagem[i] + "'><div class='info_tema'><br><br>" + descricao[i] + "</div></div>"
                 }
             }
         }
@@ -191,8 +189,8 @@ function confirma_compra(categoria, item, confirmacao) {
                     jogador.skins_compradas[item] = 1
                     jogador.skin = item
 
-                    localStorage.setItem("skinAtual", jogador.skin)
-                    localStorage.setItem("skinsCompradas", jogador.skins_compradas)
+                    localStorage.setItem("pul4Pr3dios-skinAtual", jogador.skin)
+                    localStorage.setItem("pul4Pr3dios-skinsCompradas", jogador.skins_compradas)
 
                     debita_compra(listaPrecos_Skins[item], "Skins", 1)
 
@@ -233,7 +231,7 @@ function confirma_compra(categoria, item, confirmacao) {
             }
 
             jogador.skin = item
-            localStorage.setItem("skinAtual", jogador.skin)
+            localStorage.setItem("pul4Pr3dios-skinAtual", jogador.skin)
 
             executaSons("faixa_efeitos1", "Efeitos", "skin.ogg", 2)
             carrega_vendas_loja("Skins")
@@ -273,9 +271,9 @@ function confirma_compra(categoria, item, confirmacao) {
                     jogador.mods_comprados[item] = 1
                     jogador.mods_vezes_usados[item] = 5
 
-                    localStorage.setItem("modEmUso", jogador.mod_em_uso)
-                    localStorage.setItem("modsComprados", jogador.mods_comprados)
-                    localStorage.setItem("modsCompradosUsados", jogador.mods_vezes_usados)
+                    localStorage.setItem("pul4Pr3dios-modEmUso", jogador.mod_em_uso)
+                    localStorage.setItem("pul4Pr3dios-modsComprados", jogador.mods_comprados)
+                    localStorage.setItem("pul4Pr3dios-modsCompradosUsados", jogador.mods_vezes_usados)
 
                     debita_compra(listaPrecos_Mods[item], "Modificadores", 1)
 
@@ -324,7 +322,7 @@ function confirma_compra(categoria, item, confirmacao) {
 
                 pisca_loja("0, 255, 255, .2")
 
-                localStorage.setItem("modEmUso", jogador.mod_em_uso)
+                localStorage.setItem("pul4Pr3dios-modEmUso", jogador.mod_em_uso)
             } else {
                 if (idioma == "pt")
                     exibe_teaser("Você já possuí este item e ele está ativo", "cyan")
@@ -355,8 +353,8 @@ function confirma_compra(categoria, item, confirmacao) {
                     jogador.bonus_comprados[item] = 1
                     jogador.bonus_vezes_usados[item] = 5
 
-                    localStorage.setItem("bonusComprados", jogador.bonus_comprados)
-                    localStorage.setItem("bonusVezesUsados", jogador.bonus_vezes_usados)
+                    localStorage.setItem("pul4Pr3dios-bonusComprados", jogador.bonus_comprados)
+                    localStorage.setItem("pul4Pr3dios-bonusVezesUsados", jogador.bonus_vezes_usados)
 
                     if (item == 2) // Vento estocado
                         executaSons2("faixa_memes1", "Memes", "dilma_vento_1.ogg", 2)
@@ -408,8 +406,8 @@ function confirma_compra(categoria, item, confirmacao) {
                 if (confirmacao == 1) {
 
                     jogo.temas_comprados[item] = 1
-                    localStorage.setItem("temasComprados", jogo.temas_comprados)
-                    localStorage.setItem("temaAtivo", item)
+                    localStorage.setItem("pul4Pr3dios-temasComprados", jogo.temas_comprados)
+                    localStorage.setItem("pul4Pr3dios-temaAtivo", item)
 
                     debita_compra(listaPrecos_Temas[item], "Temas", 1)
 
@@ -439,7 +437,7 @@ function confirma_compra(categoria, item, confirmacao) {
                 else
                     exibe_teaser("Changing the theme of the game...", "cyan")
 
-                localStorage.setItem("temaAtivo", item)
+                localStorage.setItem("pul4Pr3dios-temaAtivo", item)
                 recarrega_jogo_tema()
             } else {
                 if (idioma == "pt")
@@ -484,8 +482,8 @@ function debita_compra(valor, item, caso) {
 
         get_element("moedas_gastas").innerHTML = jogador.moedas_gastas
 
-        localStorage.setItem("moedas", jogador.moedas)
-        localStorage.setItem("moedasGastas", jogador.moedas_gastas)
+        localStorage.setItem("pul4Pr3dios-moedas", jogador.moedas)
+        localStorage.setItem("pul4Pr3dios-moedasGastas", jogador.moedas_gastas)
 
         registra_compra(item, 0)
 

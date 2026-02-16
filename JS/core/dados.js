@@ -39,7 +39,7 @@ function sincroniza_api() {
         moedas_coletadas: jogador.moedas_coletadas,
 
         conquistas: jogador.conquistas,
-        consquistas_total: jogador.consquistas_total,
+        conquistas_total: jogador.conquistas_total,
 
         tempo_jogado: hist_tempo_jogado,
         tempo_voando: hist_tempo_flutuando,
@@ -53,7 +53,7 @@ function sincroniza_api() {
     // Enviando os dados para a API salvar
     const elemento = get_element("flag_api")
 
-    fetch(`https://alonpi.discloud.app/pula?token=placholder&save=1&token_user=${localStorage.getItem("token_user")}&data=${JSON.stringify(data_user)}`)
+    fetch(`https://alonpi.discloud.app/pula?token=placholder&save=1&token_user=${localStorage.getItem("pul4Pr3dios-token_user")}&data=${JSON.stringify(data_user)}`)
         .then(res => res.json())
         .then(retorno => {
 
@@ -74,153 +74,150 @@ function sincroniza_api() {
 
 function carrega_dados() {
 
-    let token = localStorage.getItem("token_user")
-    if (token)
-        usuario.token = token
+    let token = localStorage.getItem("pul4Pr3dios-token_user")
+    if (token) usuario.token = token
 
-    opcoes.inicia_game = localStorage.getItem("iniciaLoucura_1.2")
+    opcoes.inicia_game = localStorage.getItem("pul4Pr3dios-iniciaLoucura_1.2")
     if (opcoes.inicia_game == null)
         $("#boas_vindas").fadeIn()
     else
         $("#log_button").fadeIn()
 
-    tutorial_completo = localStorage.getItem("tutorialCompleto")
+    tutorial_completo = localStorage.getItem("pul4Pr3dios-tutorialCompleto")
     if (tutorial_completo == null)
         tut_complet = 0
     else
         tut_complet = parseInt(tutorial_completo)
 
-    jogador.recorde = localStorage.getItem("recorde")
+    jogador.recorde = localStorage.getItem("pul4Pr3dios-recorde")
     if (!jogador.recorde)
         jogador.recorde = 0
 
     // Pegando os valores de pulos do localStorage e convertendo em inteiros
-    hist_distancia = localStorage.getItem("qtdDistancia")
+    hist_distancia = localStorage.getItem("pul4Pr3dios-qtdDistancia")
     if (hist_distancia == null)
         hist_distancia = 0
     else
         hist_distancia = parseInt(hist_distancia)
 
-    hist_tempo_jogado = localStorage.getItem("qtdTempoJogado")
+    hist_tempo_jogado = localStorage.getItem("pul4Pr3dios-qtdTempoJogado")
     if (hist_tempo_jogado == null)
         hist_tempo_jogado = 0
     else
         hist_tempo_jogado = parseInt(hist_tempo_jogado)
 
-    hist_pulos = localStorage.getItem("qtdPulos")
+    hist_pulos = localStorage.getItem("pul4Pr3dios-qtdPulos")
     if (hist_pulos == null)
         hist_pulos = 0
     else
         hist_pulos = parseInt(hist_pulos)
 
-    jogo.bioma = parseInt(localStorage.getItem("jogo_bioma"))
-
-    hist_pontos = localStorage.getItem("qtdPontos")
+    hist_pontos = localStorage.getItem("pul4Pr3dios-qtdPontos")
     if (hist_pontos == null)
         hist_pontos = 0
     else
         hist_pontos = parseInt(hist_pontos)
 
-    hist_mod = localStorage.getItem("qtdMods")
+    hist_mod = localStorage.getItem("pul4Pr3dios-qtdMods")
     if (hist_mod == null)
         hist_mod = 0
     else
         hist_mod = parseInt(hist_mod)
 
-    hist_tempo_flutuando = localStorage.getItem("tempoFlutuando")
+    hist_tempo_flutuando = localStorage.getItem("pul4Pr3dios-tempoFlutuando")
     if (hist_tempo_flutuando == null)
         hist_tempo_flutuando = 0
     else
         hist_tempo_flutuando = parseInt(hist_tempo_flutuando)
 
-    hist_mortes = localStorage.getItem("qtdMortes")
+    hist_mortes = localStorage.getItem("pul4Pr3dios-qtdMortes")
     if (hist_mortes == null)
         hist_mortes = 0
     else
         hist_mortes = parseInt(hist_mortes)
 
-    hist_pisoes = localStorage.getItem("qtdPisoes")
+    hist_pisoes = localStorage.getItem("pul4Pr3dios-qtdPisoes")
     if (hist_pisoes == null)
         hist_pisoes = 0
     else
         hist_pisoes = parseInt(hist_pisoes)
 
-    moedas = localStorage.getItem("moedas")
+    moedas = localStorage.getItem("pul4Pr3dios-moedas")
     if (moedas == null)
         jogador.moedas = 0
     else
         jogador.moedas = parseInt(moedas)
 
-    moedas_coletadas = localStorage.getItem("moedasColetadas")
+    moedas_coletadas = localStorage.getItem("pul4Pr3dios-moedasColetadas")
     if (moedas_coletadas == null)
         jogador.moedas_coletadas = 0
     else
         jogador.moedas_coletadas = parseInt(moedas_coletadas)
 
-    moedas_gastas = localStorage.getItem("moedasGastas")
+    moedas_gastas = localStorage.getItem("pul4Pr3dios-moedasGastas")
     if (moedas_gastas == null)
         jogador.moedas_gastas = 0
     else
         jogador.moedas_gastas = parseInt(moedas_gastas)
 
-    hist_eventos_concluidos = localStorage.getItem("eventosConcluidos")
+    hist_eventos_concluidos = localStorage.getItem("pul4Pr3dios-eventosConcluidos")
     if (hist_eventos_concluidos == null)
         hist_eventos_concluidos = 0
     else
         hist_eventos_concluidos = parseInt(hist_eventos_concluidos)
 
-    hist_tempo_eventos = localStorage.getItem("tempoEventos")
+    hist_tempo_eventos = localStorage.getItem("pul4Pr3dios-tempoEventos")
     if (hist_tempo_eventos == null)
         hist_tempo_eventos = 0
     else
         hist_tempo_eventos = parseInt(hist_tempo_eventos)
 
-    hist_cidade = localStorage.getItem("qtdEventoCidade")
+    hist_cidade = localStorage.getItem("pul4Pr3dios-qtdEventoCidade")
     if (hist_cidade == null)
         hist_cidade = 0
     else
         hist_cidade = parseInt(hist_cidade)
 
-    hist_parque = localStorage.getItem("qtdEventoParque")
+    hist_parque = localStorage.getItem("pul4Pr3dios-qtdEventoParque")
     if (hist_parque == null)
         hist_parque = 0
     else
         hist_parque = parseInt(hist_parque)
 
-    hist_agua = localStorage.getItem("qtdEventoAgua")
+    hist_agua = localStorage.getItem("pul4Pr3dios-qtdEventoAgua")
     if (hist_agua == null)
         hist_agua = 0
     else
         hist_agua = parseInt(hist_agua)
 
-    hist_lava = localStorage.getItem("qtdEventoLava")
+    hist_lava = localStorage.getItem("pul4Pr3dios-qtdEventoLava")
     if (hist_lava == null)
         hist_lava = 0
     else
         hist_lava = parseInt(hist_lava)
 
     // Sincroniza o Volume da Música
-    volMusica = localStorage.getItem("volMusica")
+    volMusica = localStorage.getItem("pul4Pr3dios-volMusica")
     if (volMusica == null)
         volMusica = 50
 
     carrega_volume(volMusica, 1)
 
     // Sincroniza o Volume dos Efeitos
-    volEfeitos = localStorage.getItem("volEfeito")
+    volEfeitos = localStorage.getItem("pul4Pr3dios-volEfeito")
     if (volEfeitos == null)
         volEfeitos = 50
 
     carrega_volume(volEfeitos, 2)
 
     // Sincroniza o Volume dos Memes
-    volMemes = localStorage.getItem("volMemes")
+    volMemes = localStorage.getItem("pul4Pr3dios-volMemes")
     if (volMemes == null)
         volMemes = 50
 
     carrega_volume(volMemes, 3)
 
-    efeitosSom = localStorage.getItem("efeitosSom")
+    efeitosSom = localStorage.getItem("pul4Pr3dios-efeitosSom")
     if (efeitosSom == null)
         efeitosSom = 1
     else
@@ -228,14 +225,14 @@ function carrega_dados() {
 
 
     // Sincroniza animação de morte
-    menus.estatistica_morte = localStorage.getItem("estatisticaMorte")
+    menus.estatistica_morte = localStorage.getItem("pul4Pr3dios-estatisticaMorte")
     if (menus.estatistica_morte == null)
         menus.estatistica_morte = 1
     else
         menus.estatistica_morte = parseInt(menus.estatistica_morte)
 
     // Sincroniza a configuração de tema atual
-    config_temaEscolhido = localStorage.getItem("TemaEscolhido")
+    config_temaEscolhido = localStorage.getItem("pul4Pr3dios-TemaEscolhido")
     if (config_temaEscolhido == null)
         ambiente.tema = 0
     else
@@ -245,46 +242,46 @@ function carrega_dados() {
         sincronizaRelogio()
 
     // Sincroniza as estatísticas para nerds através do console
-    estatisticasNerds = localStorage.getItem("estatisticasNerds")
+    estatisticasNerds = localStorage.getItem("pul4Pr3dios-estatisticasNerds")
     if (estatisticasNerds == null)
         jogo.estatisticasNerds = 0
 
     jogo.estatisticasNerds = parseInt(estatisticasNerds)
 
     // Sincroniza as notificações de conquistas
-    notificacoesConquistas = localStorage.getItem("notificaConquistas")
+    notificacoesConquistas = localStorage.getItem("pul4Pr3dios-notificaConquistas")
     if (notificacoesConquistas == null)
         jogo.notificaConquista = 1
     else
         jogo.notificaConquista = parseInt(notificacoesConquistas)
 
-    qualidadeGraficos = localStorage.getItem("qualidadeGrafica")
+    qualidadeGraficos = localStorage.getItem("pul4Pr3dios-qualidadeGrafica")
     if (qualidadeGraficos == null)
         jogo.qualidadeGrafica = 1
     else
         jogo.qualidadeGrafica = parseInt(qualidadeGraficos)
 
     // Sincroniza a configuração para a Dificuldade do jogo
-    dificuldadeJogo = localStorage.getItem("dificuldadeJogo")
+    dificuldadeJogo = localStorage.getItem("pul4Pr3dios-dificuldadeJogo")
     if (dificuldadeJogo == null)
         jogo.dificuldade = 1 // Dificuldade Normal por padrão
     else
         jogo.dificuldade = parseInt(dificuldadeJogo)
 
     // Sincroniza a configuração de ociosidade
-    ociosidade = localStorage.getItem("ociosidade")
+    ociosidade = localStorage.getItem("pul4Pr3dios-ociosidade")
     if (ociosidade == null)
         jogo.ociosidade = 0
     else
         jogo.ociosidade = parseInt(ociosidade)
 
     // Sincroniza a configuração do paralaxe do menu
-    parallax = localStorage.getItem("menu_parallax")
+    parallax = localStorage.getItem("pul4Pr3dios-menu_parallax")
     if (parallax == null) jogo.parallax = 0
     else jogo.parallax = parseInt(parallax)
 
     // Sincronizando a skin selecionada atualmente
-    skinAtual = localStorage.getItem("skinAtual")
+    skinAtual = localStorage.getItem("pul4Pr3dios-skinAtual")
     if (skinAtual == null)
         jogador.skin = 7
     else
@@ -292,7 +289,7 @@ function carrega_dados() {
 
 
     // Sincronizando a lista de Skins
-    loja_skinsCompradas = localStorage.getItem("skinsCompradas")
+    loja_skinsCompradas = localStorage.getItem("pul4Pr3dios-skinsCompradas")
     if (loja_skinsCompradas == null)
         jogador.skins_compradas = [0, 0, 0, 0, 0, 0, 0, 1]
     else {
@@ -309,7 +306,7 @@ function carrega_dados() {
         }
     }
 
-    loja_modsComprados = localStorage.getItem("modsComprados")
+    loja_modsComprados = localStorage.getItem("pul4Pr3dios-modsComprados")
     if (loja_modsComprados == null)
         jogador.mods_comprados = [0, 0, 0, 0]
     else {
@@ -327,14 +324,14 @@ function carrega_dados() {
     }
 
     // Sincronizando o mod que está ativo no momento
-    jogador.mod_em_uso = localStorage.getItem("modEmUso")
+    jogador.mod_em_uso = localStorage.getItem("pul4Pr3dios-modEmUso")
     if (jogador.mod_em_uso == null)
         jogador.mod_em_uso = 0
     else
         jogador.mod_em_uso = parseInt(jogador.mod_em_uso)
 
     // Sincroniza a quantidade de usos dos modificadores
-    loja_modsCompradosUsados = localStorage.getItem("modsCompradosUsados")
+    loja_modsCompradosUsados = localStorage.getItem("pul4Pr3dios-modsCompradosUsados")
     if (loja_modsCompradosUsados == null)
         jogador.mods_vezes_usados = [0, 0, 0, 0]
     else {
@@ -354,7 +351,7 @@ function carrega_dados() {
 
     sincronizaModificadoresComprados(1)
 
-    bonus_comprados = localStorage.getItem("bonusComprados")
+    bonus_comprados = localStorage.getItem("pul4Pr3dios-bonusComprados")
     if (bonus_comprados == null)
         jogador.bonus_comprados = [0, 0, 0]
     else {
@@ -372,7 +369,7 @@ function carrega_dados() {
     }
 
     // Sincroniza a quantidade de usos dos modificadores
-    loja_bonusVezesUsados = localStorage.getItem("bonusVezesUsados")
+    loja_bonusVezesUsados = localStorage.getItem("pul4Pr3dios-bonusVezesUsados")
     if (loja_bonusVezesUsados == null)
         jogador.bonus_vezes_usados = [0, 0, 0]
     else {
@@ -392,7 +389,7 @@ function carrega_dados() {
 
     sincroniza_bonus(1)
 
-    lista_conquistas_g = localStorage.getItem("lista_conquistas_ganhas")
+    lista_conquistas_g = localStorage.getItem("pul4Pr3dios-lista_conquistas_ganhas")
     if (lista_conquistas_g == null)
         lista_conquistas_ganhas = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
     else {
@@ -414,21 +411,21 @@ function carrega_dados() {
     sincronizaConquistas()
 
     // Sincroniza a musica tema principal
-    musicaTema = localStorage.getItem("temaMusica")
-    jogo.musica_tema = `${musicaTema}.ogg` || "random"
+    musicaTema = localStorage.getItem("pul4Pr3dios-temaMusica")
+    jogo.musica_tema = musicaTema ? `${musicaTema}.ogg` : "random"
     get_element("seleciona_tema").value = jogo.musica_tema.replace(".ogg", "")
 
-    musicaTemaOcioso = localStorage.getItem("temaOcioso")
-    jogo.musica_tema_ocioso = `${musicaTemaOcioso}.ogg` || "random"
+    musicaTemaOcioso = localStorage.getItem("pul4Pr3dios-temaOcioso")
+    jogo.musica_tema_ocioso = musicaTemaOcioso ? `${musicaTemaOcioso}.ogg` : "random"
     get_element("seleciona_ocioso").value = jogo.musica_tema_ocioso.replace(".ogg", "")
 
-    temaAtivo = localStorage.getItem("temaAtivo")
+    temaAtivo = localStorage.getItem("pul4Pr3dios-temaAtivo")
     if (temaAtivo == null)
         jogo.tema_ativo = 1
     else
         jogo.tema_ativo = parseInt(temaAtivo)
 
-    temasComprados = localStorage.getItem("temasComprados")
+    temasComprados = localStorage.getItem("pul4Pr3dios-temasComprados")
     if (temasComprados == null)
         jogo.temas_comprados = [0, 1]
     else
@@ -439,7 +436,7 @@ function carrega_dados() {
 
     for (let i = 0; i < 3; i++) {
 
-        valor = localStorage.getItem(identificadores[i])
+        valor = localStorage.getItem(`pul4Pr3dios-${identificadores[i]}`)
 
         if (valor == null)
             valor = 0
@@ -513,7 +510,7 @@ function reseta() {
     jogador.y = 0
 
     if (jogador.partida_pontuacao > recorde) {
-        localStorage.setItem("recorde", jogador.partida_pontuacao)
+        localStorage.setItem("pul4Pr3dios-recorde", jogador.partida_pontuacao)
         recorde = jogador.partida_pontuacao
     }
 
@@ -545,25 +542,25 @@ function reseta() {
     hist_lava += jogador.partida_evento_lava
     jogador.moedas_coletadas += jogador.partida_moedas_coletadas
 
-    localStorage.setItem("qtdDistancia", hist_distancia)
-    localStorage.setItem("qtdTempoJogado", hist_tempo_jogado)
-    localStorage.setItem("qtdPulos", hist_pulos)
-    localStorage.setItem("qtdPontos", hist_pontos)
-    localStorage.setItem("qtdMods", hist_mod)
-    localStorage.setItem("tempoFlutuando", hist_tempo_flutuando)
-    localStorage.setItem("qtdMortes", hist_mortes)
-    localStorage.setItem("qtdPisoes", hist_pisoes)
+    localStorage.setItem("pul4Pr3dios-qtdDistancia", hist_distancia)
+    localStorage.setItem("pul4Pr3dios-qtdTempoJogado", hist_tempo_jogado)
+    localStorage.setItem("pul4Pr3dios-qtdPulos", hist_pulos)
+    localStorage.setItem("pul4Pr3dios-qtdPontos", hist_pontos)
+    localStorage.setItem("pul4Pr3dios-qtdMods", hist_mod)
+    localStorage.setItem("pul4Pr3dios-tempoFlutuando", hist_tempo_flutuando)
+    localStorage.setItem("pul4Pr3dios-qtdMortes", hist_mortes)
+    localStorage.setItem("pul4Pr3dios-qtdPisoes", hist_pisoes)
 
-    localStorage.setItem("moedas", jogador.moedas)
-    localStorage.setItem("moedasGastas", jogador.moedas_gastas)
-    localStorage.setItem("moedasColetadas", jogador.moedas_coletadas)
+    localStorage.setItem("pul4Pr3dios-moedas", jogador.moedas)
+    localStorage.setItem("pul4Pr3dios-moedasGastas", jogador.moedas_gastas)
+    localStorage.setItem("pul4Pr3dios-moedasColetadas", jogador.moedas_coletadas)
 
-    localStorage.setItem("eventosConcluidos", hist_eventos_concluidos)
-    localStorage.setItem("tempoEventos", hist_tempo_eventos)
-    localStorage.setItem("qtdEventoCidade", hist_cidade)
-    localStorage.setItem("qtdEventoParque", hist_parque)
-    localStorage.setItem("qtdEventoAgua", hist_agua)
-    localStorage.setItem("qtdEventoLava", hist_lava)
+    localStorage.setItem("pul4Pr3dios-eventosConcluidos", hist_eventos_concluidos)
+    localStorage.setItem("pul4Pr3dios-tempoEventos", hist_tempo_eventos)
+    localStorage.setItem("pul4Pr3dios-qtdEventoCidade", hist_cidade)
+    localStorage.setItem("pul4Pr3dios-qtdEventoParque", hist_parque)
+    localStorage.setItem("pul4Pr3dios-qtdEventoAgua", hist_agua)
+    localStorage.setItem("pul4Pr3dios-qtdEventoLava", hist_lava)
 
     ambiente.segura_som = 0
     pontosAtuais = null

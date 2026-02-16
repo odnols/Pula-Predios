@@ -3,10 +3,10 @@ var lista_conquistas, lista_descricao, lista_conquistas_ganhas = [0, 0, 0, 0, 0,
 function sincronizaNomeConquistas() {
     if (idioma == "pt")
         lista_conquistas = ["Ligando os motores", "Pisando em falso", "O Chão era Lava", "Não Atropele os prédios!", "No Poder do Ódio", "Paraíso dos Pisões", "Passando o tempo", "Já vi de tudo", "Pisões pra quem te quero", "Pling!", "Prédio Santos", "Roda Fria", "Velocidade Máxima", "Comprador Compulsivo", "Mudança de Tintas", "Simulador de Pulga", "Nada é Natural", "É Um Pássaro!", "Isso era Possível?", "Baixa Gravidade", "Você tem um sério problema!", "Selva de Concreto", "Clube de milhas aéreas", "Vergonha da Profissón!", "De novo de novo!", "Capitalista Opressor", "Colhendo os Frutos", "Corredor de Maratonas", "Nadando no Dinheiro"],
-            lista_descricao = ["Começou sua primeira partida!", "Perdeu uma partida se molhando na água", "Perdeu uma partida afundando na lava", "Perdeu uma partida atropelando um prédio", "Pulou 3x seguidas sem tocar no chão", "Passou por 5 parques", "Jogou por 1 hora (cumulativa durante partidas)", "Passou por todos os eventos do jogo", "Pisou em 50 pisões", "Ganhou sua primeira moeda", "Acumulou 2.500 moedas simultâneas", "Perdeu 10 vezes", "Atingiu a velocidade máxima", "Gastou mais de 500 moedas na loja", "Mudou de visual", "Pulou 1000 vezes", "Comprou um modificador", "Flutuou por mais de 500 segundos", "Perdeu uma partida no evento do parque", "Ativou um modificador de baixa gravidade", "Fez 200 pontos na dificuldade expert", "Terminou um evento de área densa, com mais de 30 segundos e na dificuldade expert", "Esgotou seu modificador aéreo numa partida", "Terminou uma partida com pontuação negativada", "Reiniciou os dados", "Ganhou 50 ou mais moedas em uma única partida", "Aproveitou seus Prêmios!", "Correu por mais de 50 km's", "Jogou com os bônus de 2x e Garimpo ativos ao mesmo tempo"]
+            lista_descricao = ["Começou sua primeira partida!", "Perdeu uma partida afundando na água", "Perdeu uma partida afundando na lava", "Perdeu uma partida atropelando um prédio", "Pulou 3x seguidas sem tocar no chão", "Passou por 5 parques", "Jogou por 1 hora (cumulativa durante partidas)", "Passou por todos os eventos do jogo", "Pisou em 50 pisões", "Ganhou sua primeira moeda", "Acumulou 2.500 moedas simultâneas", "Perdeu 10 vezes", "Atingiu a velocidade máxima", "Gastou mais de 500 moedas na loja", "Mudou de visual", "Pulou 1000 vezes", "Comprou um modificador", "Flutuou por mais de 500 segundos", "Perdeu uma partida no evento do parque", "Ativou um modificador de baixa gravidade", "Fez 200 pontos na dificuldade expert", "Terminou um evento de área densa, com mais de 30 segundos e na dificuldade expert", "Esgotou seu modificador aéreo numa partida", "Terminou uma partida com pontuação negativada", "Reiniciou os dados", "Ganhou 50 ou mais moedas em uma única partida", "Aproveitou seus Prêmios!", "Correu por mais de 50 km's", "Jogou com os bônus de 2x e Garimpo ativos ao mesmo tempo"]
     else
         lista_conquistas = ["Starting the engines", "False step", "The floor was Lava", "Don't run over buildings!", "In the Power of Hate", "Paradise of kicks", "Passing the time", "I saw everything", "Kicks for whoever wants", "Pling!", "Santos Building", "Cold Wheel", "Maximum speed", "Compulsive buyer", "Paint Change", "Flea Simulator", "Nothing is Natural", "It is a bird!", "That was possible?", "Low Severity", "You have a serious problem!", "Concrete jungle", "Air miles club", "Shame of the Profession!", "Again again!", "Oppressive Capitalist", "Harvesting the Fruits", "Marathon Runner", "Swimming in the Money"],
-            lista_descricao = ["Your first match started!", "Lost a game by falling into the water", "Missed a match sinking in the lava", "Lost a match by running over a building", "Jumped 3x in a row without touching the ground", "Passed through 5 parks", "Played for 1 hour (cumulative during matches)", "Went through all the events in the game", "Gave 50 kicks", "Won his first coin", "Accumulated 2,500 simultaneous coins", "Lost 10 times", "Reached maximum speed", "Spent more than 500 coins in the store", "Altered appearance", "Jumped 1000 times", "Purchased a modifier", "Floated for more than 500 seconds", "Lost a game at the park event", "Activated a low gravity modifier", "Scored 200 points on expert difficulty", "Finished a dense area event, with more than 30 seconds and on expert difficulty", "Used all of his fluctuation modifier in one match", "Finished a game with a negative score", "Erased your data", "Won 50 or more coins in a single match", "Enjoy your prizes!", "Run for more than50 km's", "Played with 2x and Gold Mining bonuses active at the same time"]
+            lista_descricao = ["Your first match started!", "Missed a match sinking in the water", "Missed a match sinking in the lava", "Lost a match by running over a building", "Jumped 3x in a row without touching the ground", "Passed through 5 parks", "Played for 1 hour (cumulative during matches)", "Went through all the events in the game", "Gave 50 kicks", "Won his first coin", "Accumulated 2,500 simultaneous coins", "Lost 10 times", "Reached maximum speed", "Spent more than 500 coins in the store", "Altered appearance", "Jumped 1000 times", "Purchased a modifier", "Floated for more than 500 seconds", "Lost a game at the park event", "Activated a low gravity modifier", "Scored 200 points on expert difficulty", "Finished a dense area event, with more than 30 seconds and on expert difficulty", "Used all of his fluctuation modifier in one match", "Finished a game with a negative score", "Erased your data", "Won 50 or more coins in a single match", "Enjoy your prizes!", "Run for more than50 km's", "Played with 2x and Gold Mining bonuses active at the same time"]
 }
 
 function conquista(conquista, modo) {
@@ -62,7 +62,7 @@ function conquista(conquista, modo) {
 
                     executaSons("faixa_conquistas", "Efeitos", "conquista_secreta.ogg", 2)
                     tempo_conquista = 9000
-                } else {                    
+                } else {
                     if (idioma == "pt")
                         get_element("tipo_conquista").innerHTML = "Conquista Obtida!"
                     else
@@ -121,7 +121,7 @@ function conquista(conquista, modo) {
         }
 
         // Salvando no banco a lista de conquistas ganhas
-        localStorage.setItem("lista_conquistas_ganhas", lista_conquistas_ganhas)
+        localStorage.setItem("pul4Pr3dios-lista_conquistas_ganhas", lista_conquistas_ganhas)
     }
 
     sincronizaEstatisticasConquistas()
@@ -161,7 +161,7 @@ function sincronizaEstatisticasConquistas() {
     }
 
     jogador.conquistas = obtidas
-    jogador.consquistas_total = lista_conquistas.length
+    jogador.conquistas_total = lista_conquistas.length
 
     get_element("conquistas_obtidas").innerHTML = `${obtidas}/${lista_conquistas.length}`
 

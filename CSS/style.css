@@ -12,13 +12,13 @@
 }
 
 @font-face {
-    font-family: Minecraft;
-    src: url('../source/fonts/Minecraft.ttf');
+    font-family: minecraft;
+    src: url('../source/fonts/minecraft.ttf');
 }
 
 @font-face {
-    font-family: Minecraftia;
-    src: url('../source/fonts/Minecraftia.ttf');
+    font-family: minecraftia;
+    src: url('../source/fonts/minecraftia.ttf');
 }
 
 body {
@@ -31,7 +31,7 @@ body {
 
     /* Desabilita o zoom com duplo clique */
     touch-action: manipulation;
-    font-family: Minecraftia !important;
+    font-family: minecraftia !important;
 }
 
 hr {
@@ -111,13 +111,11 @@ canvas {
     width: 100%;
     color: white;
     font-size: 25px;
-    position: absolute;
+    /* position: absolute; */
 }
 
 #stats_dead,
-#stats_dead2,
-#stats_,
-#stats_2 {
+#stats_dead2 {
     width: 400px;
     height: 400px;
     overflow-y: scroll;
@@ -134,21 +132,31 @@ canvas {
     left: 15%;
 }
 
-#stats_ {
-    right: 5%;
-    height: 70%;
-    width: 450px;
-    text-align: center;
-    background: url("../source/images/background/Update.png");
+#quadros_estatisticas {
+    grid-gap: 3%;
+    display: flex;
+    margin-left: 3%;
+    grid-template-columns: auto auto auto;
 }
 
-#stats_2 {
-    left: 5%;
-    height: 70%;
-    width: 450px;
+#quadro_confirma_exclusao {
+    display: none;
+    overflow-y: hidden;
+    border: 1px solid black;
+    text-shadow: 1px 1px 2px grey;
+    box-shadow: 0px 0px 15px black;
+    background-color: rgba(255, 0, 0, .6);
+    background-image: url("../source/images/background/geometria.png");
+}
+
+.campo_stats {
+    width: 30%;
+    height: 600px;
+    padding-top: 2%;
     overflow-y: auto;
+    position: relative;
     text-align: center;
-    background: url("../source/images/background/Update.png");
+    background: url("../source/images/background/update.png");
 }
 
 a#log_click {
@@ -374,7 +382,7 @@ button {
     height: 120px;
     overflow: hidden;
     animation: move_img_loja 30s infinite;
-    background: url("../source/images/background/Quadrantes.png");
+    background: url("../source/images/background/quadrantes.png");
 }
 
 #text_novidades_loja {
@@ -408,7 +416,7 @@ button {
 .item_grid_loja_1 {
     grid-area: tema;
     background-size: cover !important;
-    background-image: url("../source/images/store/Temas/1900s.jpg") !important;
+    background-image: url("../source/images/store/temas/1900s.jpg") !important;
 }
 
 .item_grid_loja_2 {
@@ -459,7 +467,7 @@ button {
     background-color: rgb(3, 73, 64);
     box-shadow: inset 0px 0px 15px black;
     transition: background-color .5s, box-shadow .2s;
-    background: url("../source/images/background/Quadrantes.png");
+    background: url("../source/images/background/quadrantes.png");
 }
 
 .quadros_loja:hover {
@@ -488,7 +496,7 @@ button {
     overflow: hidden;
     box-shadow: 0px 0px 15px black;
     transition: box-shadow .3s, transform .5s;
-    background-image: url("../source/images/background/Quadrantes.png");
+    background-image: url("../source/images/background/quadrantes.png");
 }
 
 .tema_caixa_ativo {
@@ -534,7 +542,7 @@ button {
     overflow: hidden;
     box-shadow: inset 0px 0px 15px black;
     transition: transform .5s box-shadow .2s;
-    background: url("../source/images/background/Quadrantes.png");
+    background: url("../source/images/background/quadrantes.png");
 }
 
 #sessao_loja {
@@ -562,24 +570,6 @@ button {
     animation: aparece_texto .5s;
 }
 
-#quadro_confirma_exclusao {
-    top: 40%;
-    left: 30%;
-    z-index: 10;
-    width: 40%;
-    color: white;
-    display: none;
-    padding: 20px;
-    height: 250px;
-    position: fixed;
-    text-align: center;
-    border: 1px solid black;
-    text-shadow: 1px 1px 2px grey;
-    box-shadow: 0px 0px 15px black;
-    background-color: rgba(255, 0, 0, .8);
-    background-image: url("../source/images/background/Geometria.png");
-}
-
 #quadro_confirma_compra {
     top: 40%;
     left: 35%;
@@ -591,7 +581,7 @@ button {
     position: fixed;
     border: 1px solid black;
     background-color: rgba(0, 0, 0, .6);
-    background-image: url("../source/images/background/Geometria.png");
+    background-image: url("../source/images/background/geometria.png");
 }
 
 .cancela_compra {
@@ -692,7 +682,7 @@ button {
     background-color: midnightblue;
     box-shadow: 0px 0px 15px black;
     transition: box-shadow .3s, transform .5s;
-    background-image: url("../source/images/background/Quadrantes.png");
+    background-image: url("../source/images/background/quadrantes.png");
 }
 
 .item_venda:hover {
@@ -742,7 +732,7 @@ button {
     background-color: yellow;
     transition: box-shadow .3s;
     box-shadow: 0px 0px 15px black;
-    background-image: url("../source/images/background/Quadrantes.png");
+    background-image: url("../source/images/background/quadrantes.png");
 }
 
 .item_equipado:hover {
@@ -780,7 +770,7 @@ button {
     position: absolute;
     background-color: red;
     box-shadow: inset 0px 0px 15px black;
-    background-image: url("../source/images/background/Quadrantes.png");
+    background-image: url("../source/images/background/quadrantes.png");
 }
 
 #mod_esquerda_principal {
@@ -864,7 +854,7 @@ button {
     background-color: midnightblue;
     box-shadow: 0px 0px 15px black;
     transition: box-shadow .3s, transform .5s;
-    background-image: url("../source/images/background/Quadrantes.png");
+    background-image: url("../source/images/background/quadrantes.png");
 }
 
 .mod_venda:hover {
@@ -882,7 +872,7 @@ button {
     background-color: red;
     box-shadow: 0px 0px 15px black;
     transition: box-shadow .3s, transform .5s;
-    background-image: url("../source/images/background/Quadrantes.png");
+    background-image: url("../source/images/background/quadrantes.png");
 }
 
 .mod_principal_venda:hover {
@@ -904,7 +894,7 @@ button {
     background-color: yellow;
     box-shadow: 0px 0px 15px black;
     transition: box-shadow .3s, transform .5s;
-    background-image: url("../source/images/background/Quadrantes.png");
+    background-image: url("../source/images/background/quadrantes.png");
 }
 
 #notificacoes {
@@ -939,7 +929,7 @@ button {
     left: 0%;
     font-size: 50px;
     position: absolute;
-    font-family: "Minecraft";
+    font-family: minecraft;
 }
 
 #mod {
@@ -953,7 +943,7 @@ h3#timer_mod {
     top: 60%;
     font-size: 50px;
     position: absolute;
-    font-family: "Minecraft";
+    font-family: minecraft;
 }
 
 h3#estado_mod {
@@ -991,7 +981,7 @@ h3#velocity {
     top: 60%;
     font-size: 50px;
     position: absolute;
-    font-family: "Minecraft";
+    font-family: minecraft;
 }
 
 h3#metros_s {
@@ -1015,7 +1005,7 @@ h3#cronometro {
     width: 100%;
     font-size: 50px;
     position: absolute;
-    font-family: "Minecraft";
+    font-family: minecraft;
 }
 
 h3#tempo_cro {
@@ -1099,7 +1089,7 @@ h3#qtdPulos {
     border: solid 2px black;
     box-shadow: inset 0px 0px 15px black;
     background-color: rgba(255, 255, 255, .1);
-    background: url("../source/images/background/Geometria.png");
+    background: url("../source/images/background/geometria.png");
 }
 
 #placeholder_conquista {
@@ -1173,7 +1163,7 @@ h3#qtdPulos {
     position: absolute;
     background-color: rgba(0, 0, 0, .5);
     box-shadow: inset 0px 0px 15px black;
-    background-image: url("../source/images/background/Mosaico.png");
+    background-image: url("../source/images/background/mosaico.png");
 }
 
 .opcao_tutorial {
@@ -1762,7 +1752,7 @@ img#trofeu {
     height: 100%;
     background-color: yellow;
     box-shadow: inset 0px 0px 15px black;
-    background-image: url("../source/images/background/Update.png");
+    background-image: url("../source/images/background/update.png");
 }
 
 #historia_jogo {

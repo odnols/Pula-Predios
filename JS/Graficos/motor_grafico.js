@@ -3,7 +3,7 @@ var anim_indices = [0, 0, 0, 0, 0, 0], anim_estrela = 0, anim_luzes_naveg = 0
 function Cenario(astro) {
 
     let temas_disponiveis = ["cidade", "cidade", "lua"]
-    let tema_ativo = temas_disponiveis[jogo.tema_ativo] || 0
+    let tema_ativo = temas_disponiveis[jogo.tema_ativo] || "cidade"
 
     lista_sprites.img_cenario = new Image()
 
@@ -26,31 +26,31 @@ function Cenario(astro) {
     lista_sprites.img_mascara_estrela = new Image()
     lista_sprites.img_luzes_navegacao = new Image()
 
-    lista_sprites.img_jogador.src = "source/images/Sprites/Jogador/Jogador_dia.png"
+    lista_sprites.img_jogador.src = "source/images/sprites/jogador/jogador_dia.png"
 
-    lista_sprites.img_objs.src = `source/images/Sprites/${tema_ativo}/Objetos_dia.png`
-    lista_sprites.img_cenario.src = `source/images/Sprites/${tema_ativo}/cenario_dia.png`
-    lista_sprites.img_agua.src = `source/images/Sprites/${tema_ativo}/agua_dia.png`
-    lista_sprites.img_lava.src = `source/images/Sprites/${tema_ativo}/lava.png`
-    lista_sprites.img_areia.src = `source/images/Sprites/Praia/areia_noite.png`
-    lista_sprites.img_ceu.src = `source/images/Sprites/${tema_ativo}/Ceu.png`
-    lista_sprites.img_sombra.src = `source/images/Sprites/${tema_ativo}/Sombra.png`
+    lista_sprites.img_objs.src = `source/images/sprites/${tema_ativo}/objetos_dia.png`
+    lista_sprites.img_cenario.src = `source/images/sprites/${tema_ativo}/cenario_dia.png`
+    lista_sprites.img_agua.src = `source/images/sprites/${tema_ativo}/agua_dia.png`
+    lista_sprites.img_lava.src = `source/images/sprites/${tema_ativo}/lava.png`
+    lista_sprites.img_areia.src = `source/images/sprites/praia/areia_dia.png`
+    lista_sprites.img_ceu.src = `source/images/sprites/${tema_ativo}/ceu.png`
+    lista_sprites.img_sombra.src = `source/images/sprites/${tema_ativo}/sombra.png`
 
     // Sprites animados usados no jogador
-    lista_sprites.img_adereco_aco.src = "source/images/Sprites/Jogador/Aderecos/aco.png"
-    lista_sprites.img_adereco_fogo.src = "source/images/Sprites/Jogador/Aderecos/mascara_fogo.png"
-    lista_sprites.img_adereco_roda.src = "source/images/Sprites/Jogador/Aderecos/roda.png"
-    lista_sprites.img_adereco_bandeira.src = "source/images/Sprites/Jogador/Aderecos/bandeira.png"
-    lista_sprites.img_adereco_combustao.src = "source/images/Sprites/Jogador/Aderecos/combustao.png"
+    lista_sprites.img_adereco_aco.src = "source/images/sprites/jogador/aderecos/aco.png"
+    lista_sprites.img_adereco_fogo.src = "source/images/sprites/jogador/aderecos/mascara_fogo.png"
+    lista_sprites.img_adereco_roda.src = "source/images/sprites/jogador/aderecos/roda.png"
+    lista_sprites.img_adereco_bandeira.src = "source/images/sprites/jogador/aderecos/bandeira.png"
+    lista_sprites.img_adereco_combustao.src = "source/images/sprites/jogador/aderecos/combustao.png"
 
-    lista_sprites.img_mascara_estrela.src = "source/images/Sprites/Cidade/mascara_estrelas.png"
-    lista_sprites.img_luzes_navegacao.src = "source/images/Sprites/Cidade/luzes_de_navegacao.png"
+    lista_sprites.img_mascara_estrela.src = "source/images/sprites/cidade/mascara_estrelas.png"
+    lista_sprites.img_luzes_navegacao.src = "source/images/sprites/cidade/luzes_de_navegacao.png"
 
     // Define qual será o astro mostrado no céu ao carregar o game
     if (astro)
-        lista_sprites.img_astros.src = "source/images/Sprites/lua.png"
+        lista_sprites.img_astros.src = "source/images/sprites/lua.png"
     else
-        lista_sprites.img_astros.src = "source/images/Sprites/sol.png"
+        lista_sprites.img_astros.src = "source/images/sprites/sol.png"
 
     if (jogo.tema_ativo == 0) {
 

@@ -6,7 +6,7 @@ function carrega_jogo(requisicao_auto) {
     if (dispositivo < 1366)
         $("#botoes_acessibilidade").fadeIn()
 
-    verifica = localStorage.getItem("iniciaLoucura_1.2")
+    verifica = localStorage.getItem("pul4Pr3dios-iniciaLoucura_1.2")
 
     if (requisicao_auto == 0 && verifica == null) {
         get_element("primeiro_logon").style.display = "block"
@@ -46,12 +46,12 @@ function carrega_jogo(requisicao_auto) {
         data_atual = date1.toLocaleDateString('pt-BR')
 
         // Verifica quando foi a última sessão
-        if (localStorage.getItem("ultimoCarregamento"))
-            if (data_atual == localStorage.getItem("ultimoCarregamento"))
+        if (localStorage.getItem("pul4Pr3dios-ultimoCarregamento"))
+            if (data_atual == localStorage.getItem("pul4Pr3dios-ultimoCarregamento"))
                 carregar_tudo = false // true p/ sempre carregar
 
         if (carregar_tudo) {
-            localStorage.setItem("ultimoCarregamento", data_atual)
+            localStorage.setItem("pul4Pr3dios-ultimoCarregamento", data_atual)
 
             let indice = 0
 
@@ -92,6 +92,8 @@ function carrega_jogo(requisicao_auto) {
 
                 get_element("carrega_jogo").style.animation = "termina_carregamento2 1s"
                 $("#carrega_jogo").fadeOut(1000)
+
+                console.log(verifica)
 
                 if (verifica == null)
                     historia()

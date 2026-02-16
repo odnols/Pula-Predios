@@ -92,15 +92,17 @@ function insere_obj() {
     //  Aumenta a Velocidade Gradualmente ( Fácil, Normal e Difícil )
     if (obstaculos.qtdObjetos % 4 == 0 && jogo.status == estados.jogando && jogo.velocidade < 30 && jogo.dificuldade != 3) {
         jogo.velocidade += .5
-        if (jogo.velocidade == 30)
-            conquista(12, 0)
+
+        // Conquista: Velocidade máxima
+        if (jogo.velocidade == 30) conquista(12, 0)
     }
 
     // Modo Expert
     if (obstaculos.qtdObjetos % 2 == 0 && jogo.status == estados.jogando && jogo.velocidade < 35 && jogo.dificuldade == 3) {
         jogo.velocidade += .5
-        if (jogo.velocidade == 35)
-            conquista(12, 0)
+
+        // Conquista: Velocidade máxima
+        if (jogo.velocidade == 35) conquista(12, 0)
     }
 }
 

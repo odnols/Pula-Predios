@@ -62,7 +62,7 @@ function TOOLTIP() {
 	this.width = 150;					// width (pixels)
 	this.maxWidth = 500;				// max width (pixels)
 	this.bgColor = "rgba(0, 0, 0, .8)"; // background color
-	this.textFont = "Minecraftia";	    // text font family
+	this.textFont = "minecraftia";	    // text font family
 	this.textSize = 18;					// text font size (pixels)
 	this.textColor = "white";			// text color
 	this.textAlign = "center";			// text alignment: "left", "right" or "center"
