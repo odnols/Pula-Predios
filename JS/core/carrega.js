@@ -93,8 +93,6 @@ function carrega_jogo(requisicao_auto) {
                 get_element("carrega_jogo").style.animation = "termina_carregamento2 1s"
                 $("#carrega_jogo").fadeOut(1000)
 
-                console.log(verifica)
-
                 if (verifica == null)
                     historia()
             }, 1000)
