@@ -415,12 +415,12 @@ function carrega_dados() {
 
     // Sincroniza a musica tema principal
     musicaTema = localStorage.getItem("temaMusica")
-    if (musicaTema == "0")
-        jogo.musica_tema = null
+    jogo.musica_tema = `${musicaTema}.ogg` || "random"
+    get_element("seleciona_tema").value = jogo.musica_tema.replace(".ogg", "")
 
     musicaTemaOcioso = localStorage.getItem("temaOcioso")
-    if (musicaTemaOcioso == "0")
-        jogo.musica_tema_ocioso = null
+    jogo.musica_tema_ocioso = `${musicaTemaOcioso}.ogg` || "random"
+    get_element("seleciona_ocioso").value = jogo.musica_tema_ocioso.replace(".ogg", "")
 
     temaAtivo = localStorage.getItem("temaAtivo")
     if (temaAtivo == null)

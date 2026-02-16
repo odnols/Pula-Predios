@@ -62,7 +62,7 @@ function conquista(conquista, modo) {
 
                     executaSons("faixa_conquistas", "Efeitos", "conquista_secreta.ogg", 2)
                     tempo_conquista = 9000
-                } else {
+                } else {                    
                     if (idioma == "pt")
                         get_element("tipo_conquista").innerHTML = "Conquista Obtida!"
                     else
@@ -138,15 +138,14 @@ function redireciona_conquista(valor) {
 function sincronizaQuadroConquistas() {
 
     sincronizaEstatisticasConquistas()
-
     get_element("placeholder_conquista").innerHTML = ""
 
     for (let i = 0; i < lista_conquistas.length; i++) {
         if (lista_conquistas_ganhas[i] == 0) {
-            if (conquistas_secretas.includes(i))
-                get_element("placeholder_conquista").innerHTML += "<img class='img_conquista' src='source/images/achievements/secreta.jpg'>"
-            else
-                get_element("placeholder_conquista").innerHTML += "<img  onMouseOver='troca_descricao(" + 'lista_conquistas[' + i + ']' + "," + 'lista_descricao[' + i + ']' + ", 1)' onmouseout='troca_descricao(0, 0, 0)' class='img_conquista' src='source/images/achievements/" + i + ".jpg'></div>"
+
+            const imagem = conquistas_secretas.includes(i) ? "secreta" : i
+
+            get_element("placeholder_conquista").innerHTML += "<img onMouseOver='troca_descricao(" + 'lista_conquistas[' + i + ']' + "," + 'lista_descricao[' + i + ']' + ", 1)' onmouseout='troca_descricao(0, 0, 0)' class='img_conquista' src='source/images/achievements/" + imagem + ".jpg'></div>"
         } else
             get_element("placeholder_conquista").innerHTML += "<img onMouseOver='troca_descricao(" + 'lista_conquistas[' + i + ']' + "," + 'lista_descricao[' + i + ']' + ", 1)' onmouseout='troca_descricao(0, 0, 0)' class='img_conquista_obtida' src='source/images/achievements/" + i + ".jpg'>"
     }
