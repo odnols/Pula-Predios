@@ -22,10 +22,7 @@ function carrega_jogo(requisicao_auto) {
         $("#status_carregamento").fadeIn()
         $("#primeiro_logon").fadeOut()
 
-        if (idioma == "pt")
-            get_element("texto_carregamento").innerHTML = "Ligando os motores"
-        else if (idioma == "en")
-            get_element("texto_carregamento").innerHTML = "Starting the engines"
+        get_element("texto_carregamento").innerHTML = translations["historia.ligando_motores"]
 
         if (dispositivo >= 1366) {
             animaMoeda()
@@ -34,8 +31,7 @@ function carrega_jogo(requisicao_auto) {
         }
 
         let carregar_departamentos = [sincronizaQualidadeGrafica(), main(), aleatorizaProp(), sincronizaQuadroConquistas(), carrega_idioma(1)]
-        let texto_feedback_pt = ["Vasculhando o cache", "Colocando combustível", "Animando", "Aleatorizando Props", "Admirando Conquistas", "Traduzindo", "Sintonizando os sons"]
-        let texto_feedback_en = ["Searching the cache", "Putting fuel", "Starting animations", "Randomizing Props", "Admiring Achievements", "translating", "Tuning the sounds"]
+        const texto_feedback = ["carregando.cache", "carregando.combustivel", "carregando.animando", "carregando.props", "carregando.conquistas", "carregando.traduzindo", "carregando.sons"]
 
         let date1 = new Date(), carregar_tudo = true
         data_atual = date1.toLocaleDateString('pt-BR')
@@ -51,10 +47,8 @@ function carrega_jogo(requisicao_auto) {
             let indice = 0
 
             carregar_departaments = setInterval(() => {
-                if (idioma == "pt")
-                    get_element("texto_carregamento").innerHTML = texto_feedback_pt[indice]
-                else
-                    get_element("texto_carregamento").innerHTML = texto_feedback_en[indice]
+                get_element("texto_carregamento").innerHTML = texto_feedback[indice]
+
                 indice++
 
                 get_element("progresso_barra_carregamento").style.width = `${(indice * 8.33).toFixed(2)}%`
@@ -69,13 +63,8 @@ function carrega_jogo(requisicao_auto) {
         } else {
             get_element("texto_carregamento").style.color = "Yellow"
 
-            if (idioma == "pt") {
-                get_element("texto_carregamento").innerHTML = "Carregamento Rápido"
-                get_element("porcentagem_carregada").innerHTML = "Uma Odisseia pulatória"
-            } else {
-                get_element("texto_carregamento").innerHTML = "Fast load"
-                get_element("porcentagem_carregada").innerHTML = "An Odyssey full of heels"
-            }
+            get_element("texto_carregamento").innerHTML = translations["tela.carregamento_rapido"]
+            get_element("porcentagem_carregada").innerHTML = translations["tela.odisseia"]
 
             setTimeout(() => {
 
@@ -97,10 +86,7 @@ function carrega_jogo(requisicao_auto) {
 
 function ultimo_estagio_carregamento() {
 
-    if (idioma == "pt")
-        get_element("texto_carregamento").innerHTML = "Sincronizando tudo e iniciando"
-    else
-        get_element("texto_carregamento").innerHTML = "Syncing everything and getting started"
+    get_element("texto_carregamento").innerHTML = translations["tela.sincronizando"]
 
     largura_barra = $("#progresso_barra_carregamento").css("width")
 

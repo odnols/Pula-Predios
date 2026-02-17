@@ -1,5 +1,4 @@
 var identificadores = ["Skins", "Modificadores", "Bônus", "Temas"]
-var identificadores_2 = ["Skins", "Modifiers", "Bonuses", "Themes"]
 var listaPrecos_Skins = [70, 70, 70, 70, 70, 70, 70]
 var listaPrecos_Mods = [50, 50, 70, 0]
 var listaPrecos_Bonus = [100, 100, 30]
@@ -12,11 +11,7 @@ function carrega_dados_loja(categoria_loja) {
     $("#sessao_loja").fadeIn()
     $("#rodape_loja").fadeIn()
 
-    if (idioma == "pt")
-        get_element("categoria_loja").innerHTML = identificadores[categoria_loja]
-    else
-        get_element("categoria_loja").innerHTML = identificadores_2[categoria_loja]
-
+    get_element("categoria_loja").innerHTML = translations[identificadores[categoria_loja]]
     carrega_vendas_loja(identificadores[categoria_loja])
 
     menus.categoria_anterior = identificadores[categoria_loja]
@@ -29,16 +24,9 @@ function carrega_vendas_loja(caso) {
 
     if (caso == "Skins") {
 
-        if (idioma == "pt")
-            var nomeSkins = ["Vermelho", "Branco", "Amarelo", "Azul", "Roxo", "Verde"]
-        else
-            var nomeSkins = ["Red", "White", "Yellow", "Blue", "Purple", "Green"]
+        let nomeSkins = ["cor.vermelho", "cor.branco", "cor.amarelo", "cor.azul", "cor.roxo", "cor.verde"]
 
-        if (idioma == "pt")
-            get_element("categoria_teaser").innerHTML = "Mude a sua aparência por aqui ;)"
-        else
-            get_element("categoria_teaser").innerHTML = "Change your appearance around here ;)"
-
+        get_element("categoria_teaser").innerHTML = translations["loja.mude_aparencia"]
         get_element("placeholder_loja").innerHTML = ""
 
         if (jogador.skin != 7)
@@ -46,13 +34,13 @@ function carrega_vendas_loja(caso) {
         else
             get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onclick='confirma_compra(1, 7)'><img class='img_skin_venda' src='source/images/sprites/jogador/jogador7_noite.png'><br><br>Padrão</div>"
 
-        for (var i = 0; i < 6; i++) {
+        for (let i = 0; i < 6; i++) {
             if (jogador.skins_compradas[i] != 1) // Item a venda
-                get_element("placeholder_loja").innerHTML += `<div class='item_venda' onclick='confirma_compra(1, ${i}, 55)'> <img class='img_skin_venda' src='source/images/sprites/jogador/jogador${i + 1}_noite.png'><br><br>${nomeSkins[i]}<div class='preco_item'>$${listaPrecos_Skins[i]}</div></div>`
+                get_element("placeholder_loja").innerHTML += `<div class='item_venda' onclick='confirma_compra(1, ${i}, 55)'> <img class='img_skin_venda' src='source/images/sprites/jogador/jogador${i + 1}_noite.png'><br><br>${translations[nomeSkins[i]]}<div class='preco_item'>$${listaPrecos_Skins[i]}</div></div>`
             else if (jogador.skin != [i]) // Item Comprado
-                get_element("placeholder_loja").innerHTML += `<div class='item_comprado' onclick='confirma_compra(1, ${i}, 55)'><img class='img_skin_venda' src='source/images/sprites/jogador/jogador${i + 1}_noite.png'><br><br>${nomeSkins[i]}</div>`
+                get_element("placeholder_loja").innerHTML += `<div class='item_comprado' onclick='confirma_compra(1, ${i}, 55)'><img class='img_skin_venda' src='source/images/sprites/jogador/jogador${i + 1}_noite.png'><br><br>${translations[nomeSkins[i]]}</div>`
             else                         // Item Equipado
-                get_element("placeholder_loja").innerHTML += `<div class='item_equipado' onclick='confirma_compra(1, ${i}, 55)'><img class='img_skin_venda' src='source/images/sprites/jogador/jogador${i + 1}_noite.png'><br><br>${nomeSkins[i]}</div>`
+                get_element("placeholder_loja").innerHTML += `<div class='item_equipado' onclick='confirma_compra(1, ${i}, 55)'><img class='img_skin_venda' src='source/images/sprites/jogador/jogador${i + 1}_noite.png'><br><br>${translations[nomeSkins[i]]}</div>`
         }
 
     } else if (caso == "Modificadores") {
@@ -62,15 +50,8 @@ function carrega_vendas_loja(caso) {
         if (jogador.mod_em_uso == 0) nome_img = "flutua"
         else if (jogador.mod_em_uso == 1) nome_img = "aco"
 
-        if (idioma == "pt")
-            get_element("categoria_teaser").innerHTML = "Bota mod em tudo!"
-        else
-            get_element("categoria_teaser").innerHTML = "Puts mod on everything!"
-
-        if (idioma == "pt")
-            get_element("categoria_teaser").innerHTML += `<br><div id='mod_em_uso'><h3 style='float: left'>Modificador Principal</h3><h3 style='float: right'>Modificadores Adquiridos</h3><div id='barra_mods_loja'><div id='mod_esquerda_principal'>Ativo: &nbsp; <img class='icon_mod_loja' src='source/images/store/mods/${nome_img}.png'></div><div id='mod_direita_principal'></div></div></div>`
-        else
-            get_element("categoria_teaser").innerHTML += `<br><div id='mod_em_uso'><h3 style='float: left'>Main Modifier</h3><h3 style='float: right'>Purchased Modifiers</h3><div id='barra_mods_loja'><div id='mod_esquerda_principal'>Active: &nbsp; <img class='icon_mod_loja' src='source/images/store/mods/${nome_img}.png'></div> <div id='mod_direita_principal'></div></div></div>`
+        get_element("categoria_teaser").innerHTML = translations["loja.coloca_mod"]
+        get_element("categoria_teaser").innerHTML += `<br><div id='mod_em_uso'><h3 style='float: left'>${translations["loja.mod_principal"]}</h3><h3 style='float: right'>${translations["loja.mods_comprados"]}</h3><div id='barra_mods_loja'><div id='mod_esquerda_principal'>${translations["loja.ativo"]} &nbsp; <img class='icon_mod_loja' src='source/images/store/mods/${nome_img}.png'></div><div id='mod_direita_principal'></div></div></div>`
 
         get_element("mod_direita_principal").innerHTML = ""
 
@@ -89,30 +70,25 @@ function carrega_vendas_loja(caso) {
         if (jogador.mod_em_uso == 0 && jogador.mods_comprados[3] == 1)
             get_element("mod_direita_principal").innerHTML += "<img id='restaura_modificador' src='source/images/store/mods/lunar.png' onclick='altera_modificador(100)'>"
 
-        if (idioma == "pt")
-            var descricao = ["+ Tempo", "+ Vezes", "De Aço"]
-        else
-            var descricao = ["+ Time", "+ Turns", "Of steel"]
-
-        var nomeImagem = ["relogio.gif", "jump_boost.png", "aco.png"]
+        let descricao = ["mod.mais_tempo", "mod.mais_vezes", "mod.de_aco"]
+        let nomeImagem = ["relogio.gif", "jump_boost.png", "aco.png"]
 
         get_element("placeholder_loja").innerHTML = ""
 
-
-        for (var i = 0; i < descricao.length; i++) {
+        for (let i = 0; i < descricao.length; i++) {
             if (jogador.mods_comprados[i] == 0) { // Item a venda
                 if (i != 2)
-                    get_element("placeholder_loja").innerHTML += "<div class='mod_venda' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + descricao[i] + " <div class='preco_item'> $" + listaPrecos_Mods[i] + "</div> </div>"
+                    get_element("placeholder_loja").innerHTML += "<div class='mod_venda' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + translations[descricao[i]] + " <div class='preco_item'> $" + listaPrecos_Mods[i] + "</div> </div>"
                 else
-                    get_element("placeholder_loja").innerHTML += "<div class='mod_principal_venda' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + descricao[i] + " <div class='preco_item'> $" + listaPrecos_Mods[i] + "</div> </div>"
+                    get_element("placeholder_loja").innerHTML += "<div class='mod_principal_venda' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + translations[descricao[i]] + " <div class='preco_item'> $" + listaPrecos_Mods[i] + "</div> </div>"
             } else {
                 if (jogador.mods_comprados[i] == 1 && jogador.mod_em_uso != 1) // Item Comprado
                     if (jogador.mods_comprados[i] == 1 && i < 2)
-                        get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + descricao[i] + "</div>"
+                        get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + translations[descricao[i]] + "</div>"
                     else
-                        get_element("placeholder_loja").innerHTML += "<div class='item_comprado' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + descricao[i] + "</div>"
+                        get_element("placeholder_loja").innerHTML += "<div class='item_comprado' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + translations[descricao[i]] + "</div>"
                 else // Comprado e equipado
-                    get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + descricao[i] + "</div>"
+                    get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip(" + 'descricao_Mods[' + i + ']' + ")' onmouseout='toolTip()'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + translations[descricao[i]] + "</div>"
             }
         }
 
@@ -123,50 +99,36 @@ function carrega_vendas_loja(caso) {
                 get_element("placeholder_loja").innerHTML += "<div class='item_comprado_lendario' onMouseOver='toolTip(" + 'descricao_Mods[3]' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, 3, 55)'><img class='img_mod_venda' src='source/images/store/mods/lunar.png'><br><br>Gravidade Lunar</div>"
         }
     } else if (caso == "Bônus") { // Bônus
-        if (idioma == "pt")
-            var descricao = ["2x$", "Garimpeiro", "Vento Estocado"]
-        else
-            var descricao = ["2x$", "Gold miner", "Stocked Wind"]
 
-        var nomeImagem = ["pisao2x.png", "garimpeiro.png", "vento_estocado.png"]
+        let descricao = ["bonus.dobro", "bonus.garimpeiro", "bonus.vento_estocado"]
+        let nomeImagem = ["pisao2x.png", "garimpeiro.png", "vento_estocado.png"]
 
-        if (idioma == "pt")
-            get_element("categoria_teaser").innerHTML = "Adquira Bônus!"
-        else
-            get_element("categoria_teaser").innerHTML = "Get Bonuses!"
-
+        get_element("categoria_teaser").innerHTML = translations["loja.adquira_bonus"]
         get_element("placeholder_loja").innerHTML = ""
 
-        for (var i = 0; i < descricao.length; i++) {
+        for (let i = 0; i < descricao.length; i++) {
             if (jogador.bonus_comprados[i] != 1) // Item a venda
-                get_element("placeholder_loja").innerHTML += "<div class='mod_venda' onMouseOver='toolTip(" + 'descricao_Bonus[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(3, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/bonus/" + nomeImagem[i] + "'><br><br>" + descricao[i] + " <div class='preco_item'> $" + listaPrecos_Bonus[i] + "</div></div>"
+                get_element("placeholder_loja").innerHTML += "<div class='mod_venda' onMouseOver='toolTip(" + 'descricao_Bonus[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(3, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/bonus/" + nomeImagem[i] + "'><br><br>" + translations[descricao[i]] + " <div class='preco_item'> $" + listaPrecos_Bonus[i] + "</div></div>"
             else // Item Comprado
-                get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip(" + 'descricao_Bonus[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(3, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/bonus/" + nomeImagem[i] + "'><br><br>" + descricao[i] + "</div>"
+                get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip(" + 'descricao_Bonus[' + i + ']' + ")' onmouseout='toolTip()' onclick='confirma_compra(3, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/bonus/" + nomeImagem[i] + "'><br><br>" + translations[descricao[i]] + "</div>"
         }
     } else {
-        if (idioma == "pt")
-            var descricao = ["1900's", "Padrão"]
-        else
-            var descricao = ["1900's", "Standard"]
 
-        var nomeImagem = ["1900s.jpg", "padrao.jpg"]
+        let descricao = ["temas.antigo", "temas.padrao"]
+        let nomeImagem = ["1900s.jpg", "padrao.jpg"]
 
-        if (idioma == "pt")
-            get_element("categoria_teaser").innerHTML = "Viagem no tempo!"
-        else
-            get_element("categoria_teaser").innerHTML = "Time travel!"
-
+        get_element("categoria_teaser").innerHTML = translations["loja.viagem_tempo"]
         get_element("placeholder_loja").innerHTML = ""
 
 
-        for (var i = 0; i < descricao.length; i++) {
+        for (let i = 0; i < descricao.length; i++) {
             if (jogo.temas_comprados[i] != 1) { // Temas não comprados
-                get_element("placeholder_loja").innerHTML += "<div class='tema_caixa' onclick='confirma_compra(4, " + i + ", 55)' onMouseOver='toolTip(" + 'descricao_Tema[' + i + ']' + ")' onmouseout='toolTip()'><img class='img_preview_tema' src='source/images/store/temas/" + nomeImagem[i] + "'><div class='info_tema'><br><br>" + descricao[i] + " <div class='preco_tema'> $" + listaPrecos_Temas[i] + "</div></div></div>"
+                get_element("placeholder_loja").innerHTML += "<div class='tema_caixa' onclick='confirma_compra(4, " + i + ", 55)' onMouseOver='toolTip(" + 'descricao_Tema[' + i + ']' + ")' onmouseout='toolTip()'><img class='img_preview_tema' src='source/images/store/temas/" + nomeImagem[i] + "'><div class='info_tema'><br><br>" + translations[descricao[i]] + " <div class='preco_tema'> $" + listaPrecos_Temas[i] + "</div></div></div>"
             } else {
                 if (jogo.tema_ativo != i) { // Tema comprado e não ativo
-                    get_element("placeholder_loja").innerHTML += "<div class='tema_caixa' onclick='confirma_compra(4, " + i + ", 55)' onMouseOver='toolTip(" + 'descricao_Tema[' + i + ']' + ")' onmouseout='toolTip()'><img class='img_preview_tema' src='source/images/store/temas/" + nomeImagem[i] + "'><div class='info_tema'><br><br>" + descricao[i] + "</div></div>"
+                    get_element("placeholder_loja").innerHTML += "<div class='tema_caixa' onclick='confirma_compra(4, " + i + ", 55)' onMouseOver='toolTip(" + 'descricao_Tema[' + i + ']' + ")' onmouseout='toolTip()'><img class='img_preview_tema' src='source/images/store/temas/" + nomeImagem[i] + "'><div class='info_tema'><br><br>" + translations[descricao[i]] + "</div></div>"
                 } else {                    // Tema comprado e ativo
-                    get_element("placeholder_loja").innerHTML += "<div class='tema_caixa_ativo' onclick='confirma_compra(4, " + i + ", 55)' onMouseOver='toolTip(" + 'descricao_Tema[' + i + ']' + ")' onmouseout='toolTip()'><img class='img_preview_tema' src='source/images/store/temas/" + nomeImagem[i] + "'><div class='info_tema'><br><br>" + descricao[i] + "</div></div>"
+                    get_element("placeholder_loja").innerHTML += "<div class='tema_caixa_ativo' onclick='confirma_compra(4, " + i + ", 55)' onMouseOver='toolTip(" + 'descricao_Tema[' + i + ']' + ")' onmouseout='toolTip()'><img class='img_preview_tema' src='source/images/store/temas/" + nomeImagem[i] + "'><div class='info_tema'><br><br>" + translations[descricao[i]] + "</div></div>"
                 }
             }
         }
@@ -194,20 +156,13 @@ function confirma_compra(categoria, item, confirmacao) {
 
                     debita_compra(listaPrecos_Skins[item], "Skins", 1)
 
-                    if (idioma == "pt")
-                        exibe_teaser("Compra confirmada, a skin foi equipada!", "yellow")
-                    else
-                        exibe_teaser("Confirmed purchase, the skin has been equipped!", "yellow")
-
+                    exibe_teaser(translations["loja.compra_skin"], "yellow")
                     pisca_loja("0, 255, 0, .2")
 
                     conquista(14, 0)
                 } else if (confirmacao == 0) {
-                    if (idioma == "pt")
-                        exibe_teaser("Compra cancelada", "red")
-                    else
-                        exibe_teaser("Cancelled purchase", "red")
 
+                    exibe_teaser(translations["loja.compra_cancelada"], "red")
                     pisca_loja("255, 0, 0, .2")
                 }
             } else
@@ -215,18 +170,10 @@ function confirma_compra(categoria, item, confirmacao) {
         } else {
 
             if (jogador.skin != item) {
-                if (idioma == "pt")
-                    exibe_teaser("Skin alterada", "cyan")
-                else
-                    exibe_teaser("Skin changed", "cyan")
-
+                exibe_teaser(translations["skin.alterada"], "cyan")
                 pisca_loja("0, 255, 255, .2")
             } else {
-                if (idioma == "pt")
-                    exibe_teaser("Essa skin já está selecionada, sem alterações", "cyan")
-                else
-                    exibe_teaser("This skin is already selected, no changes", "cyan")
-
+                exibe_teaser(translations["skin.ja_selecionada"], "cyan")
                 pisca_loja("0, 255, 255, .2")
             }
 
@@ -241,16 +188,8 @@ function confirma_compra(categoria, item, confirmacao) {
         if (jogador.mods_comprados[item] == 0) {
             if (jogador.moedas >= listaPrecos_Mods[item]) {
 
-                if (item != 3)
-                    if (idioma == "pt")
-                        texto = "Deseja realmente comprar está melhoria? Ela será válida pelas próximas 5 partidas."
-                    else
-                        texto = "Do you really want to buy this improvement? It will be valid for the next 5 matches."
-                else
-                    if (idioma == "pt")
-                        texto = "Deseja equipar esse modificador?"
-                    else
-                        texto = "Do you want to equip this modifier?"
+                if (item != 3) texto = translations["loja.confirmar_compra_mod"]
+                else texto = translations["loja.equipar_mod"]
 
                 // Verifica se é uma requisição automática
                 if (confirmacao == 55) {
@@ -278,27 +217,16 @@ function confirma_compra(categoria, item, confirmacao) {
                     debita_compra(listaPrecos_Mods[item], "Modificadores", 1)
 
                     if (item != 3) {
-                        if (idioma == "pt")
-                            exibe_teaser("Compra confirmada, aproveite!", "yellow")
-                        else
-                            exibe_teaser("Confirmed purchase, enjoy!", "yellow")
-
+                        exibe_teaser(translations["loja.compra_confirmada"], "yellow")
                         pisca_loja("0, 255, 0, .2")
                     } else {
-                        if (idioma == "pt")
-                            exibe_teaser("Modificador equipado", "yellow")
-                        else
-                            exibe_teaser("Modifier equipped", "yellow")
-
+                        exibe_teaser(translations["loja.mod_equipado"], "yellow")
                         pisca_loja("255, 255, 0, .2")
                     }
+
                     conquista(16, 0)
                 } else if (confirmacao == 0) {
-                    if (idioma == "pt")
-                        exibe_teaser("Compra cancelada", "red")
-                    else
-                        exibe_teaser("Cancelled purchase", "red")
-
+                    exibe_teaser(translations["loja.compra_cancelada"], "red")
                     pisca_loja("255, 0, 0, .2")
                 }
             } else
@@ -315,20 +243,12 @@ function confirma_compra(categoria, item, confirmacao) {
 
                 executaSons2("faixa_efeitos2", "efeitos", "pop.ogg", 2)
 
-                if (idioma == "pt")
-                    exibe_teaser("Modificador alterado", "cyan")
-                else
-                    exibe_teaser("Changed modifier", "cyan")
-
+                exibe_teaser(translations["loja.mod_alterado"], "cyan")
                 pisca_loja("0, 255, 255, .2")
 
                 localStorage.setItem("pul4Pr3dios-modEmUso", jogador.mod_em_uso)
             } else {
-                if (idioma == "pt")
-                    exibe_teaser("Você já possuí este item e ele está ativo", "cyan")
-                else
-                    exibe_teaser("You already own this item and it is active", "cyan")
-
+                exibe_teaser(translations["loja.item_ja_adquirido"], "cyan")
                 pisca_loja("0, 255, 255, .2")
             }
         }
@@ -361,34 +281,22 @@ function confirma_compra(categoria, item, confirmacao) {
 
                     debita_compra(listaPrecos_Bonus[item], "Bônus", 1)
 
-                    if (idioma == "pt")
-                        exibe_teaser("Compra confirmada, aproveite!", "yellow")
-                    else
-                        exibe_teaser("Confirmed purchase, enjoy!", "yellow")
-
+                    exibe_teaser(translations["loja.compra_confirmada"], "yellow")
                     pisca_loja("0, 255, 0, .2")
 
                     sincroniza_bonus(1)
                 } else if (confirmacao == 0) {
-                    if (idioma == "pt")
-                        exibe_teaser("Compra cancelada", "red")
-                    else
-                        exibe_teaser("Cancelled purchase", "red")
-
+                    exibe_teaser(translations["loja.compra_cancelada"], "red")
                     pisca_loja("255, 0, 0, .2")
                 }
             } else
                 debita_compra(0, 0, 0)
         } else {
-            if (idioma == "pt")
-                exibe_teaser("Este bônus já está adquirido e ativo ;)", "cyan")
-            else
-                exibe_teaser("This bonus is already acquired and active ;)", "cyan")
-
+            exibe_teaser(translations["loja.bonus_ja_adquirido"], "cyan")
             pisca_loja("0, 255, 255, .2")
 
-            if (item == 2) // Vento estocado
-                falas_dilma()
+            // Vento estocado
+            if (item == 2) falas_dilma()
         }
     } else { // Temas
 
@@ -411,20 +319,12 @@ function confirma_compra(categoria, item, confirmacao) {
 
                     debita_compra(listaPrecos_Temas[item], "Temas", 1)
 
-                    if (idioma == "pt")
-                        exibe_teaser("Compra confirmada, aproveite!", "yellow")
-                    else
-                        exibe_teaser("Confirmed purchase, enjoy!", "yellow")
-
+                    exibe_teaser(translations["loja.compra_confirmada"], "yellow")
                     pisca_loja("0, 255, 0, .2")
 
                     sincroniza_bonus(1)
                 } else if (confirmacao == 0) {
-                    if (idioma == "pt")
-                        exibe_teaser("Compra cancelada", "red")
-                    else
-                        exibe_teaser("Cancelled purchase", "red")
-
+                    exibe_teaser(translations["loja.compra_cancelada"], "red")
                     pisca_loja("255, 0, 0, .2")
                 }
             } else
@@ -432,18 +332,13 @@ function confirma_compra(categoria, item, confirmacao) {
         } else {
 
             if (item != jogo.tema_ativo) {
-                if (idioma == "pt")
-                    exibe_teaser("Mudando o tema do jogo...", "cyan")
-                else
-                    exibe_teaser("Changing the theme of the game...", "cyan")
-
+                exibe_teaser(translations["loja.alterando_tema"], "cyan")
                 localStorage.setItem("pul4Pr3dios-temaAtivo", item)
+
                 recarrega_jogo_tema()
             } else {
-                if (idioma == "pt")
-                    exibe_teaser("Este tema já está adquirido e ativo ;)", "cyan")
-                else
-                    exibe_teaser("This theme is already acquired and active ;)", "cyan")
+                exibe_teaser(translations["loja.tema_ja_adquirido"], "cyan")
+                pisca_loja("0, 255, 255, .2")
             }
 
             pisca_loja("0, 255, 255, .2")
@@ -461,15 +356,9 @@ function debita_compra(valor, item, caso) {
 
         if (jogo.estatisticasNerds == 1)
             if (valor > 0)
-                if (idioma == "pt")
-                    console.log("%cCompra confirmada, retirado $" + valor + " do jogador", "color: orange")
-                else
-                    console.log("%cConfirmed purchase, withdrawn $" + valor + " of the player", "color: orange")
+                jogo.depuracao({ tls: "depuracao.compra_confirmada", replace: valor, color: "orange" })
             else
-                if (idioma == "pt")
-                    console.log("%cItem resgatável ativado", "color: orange")
-                else
-                    console.log("%cRedeemable item activated", "color: orange")
+                jogo.depuracao({ tls: "depuracao.item_resgatavel", color: "orange" })
 
         if (valor > 0)
             altera_moedas(-valor, jogador.moedas)
@@ -494,11 +383,7 @@ function debita_compra(valor, item, caso) {
 
     } else { // Caso não tenha dinheiro
 
-        if (idioma == "pt")
-            exibe_teaser("Você não possuí moedas suficientes para comprar este item.", "red")
-        else
-            exibe_teaser("You do not have enough coins to purchase this item.", "red")
-
+        exibe_teaser(translations["loja.sem_dinheiro"], "red")
         pisca_loja("255, 0, 0, .2")
 
         executaSons2("faixa_memes1", "memes", "falencia.ogg", 3)

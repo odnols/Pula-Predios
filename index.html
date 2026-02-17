@@ -501,8 +501,8 @@
             <div class="campo_stats" id="quadro_confirma_exclusao">
                 <h2 data-i18n="stats.texto_excluir"></h2><br>
 
-                <button class="cancela_compra" onclick="status_confirmacao(0, 0, 'Exclui')"></button>
-                <button class="confirmar_compra" onclick="status_confirmacao(1, 0, 'Exclui')"></button>
+                <button data-i18n="botao.nao" class="cancela_compra" onclick="status_confirmacao(0, 0, 'Exclui')"></button>
+                <button data-i18n="botao.sim" class="confirmar_compra" onclick="status_confirmacao(1, 0, 'Exclui')"></button>
             </div>
 
             <div class="campo_stats">
@@ -706,7 +706,7 @@
 
         <div id="versao">
             <h3 id="versao_texto"><span data-i18n="menu.versao"></span></h3>
-            <h3 data-i18n="menu.pulos"></h3>
+            <h3 class="pulos_trad" data-i18n="menu.pulos"></h3>
             <h3 id="qtdPulos">3</h3>
         </div>
     </div>
@@ -787,8 +787,8 @@
             <div id="quadro_confirma_compra">
                 <h2 data-i18n="botao.confirma_compra"></h2><br><br><br>
 
-                <button class="cancela_compra" onclick="status_confirmacao(0, 0, 'Loja')"></button>
-                <button class="confirmar_compra" onclick="status_confirmacao(1, 0, 'Loja')"></button>
+                <button data-i18n="botao.nao" class="cancela_compra" onclick="status_confirmacao(0, 0, 'Loja')"></button>
+                <button data-i18n="botao.sim" class="confirmar_compra" onclick="status_confirmacao(1, 0, 'Loja')"></button>
             </div>
 
             <div id="filtro_alerta_loja"></div>

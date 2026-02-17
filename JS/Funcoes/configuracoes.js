@@ -295,10 +295,7 @@ function sincronizaQualidadeGrafica() {
             get_element("status_animacoes").innerHTML = "Minimum"
 
         if (jogo.estatisticasNerds)
-            if (idioma == "pt")
-                console.log("Desligando animações")
-            else
-                console.log("Turning off animations")
+            jogo.depuracao({ tls: "depuracao.desligando_animacoes" })
 
         verifica_animacoes(0)
 
@@ -321,10 +318,7 @@ function sincronizaQualidadeGrafica() {
                 get_element("status_animacoes").innerHTML = "Fantastic"
 
         if (jogo.estatisticasNerds)
-            if (idioma == "pt")
-                console.log("Ligando animações")
-            else
-                console.log("Starting animations")
+            jogo.depuracao({ tls: "depuracao.ligando_animacoes" })
 
         if (jogo.parallax) {
 

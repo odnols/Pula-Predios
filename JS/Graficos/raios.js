@@ -20,7 +20,7 @@
 //   ctx.beginPath()
 //   ctx.lineWidth = 7
 
-//   for (var i = 0; i < lightning.length; i++) {
+//   for (let i = 0; i < lightning.length; i++) {
 //     ctx.lineTo(lightning[i].x, lightning[i].y)
 //   }
 
@@ -38,7 +38,7 @@
 //   while (segmentHeight > minSegmentHeight) {
 //     var newSegments = []
 
-//     for (var i = 0; i < lightning.length - 1; i++) {
+//     for (let i = 0; i < lightning.length - 1; i++) {
 //       var start = lightning[i]
 //       var end = lightning[i + 1]
 //       var midX = (start.x + end.x) / 2

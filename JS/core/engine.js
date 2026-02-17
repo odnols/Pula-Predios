@@ -394,10 +394,7 @@ var labelTexto = {
                 this.contador_tempo = 3
 
             if (this.estatisticasNerds)
-                if (idioma == "pt")
-                    console.log("%cPróximo evento em: " + this.contador_tempo + " segundos", "color: purple")
-                else
-                    console.log("%cNext event in: " + this.contador_tempo + " seconds", "color: purple")
+                jogo.depuracao({ tls: "partida.proximo_evento", replace: this.contador_tempo, color: "purple" })
 
             this.ativa_evento = setTimeout(() => {
                 eventos.eventos()
@@ -423,10 +420,7 @@ var labelTexto = {
             this.inicia_evento = Math.round(3 * Math.random())
 
             if (jogo.estatisticasNerds)
-                if (idioma == "pt")
-                    console.log("%cComeçando o evento: " + this.inicia_evento, "color: purple")
-                else
-                    console.log("%cStarting the event: " + this.inicia_evento, "color: purple")
+                jogo.depuracao({ tls: "partida.comecando_evento", replace: this.inicia_evento, color: "purple" })
 
             if (this.dificuldade != 0 && this.dificuldade != 3)
                 this.contador_tempo_evento = 15 + Math.round(15 * Math.random())
@@ -445,19 +439,13 @@ var labelTexto = {
 
             if (this.qtd_eventos[this.inicia_evento] == 0 || this.inicia_evento == this.ultimo_evento || this.inicia_evento == this.penultimo_evento && (this.dificuldade == 0 && (this.inicia_evento == 1 || this.inicia_evento == 3))) {
                 if (this.estatisticasNerds)
-                    if (idioma == "pt")
-                        console.log("%cEvento Pulado, escolhendo novamente", "color: red")
-                    else
-                        console.log("%cSkipped Event, choosing again", "color: red")
+                    jogo.depuracao({ tls: "evento.pulado", color: "red" })
 
                 eventos.eventos()
             } else {
                 if (this.timer_mod < this.tempoMod && (this.inicia_evento == 1 || this.inicia_evento == 3)) {
                     if (jogo.estatisticasNerds)
-                        if (idioma == "pt")
-                            console.log("%cEvento Pulado, escolhendo novamente", "color: red")
-                        else
-                            console.log("%cSkipped Event, choosing again", "color: red")
+                        jogo.depuracao({ tls: "evento.pulado", color: "red" })
 
                     eventos.eventos()
                 } else {
@@ -499,21 +487,14 @@ var labelTexto = {
 
                         parque_event = setTimeout(() => {
                             if (jogo.status == estados.jogando) {
-                                if (idioma == "pt")
-                                    jogo.notifica("Hora de Pontuar!", "#14e11e")
-                                else
-                                    jogo.notifica("Time to Score!", "#14e11e")
-
+                                jogo.notifica(translations["partida.parque"], "#14e11e")
                                 executaSons("faixa_efeitos3", "memes", "parque.ogg", 3)
                             }
                         }, 3000)
                     }
 
                     if (this.estatisticasNerds)
-                        if (idioma == "pt")
-                            console.log("%cTempo de duração do evento: " + this.contador_tempo_evento + " segundos", "color: purple")
-                        else
-                            console.log("%cEvent duration time: " + this.contador_tempo_evento + " seconds", "color: purple")
+                        jogo.depuracao({ tls: "partida.tempo_evento", replace: this.contador_tempo_evento, color: "purple" })
 
                     if (jogo.status == estados.jogando) {
                         $("#temporizador").fadeIn()
@@ -602,19 +583,17 @@ var labelTexto = {
 
             encerra_modificador()
 
-            // Nadando no Dinheiro
             if (jogador.bonus_comprados[0] == 1 && jogador.bonus_comprados[1] == 1)
-                conquista(28, 0)
+                conquista(28, 0) // Nadando no Dinheiro
 
             sincroniza_bonus(0)
 
             if (jogador.partida_pontuacao < 0)
-                // Não é todo dia que isso acontece
-                conquista(23, 0)
+                conquista(23, 0) // Não é todo dia que isso acontece
 
             desliga_som3("faixa_musicas", 1)
 
-            if (jogo.velocidade > 25)
+            if (jogo.velocidade > 25) // Desligando o som de vento
                 desliga_som2("faixa_ambiente", 2)
 
             this.status = estados.perdeu
@@ -646,40 +625,24 @@ var labelTexto = {
             clearTimeout(eventos.ativa_evento)
 
             if (causa == 1) {
-                if (idioma == "pt")
-                    jogador.partida_causa_morte = "Afundou na água"
-                else
-                    jogador.partida_causa_morte = "Sank in the water"
-                // Pisando em falso
-                conquista(1, 0)
-            } else if (causa == 3) {
-                if (idioma == "pt")
-                    jogador.partida_causa_morte = "Tentou nadar na lava"
-                else
-                    jogador.partida_causa_morte = "Tried to swim in the lava"
-                // O Chão era Lava
-                conquista(2, 0)
-            } else {
-                if (idioma == "pt")
-                    jogador.partida_causa_morte = "Atropelou um prédio"
-                else
-                    jogador.partida_causa_morte = "Was knocked down"
+                jogador.partida_causa_morte = translations["morte.agua"]
 
-                if (causa == 2)
-                    // Isso era Possível?
-                    conquista(18, 1)
-                else
-                    // Não Atropele os Prédios!
-                    conquista(3, 0)
+                conquista(1, 0) // Pisando em falso
+            } else if (causa == 3) {
+                jogador.partida_causa_morte = translations["morte.lava"]
+
+                conquista(2, 0) // O Chão era Lava
+            } else {
+                jogador.partida_causa_morte = translations["morte.batida"]
+
+                if (causa == 2) conquista(18, 1) // Isso era Possível?
+                else conquista(3, 0) // Não Atropele os Prédios!
             }
 
             alteraValorEstatisticaPartida("causa_perca", jogador.partida_causa_morte)
 
             if (jogo.estatisticasNerds)
-                if (idioma == "pt")
-                    console.log("%cPartida Encerrada, causa perca: " + jogador.partida_causa_morte, "color: red")
-                else
-                    console.log("%cClosed match, cause of loss: " + jogador.partida_causa_morte, "color: red")
+                jogo.depuracao({ tls: "partida.encerrada", replace: jogador.partida_causa_morte, color: "red" })
 
             ajusta_cores(6, 2)
 
@@ -705,6 +668,21 @@ var labelTexto = {
                 $("#notificacoes").fadeOut()
                 clearTimeout(limpar_notificacao)
             }, 2000)
+        },
+
+
+        depuracao: function (dados) {
+
+            mensagem = translations[dados.tls]
+
+            if (dados.replace) // Substituindo dados na string após traduzir
+                mensagem = mensagem.replace("auto_repl", mensagem.replace)
+
+            // Retorno com cor definida
+            if (dados.color) return console.log(`%c${mensagem}`, `color: ${dados.color}`)
+
+            // Retorno sem customização
+            return console.log(mensagem)
         }
     },
 
@@ -836,10 +814,7 @@ var labelTexto = {
             if ((jogo.status == estados.jogando || jogo.status == estados.tutorial) && this.timer_mod != 0 && this.mod != 1 && this.qtdMods > 0) {
 
                 if (jogo.estatisticasNerds)
-                    if (idioma == "pt")
-                        console.log("Modificador ativado")
-                    else
-                        console.log("Modifier activated")
+                    jogo.depuracao({ tls: "modificador.ativado" })
 
                 this.qtdMods--
                 get_element("qtdMods").innerHTML = this.qtdMods
@@ -943,10 +918,7 @@ var labelTexto = {
         recarrega_timer: function () {
 
             if (this.estatisticasNerds)
-                if (idioma == "pt")
-                    console.log("Recarregando Modificador")
-                else
-                    console.log("Reloading Modifier")
+                jogo.depuracao({ tls: "modificador.recarregando" })
 
             get_element("qtdMods").style.display = "none"
 
@@ -963,10 +935,7 @@ var labelTexto = {
                     jogador.liberaMod = 0
 
                     if (jogo.estatisticasNerds)
-                        if (idioma == "pt")
-                            console.log("Modificador pronto para uso novamente")
-                        else
-                            console.log("Modifier ready to use again")
+                        jogo.depuracao({ tls: "modificador.pronto" })
 
                     ajusta_cores(5, 2)
                     clearInterval(jogador.var_timer_recarrega)
@@ -1145,18 +1114,10 @@ var labelTexto = {
 
                             if ((jogo.status == estados.jogando || jogo.status == estados.tutorial) && obs.altura > 60) {
                                 if (jogador.mod_em_uso != 1) {
-                                    if (idioma == "pt")
-                                        jogo.notifica("Não Atropele os Prédios!", "red")
-                                    else
-                                        jogo.notifica("Don't Run Over Buildings!", "red")
-
+                                    jogo.notifica(translations["partida.nao_atropele"], "red")
                                     soma_pontuacao(-2)
                                 } else {
-                                    if (idioma == "pt")
-                                        jogo.notifica("Não é o Certo, mas acontece", "white")
-                                    else
-                                        jogo.notifica("It's not right, but it happens", "white")
-
+                                    jogo.notifica(translations["partida.acontece"], "white")
                                     soma_pontuacao(2)
                                 }
 
@@ -1329,11 +1290,11 @@ function desenha() {
             opcoes.ctx.fillStyle = "#fff"
 
         opcoes.ctx.font = "40px Minecraftia"
-        if (jogador.partida_pontuacao < jogador.recorde)
-            if (idioma == "pt")
-                opcoes.ctx.fillText(`Recorde Atual: ${jogador.recorde}`, opcoes.canvas.width / 2 - opcoes.ctx.measureText(`Recorde Atual: ${jogador.recorde}`).width / 2, opcoes.altura / 1.3 + 50)
-            else
-                opcoes.ctx.fillText(`Current Record: ${jogador.recorde}`, opcoes.canvas.width / 2 - opcoes.ctx.measureText(`Current Record: ${jogador.recorde}`).width / 2, opcoes.altura / 1.3 + 50)
+        if (jogador.partida_pontuacao < jogador.recorde) {
+
+            const texto_recorde = `${translations["partida.recorde_atual"]} ${jogador.recorde}`
+            opcoes.ctx.fillText(texto_recorde, opcoes.canvas.width / 2 - opcoes.ctx.measureText(texto_recorde).width / 2, opcoes.altura / 1.3 + 50)
+        }
 
         opcoes.ctx.save()
         opcoes.ctx.translate(opcoes.largura / 2, opcoes.altura / 2)
@@ -1355,10 +1316,7 @@ function desenha() {
             jogo.estadoOcioso = 1
 
             if (jogo.estatisticasNerds)
-                if (idioma == "pt")
-                    console.log("%cO Modo Ocioso começará em 10 segundos", "color: green")
-                else
-                    console.log("%cIdle Mode will start in 10 seconds", "color: green")
+                console.log(`%c${translations["ocioso.iniciando"]}`, "color: green")
 
             contagemOcioso = setTimeout(() => {
                 jogo.status = estados.ocioso
