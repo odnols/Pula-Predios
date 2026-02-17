@@ -79,7 +79,7 @@ function confirma_inicio_partida() {
     }, 1000)
 
     if (jogo.tema_ativo != 0) {
-        if (jogo.musica_tema === "random.ogg")
+        if (jogo.musica_tema.includes("random"))
             executaSons2("faixa_musicas", "musicas", `main_${(1 + (3 * Math.random())).toFixed(0)}.ogg`, 1)
         else
             executaSons2("faixa_musicas", "musicas", jogo.musica_tema, 1)
@@ -542,7 +542,7 @@ function estadoOcioso(caso) {
         escondeInformacoes(1, 1)
 
         if (jogo.tema_ativo != 0)
-            if (jogo.musica_tema_ocioso === "random.ogg")
+            if (jogo.musica_tema_ocioso.includes("random"))
                 executaSons2("faixa_musicas", "musicas", `ocioso_${(1 + (2 * Math.random())).toFixed(0)}.ogg`, 1)
             else
                 executaSons2("faixa_musicas", "musicas", jogo.musica_tema_ocioso, 1)

@@ -12,13 +12,8 @@ function carrega_jogo(requisicao_auto) {
         get_element("primeiro_logon").style.display = "block"
 
         idioma = carrega_idioma()
-
-        if (idioma == "en") {
-            get_element("button_inicia_game").innerHTML = "Start"
-            get_element("versao_trad").innerHTML = "Version 1.2"
-        }
-
         return 0
+
     } else {
 
         popula_pisos()
@@ -80,9 +75,6 @@ function carrega_jogo(requisicao_auto) {
             } else {
                 get_element("texto_carregamento").innerHTML = "Fast load"
                 get_element("porcentagem_carregada").innerHTML = "An Odyssey full of heels"
-            }
-            for (let i = 0; i < carregar_departamentos.length; i++) {
-                carregar_departamentos[i]
             }
 
             setTimeout(() => {

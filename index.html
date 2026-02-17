@@ -60,7 +60,7 @@
             <hr style="width: 50%">
 
             <div id="primeiro_logon">
-                <button onclick="carrega_jogo(1)" id="button_inicia_game">Iniciar</button>
+                <button onclick="carrega_jogo(1)" id="button_inicia_game" data-i18n="botao.iniciar"></button>
 
                 <div id="idioma_config_inicio">
                     <button class="button_opcoes_inicio" onclick="define_idioma('en-us')">English</button><br><br>
@@ -68,7 +68,7 @@
                 </div>
             </div>
 
-            <h4 style="position: absolute; right: 2%; bottom: 2%" id="versao_trad">Versão 1.2</h4>
+            <h4 style="position: absolute; right: 2%; bottom: 2%" data-i18n="menu.versao"></h4>
         </div>
 
         <div id="status_carregamento">
@@ -83,32 +83,32 @@
     <div id="historia_jogo">
         <div id="texto_historia"></div>
 
-        <button class="avancar_hist avancar_trad" onclick="avanca_hist()"></button>
-        <button class="avancar_hist_block avancar_trad"></button><br><br><br>
-        <button class="avancar_hist pular_hist pular_trad" onclick="pular_hist()"></button>
+        <button class="avancar_hist" data-i18n="botao.avancar" onclick="avanca_hist()"></button>
+        <button class="avancar_hist_block" data-i18n="botao.avancar"></button><br><br><br>
+        <button class="avancar_hist pular_hist" data-i18n="botao.pular" onclick="pular_hist()"></button>
 
         <div id="escolhas_hist">
-            <button class="nega_hist" onclick="nega_hist()"></button>
-            <button class="confirma_hist" onclick="confirma_hist()"></button>
+            <button class="nega_hist" data-i18n="botao.nao" onclick="nega_hist()"></button>
+            <button class="confirma_hist" data-i18n="botao.sim" onclick="confirma_hist()"></button>
         </div>
     </div>
 
     <div id="tutorial_em_jogo">
         <span id="frase_tuto_em_game"></span>
 
-        <button class="avancar_tuto avancar_trad" onclick="avanca_tutorial()"></button>
-        <button class="avancar_tuto_block avancar_trad"></button>
+        <button class="avancar_tuto" data-i18n="botao.avancar" onclick="avanca_tutorial()"></button>
+        <button class="avancar_tuto_block" data-i18n="botao.avancar"></button>
 
-        <button class="pular_tuto pular_trad" onclick="pular_tutorial()"></button>
+        <button class="pular_tuto" data-i18n="botao.pular" onclick="pular_tutorial()"></button>
     </div>
 
     <div id="controles_tuto">
         <div id="placeholder_controles">
-            <p class="tecla espaco_trad"></p>
+            <p class="tecla" data-i18n="geral.espaco"></p>
             <p class="espacador"></p>
             <p class="tecla" style="width: 70px">W</p>
             <p class="espacador"></p>
-            <p class="controle_text"> -> <span class="pulo_trad"></span></p>
+            <p class="controle_text"> -> <span data-i18n="geral.pulo"></span></p>
 
             <br><br><br>
             <p class="tecla">D</p>
@@ -117,12 +117,12 @@
                 <p class="enter2">⏎</p>
             </div>
             <p class="espacador"></p>
-            <p class="controle_text">-> <span class="mod_trad"></span></p>
+            <p class="controle_text">-> <span data-i18n="geral.modificador"></span></p>
         </div>
     </div>
 
     <iframe style="width: 100%; height: 100%;" id="log_imbutido" src="log.html"></iframe>
-    <p class="fechador_log" onclick="visualizar_log(0)"></p>
+    <p class="fechador_log" data-i18n="botao.voltar_jogo" onclick="visualizar_log(0)"></p>
 
     <!-- Sprites para o tema Noturno -->
     <div id="sprites_imgs">
@@ -255,7 +255,7 @@
     <!-- Tela de estatísticas para quando o jogador morre -->
     <div id="filtro2">
         <center id="estatisticas_morte">
-            <h1 class="fimdejogo"></h1>
+            <h1 class="fimdejogo" data-i18n="menu.fim_de_jogo"></h1>
             <h3><span data-i18n="menu.causa_perda"></span>: <a class="estat" id="causa_perca" style="color: red">??</a>
             </h3>
 
@@ -324,10 +324,10 @@
             <h3 class="opcao_tutorial" data-i18n="tutorial.historia" onclick="exibeTutorial(15)"></h3><br><br>
             <h3 class="opcao_tutorial" data-i18n="tutorial.como_jogar" onclick="exibeTutorial(1)"></h3><br><br>
             <h3 class="opcao_tutorial" data-i18n="tutorial.modificadores" onclick="exibeTutorial(2)"></h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="tutorial.bonus" onclick="exibeTutorial(14)"></h3><br><br>
+            <h3 class="opcao_tutorial" data-i18n="loja.bonus" onclick="exibeTutorial(14)"></h3><br><br>
             <h3 class="opcao_tutorial" data-i18n="tutorial.inimigos" onclick="exibeTutorial(3)"></h3><br><br>
             <h3 class="opcao_tutorial" data-i18n="tutorial.eventos" onclick="exibeTutorial(4)"></h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="tutorial.dificuldade" onclick="exibeTutorial(8)"></h3><br><br>
+            <h3 class="opcao_tutorial" data-i18n="geral.dificuldade" onclick="exibeTutorial(8)"></h3><br><br>
             <h3 class="opcao_tutorial" data-i18n="geral.conquistas" onclick="exibeTutorial(13)"></h3><br><br>
             <h3 class="opcao_tutorial" data-i18n="tutorial.moedas" onclick="exibeTutorial(5)"></h3><br><br>
             <h3 class="opcao_tutorial" data-i18n="geral.loja" onclick="exibeTutorial(6)"></h3><br><br>
@@ -431,8 +431,8 @@
 
         <div class="opcoes_direita">
             <iframe src="https://discord.com/widget?id=666465457565335563&theme=dark" width="350" height="360"
-            allowtransparency="true" frameborder="0"
-            sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+                allowtransparency="true" frameborder="0"
+                sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
         </div>
     </div>
 
@@ -445,9 +445,9 @@
         </center>
         <hr style="width: 50%">
         <div class="opcoes_esquerda_2">
-            <h4 class="suporte_descri_1"></h4><br>
+            <h4 data-i18n="suporte.descricao_1"></h4><br>
 
-            <h4 class="suporte_descri_2"></h4><br>
+            <h4 data-i18n="suporte.descricao_2"></h4><br>
             << <a href="https://picpay.me/slondotk" target="_blank">PicPay</a> >>
         </div>
 
@@ -508,7 +508,8 @@
             <div class="campo_stats">
                 <p class="texto _estatistic_dead">
                     <span data-i18n="geral.eventos"></span> \\//<br><br>
-                    <span data-i18n="stats.eventos_concluidos"></span>: <a class="estat" id="eventos_concluidos">0</a><br>
+                    <span data-i18n="stats.eventos_concluidos"></span>: <a class="estat"
+                        id="eventos_concluidos">0</a><br>
                     <span data-i18n="stats.tempo_eventos"></span>: <a class="estat" id="tempo_eventos">0</a><br><br>
 
                     <span data-i18n="evento.cidade"></span>: <a class="estat" id="quantidade_cidade">0</a><br>
@@ -524,33 +525,33 @@
         <span id="fecha_janela_c" onclick="botoes(81)">X</span>
 
         <center>
-            <h1 class="opcoes_trad"></h1>
+            <h1 data-i18n="geral.opcoes"></h1>
         </center>
         <hr style="width: 50%">
 
         <div class="opcoes_direita">
-            <h3><button class="button_opcoes geral_trad" onclick="menu_opcoes(1)"></button></h3>
-            <h3><button class="button_opcoes sons_trad" onclick="menu_opcoes(2)"></button></h3>
+            <h3><button class="button_opcoes" data-i18n="geral.geral" onclick="menu_opcoes(1)"></button></h3>
+            <h3><button class="button_opcoes" data-i18n="menu.sons" onclick="menu_opcoes(2)"></button></h3>
         </div>
 
         <div class="opcoes_esquerda">
-            <h3><button class="button_opcoes graficos_trad" onclick="menu_opcoes(3)"></button></h3>
-            <h3><button class="button_opcoes idiomas_trad" onclick="menu_opcoes(4)"></button></h3>
+            <h3><button class="button_opcoes" data-i18n="menu.graficos" onclick="menu_opcoes(3)"></button></h3>
+            <h3><button class="button_opcoes" data-i18n="menu.idiomas" onclick="menu_opcoes(4)"></button></h3>
         </div>
 
         <div id="config_grafc">
             <div class="itens_configs">
                 <h4 class="texto"><button id="status_tema_atual" class="button_opcoes"
-                        onclick="alteraRelogio()"></button> : <span class="definir_tempo_trad"></span></h4>
+                        onclick="alteraRelogio()"></button> : <span data-i18n="botao.definir_tempo"></span></h4>
 
                 <h4 class="texto" id="button_animacoes_cell"><button id="status_animacoes_block"
-                        class="button_opcoes_block"><span class="status_anima"></span></button> : <span
-                        class="animacoes_trad"></span></h4>
+                        class="button_opcoes_block"><span data-i18n="menu.desativado"></span></button> : <span
+                        data-i18n="botao.animacoes"></span></h4>
                 <h4 class="texto" id="button_animacoes_pc"><button id="status_animacoes" class="button_opcoes"
-                        onclick="alteraQualidadeGrafica()"></button> : <span class="animacoes_trad"></span></h4>
+                        onclick="alteraQualidadeGrafica()"></button> : <span data-i18n="botao.animacoes"></span></h4>
 
                 <h4 class="texto"><button id="status_parallax" class="button_opcoes"
-                        onclick="alteraParallax()"></button> : <span class="parallax_trad"></span></h4>
+                        onclick="alteraParallax()"></button> : <span data-i18n="botao.parallax"></span></h4>
             </div>
         </div>
 
@@ -565,22 +566,22 @@
         <div id="config_gerais">
             <div class="itens_configs">
                 <h4 class="texto"><button id="status_dificuldade" class="button_opcoes"
-                        onclick="alteraDificuldade()"></button> : <span class="dificuldade_trad"></span></h4>
+                        onclick="alteraDificuldade()"></button> : <span data-i18n="geral.dificuldade"></span></h4>
 
                 <h4 class="texto"><button id="status_tela_estatisti" class="button_opcoes"
-                        onclick="alteraEstadoEstatistica()"></button> : <span class="estatisticas_morte_trad"></span>
+                        onclick="alteraEstadoEstatistica()"></button> : <span data-i18n="botao.stats_morte"></span>
                 </h4>
 
                 <h4 class="texto"><button id="status_estatisticas_nerds" class="button_opcoes"
-                        onclick="alteraEstatisticasNerds()"></button> : <span class="estatisticas_nerd_trad"></span>
+                        onclick="alteraEstatisticasNerds()"></button> : <span data-i18n="botao.stats_nerds"></span>
                 </h4>
 
                 <h4 class="texto"><button id="status_conquistas_notifc" class="button_opcoes"
                         onclick="alteraNotificacoesConquistas()"></button> : <span
-                        class="notificacoes_conquistas_trad"></span></h4>
+                        data-i18n="botao.notics_conquistas"></span></h4>
 
                 <h4 class="texto"><button id="status_modo_ocioso" class="button_opcoes"
-                        onclick="alteraEstadoOcioso()"></button> : <span class="modo_ocioso_trad"></span></h4>
+                        onclick="alteraEstadoOcioso()"></button> : <span data-i18n="botao.modo_ocioso"></span></h4>
             </div>
         </div>
 
@@ -588,13 +589,13 @@
             <div id="controle_som">
 
                 <div class="opcao_som">
-                    <h3 style="float: left"><label for="volume_musica" class="musicas_trad"></label></h3>
+                    <h3 style="float: left"><label for="volume_musica" data-i18n="botao.musicas"></label></h3>
                     <input class="control_volume" type="range" min="0" max="100" id="volume_musica"
                         oninput="alteraVolume(this.value, 1)" onchange="alteraVolume(this.value, 1, 1)">
                 </div>
 
                 <div class="opcao_som">
-                    <h3 style="float: left"><label for="volume_efeitos" class="efeitos_trad"></label></h3>
+                    <h3 style="float: left"><label for="volume_efeitos" data-i18n="botao.efeitos"></label></h3>
                     <input class="control_volume" type="range" min="0" max="100" value="carrega_sons(2)"
                         id="volume_efeitos" oninput="alteraVolume(this.value, 2)"
                         onchange="alteraVolume(this.value, 2, 1)">
@@ -609,7 +610,7 @@
 
                 <br>
                 <h4 class="texto">
-                    <center class="sons_trad"></center>
+                    <center data-i18n="menu.sons"></center>
                     <button id="status_volume_som" class="button_opcoes" onclick="alteraEstadoSom()"></button>
                 </h4>
 
@@ -643,11 +644,11 @@
         <hr style="width: 50%">
 
         <div class="opcoes_direita">
-            <h3><button class="button_opcoes controles_trad" onclick="botoes(99)"></button></h3>
-            <h3><button class="button_opcoes estatisticas_trad" onclick="botoes(101)"></button></h3>
+            <h3><button class="button_opcoes" data-i18n="geral.controles" onclick="botoes(99)"></button></h3>
+            <h3><button class="button_opcoes" data-i18n="geral.estatisticas" onclick="botoes(101)"></button></h3>
 
             <div>
-                <button class="button_opcoes_t opcoes_trad" onclick="botoes(90)"></button>
+                <button class="button_opcoes_t" data-i18n="geral.opcoes" onclick="botoes(90)"></button>
                 <button class="button_trad" onclick="menu_opcoes(4, 1)"><img id="img_trad"
                         src="source/images/icons/globo.png"></button>
             </div>
@@ -655,20 +656,20 @@
 
         <div class="opcoes_esquerda">
             <h3><button class="button_opcoes" onclick="botoes(116)">Tutorial</button></h3>
-            <h3><button class="button_opcoes conquistas_trad" onclick="botoes(111)"></button></h3>
-            <h3><button class="button_opcoes problemas_trad" onclick="botoes(150)"></button></h3>
-            <h3><button class="button_opcoes suporte_trad" onclick="botoes(151)"></button></h3>
+            <h3><button class="button_opcoes" data-i18n="geral.conquistas" onclick="botoes(111)"></button></h3>
+            <h3><button class="button_opcoes" data-i18n="menu.problemas" onclick="botoes(150)"></button></h3>
+            <h3><button class="button_opcoes" data-i18n="menu.suporte" onclick="botoes(151)"></button></h3>
         </div>
     </div>
 
     <!-- Log de Mudanças e Apresentações -->
     <div id="boas_vindas">
         <div id="pag1"><br>
-            <h1 class="boas_vindas_trad"></h1>
+            <h1 data-i18n="menu.boas_vindas"></h1>
             <hr>
-            <p class="versao_trad"></p>
-            <strong style="color: red" class="sons_ativados_trad"></strong><br>
-            <button class="botao_a beleuza_trad" onclick="boasVindas()"></button><br><br>
+            <p data-i18n="menu.aviso_versao"></p>
+            <strong style="color: red" data-i18n="menu.sons_ativados"></strong><br>
+            <button class="botao_a" data-i18n="botao.beleuza" onclick="boasVindas()"></button><br><br>
         </div>
     </div>
 
@@ -682,30 +683,30 @@
         <div id="flag_api"></div>
         <p id="fps_counter"></p>
 
-        <div id="pontuador"><span class="pontuador_trad"></span>
+        <div id="pontuador"><span data-i18n="stats.pontuacao"></span>
             <h3 id="pontuacao">0</h3>
         </div>
 
-        <div id="mod"><span class="mod_trad"></span>
+        <div id="mod"><span data-i18n="geral.modificador"></span>
             <h3 id="timer_mod"></h3>
             <h3 id="estado_mod">Seg</h3>
             <h3 id="carregando">+++</h3>
             <h3 id="qtdMods"></h3>
         </div>
 
-        <div id="velocidade"><span class="velocidade_trad"></span>
+        <div id="velocidade"><span data-i18n="geral.velocidade"></span>
             <h3 id="velocity"></h3>
             <h3 id="metros_s">M/s</h3>
         </div>
 
-        <div id="temporizador"><span class="temporizador_trad"></span>
+        <div id="temporizador"><span data-i18n="menu.tempo"></span>
             <h3 id="cronometro"></h3>
             <h3 id="tempo_cro">Seg</h3>
         </div>
 
         <div id="versao">
-            <h3 id="versao_texto"><span class="versao_texto_trad"></span></h3>
-            <h3 class="pulos_trad"></h3>
+            <h3 id="versao_texto"><span data-i18n="menu.versao"></span></h3>
+            <h3 data-i18n="menu.pulos"></h3>
             <h3 id="qtdPulos">3</h3>
         </div>
     </div>
@@ -735,13 +736,13 @@
 
         <div class="faixa_menu fx_baixo">
             <h3 id="log_button" onclick="botoes(76)">Log ( L )</h3>
-            <h3 class="reload_button" onclick="clique(114)"></h3>
+            <h3 class="reload_button" data-i18n="botao.recarregar" onclick="clique(114)"></h3>
         </div>
     </div>
 
     <div id="menu_inicial">
         <center>
-            <h3 class="iniciar_" onclick="clique()"></h3>
+            <h3 class="iniciar_" data-i18n="botao.iniciar_partida" onclick="clique()"></h3>
             <h3 id="opcoes_" onclick="botoes(113)">Menu ( Q )</h3>
         </center>
     </div>
@@ -752,9 +753,9 @@
 
     <div id="loja"><br>
 
-        <p class="fechador_loja" onclick="abre_loja()"></p>
+        <p class="fechador_loja" data-i18n="botao.fechar_loja" onclick="abre_loja()"></p>
 
-        <h1 class="titu_loja"></h1>
+        <h1 class="titu_loja" data-i18n="loja.titulo"></h1>
 
         <div id="quadro_novidades_loja">
             <fieldset id="colore_loja">
@@ -774,17 +775,17 @@
                 <p class="text_quadro_loja">Mods</p>
             </div>
             <div class="item_grid_loja_4 quadros_loja" onclick="carrega_dados_loja(2)">
-                <p class="text_quadro_loja bonus_trad"></p>
+                <p class="text_quadro_loja" data-i18n="loja.bonus"></p>
             </div>
             <div class="item_grid_loja_1 quadros_loja" onclick="carrega_dados_loja(3)">
-                <p class="text_quadro_loja temas_trad"></p>
+                <p class="text_quadro_loja" data-i18n="loja.temas"></p>
             </div>
         </div>
 
         <div id="sessao_loja">
 
             <div id="quadro_confirma_compra">
-                <h2 class="texto_confirmacao"></h2><br><br><br>
+                <h2 data-i18n="botao.confirma_compra"></h2><br><br><br>
 
                 <button class="cancela_compra" onclick="status_confirmacao(0, 0, 'Loja')"></button>
                 <button class="confirmar_compra" onclick="status_confirmacao(1, 0, 'Loja')"></button>
@@ -792,7 +793,7 @@
 
             <div id="filtro_alerta_loja"></div>
 
-            <button class="voltar_inicio_loja" onclick="fechar_sessao_loja()"></button>
+            <button class="voltar_inicio_loja" data-i18n="botao.voltar" onclick="fechar_sessao_loja()"></button>
 
             <div id="cabecalho_categoria_loja">
                 <h1 id="categoria_loja"></h1>
