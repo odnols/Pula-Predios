@@ -7,6 +7,7 @@ async function loadLanguage(lang) {
 }
 
 function applyTranslations() {
+
     document.querySelectorAll('[data-i18n]').forEach(el => {
         const key = el.dataset.i18n
         if (translations[key]) {

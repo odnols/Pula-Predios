@@ -63,8 +63,8 @@
                 <button onclick="carrega_jogo(1)" id="button_inicia_game">Iniciar</button>
 
                 <div id="idioma_config_inicio">
-                    <button class="button_opcoes_inicio" onclick="define_idioma('en')">English</button><br><br>
-                    <button class="button_opcoes_inicio" onclick="define_idioma('pt')">Português</button>
+                    <button class="button_opcoes_inicio" onclick="define_idioma('en-us')">English</button><br><br>
+                    <button class="button_opcoes_inicio" onclick="define_idioma('pt-br')">Português</button>
                 </div>
             </div>
 
@@ -256,42 +256,42 @@
     <div id="filtro2">
         <center id="estatisticas_morte">
             <h1 class="fimdejogo"></h1>
-            <h3><span class="causa_perca_trad"></span>: <a class="estat" id="causa_perca" style="color: red">??</a>
+            <h3><span data-i18n="menu.causa_perda"></span>: <a class="estat" id="causa_perca" style="color: red">??</a>
             </h3>
 
             <div id="stats_dead">
                 <p class="texto _estatistic_dead">
-                    <span class="resumo_partida_trad"></span> \\//<br><br>
-                    <span class="pontuacao_trad"></span>: <a class="estat" id="pontuacao_partida">0</a><br>
-                    <span class="tempo_correndo_trad"></span>: <a class="estat" id="tempo_jogado_partida">0</a><br>
-                    <span class="distancia_trad"></span>: <a class="estat"
+                    <span data-i18n="stats.resumo"></span> \\//<br><br>
+                    <span data-i18n="stats.pontuacao"></span>: <a class="estat" id="pontuacao_partida">0</a><br>
+                    <span data-i18n="stats.tempo_correndo"></span>: <a class="estat" id="tempo_jogado_partida">0</a><br>
+                    <span data-i18n="stats.distancia"></span>: <a class="estat"
                         id="distancia_percorrida_partida">0</a><br><br>
 
-                    N° <span class="n_de_pulos_trad"></span>: <a class="estat" id="quantidade_pulos_partida">0</a><br>
-                    <span class="mods_utilizados_trad"></span>: <a class="estat"
+                    <span data-i18n="stats.pulos"></span>: <a class="estat" id="quantidade_pulos_partida">0</a><br>
+                    <span data-i18n="stats.mods_utilizados"></span>: <a class="estat"
                         id="quantidade_modificadores_partida">0</a><br><br>
 
-                    <span class="moedas_coletadas_trad"></span>: <a class="estat"
+                    <span data-i18n="moeda.moedas_coletadas"></span>: <a class="estat"
                         id="moedas_coletadas_partida">0</a><br>
-                    N° <span class="n_de_pisoes_trad"></span>: <a class="estat"
+                    <span data-i18n="pisao.numero_pisoes"></span>: <a class="estat"
                         id="quantidade_pisoes_partida">0</a><br><br>
 
-                    <span class="predios_atropelados_trad"></span>: <a class="estat"
+                    <span data-i18n="stats.predios_atropelados"></span>: <a class="estat"
                         id="quantidade_predios_partida">0</a><br>
                 </p>
             </div>
 
             <div id="stats_dead2">
                 <p class="texto _estatistic_dead">
-                    <span class="eventos_trad"></span> \\//<br><br>
-                    <span class="eventos_concluidos_trad"></span>: <a class="estat"
+                    <span data-i18n="geral.eventos"></span> \\//<br><br>
+                    <span data-i18n="stats.eventos_concluidos"></span>: <a class="estat"
                         id="eventos_concluidos_partida">0</a><br>
-                    <span class="tempo_em_eventos_trad"></span>: <a class="estat"
+                    <span data-i18n="stats.tempo_eventos"></span>: <a class="estat"
                         id="tempo_eventos_partida">0</a><br><br>
 
-                    <span class="evento_cidade_trad"></span>: <a class="estat" id="quantidade_cidade_partida">0</a><br>
-                    <span class="evento_parque_trad"></span>: <a class="estat" id="quantidade_parque_partida">0</a><br>
-                    <span class="evento_agua_trad"></span>: <a class="estat" id="quantidade_agua_partida">0</a><br>
+                    <span data-i18n="evento.cidade"></span>: <a class="estat" id="quantidade_cidade_partida">0</a><br>
+                    <span data-i18n="evento.parque"></span>: <a class="estat" id="quantidade_parque_partida">0</a><br>
+                    <span data-i18n="evento.agua"></span>: <a class="estat" id="quantidade_agua_partida">0</a><br>
                     Lava: <a class="estat" id="quantidade_lava_partida">0</a><br>
                 </p>
             </div>
@@ -302,7 +302,7 @@
         <span class="fecha_janela" onclick="botoes(81)">X</span>
 
         <center>
-            <h1 class="conquistas_trad"></h1>
+            <h1 data-i18n="geral.conquistas"></h1>
         </center>
         <hr style="width: 50%">
 
@@ -328,12 +328,12 @@
             <h3 class="opcao_tutorial" data-i18n="tutorial.inimigos" onclick="exibeTutorial(3)"></h3><br><br>
             <h3 class="opcao_tutorial" data-i18n="tutorial.eventos" onclick="exibeTutorial(4)"></h3><br><br>
             <h3 class="opcao_tutorial" data-i18n="tutorial.dificuldade" onclick="exibeTutorial(8)"></h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="tutorial.conquistas" onclick="exibeTutorial(13)"></h3><br><br>
+            <h3 class="opcao_tutorial" data-i18n="geral.conquistas" onclick="exibeTutorial(13)"></h3><br><br>
             <h3 class="opcao_tutorial" data-i18n="tutorial.moedas" onclick="exibeTutorial(5)"></h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="tutorial.loja" onclick="exibeTutorial(6)"></h3><br><br>
+            <h3 class="opcao_tutorial" data-i18n="geral.loja" onclick="exibeTutorial(6)"></h3><br><br>
             <h3 class="opcao_tutorial" onclick="exibeTutorial(12)">Upgrades</h3><br><br>
             <h3 class="opcao_tutorial" data-i18n="tutorial.atalhos" onclick="exibeTutorial(7)"></h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="tutorial.opcoes" onclick="exibeTutorial(9)"></h3><br><br>
+            <h3 class="opcao_tutorial" data-i18n="geral.opcoes" onclick="exibeTutorial(9)"></h3><br><br>
             <h3 class="opcao_tutorial" href="#" onclick="exibeTutorial(10)">Experimental</h3><br><br>
             <h3 class="opcao_tutorial" href="#" onclick="exibeTutorial(11)">Feedbacks</h3>
         </div>
@@ -349,7 +349,7 @@
         <span class="fecha_janela" onclick="botoes(81)">X</span>
 
         <center>
-            <h1 class="controles_trad"></h1>
+            <h1 data-i18n="geral.controles"></h1>
         </center>
         <hr style="width: 50%">
 
@@ -360,17 +360,17 @@
 
             <p class="tecla">O</p>
             <p class="espacador"></p>
-            <p class="controle_text">-> <span class="conquistas_trad"></span></p>
+            <p class="controle_text">-> <span data-i18n="geral.conquistas"></span></p>
 
             <br><br><br>
             <p class="tecla">C</p>
             <p class="espacador"></p>
-            <p class="controle_text">-> <span class="controles_trad"></span></p>
+            <p class="controle_text">-> <span data-i18n="geral.controles"></span></p>
 
             <br><br><br>
             <p class="tecla">E</p>
             <p class="espacador"></p>
-            <p class="controle_text">-> <span class="estatisticas_trad"></span></p>
+            <p class="controle_text">-> <span data-i18n="geral.estatisticas"></span></p>
 
             <br><br><br>
             <p class="tecla">L</p>
@@ -380,12 +380,12 @@
             <br><br><br>
             <p class="tecla">X</p>
             <p class="espacador"></p>
-            <p class="controle_text">-> <span class="loja_trad"></span></p>
+            <p class="controle_text">-> <span data-i18n="geral.loja"></span></p>
 
             <br><br><br>
             <p class="tecla">Z</p>
             <p class="espacador"></p>
-            <p class="controle_text">-> <span class="opcoes_trad"></span></p>
+            <p class="controle_text">-> <span data-i18n="geral.opcoes"></span></p>
 
             <br><br><br>
             <p class="tecla">T</p>
@@ -397,11 +397,11 @@
             <h2>Gameplay</h2>
             <hr style="width: 50%">
 
-            <p class="tecla espaco_trad"></p>
+            <p class="tecla" data-i18n="geral.espaco"></p>
             <p class="espacador"></p>
             <p class="tecla" style="width: 70px">W</p>
             <p class="espacador"></p>
-            <p class="controle_text"> -> <span class="pulo_trad"></span></p>
+            <p class="controle_text"> -> <span data-i18n="geral.pulo"></span></p>
 
             <br><br><br>
             <p class="tecla">D</p>
@@ -410,7 +410,7 @@
                 <p class="enter2">⏎</p>
             </div>
             <p class="espacador"></p>
-            <p class="controle_text">-> <span class="mod_trad"></span></p>
+            <p class="controle_text">-> <span data-i18n="geral.modificador"></span></p>
         </div>
     </div>
 
@@ -419,21 +419,21 @@
         <span class="fecha_janela" onclick="botoes(81)">X</span>
 
         <center>
-            <h1 class="problemas_trad"></h1>
+            <h1 data-i18n="menu.problemas"></h1>
         </center>
         <hr style="width: 50%">
         <div class="opcoes_esquerda_2">
-            <h4 class="problemas_descri_trad"></h4>
+            <h4 data-i18n="problemas.descricao"></h4>
 
             <a href="https://twitter.com/odnols" target="_blank"><img src="source/images/icons/twitter.png"
                     style="width: 250px"></a>
         </div>
 
-        <!-- <div class="opcoes_direita">
+        <div class="opcoes_direita">
             <iframe src="https://discord.com/widget?id=666465457565335563&theme=dark" width="350" height="360"
             allowtransparency="true" frameborder="0"
             sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
-        </div> -->
+        </div>
     </div>
 
     <div id="suporte_jogo"><br>
@@ -441,7 +441,7 @@
         <span class="fecha_janela" onclick="botoes(81)">X</span>
 
         <center>
-            <h1 class="suporte_trad"></h1>
+            <h1 data-i18n="menu.suporte"></h1>
         </center>
         <hr style="width: 50%">
         <div class="opcoes_esquerda_2">
@@ -463,42 +463,43 @@
         <div id="excluirdados" onclick="quadro_confirma_exclusao(1)">
             <img src="source/images/icons/lixeira.png" id="iconlixeira">
 
-            <span class="excluir_dados_trad"></span>
+            <span data-i18n="botao.excluir_dados"></span>
         </div>
 
         <center>
-            <h1 class="estatisticas_trad"></h1>
+            <h1 data-i18n="geral.estatisticas"></h1>
         </center>
         <hr style="width: 50%">
 
         <div id="quadros_estatisticas">
             <div class="campo_stats">
                 <p class="texto _estatistic_dead">
-                    <span class="geral_trad"></span> \\//<br><br>
-                    <span class="tempo_correndo_trad"></span>: <a class="estat" id="tempo_jogado">0</a><br>
-                    <span class="distancia_trad"></span>: <a class="estat" id="distancia_percorrida">0</a><br>
-                    <span class="mods_utilizados_trad"></span>: <a class="estat" id="quantidade_mods">0</a><br>
-                    N° <span class="n_de_pulos_trad"></span>: <a class="estat" id="quantidade_pulos">0</a><br>
-                    N° <span class="n_de_pisoes_trad"></span>: <a class="estat" id="quantidade_pisoes">0</a><br>
-                    N° <span class="n_de_mortes"></span>: <a class="estat" id="quantidade_mortes">0</a><br><br>
+                    <span data-i18n="geral.geral"></span> \\//<br><br>
+                    <span data-i18n="stats.tempo_correndo"></span>: <a class="estat" id="tempo_jogado">0</a><br>
+                    <span data-i18n="stats.distancia"></span>: <a class="estat" id="distancia_percorrida">0</a><br>
+                    <span data-i18n="stats.mods_utilizados"></span>: <a class="estat" id="quantidade_mods">0</a><br>
+                    <span data-i18n="stats.pulos"></span>: <a class="estat" id="quantidade_pulos">0</a><br>
+                    <span data-i18n="stats.pisoes"></span>: <a class="estat" id="quantidade_pisoes">0</a><br>
+                    <span data-i18n="stats.mortes"></span>: <a class="estat" id="quantidade_mortes">0</a><br><br>
 
-                    <span class="moedas_coletadas_trad"></span>: <a class="estat" id="moedas_coletadas">0</a><br>
-                    <span class="moedas_gastas_trad"></span>: <a class="estat" id="moedas_gastas">0</a><br><br>
+                    <span data-i18n="stats.moedas_coletadas"></span>: <a class="estat" id="moedas_coletadas">0</a><br>
+                    <span data-i18n="stats.moedas_gastas"></span>: <a class="estat" id="moedas_gastas">0</a><br><br>
 
-                    <span class="skins_compradas_trad"></span>: <a class="estat" id="tt_skins_compradas">0</a><br>
-                    <span class="mods_comprados_trad"></span>: <a class="estat"
+                    <span data-i18n="stats.skins_compradas"></span>: <a class="estat" id="tt_skins_compradas">0</a><br>
+                    <span data-i18n="stats.mods_comprados"></span>: <a class="estat"
                         id="tt_modificadores_comprados">0</a><br>
-                    <span class="bonus_comprados_trad"></span>: <a class="estat" id="tt_bonus_comprados">0</a><br><br>
+                    <span data-i18n="stats.bonus_comprados"></span>: <a class="estat"
+                        id="tt_bonus_comprados">0</a><br><br>
 
-                    <span class="conquistas_trad"></span>: <a class="estat" id="conquistas_obtidas"></a><br><br>
-                    <span class="pontos_obtidos_trad"></span>: <a class="estat" id="quantidade_pontos">0</a><br>
-                    <span class="melhor_partida_trad"></span>: <a class="estat" id="recorde">0</a> <span
-                        id="pontos_trad"></span><br>
+                    <span data-i18n="geral.conquistas"></span>: <a class="estat" id="conquistas_obtidas"></a><br><br>
+                    <span data-i18n="stats.pontos_obtidos"></span>: <a class="estat" id="quantidade_pontos">0</a><br>
+                    <span data-i18n="stats.melhor_partida"></span>: <a class="estat" id="recorde">0</a> <span
+                        data-i18n="stats.pontos"></span><br>
                 </p>
             </div>
 
             <div class="campo_stats" id="quadro_confirma_exclusao">
-                <h2 class="texto_confirmacao_excl"></h2><br>
+                <h2 data-i18n="stats.texto_excluir"></h2><br>
 
                 <button class="cancela_compra" onclick="status_confirmacao(0, 0, 'Exclui')"></button>
                 <button class="confirmar_compra" onclick="status_confirmacao(1, 0, 'Exclui')"></button>
@@ -506,13 +507,13 @@
 
             <div class="campo_stats">
                 <p class="texto _estatistic_dead">
-                    <span class="eventos_trad"></span> \\//<br><br>
-                    <span class="eventos_concluidos_trad"></span>: <a class="estat" id="eventos_concluidos">0</a><br>
-                    <span class="tempo_em_eventos_trad"></span>: <a class="estat" id="tempo_eventos">0</a><br><br>
+                    <span data-i18n="geral.eventos"></span> \\//<br><br>
+                    <span data-i18n="stats.eventos_concluidos"></span>: <a class="estat" id="eventos_concluidos">0</a><br>
+                    <span data-i18n="stats.tempo_eventos"></span>: <a class="estat" id="tempo_eventos">0</a><br><br>
 
-                    <span class="evento_cidade_trad"></span>: <a class="estat" id="quantidade_cidade">0</a><br>
-                    <span class="evento_parque_trad"></span>: <a class="estat" id="quantidade_parque">0</a><br>
-                    <span class="evento_agua_trad"></span>: <a class="estat" id="quantidade_agua">0</a><br>
+                    <span data-i18n="evento.cidade"></span>: <a class="estat" id="quantidade_cidade">0</a><br>
+                    <span data-i18n="evento.parque"></span>: <a class="estat" id="quantidade_parque">0</a><br>
+                    <span data-i18n="evento.agua"></span>: <a class="estat" id="quantidade_agua">0</a><br>
                     Lava: <a class="estat" id="quantidade_lava">0</a><br>
                 </p>
             </div>
@@ -555,9 +556,9 @@
 
         <div id="config_idioma">
             <div id="alinha_traducoes">
-                <h4 class="texto"><button class="button_opcoes" onclick="define_idioma('en')">English</button></h4>
+                <h4 class="texto"><button class="button_opcoes" onclick="define_idioma('en-us')">English</button></h4>
 
-                <h4 class="texto"><button class="button_opcoes" onclick="define_idioma('pt')">Português</button></h4>
+                <h4 class="texto"><button class="button_opcoes" onclick="define_idioma('pt-br')">Português</button></h4>
             </div>
         </div>
 
