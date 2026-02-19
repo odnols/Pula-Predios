@@ -26,17 +26,12 @@ function alteraEstadoSom() {
             pausa_som.pause()
         }
 
-        if (idioma == "pt")
-            get_element("status_volume_som").innerHTML = "Desativados"
-        else
-            get_element("status_volume_som").innerHTML = "Disabled"
-    } else {
-        jogo.estadoSom = 1
+        get_element("status_volume_som").innerHTML = translations["botao.desativado"]
 
-        if (idioma == "pt")
-            get_element("status_volume_som").innerHTML = "Ativados"
-        else
-            get_element("status_volume_som").innerHTML = "Activated"
+    } else {
+
+        jogo.estadoSom = 1
+        get_element("status_volume_som").innerHTML = translations["botao.ativado"]
 
         if (Math.round(2 * Math.random()) > 1)
             executaSons("faixa_musicas", "musicas", "intro_2.ogg", 1)
@@ -49,15 +44,9 @@ function alteraEstadoSom() {
 
 function sincronizaEfeitosSom() {
     if (jogo.estadoSom == 1)
-        if (idioma == "pt")
-            get_element("status_volume_som").innerHTML = "Ativados"
-        else
-            get_element("status_volume_som").innerHTML = "Activated"
+        get_element("status_volume_som").innerHTML = translations["botao.ativado"]
     else
-        if (idioma == "pt")
-            get_element("status_volume_som").innerHTML = "Desativados"
-        else
-            get_element("status_volume_som").innerHTML = "Disabled"
+        get_element("status_volume_som").innerHTML = translations["botao.desativado"]
 }
 
 function alteraEstadoEstatistica() {
@@ -69,18 +58,10 @@ function alteraEstadoEstatistica() {
 
     if (menus.estatistica_morte) {
         menus.estatistica_morte = 0
-
-        if (idioma == "pt")
-            get_element("status_tela_estatisti").innerHTML = "Desativado"
-        else
-            get_element("status_tela_estatisti").innerHTML = "Disabled"
+        get_element("status_tela_estatisti").innerHTML = translations["botao.desativado"]
     } else {
         menus.estatistica_morte = 1
-
-        if (idioma == "pt")
-            get_element("status_tela_estatisti").innerHTML = "Ativado"
-        else
-            get_element("status_tela_estatisti").innerHTML = "Activated"
+        get_element("status_tela_estatisti").innerHTML = translations["botao.ativado"]
     }
 
     localStorage.setItem("pul4Pr3dios-estatisticaMorte", menus.estatistica_morte)
@@ -88,15 +69,9 @@ function alteraEstadoEstatistica() {
 
 function sincronizaEstatisticaMorte(estado) {
     if (estado)
-        if (idioma == "pt")
-            get_element("status_tela_estatisti").innerHTML = "Ativado"
-        else
-            get_element("status_tela_estatisti").innerHTML = "Activated"
+        get_element("status_tela_estatisti").innerHTML = translations["botao.ativado"]
     else
-        if (idioma == "pt")
-            get_element("status_tela_estatisti").innerHTML = "Desativado"
-        else
-            get_element("status_tela_estatisti").innerHTML = "Disabled"
+        get_element("status_tela_estatisti").innerHTML = translations["botao.desativado"]
 }
 
 function alteraRelogio() {
@@ -111,12 +86,7 @@ function alteraRelogio() {
         verifica_tema()
 
         ambiente.tema = 1 // Sempre dia
-
-        if (idioma == "pt")
-            get_element("status_tema_atual").innerHTML = "Sempre Dia"
-        else
-            get_element("status_tema_atual").innerHTML = "Always Day"
-
+        get_element("status_tema_atual").innerHTML = translations["botao.sempre_dia"]
         animaLuzesGuia(0)
 
     } else if (ambiente.tema == 1) {
@@ -124,21 +94,14 @@ function alteraRelogio() {
         verifica_tema()
 
         ambiente.tema = 2 // Sempre noite
-
-        if (idioma == "pt")
-            get_element("status_tema_atual").innerHTML = "Sempre Noite"
-        else
-            get_element("status_tema_atual").innerHTML = "Always night"
+        get_element("status_tema_atual").innerHTML = translations["botao.sempre_noite"]
 
         if (ambiente.objeto_voador[3] == 1)
             animaLuzesGuia(1)
 
     } else if (ambiente.tema == 2) {
         ambiente.tema = 0
-        if (idioma == "pt")
-            get_element("status_tema_atual").innerHTML = "Dinâmico"
-        else
-            get_element("status_tema_atual").innerHTML = "Dynamic"
+        get_element("status_tema_atual").innerHTML = translations["botao.dinamico"]
     }
 
     sincronizaRelogio()
@@ -156,10 +119,8 @@ function sincronizaRelogio() {
         if (typeof tEst != "undefined")
             clearInterval(tEst)
 
-        if (idioma == "pt")
-            get_element("status_tema_atual").innerHTML = "Sempre Dia"
-        else
-            get_element("status_tema_atual").innerHTML = "Always Day"
+        get_element("status_tema_atual").innerHTML = translations["botao.sempre_dia"]
+
     } else if (ambiente.tema == 2) { // Sempre Noite
         ambiente.astro[2] = 1
         ambiente.opacidade_noite = 1
@@ -169,16 +130,10 @@ function sincronizaRelogio() {
             clearInterval(tEst)
 
         animaEstrelas()
+        get_element("status_tema_atual").innerHTML = translations["botao.sempre_noite"]
 
-        if (idioma == "pt")
-            get_element("status_tema_atual").innerHTML = "Sempre Noite"
-        else
-            get_element("status_tema_atual").innerHTML = "Always Night"
     } else
-        if (idioma == "pt")
-            get_element("status_tema_atual").innerHTML = "Dinâmico"
-        else
-            get_element("status_tema_atual").innerHTML = "Dynamic"
+        get_element("status_tema_atual").innerHTML = translations["botao.dinamico"]
 }
 
 function alteraEstatisticasNerds() {
@@ -187,18 +142,10 @@ function alteraEstatisticasNerds() {
 
     if (!jogo.estatisticasNerds) {
         jogo.estatisticasNerds = 1
-
-        if (idioma == "pt")
-            get_element("status_estatisticas_nerds").innerHTML = "Ativado"
-        else
-            get_element("status_estatisticas_nerds").innerHTML = "Activated"
+        get_element("status_estatisticas_nerds").innerHTML = translations["botao.ativado"]
     } else {
         jogo.estatisticasNerds = 0
-
-        if (idioma == "pt")
-            get_element("status_estatisticas_nerds").innerHTML = "Desativado"
-        else
-            get_element("status_estatisticas_nerds").innerHTML = "Disabled"
+        get_element("status_estatisticas_nerds").innerHTML = translations["botao.desativado"]
     }
 
     localStorage.setItem("pul4Pr3dios-estatisticasNerds", jogo.estatisticasNerds)
@@ -206,15 +153,9 @@ function alteraEstatisticasNerds() {
 
 function sincronizaEstatisticasNerds() {
     if (!jogo.estatisticasNerds)
-        if (idioma == "pt")
-            get_element("status_estatisticas_nerds").innerHTML = "Desativado"
-        else
-            get_element("status_estatisticas_nerds").innerHTML = "Disabled"
+        get_element("status_estatisticas_nerds").innerHTML = translations["botao.desativado"]
     else
-        if (idioma == "pt")
-            get_element("status_estatisticas_nerds").innerHTML = "Ativado"
-        else
-            get_element("status_estatisticas_nerds").innerHTML = "Activated"
+        get_element("status_estatisticas_nerds").innerHTML = translations["botao.ativado"]
 }
 
 function alteraNotificacoesConquistas() {
@@ -222,18 +163,10 @@ function alteraNotificacoesConquistas() {
 
     if (jogo.notificaConquista == 0) {
         jogo.notificaConquista = 1
-
-        if (idioma == "pt")
-            get_element("status_conquistas_notifc").innerHTML = "Ativado"
-        else
-            get_element("status_conquistas_notifc").innerHTML = "Activated"
+        get_element("status_conquistas_notifc").innerHTML = translations["botao.ativado"]
     } else {
         jogo.notificaConquista = 0
-
-        if (idioma == "pt")
-            get_element("status_conquistas_notifc").innerHTML = "Desativado"
-        else
-            get_element("status_conquistas_notifc").innerHTML = "Disabled"
+        get_element("status_conquistas_notifc").innerHTML = translations["botao.desativado"]
     }
 
     localStorage.setItem("pul4Pr3dios-notificaConquistas", jogo.notificaConquista)
@@ -241,15 +174,9 @@ function alteraNotificacoesConquistas() {
 
 function sincronizaNotificacoesConquistas() {
     if (jogo.notificaConquista == 0)
-        if (idioma == "pt")
-            get_element("status_conquistas_notifc").innerHTML = "Desativado"
-        else
-            get_element("status_conquistas_notifc").innerHTML = "Disabled"
+        get_element("status_conquistas_notifc").innerHTML = translations["botao.desativado"]
     else
-        if (idioma == "pt")
-            get_element("status_conquistas_notifc").innerHTML = "Ativado"
-        else
-            get_element("status_conquistas_notifc").innerHTML = "Activated"
+        get_element("status_conquistas_notifc").innerHTML = translations["botao.ativado"]
 }
 
 function alteraQualidadeGrafica() {
@@ -258,28 +185,17 @@ function alteraQualidadeGrafica() {
     if (jogo.qualidadeGrafica == 0) {
         jogo.qualidadeGrafica = 1
 
-        if (idioma == "pt")
-            get_element("status_animacoes").innerHTML = "Aprimoradas"
-        else
-            get_element("status_animacoes").innerHTML = "Enhanced"
-
+        get_element("status_animacoes").innerHTML = translations["botao.aprimorada"]
         location.reload()
     } else if (jogo.qualidadeGrafica == 1) {
         jogo.qualidadeGrafica = 2
 
-        if (idioma == "pt")
-            get_element("status_animacoes").innerHTML = "Fantásticas"
-        else
-            get_element("status_animacoes").innerHTML = "Fantastic"
-
+        get_element("status_animacoes").innerHTML = translations["botao.fantastica"]
         location.reload()
     } else {
         jogo.qualidadeGrafica = 0
 
-        if (idioma == "pt")
-            get_element("status_animacoes").innerHTML = "Mínimas"
-        else
-            get_element("status_animacoes").innerHTML = "Minimum"
+        get_element("status_animacoes").innerHTML = translations["botao.minima"]
     }
 
     localStorage.setItem("pul4Pr3dios-qualidadeGrafica", jogo.qualidadeGrafica)
@@ -289,10 +205,7 @@ function alteraQualidadeGrafica() {
 function sincronizaQualidadeGrafica() {
 
     if (jogo.qualidadeGrafica == 0) {
-        if (idioma == "pt")
-            get_element("status_animacoes").innerHTML = "Mínimas"
-        else
-            get_element("status_animacoes").innerHTML = "Minimum"
+        get_element("status_animacoes").innerHTML = translations["botao.minima"]
 
         if (jogo.estatisticasNerds)
             jogo.depuracao({ tls: "depuracao.desligando_animacoes" })
@@ -307,36 +220,19 @@ function sincronizaQualidadeGrafica() {
         verifica_animacoes(1)
 
         if (jogo.qualidadeGrafica == 1)
-            if (idioma == "pt")
-                get_element("status_animacoes").innerHTML = "Aprimoradas"
-            else
-                get_element("status_animacoes").innerHTML = "Enhanced"
+            get_element("status_animacoes").innerHTML = translations["botao.aprimorada"]
         else
-            if (idioma == "pt")
-                get_element("status_animacoes").innerHTML = "Fantásticas"
-            else
-                get_element("status_animacoes").innerHTML = "Fantastic"
+            get_element("status_animacoes").innerHTML = translations["botao.fantastica"]
 
         if (jogo.estatisticasNerds)
             jogo.depuracao({ tls: "depuracao.ligando_animacoes" })
 
         if (jogo.parallax) {
-
             get_element("fx_cima")[0].style.display = "Block"
-
-            if (idioma == "pt")
-                get_element("status_parallax").innerHTML = "Ativado"
-            else
-                get_element("status_parallax").innerHTML = "Activated"
-
+            get_element("status_parallax").innerHTML = translations["botao.ativado"]
         } else {
-
             get_element("fx_cima")[0].style.display = "None"
-
-            if (idioma == "pt")
-                get_element("status_parallax").innerHTML = "Desativado"
-            else
-                get_element("status_parallax").innerHTML = "Disabled"
+            get_element("status_parallax").innerHTML = translations["botao.desativado"]
         }
     }
 }
@@ -350,11 +246,7 @@ function alteraDificuldade() {
 
     if (jogo.dificuldade == 1) {
         jogo.dificuldade = 2
-
-        if (idioma == "pt")
-            get_element("status_dificuldade").innerHTML = "Díficil"
-        else
-            get_element("status_dificuldade").innerHTML = "Hard"
+        get_element("status_dificuldade").innerHTML = translations["botao.dificil"]
     } else if (jogo.dificuldade == 2) {
         jogo.dificuldade = 3
 
@@ -364,11 +256,7 @@ function alteraDificuldade() {
         get_element("stats_dead2").style.backgroundImage = "url('source/images/icons/icone.gif')"
     } else if (jogo.dificuldade == 3) {
         jogo.dificuldade = 0
-
-        if (idioma == "pt")
-            get_element("status_dificuldade").innerHTML = "Fácil"
-        else
-            get_element("status_dificuldade").innerHTML = "Easy"
+        get_element("status_dificuldade").innerHTML = translations["botao.facil"]
 
         get_element("stats_dead").style.backgroundImage = "none"
         get_element("stats_dead2").style.backgroundImage = "none"
@@ -383,25 +271,18 @@ function alteraDificuldade() {
 
 function sincronizaDificuldade() {
 
-    if (jogo.dificuldade == 1) {       // Normal  = 1
+    if (jogo.dificuldade == 1)        // Normal  = 1
         get_element("status_dificuldade").innerHTML = "Normal"
-    } else if (jogo.dificuldade == 2) { // Díficil = 2
-        if (idioma == "pt")
-            get_element("status_dificuldade").innerHTML = "Díficil"
-        else
-            get_element("status_dificuldade").innerHTML = "Hard"
-    } else if (jogo.dificuldade == 3) { // Expert  = 3
-
+    else if (jogo.dificuldade == 2)   // Díficil = 2
+        get_element("status_dificuldade").innerHTML = translations["botao.dificil"]
+    else if (jogo.dificuldade == 3) { // Expert  = 3
         get_element("status_dificuldade").innerHTML = "Expert"
 
         get_element("stats_dead").style.backgroundImage = "url('source/images/icons/icone.gif')"
         get_element("stats_dead2").style.backgroundImage = "url('source/images/icons/icone.gif')"
-    } else if (jogo.dificuldade == 0) { // Fácil   = 0
-        if (idioma == "pt")
-            get_element("status_dificuldade").innerHTML = "Fácil"
-        else
-            get_element("status_dificuldade").innerHTML = "Easy"
-    }
+    } else if (jogo.dificuldade == 0) // Fácil   = 0
+        get_element("status_dificuldade").innerHTML = translations["botao.facil"]
+
 }
 
 function alteraEstadoOcioso() {
@@ -413,18 +294,10 @@ function alteraEstadoOcioso() {
 
     if (jogo.ociosidade) {
         jogo.ociosidade = 0
-
-        if (idioma == "pt")
-            get_element("status_modo_ocioso").innerHTML = "Desativado"
-        else
-            get_element("status_modo_ocioso").innerHTML = "Disabled"
+        get_element("status_modo_ocioso").innerHTML = translations["botao.desativado"]
     } else {
         jogo.ociosidade = 1
-
-        if (idioma == "pt")
-            get_element("status_modo_ocioso").innerHTML = "Ativado"
-        else
-            get_element("status_modo_ocioso").innerHTML = "Activated"
+        get_element("status_modo_ocioso").innerHTML = translations["botao.ativado"]
     }
 
     localStorage.setItem("pul4Pr3dios-ociosidade", jogo.ociosidade)
@@ -435,21 +308,13 @@ function alteraParallax() {
     executaSons2("faixa_efeitos1", "efeitos", "hat.ogg", 2)
 
     if (jogo.parallax) {
-
-        if (idioma == "pt")
-            get_element("status_parallax").innerHTML = "Desativado"
-        else
-            get_element("status_parallax").innerHTML = "Disabled"
+        get_element("status_parallax").innerHTML = translations["botao.desativado"]
 
         jogo.parallax = 0
         $(".fx_cima").fadeOut()
 
     } else {
-
-        if (idioma == "pt")
-            get_element("status_parallax").innerHTML = "Ativado"
-        else
-            get_element("status_parallax").innerHTML = "Activated"
+        get_element("status_parallax").innerHTML = translations["botao.ativado"]
 
         jogo.parallax = 1
         $(".fx_cima").fadeIn()
@@ -461,21 +326,10 @@ function alteraParallax() {
 function sincronizaOciosidade() {
 
     if (jogo.ociosidade) {
-        if (idioma == "pt")
-            get_element("status_modo_ocioso").innerHTML = "Ativado"
-        else
-            get_element("status_modo_ocioso").innerHTML = "Activated"
-
-        if (jogo.estatisticasNerds)
-            if (idioma == "pt")
-                console.log("%cA Ociosidade está ativa", "color: green")
-            else
-                console.log("%cIdleness is active", "color: green")
+        get_element("status_modo_ocioso").innerHTML = translations["botao.ativado"]
+        jogo.depuracao({ tls: "depuracao.ocioso_ativo", color: "green" })
     } else
-        if (idioma == "pt")
-            get_element("status_modo_ocioso").innerHTML = "Desativado"
-        else
-            get_element("status_modo_ocioso").innerHTML = "Disabled"
+        get_element("status_modo_ocioso").innerHTML = translations["botao.desativado"]
 }
 
 function sincronizaModificadoresComprados(requisicao_auto) {
@@ -585,13 +439,8 @@ function sincronizaVezesModificadoresComprados() {
         sincronizaModificadoresComprados(0)
 
     if (jogo.estatisticasNerds) {
-        if (idioma == "pt") {
-            console.log("%cModificador Principal ativo no momento: " + jogador.mod_em_uso, "color: orange")
-            console.log("%cModificadores em partidas: " + jogador.mods_vezes_usados, "color: orange")
-        } else {
-            console.log("%cCurrently active Main Modifier: " + jogador.mod_em_uso, "color: orange")
-            console.log("%cModifiers in rounds: " + jogador.mods_vezes_usados, "color: orange")
-        }
+        jogo.depuracao({ tls: "modificador.ativo_momento", replace: jogador.mod_em_uso, color: "orange" })
+        jogo.depuracao({ tls: "modificador.em_partidas", replace: jogador.mods_vezes_usados, color: "orange" })
     }
 
     localStorage.setItem("pul4Pr3dios-modEmUso", jogador.mod_em_uso)
@@ -624,7 +473,7 @@ function sincroniza_bonus(requisicao_auto) {
 
     // Icones de bônus adquiridos
     for (let i = 1; i <= 3; i++) {
-        nome = `bonus_${i}`
+        const nome = `bonus_${i}`
 
         if (jogador.bonus_comprados[i - 1] == 1)
             get_element(nome).style.display = "block"

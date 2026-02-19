@@ -177,14 +177,13 @@ var labelTexto = {
         biomas: function () {
 
             const biomas = ["Campos", "Praia"], tempo = Math.floor(20000 + (Math.random() * 60000))
-            console.log(`Entrando no bioma de ${biomas[jogo.bioma == 0 ? 1 : 0]} em ${tempo / 1000} segundos`)
+            jogo.depuracao({ tls: "depuracao.entrando_bioma", replace: [biomas[jogo.bioma == 0 ? 1 : 0], (tempo / 1000).toFixed(0)] })
 
             setTimeout(() => {
                 jogo.bioma = jogo.bioma == 0 ? 1 : 0
-                console.log(`No bioma de ${biomas[jogo.bioma]}`)
+                jogo.depuracao({ tls: "depuracao.no_bioma", replace: biomas[jogo.bioma] })
 
                 localStorage.setItem("pul4Pr3dios-jogo_bioma", jogo.bioma)
-
                 ambiente.biomas()
             }, tempo)
         },
@@ -393,8 +392,7 @@ var labelTexto = {
             else if (jogo.status == estados.ocioso)
                 this.contador_tempo = 3
 
-            if (this.estatisticasNerds)
-                jogo.depuracao({ tls: "partida.proximo_evento", replace: this.contador_tempo, color: "purple" })
+            jogo.depuracao({ tls: "partida.proximo_evento", replace: this.contador_tempo, color: "purple" })
 
             this.ativa_evento = setTimeout(() => {
                 eventos.eventos()
@@ -418,9 +416,7 @@ var labelTexto = {
             // Determina qual será o próximo evento aleatoriamente
             // Tempo aleatório que ficará ativo o evento
             this.inicia_evento = Math.round(3 * Math.random())
-
-            if (jogo.estatisticasNerds)
-                jogo.depuracao({ tls: "partida.comecando_evento", replace: this.inicia_evento, color: "purple" })
+            jogo.depuracao({ tls: "partida.comecando_evento", replace: this.inicia_evento, color: "purple" })
 
             if (this.dificuldade != 0 && this.dificuldade != 3)
                 this.contador_tempo_evento = 15 + Math.round(15 * Math.random())
@@ -438,14 +434,12 @@ var labelTexto = {
                 executaSons("faixa_efeitos1", "efeitos", "orb.ogg", 2)
 
             if (this.qtd_eventos[this.inicia_evento] == 0 || this.inicia_evento == this.ultimo_evento || this.inicia_evento == this.penultimo_evento && (this.dificuldade == 0 && (this.inicia_evento == 1 || this.inicia_evento == 3))) {
-                if (this.estatisticasNerds)
-                    jogo.depuracao({ tls: "evento.pulado", color: "red" })
+                jogo.depuracao({ tls: "evento.pulado", color: "red" })
 
                 eventos.eventos()
             } else {
                 if (this.timer_mod < this.tempoMod && (this.inicia_evento == 1 || this.inicia_evento == 3)) {
-                    if (jogo.estatisticasNerds)
-                        jogo.depuracao({ tls: "evento.pulado", color: "red" })
+                    jogo.depuracao({ tls: "evento.pulado", color: "red" })
 
                     eventos.eventos()
                 } else {
@@ -493,8 +487,7 @@ var labelTexto = {
                         }, 3000)
                     }
 
-                    if (this.estatisticasNerds)
-                        jogo.depuracao({ tls: "partida.tempo_evento", replace: this.contador_tempo_evento, color: "purple" })
+                    jogo.depuracao({ tls: "partida.tempo_evento", replace: this.contador_tempo_evento, color: "purple" })
 
                     if (jogo.status == estados.jogando) {
                         $("#temporizador").fadeIn()
@@ -641,9 +634,7 @@ var labelTexto = {
 
             alteraValorEstatisticaPartida("causa_perca", jogador.partida_causa_morte)
 
-            if (jogo.estatisticasNerds)
-                jogo.depuracao({ tls: "partida.encerrada", replace: jogador.partida_causa_morte, color: "red" })
-
+            jogo.depuracao({ tls: "partida.encerrada", replace: jogador.partida_causa_morte, color: "red" })
             ajusta_cores(6, 2)
 
             MsgPerdeu(causa)
@@ -673,10 +664,25 @@ var labelTexto = {
 
         depuracao: function (dados) {
 
-            mensagem = translations[dados.tls]
+            // Estatísticas para nerds desativadas
+            if (!jogo.estatisticasNerds) return
 
-            if (dados.replace) // Substituindo dados na string após traduzir
-                mensagem = mensagem.replace("auto_repl", mensagem.replace)
+            let mensagem = translations[dados.tls]
+            if (!mensagem) return
+
+            if (Array.isArray(dados.replace)) {
+
+                // Substitui cada ocorrência sequencialmente sem alterar o array original
+                const replace = dados.replace
+                let idx = 0
+
+                while (mensagem.includes('auto_repl') && idx < replace.length) {
+                    mensagem = mensagem.replace('auto_repl', replace[idx])
+                    idx++
+                }
+
+            } else if (mensagem.includes("auto_repl")) // Substitui todas as ocorrências por um único valor
+                mensagem = mensagem.replaceAll('auto_repl', dados.replace)
 
             // Retorno com cor definida
             if (dados.color) return console.log(`%c${mensagem}`, `color: ${dados.color}`)
@@ -813,8 +819,7 @@ var labelTexto = {
 
             if ((jogo.status == estados.jogando || jogo.status == estados.tutorial) && this.timer_mod != 0 && this.mod != 1 && this.qtdMods > 0) {
 
-                if (jogo.estatisticasNerds)
-                    jogo.depuracao({ tls: "modificador.ativado" })
+                jogo.depuracao({ tls: "modificador.ativado" })
 
                 this.qtdMods--
                 get_element("qtdMods").innerHTML = this.qtdMods
@@ -917,9 +922,7 @@ var labelTexto = {
 
         recarrega_timer: function () {
 
-            if (this.estatisticasNerds)
-                jogo.depuracao({ tls: "modificador.recarregando" })
-
+            jogo.depuracao({ tls: "modificador.recarregando" })
             get_element("qtdMods").style.display = "none"
 
             // Restaura a skin ao escolhido anteriormente depois do modificador
@@ -933,9 +936,7 @@ var labelTexto = {
                     jogador.timer_mod++
                 } else {
                     jogador.liberaMod = 0
-
-                    if (jogo.estatisticasNerds)
-                        jogo.depuracao({ tls: "modificador.pronto" })
+                    jogo.depuracao({ tls: "modificador.pronto" })
 
                     ajusta_cores(5, 2)
                     clearInterval(jogador.var_timer_recarrega)
@@ -1313,10 +1314,9 @@ function desenha() {
     // Verifica se o jogador está ocioso e se a opção está ativa
     if (jogo.status == estados.jogar) {
         if (!jogo.estadoOcioso && jogo.ociosidade && confirma_carregamento) {
-            jogo.estadoOcioso = 1
 
-            if (jogo.estatisticasNerds)
-                console.log(`%c${translations["ocioso.iniciando"]}`, "color: green")
+            jogo.estadoOcioso = 1
+            jogo.depuracao({ tls: "depuracao.ociosidade_iniciando", color: "green" })
 
             contagemOcioso = setTimeout(() => {
                 jogo.status = estados.ocioso

@@ -15,11 +15,7 @@ function conquista(conquista, modo) {
     if (lista_conquistas_ganhas[conquista] == 0 || modo == 1) {
         lista_conquistas_ganhas[conquista] = 1
 
-        if (jogo.estatisticasNerds)
-            if (idioma == "pt")
-                console.log("Conquista Solicitada")
-            else
-                console.log("Achievement Requested")
+        jogo.depuracao({ tls: "depuracao.conquista_solicitada" })
 
         // Remove a primeira posição do array
         if (modo)
@@ -34,11 +30,7 @@ function conquista(conquista, modo) {
                 mostra_moedas(Math.round(25 * Math.random()))
             }
 
-            if (jogo.estatisticasNerds)
-                if (idioma == "pt")
-                    console.log("Processando conquista: " + lista_conquistas[conquista])
-                else
-                    console.log("Processing achievement: " + lista_conquistas[conquista])
+            jogo.depuracao({ tls: "depuracao.processando_conquista", replace: lista_conquistas[conquista] })
 
             lista_conquistas_ganhas[conquista] = 2
 
@@ -55,19 +47,11 @@ function conquista(conquista, modo) {
 
                 // Verifica se a conquista é secreta ou não
                 if (conquistas_secretas.includes(conquista)) {
-                    if (idioma == "pt")
-                        get_element("tipo_conquista").innerHTML = "Conquista Secreta!"
-                    else
-                        get_element("tipo_conquista").innerHTML = "Secret achievement!"
-
+                    get_element("tipo_conquista").innerHTML = translations["conquista.secreta"]
                     executaSons("faixa_conquistas", "efeitos", "conquista_secreta.ogg", 2)
                     tempo_conquista = 9000
                 } else {
-                    if (idioma == "pt")
-                        get_element("tipo_conquista").innerHTML = "Conquista Obtida!"
-                    else
-                        get_element("tipo_conquista").innerHTML = "Achievement Achieved!"
-
+                    get_element("tipo_conquista").innerHTML = translations["conquista.obtida"]
                     executaSons("faixa_conquistas", "efeitos", "conquista.ogg", 2)
                 }
 
@@ -106,12 +90,7 @@ function conquista(conquista, modo) {
             if (fila_conquistas.length > 0)
                 clearInterval(puxa_proxima)
 
-            if (jogo.estatisticasNerds)
-                if (idioma == "pt")
-                    console.log("Conquista: " + lista_conquistas[conquista] + " adicionada a fila")
-                else
-                    console.log("Achievement: " + lista_conquistas[conquista] + " added to queue")
-
+            jogo.depuracao({ tls: "depuracao.conquista_fila", replace: lista_conquistas[conquista] })
             fila_conquistas.push(conquista)
 
             puxa_proxima = setInterval(() => {

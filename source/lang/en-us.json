@@ -1,7 +1,6 @@
 {
     "tutorial.historia": "Story",
     "tutorial.como_jogar": "How to Play",
-    "tutorial.modificadores": "Modifiers",
     "tutorial.inimigos": "Enemies",
     "tutorial.moedas": "Coins",
     "tutorial.atalhos": "Shortcuts",
@@ -32,6 +31,7 @@
     "menu.fim_de_jogo": "End of the line",
     "menu.desativadas": "Disabled",
     "loja.titulo": "Welcome to the Store!",
+    "loja.modificadores": "Modifiers",
     "loja.bonus": "Bonuses",
     "loja.temas": "Themes",
     "loja.skins": "Skins",

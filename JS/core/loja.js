@@ -1,4 +1,4 @@
-var identificadores = ["Skins", "Modificadores", "Bônus", "Temas"]
+var identificadores = ["Skins", "Modificadores", "Bonus", "Temas"]
 var listaPrecos_Skins = [70, 70, 70, 70, 70, 70, 70]
 var listaPrecos_Mods = [50, 50, 70, 0]
 var listaPrecos_Bonus = [100, 100, 30]
@@ -11,7 +11,7 @@ function carrega_dados_loja(categoria_loja) {
     $("#sessao_loja").fadeIn()
     $("#rodape_loja").fadeIn()
 
-    get_element("categoria_loja").innerHTML = translations[identificadores[categoria_loja]]
+    get_element("categoria_loja").innerHTML = translations[`loja.${(identificadores[categoria_loja]).toLowerCase()}`]
     carrega_vendas_loja(identificadores[categoria_loja])
 
     menus.categoria_anterior = identificadores[categoria_loja]
@@ -50,7 +50,7 @@ function carrega_vendas_loja(caso) {
         if (jogador.mod_em_uso == 0) nome_img = "flutua"
         else if (jogador.mod_em_uso == 1) nome_img = "aco"
 
-        get_element("categoria_teaser").innerHTML = translations["loja.coloca_mod"]
+        get_element("categoria_teaser").innerHTML = translations["loja.coloque_mod"]
         get_element("categoria_teaser").innerHTML += `<br><div id='mod_em_uso'><h3 style='float: left'>${translations["loja.mod_principal"]}</h3><h3 style='float: right'>${translations["loja.mods_comprados"]}</h3><div id='barra_mods_loja'><div id='mod_esquerda_principal'>${translations["loja.ativo"]} &nbsp; <img class='icon_mod_loja' src='source/images/store/mods/${nome_img}.png'></div><div id='mod_direita_principal'></div></div></div>`
 
         get_element("mod_direita_principal").innerHTML = ""
@@ -98,7 +98,7 @@ function carrega_vendas_loja(caso) {
             else
                 get_element("placeholder_loja").innerHTML += "<div class='item_comprado_lendario' onMouseOver='toolTip(" + 'descricao_Mods[3]' + ")' onmouseout='toolTip()' onclick='confirma_compra(2, 3, 55)'><img class='img_mod_venda' src='source/images/store/mods/lunar.png'><br><br>Gravidade Lunar</div>"
         }
-    } else if (caso == "Bônus") { // Bônus
+    } else if (caso == "Bonus") { // Bônus
 
         let descricao = ["bonus.dobro", "bonus.garimpeiro", "bonus.vento_estocado"]
         let nomeImagem = ["pisao2x.png", "garimpeiro.png", "vento_estocado.png"]
@@ -279,7 +279,7 @@ function confirma_compra(categoria, item, confirmacao) {
                     if (item == 2) // Vento estocado
                         executaSons2("faixa_memes1", "memes", "dilma_vento_1.ogg", 2)
 
-                    debita_compra(listaPrecos_Bonus[item], "Bônus", 1)
+                    debita_compra(listaPrecos_Bonus[item], "Bonus", 1)
 
                     exibe_teaser(translations["loja.compra_confirmada"], "yellow")
                     pisca_loja("0, 255, 0, .2")
@@ -354,14 +354,12 @@ function debita_compra(valor, item, caso) {
     if (caso == 1) { // Caso seja uma compra legítima
         executaSons2("faixa_efeitos3", "efeitos", "compra.ogg", 2)
 
-        if (jogo.estatisticasNerds == 1)
-            if (valor > 0)
-                jogo.depuracao({ tls: "depuracao.compra_confirmada", replace: valor, color: "orange" })
-            else
-                jogo.depuracao({ tls: "depuracao.item_resgatavel", color: "orange" })
-
         if (valor > 0)
-            altera_moedas(-valor, jogador.moedas)
+            jogo.depuracao({ tls: "depuracao.compra_confirmada", replace: valor, color: "orange" })
+        else
+            jogo.depuracao({ tls: "depuracao.item_resgatavel", color: "orange" })
+
+        if (valor > 0) altera_moedas(-valor, jogador.moedas)
 
         jogador.moedas -= valor
         jogador.moedas_gastas += valor

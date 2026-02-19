@@ -291,11 +291,7 @@ function pisao_neles() {
     else
         moeda_ev = 0
 
-    if (idioma == "pt")
-        jogo.notifica("Pisão Neles! +3 Pontos", "yellow")
-    else
-        jogo.notifica("Kick them! +3 Points", "yellow")
-
+    jogo.notifica(translations["partida.pisao"], "yellow")
     let ganha = moeda_ev + Math.round(3 * Math.random())
 
     if (jogo.dificuldade == 0)
@@ -324,17 +320,9 @@ function pisao_neles() {
             executaSons("faixa_memes1", "memes", "bambam.ogg", 3)
     }
 
-    if (jogo.estatisticasNerds)
-        if (ganha > 0)
-            if (idioma == "pt")
-                console.log("%cPisão efetuado, " + ganha + " moedas coletadas", "color: green")
-            else
-                console.log("%cKick done, " + ganha + " collected coins", "color: green")
-        else
-            if (idioma == "pt")
-                console.log("%cPisão efetuado", "color: green")
-            else
-                console.log("%cKick done", "color: green")
+    // Jogador bateu em um pisão
+    if (ganha > 0) jogo.depuracao({ tls: "depuracao.pisao_moedas", replace: ganha, color: "green" })
+    else jogo.depuracao({ tls: "depuracao.pisao_sem_moedas", color: "green" })
 
     soma_pontuacao(3)
     alteraValorEstatisticaPartida("pontuacao_partida", jogador.partida_pontuacao)
@@ -360,15 +348,10 @@ function finaliza_evento() {
     if (jogo.status == estados.jogando)
         jogo.notifica(eventos.saida_evento[eventos.inicia_evento], "white")
 
-    if (jogo.estatisticasNerds)
-        if (idioma == "pt")
-            console.log("%cEvento Finalizado", "color: red")
-        else
-            console.log("%cEvent Finished", "color: red")
+    jogo.depuracao({ tls: "depuracao.evento_finalizado", color: "red" })
 
-    // Selva de Concreto
     if (eventos.evento == 0 && eventos.contador_tempo_evento >= 30 && jogo.dificuldade == 3)
-        conquista(21, 0)
+        conquista(21, 0) // Selva de Concreto
 
     if (eventos.evento == 1 && jogador.bonus_vezes_usados[1] > 0) {
         ganha = 10 + Math.round(20 * Math.random())
@@ -401,12 +384,7 @@ function finaliza_evento() {
 
 function cancela_evento() {
 
-    if (jogo.estatisticasNerds)
-        if (idioma == "pt")
-            console.log("%cEvento Cancelado", "color: red")
-        else
-            console.log("%cCanceling the event", "color: red")
-
+    jogo.depuracao({ tls: "depuracao.evento_cancelado", color: "red" })
     clearInterval(cronometro)
 
     if (jogo.status == estados.jogando)
@@ -454,10 +432,7 @@ function MsgPerdeu(causa) {
         opcoes.controle = 1
 
         if (jogador.partida_pontuacao > jogador.recorde)
-            if (idioma == "pt")
-                labelTexto.texto = `Novo Recorde! ( ${jogador.partida_pontuacao} )`
-            else
-                labelTexto.texto = `New Record! ( ${jogador.partida_pontuacao} )`
+            labelTexto.texto = translations["partida.novo_recorde"].replace("auto_repl", jogador.partida_pontuacao)
         else {
 
             executaSomPerca(causa)
@@ -551,12 +526,7 @@ function estadoOcioso(caso) {
     } else {
         // Retorna o jogo do modo ocioso
         cancela_evento()
-
-        if (jogo.estatisticasNerds)
-            if (idioma == "pt")
-                console.log("%cModo Ocioso desativado", "color: green")
-            else
-                console.log("%cIdle mode disabled", "color: green")
+        jogo.depuracao({ tls: "depuracao.ociosidade_desativada", color: "green" })
 
         jogo.status = estados.jogar
         eventos.seguraEventoOcioso = 0
@@ -572,12 +542,8 @@ function estadoOcioso(caso) {
 // Impede que o jogo entre no modo ocioso
 function impedeOcioso() {
 
-    if (jogo.estatisticasNerds)
-        if (jogo.ociosidade != jogo.estadoOcioso)
-            if (idioma == "pt")
-                console.log("%cA Ociosidade está desativada", "color: green")
-            else
-                console.log("%cIdleness is disabled", "color: green")
+    if (jogo.ociosidade != jogo.estadoOcioso)
+        jogo.depuracao({ tls: "depuracao.ocioso_desativado", color: "green" })
 
     jogo.estadoOcioso = 0
 
@@ -621,51 +587,27 @@ function verificaMetrica(valor) {
             return "km"
     else
         if (valor != 1)
-            if (idioma == "pt")
-                return "metros"
-            else
-                return "meters"
+            translations["unidade.metros"]
         else
-            if (idioma == "pt")
-                return "metro"
-            else
-                return "meter"
+            translations["unidade.metro"]
 }
 
 function verificaTempo(valor) {
     if (valor >= 3600)
         if (valor > 3600)
-            if (idioma == "pt")
-                return "horas"
-            else
-                return "hours"
+            translations["unidade.horas"]
         else
-            if (idioma == "pt")
-                return "hora"
-            else
-                return "hour"
+            translations["unidade.hora"]
     else if (valor >= 60)
         if (valor > 60)
-            if (idioma == "pt")
-                return "minutos"
-            else
-                return "minutes"
+            translations["unidade.minutos"]
         else
-            if (idioma == "pt")
-                return "minuto"
-            else
-                return "minute"
+            translations["unidade.minuto"]
     else
         if (valor != 1)
-            if (idioma == "pt")
-                return "segundos"
-            else
-                return "seconds"
+            translations["unidade.segundos"]
         else
-            if (idioma == "pt")
-                return "segundo"
-            else
-                return "second"
+            translations["unidade.segundo"]
 }
 
 function calculaTempo(alvo) {
@@ -783,12 +725,8 @@ function altera_modificador(novo) {
     sincronizaModificadoresComprados(1)
     carrega_vendas_loja("Modificadores")
 
-    if (idioma == "pt")
-        get_element("mensagem_teaser").innerHTML = "Modificador alterado."
-    else
-        get_element("mensagem_teaser").innerHTML = "Modifier changed."
-
-    exibe_teaser("Modificador alterado", "cyan")
+    get_element("mensagem_teaser").innerHTML = translations["modificador.alterado"]
+    exibe_teaser(translations["modificador.alterado"], "cyan")
     pisca_loja("0, 255, 255, .2")
 }
 
@@ -924,11 +862,7 @@ function limpa_intervalos() {
     if (typeof preenche_barra_notificacao != "undefined")
         clearInterval(preenche_barra_notificacao)
 
-    if (jogo.estatisticasNerds)
-        if (idioma == "pt")
-            console.log("%cLimpando funções de intervalos e disparos//", "color: red")
-        else
-            console.log("%cCleaning interval and trigger functions//", "color: red")
+    jogo.depuracao({ tls: "depuracao.limpando_funcoes", color: "red" })
 }
 
 function registra_compra(item, requisicao_auto) {
@@ -947,7 +881,7 @@ function registra_compra(item, requisicao_auto) {
             localStorage.setItem("pul4Pr3dios-tt_mods_comprados", jogador.tt_mods_comprados)
         }
 
-        if (item == "Bônus") {
+        if (item == "Bonus") {
             jogador.tt_bonus_comprados++
             localStorage.setItem("pul4Pr3dios-tt_bonus_comprados", jogador.tt_bonus_comprados)
         }
@@ -1096,23 +1030,8 @@ function sincronizaApelidoInterno(apelido) {
 
     conversao = "Skins"
 
-    if (apelido == "Modificadores")
-        if (idioma == "pt")
-            conversao = apelido
-        else
-            conversao = "Modifiers"
-
-    if (apelido == "Bônus")
-        if (idioma == "pt")
-            conversao = apelido
-        else
-            conversao = "Bonuses"
-
-    if (apelido == "Temas")
-        if (idioma == "pt")
-            conversao = apelido
-        else
-            conversao = "Themes"
+    if (apelido !== "Skins")
+        return translations[`loja.${apelido.toLowerCase()}`]
 
     return conversao
 }
@@ -1147,11 +1066,7 @@ function notificacao(item, modo) {
         if (modo != "undefined")
             fila_notificacoes.shift()
 
-        if (jogo.estatisticasNerds)
-            if (idioma == "pt")
-                console.log("Processando notificação: " + nome_notificacoes[item])
-            else
-                console.log("Processing notification: " + nome_notificacoes[item])
+        jogo.depuracao({ tls: "depuracao.processando_notificacao", replace: nome_notificacoes[item] })
 
         descricao = get_element("texto_notificacoes_trad")
         descricao[0].innerHTML = nome_notificacoes[item]
@@ -1175,12 +1090,7 @@ function notificacao(item, modo) {
         }
 
         if (bloqueia_adicao == 0) {
-            if (jogo.estatisticasNerds)
-                if (idioma == "pt")
-                    console.log("Notificação: " + nome_notificacoes[item] + " adicionada a fila")
-                else
-                    console.log("Notification: " + nome_notificacoes[item] + " added to queue")
-
+            jogo.depuracao({ tls: "depuracao.notificacao_fila", replace: nome_notificacoes[item] })
             fila_notificacoes.push(item)
         }
     }

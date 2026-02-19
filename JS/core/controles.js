@@ -41,7 +41,7 @@ function botoes(tecla) {
                     if (!menus.estado_loja)
                         alvo = "estatisticas"
                     else
-                        regula_sessao_loja("Bônus")
+                        regula_sessao_loja("Bonus")
                     break
                 case 120: // x
                 case 88:  // X
