@@ -1,4 +1,4 @@
-let translations = {}
+let translations = {}, idioma
 
 async function loadLanguage(lang) {
     const res = await fetch(`https://raw.githubusercontent.com/odnols/Pula-Predios/master/source/lang/${lang}.json`)
@@ -14,4 +14,45 @@ function applyTranslations() {
             el.textContent = translations[key]
         }
     })
+
+    sincronizaBotoesConfigs(menus.estatistica_morte)
+}
+
+function define_idioma(idioma) {
+
+    const verifica = localStorage.getItem("pul4Pr3dios-idioma") || "pt-br"
+
+    if (verifica != idioma) {
+        localStorage.setItem("pul4Pr3dios-idioma", idioma)
+        executaSons("faixa_efeitos1", "efeitos", "hat.ogg", 2)
+
+        // Atualizando as traduções
+        loadLanguage(idioma)
+    }
+}
+
+function carrega_idioma(caso) {
+
+    idioma = localStorage.getItem("pul4Pr3dios-idioma") || "pt-br"
+    jogo.idioma = idioma
+
+    sincronizaNomeConquistas()
+
+    if (caso) return idioma
+
+    loadLanguage(idioma)
+}
+
+function toolTip_trad(categoria, alvo, loja) {
+
+    const id_mod = ["flutuante", "de_aco", "lunar", "mais_tempo", "mais_vezes"]
+    const id_bonus = ["garimpeiro", "vento_estocado"]
+
+    if (!loja) {
+        if (!categoria)
+            toolTip(`principal.${id_mod[alvo]}`)
+        else if (categoria)
+            toolTip(`bonus.${id_bonus[alvo]}`)
+    } else
+        toolTip(translations["botao.abrir_loja"])
 }

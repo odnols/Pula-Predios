@@ -377,8 +377,7 @@ var labelTexto = {
         contador_tempo_evento_b: 0,
         contador_tempo_interno: 0,
 
-        saida_evento: [],
-        anuncio_evento: [],
+        id_eventos: ["cidade", "agua", "parque", "lava"],
 
         relogio_eventos: function () {
             //  Define o tempo que o próximo evento demorará para começar
@@ -481,7 +480,7 @@ var labelTexto = {
 
                         parque_event = setTimeout(() => {
                             if (jogo.status == estados.jogando) {
-                                jogo.notifica(translations["partida.parque"], "#14e11e")
+                                jogo.notifica({ tls: "partida.parque", color: "#14e11e" })
                                 executaSons("faixa_efeitos3", "memes", "parque.ogg", 3)
                             }
                         }, 3000)
@@ -503,7 +502,7 @@ var labelTexto = {
                         preenche_barra()
 
                     if (jogo.status == estados.jogando)
-                        jogo.notifica(this.anuncio_evento[this.inicia_evento], "white")
+                        jogo.notifica({ tls: `eventos.entrando_${this.id_eventos[this.inicia_evento]}`, color: "white" })
 
                     setTimeout(() => {
 
@@ -641,13 +640,13 @@ var labelTexto = {
             regula_velocidade()
         },
 
-        notifica: function (mensagem, cor) {
+        notifica: function (dados) {
 
-            if (!mensagem) return
+            if (!dados.tls) return
 
             $("#notificacoes").fadeIn(300, "linear")
-            get_element("notificacoes").style.color = cor
-            get_element("notificacoes").innerHTML = mensagem
+            get_element("notificacoes").style.color = dados.color
+            get_element("notificacoes").innerHTML = translations[dados.tls]
 
             if (typeof limpar_notificacao != "undefined")
                 clearTimeout(limpar_notificacao)
@@ -660,7 +659,6 @@ var labelTexto = {
                 clearTimeout(limpar_notificacao)
             }, 2000)
         },
-
 
         depuracao: function (dados) {
 
@@ -1115,10 +1113,10 @@ var labelTexto = {
 
                             if ((jogo.status == estados.jogando || jogo.status == estados.tutorial) && obs.altura > 60) {
                                 if (jogador.mod_em_uso != 1) {
-                                    jogo.notifica(translations["partida.nao_atropele"], "red")
+                                    jogo.notifica({ tls: "partida.nao_atropele", color: "red" })
                                     soma_pontuacao(-2)
                                 } else {
-                                    jogo.notifica(translations["partida.acontece"], "white")
+                                    jogo.notifica({ tls: "partida.acontece", color: "white" })
                                     soma_pontuacao(2)
                                 }
 

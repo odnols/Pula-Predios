@@ -21,6 +21,7 @@
         crossorigin="anonymous">
 
     <script src="js/funcoes/operacionais.js"></script>
+    <script src="js/core/translate.js"></script>
 
     <script src="js/graficos/sprite.js"></script>
     <script src="js/graficos/motor_grafico.js"></script>
@@ -31,7 +32,6 @@
     <script src="js/core/carrega.js"></script>
     <script src="js/funcoes/configuracoes.js"></script>
     <script src="js/funcoes/conquistas.js"></script>
-    <script src="js/funcoes/idiomas.js"></script>
     <script src="js/core/controles.js"></script>
     <script src="js/graficos/desenha.js"></script>
     <script src="js/graficos/desenhaChao.js"></script>
@@ -44,7 +44,6 @@
     <script src="js/core/sons.js"></script>
     <script src="js/funcoes/tutorial.js"></script>
 
-    <script src="js/core/translate.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
     <script src="js/funcoes/tooltip.js"></script>
@@ -271,10 +270,8 @@
                     <span data-i18n="stats.mods_utilizados"></span>: <a class="estat"
                         id="quantidade_modificadores_partida">0</a><br><br>
 
-                    <span data-i18n="moeda.moedas_coletadas"></span>: <a class="estat"
-                        id="moedas_coletadas_partida">0</a><br>
-                    <span data-i18n="pisao.numero_pisoes"></span>: <a class="estat"
-                        id="quantidade_pisoes_partida">0</a><br><br>
+                    <span data-i18n="stats.moedas_coletadas"></span>: <a class="estat" id="moedas_coletadas_partida">0</a><br>
+                    <span data-i18n="stats.pisoes"></span>: <a class="estat" id="quantidade_pisoes_partida">0</a><br><br>
 
                     <span data-i18n="stats.predios_atropelados"></span>: <a class="estat"
                         id="quantidade_predios_partida">0</a><br>
@@ -486,15 +483,12 @@
                     <span data-i18n="stats.moedas_gastas"></span>: <a class="estat" id="moedas_gastas">0</a><br><br>
 
                     <span data-i18n="stats.skins_compradas"></span>: <a class="estat" id="tt_skins_compradas">0</a><br>
-                    <span data-i18n="stats.mods_comprados"></span>: <a class="estat"
-                        id="tt_modificadores_comprados">0</a><br>
-                    <span data-i18n="stats.bonus_comprados"></span>: <a class="estat"
-                        id="tt_bonus_comprados">0</a><br><br>
+                    <span data-i18n="stats.mods_comprados"></span>: <a class="estat" id="tt_modificadores_comprados">0</a><br>
+                    <span data-i18n="stats.bonus_comprados"></span>: <a class="estat" id="tt_bonus_comprados">0</a><br><br>
 
                     <span data-i18n="geral.conquistas"></span>: <a class="estat" id="conquistas_obtidas"></a><br><br>
                     <span data-i18n="stats.pontos_obtidos"></span>: <a class="estat" id="quantidade_pontos">0</a><br>
-                    <span data-i18n="stats.melhor_partida"></span>: <a class="estat" id="recorde">0</a> <span
-                        data-i18n="stats.pontos"></span><br>
+                    <span data-i18n="stats.melhor_partida"></span>: <a class="estat" id="recorde">0</a> <span data-i18n="stats.pontos"></span><br>
                 </p>
             </div>
 

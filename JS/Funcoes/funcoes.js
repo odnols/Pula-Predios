@@ -1,4 +1,4 @@
-var nome_notificacoes = [], fila_notificacoes = [], segura_notificacao = 0
+var fila_notificacoes = [], segura_notificacao = 0
 
 function boasVindas() {
 
@@ -291,7 +291,7 @@ function pisao_neles() {
     else
         moeda_ev = 0
 
-    jogo.notifica(translations["partida.pisao"], "yellow")
+    jogo.notifica({ tls: "partida.pisao", color: "yellow" })
     let ganha = moeda_ev + Math.round(3 * Math.random())
 
     if (jogo.dificuldade == 0)
@@ -346,7 +346,7 @@ function mostra_moedas(valor) {
 function finaliza_evento() {
 
     if (jogo.status == estados.jogando)
-        jogo.notifica(eventos.saida_evento[eventos.inicia_evento], "white")
+        jogo.notifica({ tls: `evento.saindo_${eventos.id_eventos[eventos.inicia_evento]}`, color: "white" })
 
     jogo.depuracao({ tls: "depuracao.evento_finalizado", color: "red" })
 
@@ -587,27 +587,28 @@ function verificaMetrica(valor) {
             return "km"
     else
         if (valor != 1)
-            translations["unidade.metros"]
+            return translations["unidade.metros"]
         else
-            translations["unidade.metro"]
+            return translations["unidade.metro"]
 }
 
 function verificaTempo(valor) {
+
     if (valor >= 3600)
         if (valor > 3600)
-            translations["unidade.horas"]
+            return translations["unidade.horas"]
         else
-            translations["unidade.hora"]
+            return translations["unidade.hora"]
     else if (valor >= 60)
         if (valor > 60)
-            translations["unidade.minutos"]
+            return translations["unidade.minutos"]
         else
-            translations["unidade.minuto"]
+            return translations["unidade.minuto"]
     else
         if (valor != 1)
-            translations["unidade.segundos"]
+            return translations["unidade.segundos"]
         else
-            translations["unidade.segundo"]
+            return translations["unidade.segundo"]
 }
 
 function calculaTempo(alvo) {
@@ -1028,12 +1029,10 @@ function regula_sessao_loja(categoria) {
 
 function sincronizaApelidoInterno(apelido) {
 
-    conversao = "Skins"
-
     if (apelido !== "Skins")
         return translations[`loja.${apelido.toLowerCase()}`]
 
-    return conversao
+    return "Skins"
 }
 
 function altera_altura_fechador() {
@@ -1059,6 +1058,7 @@ function altera_altura_fechador() {
 function notificacao(item, modo) {
 
     carrega_idioma(1)
+    const id_notificacoes = ["mod", "tema"]
 
     if (segura_notificacao == 0) {
         segura_notificacao = 1
@@ -1066,10 +1066,10 @@ function notificacao(item, modo) {
         if (modo != "undefined")
             fila_notificacoes.shift()
 
-        jogo.depuracao({ tls: "depuracao.processando_notificacao", replace: nome_notificacoes[item] })
+        jogo.depuracao({ tls: "depuracao.processando_notificacao", replace: translations[`notificacao.${id_notificacoes[item]}`] })
 
         descricao = get_element("texto_notificacoes_trad")
-        descricao[0].innerHTML = nome_notificacoes[item]
+        descricao[0].innerHTML = translations[`notificacao.${id_notificacoes[item]}`]
 
         get_element("quadro_notificacoes").style.animation = "abre_notificacao 1s"
         $("#quadro_notificacoes").fadeIn()
@@ -1090,7 +1090,7 @@ function notificacao(item, modo) {
         }
 
         if (bloqueia_adicao == 0) {
-            jogo.depuracao({ tls: "depuracao.notificacao_fila", replace: nome_notificacoes[item] })
+            jogo.depuracao({ tls: "depuracao.notificacao_fila", replace: translations[`notificacao.${id_notificacoes[item]}`] })
             fila_notificacoes.push(item)
         }
     }

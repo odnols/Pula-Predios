@@ -47,7 +47,7 @@ function carrega_jogo(requisicao_auto) {
             let indice = 0
 
             carregar_departaments = setInterval(() => {
-                get_element("texto_carregamento").innerHTML = texto_feedback[indice]
+                get_element("texto_carregamento").innerHTML = translations[texto_feedback[indice]]
 
                 indice++
 
