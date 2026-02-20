@@ -486,8 +486,6 @@ function carrega_dados() {
     nomenclatura = verificaTempo(hist_tempo_eventos)
     tempo_jogado = calculaTempo(hist_tempo_eventos)
 
-    console.log(hist_tempo_eventos, nomenclatura, tempo_jogado)
-
     // Estatísticas de Eventos
     get_element("eventos_concluidos").innerHTML = hist_eventos_concluidos
     get_element("tempo_eventos").innerHTML = `${tempo_jogado} ${nomenclatura}`

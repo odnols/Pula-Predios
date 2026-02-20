@@ -2,7 +2,7 @@ const identificadores = ["Skins", "Modificadores", "Bonus", "Temas"]
 const listaPrecos_Skins = [70, 70, 70, 70, 70, 70, 70]
 const listaPrecos_Mods = [50, 50, 70, 0]
 const listaPrecos_Bonus = [100, 100, 30]
-const listaPrecos_Temas = [200, 0]
+const listaPrecos_Temas = [200, 0, 0]
 
 function carrega_dados_loja(categoria_loja) {
 
@@ -78,39 +78,39 @@ function carrega_vendas_loja(caso) {
         for (let i = 0; i < descricao.length; i++) {
             if (jogador.mods_comprados[i] == 0) { // Item a venda
                 if (i != 2)
-                    get_element("placeholder_loja").innerHTML += "<div class='mod_venda' onMouseOver='toolTip(" + translations[`descricao.mod_${id_mod[i]}`] + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + translations[descricao[i]] + " <div class='preco_item'> $" + listaPrecos_Mods[i] + "</div></div>"
+                    get_element("placeholder_loja").innerHTML += `<div class="mod_venda" onMouseOver="toolTip('${translations[`descricao.mod_${id_mod[i]}`]}')" onmouseout="toolTip()" onclick="confirma_compra(2, ${i}, 55)"> <img class="img_mod_venda" src="source/images/store/mods/${nomeImagem[i]}"><br><br>${translations[descricao[i]]}<div class="preco_item"> $${listaPrecos_Mods[i]}</div></div>`
                 else
-                    get_element("placeholder_loja").innerHTML += "<div class='mod_principal_venda' onMouseOver='toolTip(" + translations[`descricao.mod_${id_mod[i]}`] + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + translations[descricao[i]] + " <div class='preco_item'> $" + listaPrecos_Mods[i] + "</div></div>"
+                    get_element("placeholder_loja").innerHTML += `<div class="mod_principal_venda" onMouseOver="toolTip('${translations[`descricao.mod_${id_mod[i]}`]}')" onmouseout="toolTip()" onclick="confirma_compra(2, ${i}, 55)"> <img class="img_mod_venda" src="source/images/store/mods/${nomeImagem[i]}"><br><br>${translations[descricao[i]]} <div class='preco_item'> $${listaPrecos_Mods[i]}</div></div>`
             } else {
                 if (jogador.mods_comprados[i] == 1 && jogador.mod_em_uso != 1) // Item Comprado
                     if (jogador.mods_comprados[i] == 1 && i < 2)
-                        get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip(" + translations[`descricao.mod_${id_mod[i]}`] + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + translations[descricao[i]] + "</div>"
+                        get_element("placeholder_loja").innerHTML += `<div class='item_equipado' onMouseOver="toolTip('${translations[`descricao.mod_${id_mod[i]}`]}')" onmouseout='toolTip()' onclick='confirma_compra(2, ${i}, 55)'> <img class='img_mod_venda' src="source/images/store/mods/${nomeImagem[i]}"><br><br>${translations[descricao[i]]}</div>`
                     else
-                        get_element("placeholder_loja").innerHTML += "<div class='item_comprado' onMouseOver='toolTip(" + translations[`descricao.mod_${id_mod[i]}`] + ")' onmouseout='toolTip()' onclick='confirma_compra(2, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + translations[descricao[i]] + "</div>"
+                        get_element("placeholder_loja").innerHTML += `<div class='item_comprado' onMouseOver="toolTip('${translations[`descricao.mod_${id_mod[i]}`]}')" onmouseout='toolTip()' onclick='confirma_compra(2, ${i}, 55)'> <img class='img_mod_venda' src="source/images/store/mods/${nomeImagem[i]}"><br><br>${translations[descricao[i]]}</div>`
                 else // Comprado e equipado
-                    get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip(" + translations[`descricao.mod_${id_mod[i]}`] + ")' onmouseout='toolTip()'> <img class='img_mod_venda' src='source/images/store/mods/" + nomeImagem[i] + "'><br><br>" + translations[descricao[i]] + "</div>"
+                    get_element("placeholder_loja").innerHTML += `<div class='item_equipado' onMouseOver="toolTip('${translations[`descricao.mod_${id_mod[i]}`]}')" onmouseout='toolTip()'> <img class='img_mod_venda' src="source/images/store/mods/${nomeImagem[i]}"><br><br>${translations[descricao[i]]}</div>`
             }
         }
 
         if (lista_conquistas_ganhas[26] != 0) {
             if (jogador.mod_em_uso == 100)
-                get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip(" + translations[`descricao.mod_lunar`] + ")' onmouseout='toolTip()' onclick='confirma_compra(2, 3, 55)'><img class='img_mod_venda' src='source/images/store/mods/lunar.png'><br><br>" + translations["mod.lunar"] + "</div>"
+                get_element("placeholder_loja").innerHTML += `<div class='item_equipado' onMouseOver="toolTip('${translations[`descricao.mod_lunar`]}')" onmouseout='toolTip()' onclick='confirma_compra(2, 3, 55)'><img class='img_mod_venda' src='source/images/store/mods/lunar.png'><br><br>${translations["mod.lunar"]}</div>`
             else
-                get_element("placeholder_loja").innerHTML += "<div class='item_comprado_lendario' onMouseOver='toolTip(" + translations[`descricao.mod_lunar`] + ")' onmouseout='toolTip()' onclick='confirma_compra(2, 3, 55)'><img class='img_mod_venda' src='source/images/store/mods/lunar.png'><br><br>" + translations["mod.lunar"] + "</div>"
+                get_element("placeholder_loja").innerHTML += `<div class='item_comprado_lendario' onMouseOver="toolTip('${translations[`descricao.mod_lunar`]}')" onmouseout='toolTip()' onclick='confirma_compra(2, 3, 55)'><img class='img_mod_venda' src='source/images/store/mods/lunar.png'><br><br>${translations["mod.lunar"]}</div>`
         }
     } else if (caso == "Bonus") { // Bônus
 
         const nomeImagem = ["pisao2x.png", "garimpeiro.png", "vento_estocado.png"]
-        const id_bonus = ["bonus", "garimpeiro", "vento_estocado"]
+        const id_bonus = ["dobro", "garimpeiro", "vento_estocado"]
 
         get_element("categoria_teaser").innerHTML = translations["loja.adquira_bonus"]
         get_element("placeholder_loja").innerHTML = ""
 
         for (let i = 0; i < id_bonus.length; i++) {
             if (jogador.bonus_comprados[i] != 1) // Item a venda
-                get_element("placeholder_loja").innerHTML += "<div class='mod_venda' onMouseOver='toolTip(" + translations[`descricao.bonus_${id_bonus[i]}`] + ")' onmouseout='toolTip()' onclick='confirma_compra(3, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/bonus/" + nomeImagem[i] + "'><br><br>" + translations[`bonus.${id_bonus[i]}`] + " <div class='preco_item'> $" + listaPrecos_Bonus[i] + "</div></div>"
+                get_element("placeholder_loja").innerHTML += `<div class='mod_venda' onMouseOver="toolTip('${translations[`descricao.bonus_${id_bonus[i]}`]}')" onmouseout='toolTip()' onclick='confirma_compra(3, ${i}, 55)'> <img class='img_mod_venda' src="source/images/store/bonus/${nomeImagem[i]}"><br><br> ${translations[`bonus.${id_bonus[i]}`]} <div class='preco_item'> $${listaPrecos_Bonus[i]}</div></div>`
             else // Item Comprado
-                get_element("placeholder_loja").innerHTML += "<div class='item_equipado' onMouseOver='toolTip(" + translations[`descricao.bonus_${id_bonus[i]}`] + ")' onmouseout='toolTip()' onclick='confirma_compra(3, " + i + ", 55)'> <img class='img_mod_venda' src='source/images/store/bonus/" + nomeImagem[i] + "'><br><br>" + translations[`bonus.${id_bonus[i]}`] + "</div>"
+                get_element("placeholder_loja").innerHTML += `<div class='item_equipado' onMouseOver="toolTip('${translations[`descricao.bonus_${id_bonus[i]}`]}')" onmouseout='toolTip()' onclick='confirma_compra(3, ${i}, 55)'> <img class='img_mod_venda' src="source/images/store/bonus/${nomeImagem[i]}"><br><br> ${translations[`bonus.${id_bonus[i]}`]}</div>`
         }
     } else {
 
@@ -126,13 +126,13 @@ function carrega_vendas_loja(caso) {
         get_element("placeholder_loja").innerHTML = ""
 
         for (let i = 0; i < descricao.length; i++) {
-            if (jogo.temas_comprados[i] != 1) // Temas não comprados
-                get_element("placeholder_loja").innerHTML += "<div class='tema_caixa' onclick='confirma_compra(4, " + i + ", 55)' onMouseOver='toolTip(" + translations[`descricao.tema_${id_tema[i]}`] + ")' onmouseout='toolTip()'><img class='img_preview_tema' src='source/images/store/temas/" + nomeImagem[i] + "'><div class='info_tema'><br><br>" + translations[descricao[i]] + " <div class='preco_tema'> $" + listaPrecos_Temas[i] + "</div></div></div>"
+            if (jogo.temas_comprados[i] != 1 && listaPrecos_Temas[i] !== 0) // Temas não comprados
+                get_element("placeholder_loja").innerHTML += `<div class='tema_caixa' onclick='confirma_compra(4, ${i}, 55)' onMouseOver="toolTip('${translations[`descricao.tema_${id_tema[i]}`]}')" onmouseout='toolTip()'><img class='img_preview_tema' src="source/images/store/temas/${nomeImagem[i]}"><div class='info_tema'><br><br> ${translations[descricao[i]]}<div class='preco_tema'> $${listaPrecos_Temas[i]}</div></div></div>`
             else {
                 if (jogo.tema_ativo != i)     // Tema comprado e não ativo
-                    get_element("placeholder_loja").innerHTML += "<div class='tema_caixa' onclick='confirma_compra(4, " + i + ", 55)' onMouseOver='toolTip(" + translations[`descricao.tema_${id_tema[i]}`] + ")' onmouseout='toolTip()'><img class='img_preview_tema' src='source/images/store/temas/" + nomeImagem[i] + "'><div class='info_tema'><br><br>" + translations[descricao[i]] + "</div></div>"
+                    get_element("placeholder_loja").innerHTML += `<div class='tema_caixa' onclick='confirma_compra(4, ${i}, 55)' onMouseOver="toolTip('${translations[`descricao.tema_${id_tema[i]}`]}')" onmouseout='toolTip()'><img class='img_preview_tema' src="source/images/store/temas/${nomeImagem[i]}"><div class='info_tema'><br><br>${translations[descricao[i]]}</div></div>`
                 else                          // Tema comprado e ativo
-                    get_element("placeholder_loja").innerHTML += "<div class='tema_caixa_ativo' onclick='confirma_compra(4, " + i + ", 55)' onMouseOver='toolTip(" + translations[`descricao.tema_${id_tema[i]}`] + ")' onmouseout='toolTip()'><img class='img_preview_tema' src='source/images/store/temas/" + nomeImagem[i] + "'><div class='info_tema'><br><br>" + translations[descricao[i]] + "</div></div>"
+                    get_element("placeholder_loja").innerHTML += `<div class='tema_caixa_ativo' onclick='confirma_compra(4, ${i}, 55)' onMouseOver="toolTip('${translations[`descricao.tema_${id_tema[i]}`]}')" onmouseout='toolTip()'><img class='img_preview_tema' src="source/images/store/temas/${nomeImagem[i]}"><div class='info_tema'><br><br>${translations[descricao[i]]}</div></div>`
             }
         }
     }

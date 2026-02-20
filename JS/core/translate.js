@@ -50,9 +50,9 @@ function toolTip_trad(categoria, alvo, loja) {
 
     if (!loja) {
         if (!categoria)
-            toolTip(`principal.${id_mod[alvo]}`)
+            toolTip(`${translations[`principal.${id_mod[alvo]}`]}`)
         else if (categoria)
-            toolTip(`bonus.${id_bonus[alvo]}`)
+            toolTip(`${translations[`bonus.${id_bonus[alvo]}`]}`)
     } else
         toolTip(translations["botao.abrir_loja"])
 }
