@@ -575,13 +575,13 @@ var labelTexto = {
 
             encerra_modificador()
 
-            if (jogador.bonus_comprados[0] == 1 && jogador.bonus_comprados[1] == 1)
-                conquista(28, 0) // Nadando no Dinheiro
+            // Nadando no Dinheiro
+            if (jogador.bonus_comprados[0] == 1 && jogador.bonus_comprados[1] == 1) conquista("dinheirama", 0)
 
             sincroniza_bonus(0)
 
-            if (jogador.partida_pontuacao < 0)
-                conquista(23, 0) // Não é todo dia que isso acontece
+            // Vergonha da profisson
+            if (jogador.partida_pontuacao < 0) conquista("negativado", 0)
 
             desliga_som3("faixa_musicas", 1)
 
@@ -619,16 +619,16 @@ var labelTexto = {
             if (causa == 1) {
                 jogador.partida_causa_morte = translations["morte.agua"]
 
-                conquista(1, 0) // Pisando em falso
+                conquista("morte_agua", 0) // Pisando em falso
             } else if (causa == 3) {
                 jogador.partida_causa_morte = translations["morte.lava"]
 
-                conquista(2, 0) // O Chão era Lava
+                conquista("morte_lava", 0) // O Chão era Lava
             } else {
                 jogador.partida_causa_morte = translations["morte.batida"]
 
-                if (causa == 2) conquista(18, 1) // Isso era Possível?
-                else conquista(3, 0) // Não Atropele os Prédios!
+                if (causa == 2) conquista("morte_parque", 1) // Isso era Possível?
+                else conquista("morte_batida", 0) // Não Atropele os Prédios!
             }
 
             alteraValorEstatisticaPartida("causa_perca", jogador.partida_causa_morte)
@@ -802,13 +802,10 @@ var labelTexto = {
             }
 
             // Simulador de Pulga
-            if (hist_pulos + this.partida_pulos_dados > 1000)
-                conquista(15, 0)
+            if (hist_pulos + this.partida_pulos_dados > 1000) conquista("pulga", 0)
 
             // No Poder do Ódio
-            if (this.qtdPulos == 0) {
-                conquista(4, 0)
-            }
+            if (this.qtdPulos == 0) conquista("pulo_esgotado", 0)
         },
 
         modificador: function () {
@@ -824,13 +821,14 @@ var labelTexto = {
 
                 if (this.qtdMods == 0 && this.mod_em_uso == 0) {
                     get_element("qtdMods").style.color = "red"
-                    // Clube de milhas aéreas
-                    conquista(22, 0)
+
+                    conquista("milhas_aereas", 0) // Clube de milhas aéreas
                 }
 
                 // Modificador de Gravidade Lunar
                 if (this.mod_em_uso == 100) {
-                    conquista(19, 0)
+
+                    conquista("baixa_gravidade", 0)
                     jogo.gravidade = 0.6
                     this.forcaDoPulo = 18
                     this.mod = 1
@@ -889,9 +887,8 @@ var labelTexto = {
                     if (jogador.mod_em_uso == 0)
                         jogador.partida_tempo_flutuando++
 
-                    // É um Pássaro!
                     if ((jogador.partida_tempo_flutuando + parseInt(localStorage.getItem("pul4Pr3dios-tempoFlutuando"))) >= 500)
-                        conquista(17, 0)
+                        conquista("passaro", 0) // É um Pássaro!
                 } else {
                     // Hack life p/ voar infinitamente, comente a linha abaixo \/
                     clearInterval(jogador.var_timer_modificador)
@@ -1150,9 +1147,8 @@ var labelTexto = {
                     jogador.partida_pontuacao++
                     obs._scored = true
 
-                    if (jogador.partida_pontuacao >= 200 && jogo.dificuldade == 3)
-                        // Você tem um sério problema!
-                        conquista(20, 0)
+                    // Você tem um sério problema!
+                    if (jogador.partida_pontuacao >= 200 && jogo.dificuldade == 3) conquista("expert", 0) 
 
                     alteraValorEstatisticaPartida("pontuacao_partida", jogador.partida_pontuacao)
                 } else if (obs.x <= -obs.largura - 90) {

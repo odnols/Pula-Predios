@@ -162,7 +162,7 @@ function confirma_compra(categoria, item, confirmacao) {
                     exibe_teaser(translations["loja.compra_skin"], "yellow")
                     pisca_loja("0, 255, 0, .2")
 
-                    conquista(14, 0)
+                    conquista("mudanca_tintas", 0) // Mudança de Tintas
                 } else if (confirmacao == 0) {
 
                     exibe_teaser(translations["loja.compra_cancelada"], "red")
@@ -227,7 +227,7 @@ function confirma_compra(categoria, item, confirmacao) {
                         pisca_loja("255, 255, 0, .2")
                     }
 
-                    conquista(16, 0)
+                    conquista("mods", 0) // Nada é Natural
                 } else if (confirmacao == 0) {
                     exibe_teaser(translations["loja.compra_cancelada"], "red")
                     pisca_loja("255, 0, 0, .2")
@@ -367,8 +367,8 @@ function debita_compra(valor, item, caso) {
         jogador.moedas -= valor
         jogador.moedas_gastas += valor
 
-        if (jogador.moedas_gastas >= 500)
-            conquista(13, 0)
+        // Comprador compulsivo
+        if (jogador.moedas_gastas >= 500) conquista("comprador_compulsivo", 0)
 
         get_element("moedas_gastas").innerHTML = jogador.moedas_gastas
 

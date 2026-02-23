@@ -65,7 +65,7 @@ function confirma_inicio_partida() {
     troca_descricao(0, 0, 0)
 
     // Ligando os motores
-    conquista(0, 0)
+    conquista("ligando_motores", 0)
 
     if (!ambiente.segura_som) { // Meme usado para começar
         executaSons("faixa_memes2", "inicio", escolhe_som(1, 0), 3)
@@ -298,8 +298,8 @@ function pisao_neles() {
         ganha = moeda_ev + Math.round(2 * Math.random())
 
     if (ganha > 0) {
-        // Pling!
-        conquista(9, 0)
+
+        conquista("pling", 0) // Pling!
 
         // Duplica a quantidade de moedas ganhas
         if (jogador.bonus_vezes_usados[0] > 0)
@@ -350,8 +350,8 @@ function finaliza_evento() {
 
     jogo.depuracao({ tls: "depuracao.evento_finalizado", color: "red" })
 
-    if (eventos.evento == 0 && eventos.contador_tempo_evento >= 30 && jogo.dificuldade == 3)
-        conquista(21, 0) // Selva de Concreto
+    // Selva de Concreto
+    if (eventos.evento == 0 && eventos.contador_tempo_evento >= 30 && jogo.dificuldade == 3) conquista("selva_concreto", 0)
 
     if (eventos.evento == 1 && jogador.bonus_vezes_usados[1] > 0) {
         ganha = 10 + Math.round(20 * Math.random())

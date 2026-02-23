@@ -93,16 +93,16 @@ function insere_obj() {
     if (obstaculos.qtdObjetos % 4 == 0 && jogo.status == estados.jogando && jogo.velocidade < 30 && jogo.dificuldade != 3) {
         jogo.velocidade += .5
 
-        // Conquista: Velocidade máxima
-        if (jogo.velocidade == 30) conquista(12, 0)
+        // Velocidade máxima
+        if (jogo.velocidade == 30) conquista("velocidade_maxima", 0)
     }
 
     // Modo Expert
     if (obstaculos.qtdObjetos % 2 == 0 && jogo.status == estados.jogando && jogo.velocidade < 35 && jogo.dificuldade == 3) {
         jogo.velocidade += .5
 
-        // Conquista: Velocidade máxima
-        if (jogo.velocidade == 35) conquista(12, 0)
+        // Velocidade máxima
+        if (jogo.velocidade == 35) conquista("velocidade_maxima", 0)
     }
 }
 

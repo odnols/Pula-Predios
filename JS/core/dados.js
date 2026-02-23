@@ -389,23 +389,11 @@ function carrega_dados() {
 
     sincroniza_bonus(1)
 
-    lista_conquistas_g = localStorage.getItem("pul4Pr3dios-lista_conquistas_ganhas")
-    if (lista_conquistas_g == null)
-        lista_conquistas_ganhas = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+    const lista_conquistas_g = localStorage.getItem("pul4Pr3dios-lista_conquistas_ganhas")
+    if (lista_conquistas_g == null) lista_conquistas_ganhas = {}
     else {
-        // Recolhendo os valores e convertendo para um array utilizável
-        let indices = lista_conquistas_g.split(",")
-
-        // Reiniciando o Array
-        lista_conquistas_ganhas = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
-        // Convertendo o valor e salvando no array corretamente
-        for (let i = 0; i < lista_conquistas.length; i++) {
-            indices[i]
-
-            if (indices[i] == 0 || indices[i] == 1 || indices[i] == 2)
-                lista_conquistas_ganhas[i] = parseInt(indices[i])
-        }
+        // Recolhendo os valores e convertendo para um objeto utilizável
+        lista_conquistas_ganhas = JSON.parse(lista_conquistas_g)
     }
 
     sincronizaConquistas()
@@ -642,6 +630,8 @@ function apagaDados(valor) {
 
         carrega_dados()
         sincronizaQuadroConquistas()
-        conquista(24, 0)
+
+        // De novo de novo!
+        conquista("restart", 0)
     }
 }

@@ -36,8 +36,6 @@ function carrega_idioma(caso) {
     idioma = localStorage.getItem("pul4Pr3dios-idioma") || "pt-br"
     jogo.idioma = idioma
 
-    sincronizaNomeConquistas()
-
     if (caso) return idioma
 
     loadLanguage(idioma)
