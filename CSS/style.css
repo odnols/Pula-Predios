@@ -83,7 +83,7 @@ canvas {
 }
 
 #filtro2 {
-    z-index: 3;
+    z-index: 5;
     width: 100%;
     height: 100%;
     display: none;
@@ -91,6 +91,7 @@ canvas {
     animation: efeito_morte 1s;
     background-color: rgba(0, 0, 0, .5);
     text-shadow: 2px 2px 3px rgba(0, 0, 0, .7);
+
 }
 
 #estatisticas_morte {
@@ -111,16 +112,20 @@ canvas {
     width: 100%;
     color: white;
     font-size: 25px;
+    padding-top: 40px;
 }
 
 #stats_dead,
 #stats_dead2 {
     width: 400px;
-    height: 400px;
-    overflow-y: scroll;
+    height: 500px;
+    overflow-y: auto;
     position: absolute;
+    image-rendering: pixelated;
+    background-size: 100px 100px;
     background-color: rgba(0, 0, 0, .5);
     box-shadow: inset 0px 0px 10px black;
+    background-image: url("../source/images/background/ferradura.png");
 }
 
 #stats_dead {
@@ -139,13 +144,17 @@ canvas {
 }
 
 #quadro_confirma_exclusao {
+    width: 100%;
+    height: 100%;
     display: none;
+    padding-top: 30%;
     overflow-y: hidden;
     border: 1px solid black;
+    image-rendering: pixelated;
+    background-size: 40px 40px;
     text-shadow: 1px 1px 2px grey;
-    box-shadow: 0px 0px 15px black;
-    background-color: rgba(255, 0, 0, .6);
-    background-image: url("../source/images/background/geometria.png");
+    background-color: rgba(255, 0, 0, .2);
+    background-image: url("../source/images/background/quadrados.png");
 }
 
 .campo_stats {
@@ -155,7 +164,18 @@ canvas {
     overflow-y: auto;
     position: relative;
     text-align: center;
-    background: url("../source/images/background/update.png");
+    image-rendering: pixelated;
+    box-shadow: 0px 0px 15px black inset;
+    background-size: 100px 100px !important;
+    background: url("../source/images/background/ferradura.png");
+}
+
+#quadro_slot {
+    padding-top: 0px !important;
+    overflow-y: hidden;
+    background-size: 40px 40px;
+    image-rendering: pixelated;
+    background-image: url("../source/images/background/quadrados.png");
 }
 
 a#log_click {
@@ -201,7 +221,7 @@ a.estat {
 #menu_inicial,
 #faixas_menu_ini {
     top: 60%;
-    z-index: 3;
+    z-index: 4;
     width: 100%;
     height: 40%;
     color: white;
@@ -212,7 +232,6 @@ a.estat {
 }
 
 #menu_inicial {
-    z-index: 5;
     height: 10%;
     pointer-events: auto;
 }
@@ -380,8 +399,10 @@ button {
     float: right;
     height: 120px;
     overflow: hidden;
+    background-size: 60px 60px !important;
+    image-rendering: pixelated;
     animation: move_img_loja 30s infinite;
-    background: url("../source/images/background/quadrantes.png");
+    background: url("../source/images/background/helice.png");
 }
 
 #text_novidades_loja {
@@ -463,10 +484,12 @@ button {
 }
 
 .quadros_loja {
+    background-size: 40px 40px;
+    image-rendering: pixelated;
     background-color: rgb(3, 73, 64);
     box-shadow: inset 0px 0px 15px black;
     transition: background-color .5s, box-shadow .2s;
-    background: url("../source/images/background/quadrantes.png");
+    background: url("../source/images/background/helice.png");
 }
 
 .quadros_loja:hover {
@@ -493,9 +516,11 @@ button {
     width: 500px;
     height: 200px;
     overflow: hidden;
+    background-size: 40px 40px;
+    image-rendering: pixelated;
     box-shadow: 0px 0px 15px black;
     transition: box-shadow .3s, transform .5s;
-    background-image: url("../source/images/background/quadrantes.png");
+    background-image: url("../source/images/background/helice.png");
 }
 
 .tema_caixa_ativo {
@@ -539,9 +564,11 @@ button {
     position: static;
     font-size: 80px;
     overflow: hidden;
+    background-size: 40px 40px;
+    image-rendering: pixelated;
     box-shadow: inset 0px 0px 15px black;
     transition: transform .5s box-shadow .2s;
-    background: url("../source/images/background/quadrantes.png");
+    background: url("../source/images/background/helice.png");
 }
 
 #sessao_loja {
@@ -569,18 +596,25 @@ button {
     animation: aparece_texto .5s;
 }
 
+.botao_confirma {
+    width: 100px;
+}
+
 #quadro_confirma_compra {
     top: 40%;
     left: 35%;
     z-index: 3;
     width: 30%;
+    height: auto;
     display: none;
-    padding: 20px;
-    height: 250px;
     position: fixed;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background-size: 40px;
     border: 1px solid black;
+    image-rendering: pixelated;
     background-color: rgba(0, 0, 0, .6);
-    background-image: url("../source/images/background/geometria.png");
+    background-image: url("../source/images/background/quadrados.png");
 }
 
 .cancela_compra {
@@ -678,10 +712,12 @@ button {
     width: 150px;
     height: 200px;
     padding: 10px;
+    background-size: 50px 50px;
+    image-rendering: pixelated;
     background-color: midnightblue;
     box-shadow: 0px 0px 15px black;
     transition: box-shadow .3s, transform .5s;
-    background-image: url("../source/images/background/quadrantes.png");
+    background-image: url("../source/images/background/helice.png");
 }
 
 .item_venda:hover {
@@ -729,9 +765,11 @@ button {
     height: 200px;
     padding: 10px;
     background-color: yellow;
+    image-rendering: pixelated;
+    background-size: 50px 50px;
     transition: box-shadow .3s;
     box-shadow: 0px 0px 15px black;
-    background-image: url("../source/images/background/quadrantes.png");
+    background-image: url("../source/images/background/helice.png");
 }
 
 .item_equipado:hover {
@@ -768,8 +806,10 @@ button {
     padding-top: 15px;
     position: absolute;
     background-color: red;
+    background-size: 50px 50px;
+    image-rendering: pixelated;
     box-shadow: inset 0px 0px 15px black;
-    background-image: url("../source/images/background/quadrantes.png");
+    background-image: url("../source/images/background/helice.png");
 }
 
 #mod_esquerda_principal {
@@ -796,16 +836,17 @@ button {
     box-shadow: 0px 0px 10px black;
 }
 
-#restaura_modificador {
+.restaura_modificador {
     height: 35px;
     text-align: center;
     border: solid 2px rgb(10, 100, 85);
     background-color: rgb(14, 141, 120);
     text-shadow: 2px 2px 3px rgba(0, 0, 0);
+    box-shadow: 3px 3px 5px rgba(0, 0, 0, .8);
     transition: .2s transform, .1s background-color, .1s border;
 }
 
-#restaura_modificador:hover {
+.restaura_modificador:hover {
     transform: scale(1.1);
     border: solid 2px rgb(3, 73, 64);
     background-color: rgb(6, 114, 100);
@@ -850,10 +891,12 @@ button {
     color: white;
     padding: 10px;
     height: 200px;
+    background-size: 50px 50px;
+    image-rendering: pixelated;
     background-color: midnightblue;
     box-shadow: 0px 0px 15px black;
     transition: box-shadow .3s, transform .5s;
-    background-image: url("../source/images/background/quadrantes.png");
+    background-image: url("../source/images/background/helice.png");
 }
 
 .mod_venda:hover {
@@ -869,9 +912,11 @@ button {
     padding: 10px;
     height: 200px;
     background-color: red;
+    background-size: 40px 40px;
+    image-rendering: pixelated;
     box-shadow: 0px 0px 15px black;
     transition: box-shadow .3s, transform .5s;
-    background-image: url("../source/images/background/quadrantes.png");
+    background-image: url("../source/images/background/helice.png");
 }
 
 .mod_principal_venda:hover {
@@ -891,9 +936,11 @@ button {
     height: 200px;
     padding: 10px;
     background-color: yellow;
+    background-size: 40px 40px;
+    image-rendering: pixelated;
     box-shadow: 0px 0px 15px black;
     transition: box-shadow .3s, transform .5s;
-    background-image: url("../source/images/background/quadrantes.png");
+    background-image: url("../source/images/background/helice.png");
 }
 
 #notificacoes {
@@ -1086,9 +1133,11 @@ h3#qtdPulos {
     position: absolute;
     overflow-x: hidden;
     border: solid 2px black;
+    image-rendering: pixelated;
     box-shadow: inset 0px 0px 15px black;
+    background-size: 100px 100px !important;
     background-color: rgba(255, 255, 255, .1);
-    background: url("../source/images/background/geometria.png");
+    background: url("../source/images/background/quadrados.png");
 }
 
 #placeholder_conquista {
@@ -1111,8 +1160,8 @@ h3#qtdPulos {
     padding: 0px;
     height: 54px;
     background-color: grey;
-    border: solid 2px yellow;
-    box-shadow: 0px 0px 5px yellow;
+    border: solid 2px rgb(7, 160, 127);
+    box-shadow: 0px 0px 5px rgb(7, 160, 127);
 }
 
 .img_conquista {
@@ -1160,9 +1209,11 @@ h3#qtdPulos {
     height: 70%;
     overflow-y: auto;
     position: absolute;
-    background-color: rgba(0, 0, 0, .5);
+    background-size: 40px 40px;
+    image-rendering: pixelated;
+    background-color: rgba(0, 0, 0, .3);
     box-shadow: inset 0px 0px 15px black;
-    background-image: url("../source/images/background/mosaico.png");
+    background-image: url("../source/images/background/setas.png");
 }
 
 .opcao_tutorial {
@@ -1433,10 +1484,11 @@ h3#qtdPulos {
     background-color: grey;
 }
 
-#img_trad {
+.img_trad {
     width: 30px;
     margin-left: -5px;
     margin-top: -20px;
+    image-rendering: pixelated;
 }
 
 .button_trad {
@@ -1526,10 +1578,12 @@ h3#qtdPulos {
     transition: .2s transform, .1s background-color, .1s border;
 }
 
-#iconlixeira {
+.iconlixeira,
+.icontrofeu {
     width: 25px;
     float: left;
     height: 25px;
+    image-rendering: pixelated;
 }
 
 #excluirdados:hover {
@@ -1604,32 +1658,36 @@ h3#qtdPulos {
     left: 50%;
     z-index: 9;
     bottom: 5%;
-    width: 350px;
+    width: 420px;
     height: 120px;
     display: none;
     position: fixed;
+    overflow: hidden;
     padding-top: 20px;
     text-align: center;
-    margin-left: -175px;
+    margin-left: -210px;
     border: solid 2px black;
-    background-color: yellow;
+    background-color: rgb(49, 121, 103);
     animation: conquista_obtida 2s;
     box-shadow: 0px 0px 15px black;
 }
 
 img#trofeu {
-    top: 50%;
+    top: 40%;
     left: 10px;
-    width: 35px;
-    height: 35px;
+    width: 60px;
+    height: 60px;
     margin-top: -16px;
     position: absolute;
     animation: fade_block 1s;
-    filter: drop-shadow(0px 5px 15px black);
-    -webkit-filter: drop-shadow(0px 5px 15px black);
+    image-rendering: pixelated;
+    filter: drop-shadow(3px 3px 5px black);
+    -webkit-filter: drop-shadow(3px 3px 5px black);
 }
 
 #texto_conquista {
+    width: 330px;
+    margin-left: 75px;
     animation: texto_conquista 1.4s;
 }
 
@@ -1751,7 +1809,9 @@ img#trofeu {
     height: 100%;
     background-color: yellow;
     box-shadow: inset 0px 0px 15px black;
-    background-image: url("../source/images/background/update.png");
+    image-rendering: pixelated;
+    background-size: 90px 90px;
+    background-image: url("../source/images/background/ferradura.png");
 }
 
 #historia_jogo {

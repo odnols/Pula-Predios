@@ -2,6 +2,8 @@ indice_tutorial = 0, tut_complet = null
 
 function exibeTutorial(valor) {
 
+    executaSons2("faixa_efeitos1", "efeitos", "hat.ogg", 2)
+
     switch (valor) {
         case 1:
             if (idioma == "pt")

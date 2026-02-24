@@ -50,25 +50,27 @@ function carrega_vendas_loja(caso) {
         if (jogador.mod_em_uso == 0) nome_img = "flutua"
         else if (jogador.mod_em_uso == 1) nome_img = "aco"
 
+        const nome_mod = nome_img == "aco" ? "de_aco" : nome_img
+
         get_element("categoria_teaser").innerHTML = translations["loja.coloque_mod"]
-        get_element("categoria_teaser").innerHTML += `<br><div id='mod_em_uso'><h3 style='float: left'>${translations["loja.mod_principal"]}</h3><h3 style='float: right'>${translations["loja.mods_comprados"]}</h3><div id='barra_mods_loja'><div id='mod_esquerda_principal'>${translations["loja.ativo"]} &nbsp; <img class='icon_mod_loja' src='source/images/store/mods/${nome_img}.png'></div><div id='mod_direita_principal'></div></div></div>`
+        get_element("categoria_teaser").innerHTML += `<br><div id='mod_em_uso'><h3 style='float: left'>${translations["loja.mod_principal"]}</h3><h3 style='float: right'>${translations["loja.mods_comprados"]}</h3><div id='barra_mods_loja'><div id='mod_esquerda_principal'>${translations["loja.ativo"]} &nbsp; <img class='icon_mod_loja' onMouseOver="toolTip('${translations[`mod.${nome_mod}`]}')" onmouseout="toolTip()" src='source/images/store/mods/${nome_img}.png'></div><div id='mod_direita_principal'></div></div></div>`
 
         get_element("mod_direita_principal").innerHTML = ""
 
         if (jogador.mod_em_uso != 0)
-            get_element("mod_direita_principal").innerHTML += "<img id='restaura_modificador' src='source/images/store/mods/flutua.png' onclick='altera_modificador(0)'>"
+            get_element("mod_direita_principal").innerHTML += `<img class='restaura_modificador' onMouseOver="toolTip('${translations['mod.flutua']}')" onmouseout="toolTip()" src='source/images/store/mods/flutua.png' onclick='altera_modificador(0)'>`
 
         if (jogador.mod_em_uso == 1 && jogador.mods_comprados[3] == 1)
-            get_element("mod_direita_principal").innerHTML += "<img id='restaura_modificador' src='source/images/store/mods/lunar.png' onclick='altera_modificador(100)'>"
+            get_element("mod_direita_principal").innerHTML += `<img class='restaura_modificador' onMouseOver="toolTip('${translations['mod.lunar']}')" onmouseout="toolTip()" src='source/images/store/mods/lunar.png' onclick='altera_modificador(100)'>`
 
         if (jogador.mod_em_uso == 100 && jogador.mods_comprados[2] == 1)
-            get_element("mod_direita_principal").innerHTML += "<img id='restaura_modificador' src='source/images/store/mods/aco.png' onclick='altera_modificador(1)'>"
+            get_element("mod_direita_principal").innerHTML += `<img class='restaura_modificador' onMouseOver="toolTip('${translations['mod.de_aco']}')" onmouseout="toolTip()" src='source/images/store/mods/aco.png' onclick='altera_modificador(1)'>`
 
         if (jogador.mod_em_uso == 0 && jogador.mods_comprados[2] == 1)
-            get_element("mod_direita_principal").innerHTML += "<img id='restaura_modificador' src='source/images/store/mods/aco.png' onclick='altera_modificador(1)'>"
+            get_element("mod_direita_principal").innerHTML += `<img class='restaura_modificador' onMouseOver="toolTip('${translations['mod.de_aco']}')" onmouseout="toolTip()" src='source/images/store/mods/aco.png' onclick='altera_modificador(1)'>`
 
         if (jogador.mod_em_uso == 0 && jogador.mods_comprados[3] == 1)
-            get_element("mod_direita_principal").innerHTML += "<img id='restaura_modificador' src='source/images/store/mods/lunar.png' onclick='altera_modificador(100)'>"
+            get_element("mod_direita_principal").innerHTML += `<img class='restaura_modificador' onMouseOver="toolTip('${translations['mod.lunar']}')" onmouseout="toolTip()" src='source/images/store/mods/lunar.png' onclick='altera_modificador(100)'>`
 
         const descricao = ["mod.mais_tempo", "mod.mais_vezes", "mod.de_aco"]
         const nomeImagem = ["relogio.gif", "jump_boost.png", "aco.png"]

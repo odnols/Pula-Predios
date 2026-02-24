@@ -187,12 +187,13 @@ function visualizar_log(caso) {
 function esconde_telas() {
 
     // Esconde todas as telas que estiverem abertas
-    $("#conquistas_mapa").fadeOut("slow", "linear")
-    $("#tutorial").fadeOut("slow", "linear")
-    $("#controles").fadeOut("slow", "linear")
-    $("#estatisticas").fadeOut("slow", "linear")
-    $("#configuracoes").fadeOut("slow", "linear")
-    $("#opcoes").fadeOut("slow", "linear")
+    $("#conquistas_mapa").fadeOut()
+    $("#tutorial").fadeOut()
+    $("#controles").fadeOut()
+    $("#estatisticas").fadeOut()
+    $("#quadro_confirma_exclusao").fadeOut()
+    $("#configuracoes").fadeOut()
+    $("#opcoes").fadeOut()
 }
 
 function abre_loja() {
@@ -213,6 +214,7 @@ function abre_loja() {
         verificaDesligamentos()
         escondeInformacoes(1, 0, 1)
         novidadesLoja(0)
+        esconde_telas()
 
         executaSons("faixa_musicas", "musicas", "loja.ogg", 1)
 
@@ -748,6 +750,8 @@ function pisca_loja(cor) {
 
 function status_confirmacao(valor, requisicao_auto, objeto) {
 
+    executaSons("faixa_efeitos2", "efeitos", "hat.ogg", 2)
+
     if (requisicao_auto == 0 && objeto == "Loja")
         $("#quadro_confirma_compra").fadeOut()
 
@@ -762,6 +766,8 @@ function status_confirmacao(valor, requisicao_auto, objeto) {
             confirma_compra(categoria, item, valor)
             menus.janelaConfirma = 0
         } else {
+
+            executaSons("faixa_efeitos2", "efeitos", "hat.ogg", 2)
             apagaDados(valor)
             menus.janelaConfirma = 0
         }
@@ -779,6 +785,9 @@ function quadro_confirma_compra(requisicao_auto) {
 }
 
 function quadro_confirma_exclusao() {
+
+    executaSons("faixa_efeitos2", "efeitos", "hat.ogg", 2)
+
     menus.janelaConfirma = 1
     menus.cache_confirma = "Exclui"
     $("#quadro_confirma_exclusao").fadeIn()
