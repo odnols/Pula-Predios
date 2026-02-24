@@ -1,11 +1,21 @@
-var lista_conquistas, lista_descricao, lista_conquistas_ganhas = {}, fila_conquistas = [], conquistas_secretas = ["morte_parque", "baixa_gravidade", "negativado", "restart", "frutos", "dinheirama", "passaro", "milhas_aereas"]
+let lista_conquistas_ganhas = {}, fila_conquistas = []
+
+const conquistas_secretas = [
+    "passaro",
+    "morte_parque",
+    "baixa_gravidade",
+    "milhas_aereas",
+    "negativado",
+    "restart",
+    "frutos",
+    "dinheirama"
+]
 
 const id_conquistas = [
     "ligando_motores",
     "morte_agua",
     "morte_lava",
     "morte_batida",
-    "morte_parque",
     "pulo_esgotado",
     "paraiso_pisoes",
     "passando_tempo",
@@ -20,6 +30,7 @@ const id_conquistas = [
     "pulga",
     "mods",
     "passaro",
+    "morte_parque",
     "baixa_gravidade",
     "expert",
     "selva_concreto",
@@ -141,13 +152,16 @@ function sincronizaQuadroConquistas() {
     get_element("placeholder_conquista").innerHTML = ""
 
     for (let i = 0; i < id_conquistas.length; i++) {
+
+        let imagem = i
+        let classe = "img_conquista_obtida"
+
         if (!lista_conquistas_ganhas[id_conquistas[i]]) {
+            imagem = conquistas_secretas.includes(id_conquistas[i]) ? "secreta" : i
+            classe = "img_conquista"
+        }
 
-            const imagem = conquistas_secretas.includes(id_conquistas[i]) ? "secreta" : i
-
-            get_element("placeholder_conquista").innerHTML += `<img onMouseOver="troca_descricao('${translations[`conquista.${lista_conquistas_ganhas[id_conquistas[i]]}`]}', '${translations[`conquista.descricao.${lista_conquistas_ganhas[id_conquistas[i]]}`]}', 1)" onmouseout='troca_descricao(0, 0, 0)' class='img_conquista' src="source/images/achievements/${imagem}.jpg"></div>`
-        } else
-            get_element("placeholder_conquista").innerHTML += `<img onMouseOver="troca_descricao('${translations[`conquista.${lista_conquistas_ganhas[id_conquistas[i]]}`]}', '${translations[`conquista.descricao.${lista_conquistas_ganhas[id_conquistas[i]]}`]}', 1)" onmouseout='troca_descricao(0, 0, 0)' class='img_conquista_obtida' src='source/images/achievements/${i}.jpg'>`
+        get_element("placeholder_conquista").innerHTML += `<img onMouseOver="troca_descricao('${translations[`conquista.${id_conquistas[i]}`]}', '${translations[`conquista.descricao.${id_conquistas[i]}`]}', 1)" onmouseout='troca_descricao(0, 0, 0)' class='${classe}' src="source/images/achievements/${imagem}.jpg"></div>`
     }
 }
 
@@ -195,5 +209,5 @@ function sincronizaConquistas() {
     if (moedas >= 2500) conquista("predio_santos", 0)
 
     // Colhendo os Frutos
-    if (lista_conquistas_ganhas["comprador_compulsivo"] && lista_conquistas_ganhas[8]) conquista("frutos", 0)
+    if (lista_conquistas_ganhas["comprador_compulsivo"] && lista_conquistas_ganhas["pisoes"]) conquista("frutos", 0)
 }

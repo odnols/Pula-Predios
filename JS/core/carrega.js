@@ -30,7 +30,7 @@ function carrega_jogo(requisicao_auto) {
             $("#button_animacoes_cell").fadeOut()
         }
 
-        let carregar_departamentos = [sincronizaQualidadeGrafica(), main(), aleatorizaProp(), sincronizaQuadroConquistas(), carrega_idioma(1)]
+        let carregar_departamentos = [sincronizaQualidadeGrafica(), main(), aleatorizaProp(), carrega_idioma(1)]
         const texto_feedback = ["carregando.cache", "carregando.combustivel", "carregando.animando", "carregando.props", "carregando.conquistas", "carregando.traduzindo", "carregando.sons"]
 
         let date1 = new Date(), carregar_tudo = true

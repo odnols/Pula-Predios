@@ -92,7 +92,7 @@ function carrega_vendas_loja(caso) {
             }
         }
 
-        if (lista_conquistas_ganhas[26] != 0) {
+        if (lista_conquistas_ganhas["baixa_gravidade"]) {
             if (jogador.mod_em_uso == 100)
                 get_element("placeholder_loja").innerHTML += `<div class='item_equipado' onMouseOver="toolTip('${translations[`descricao.mod_lunar`]}')" onmouseout='toolTip()' onclick='confirma_compra(2, 3, 55)'><img class='img_mod_venda' src='source/images/store/mods/lunar.png'><br><br>${translations["mod.lunar"]}</div>`
             else
@@ -119,7 +119,7 @@ function carrega_vendas_loja(caso) {
         const id_tema = ["1900s", "padrao", "lua"]
 
         // Adicionando o tema de lua a lista como recompensa
-        if (lista_conquistas_ganhas[26] != 0)
+        if (lista_conquistas_ganhas["baixa_gravidade"])
             descricao.push("temas.lua")
 
         get_element("categoria_teaser").innerHTML = translations["loja.viagem_tempo"]

@@ -502,7 +502,7 @@ var labelTexto = {
                         preenche_barra()
 
                     if (jogo.status == estados.jogando)
-                        jogo.notifica({ tls: `eventos.entrando_${this.id_eventos[this.inicia_evento]}`, color: "white" })
+                        jogo.notifica({ tls: `evento.entrando_${this.id_eventos[this.inicia_evento]}`, color: "white" })
 
                     setTimeout(() => {
 
@@ -1148,7 +1148,7 @@ var labelTexto = {
                     obs._scored = true
 
                     // Você tem um sério problema!
-                    if (jogador.partida_pontuacao >= 200 && jogo.dificuldade == 3) conquista("expert", 0) 
+                    if (jogador.partida_pontuacao >= 200 && jogo.dificuldade == 3) conquista("expert", 0)
 
                     alteraValorEstatisticaPartida("pontuacao_partida", jogador.partida_pontuacao)
                 } else if (obs.x <= -obs.largura - 90) {

@@ -16,6 +16,7 @@ function applyTranslations() {
     })
 
     sincronizaBotoesConfigs(menus.estatistica_morte)
+    sincronizaQuadroConquistas()
 }
 
 function define_idioma(idioma) {

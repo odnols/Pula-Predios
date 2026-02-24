@@ -251,17 +251,10 @@ function abre_loja_especial(aba_loja) {
 
 function novidadesLoja(indice) {
 
-    let novidades_loja = ["Os Bônus já estão disponíveis!", "Temos novos mods :D", "O Patrão ficou maluco!", "A loja foi toda reformada!"]
+    if (indice == translations["loja.descricao"].length) indice_interno = 0
+    else indice_interno = indice
 
-    if (idioma == "en")
-        novidades_loja = ["Bonuses are now available!", "We have new mods :D", "Boss went crazy!", "The store was completely renovated!"]
-
-    if (indice == novidades_loja.length)
-        indice_interno = 0
-    else
-        indice_interno = indice
-
-    get_element("text_novidades_loja").innerHTML = novidades_loja[indice_interno]
+    get_element("text_novidades_loja").innerHTML = translations["loja.descricao"][indice_interno]
 
     altera_novidade = setTimeout(() => {
         novidadesLoja(indice_interno + 1)
