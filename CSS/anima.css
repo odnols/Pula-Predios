@@ -710,3 +710,25 @@
         background-color: rgb(6, 114, 100);
     }
 }
+
+@keyframes pixelWave {
+    0% {
+        transform: translateY(0px);
+    }
+
+    25% {
+        transform: translateY(-6px);
+    }
+
+    50% {
+        transform: translateY(0px);
+    }
+
+    75% {
+        transform: translateY(6px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}

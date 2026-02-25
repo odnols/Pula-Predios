@@ -176,8 +176,8 @@ var labelTexto = {
 
         biomas: function () {
 
-            const biomas = ["Campos", "Praia"], tempo = Math.floor(20000 + (Math.random() * 60000))
-            jogo.depuracao({ tls: "depuracao.entrando_bioma", replace: [biomas[jogo.bioma == 0 ? 1 : 0], (tempo / 1000).toFixed(0)] })
+            const biomas = ["pradaria", "praia"], tempo = Math.floor(20000 + (Math.random() * 60000))
+            jogo.depuracao({ tls: "depuracao.entrando_bioma", replace: [translations[`bioma.${biomas[jogo.bioma ^ 1]}`], (tempo / 1000).toFixed(0)] })
 
             setTimeout(() => {
                 jogo.bioma = jogo.bioma == 0 ? 1 : 0
@@ -415,7 +415,7 @@ var labelTexto = {
             // Determina qual será o próximo evento aleatoriamente
             // Tempo aleatório que ficará ativo o evento
             this.inicia_evento = Math.round(3 * Math.random())
-            jogo.depuracao({ tls: "partida.comecando_evento", replace: this.inicia_evento, color: "purple" })
+            jogo.depuracao({ tls: "partida.comecando_evento", replace: translations[`evento.${this.id_eventos[this.inicia_evento]}`], color: "purple" })
 
             if (this.dificuldade != 0 && this.dificuldade != 3)
                 this.contador_tempo_evento = 15 + Math.round(15 * Math.random())

@@ -27,7 +27,6 @@ function historia(texto_especial, requisicao_auto) {
 
         if (requisicao_auto) {
             if (indice_historia > 0 && indice_historia != 4) {
-                console.log("aq")
 
                 avancar_hist_block[0].style.display = "none"
                 $(".avancar_hist").fadeIn()

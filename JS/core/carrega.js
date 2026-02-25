@@ -5,7 +5,7 @@ function carrega_jogo(requisicao_auto) {
     // Ativa o botão de mod para dispositivos móveis
     if (dispositivo < 1366) $("#botoes_acessibilidade").fadeIn()
 
-    const verifica = localStorage.getItem("pul4Pr3dios-iniciaLoucura_1.2")
+    verifica = localStorage.getItem("pul4Pr3dios-iniciaLoucura_1.2")
 
     if (verifica == null && !requisicao_auto) {
         $("#carrega_jogo").show()
