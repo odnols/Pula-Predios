@@ -1,6 +1,7 @@
 #config_idioma,
 #config_grafc,
 #config_sons,
+#config_sons_inicio,
 #item_1,
 #item_2,
 #status_carregamento,
@@ -9,6 +10,28 @@
 #mensagem_teaser,
 .sprite_noite {
     display: none;
+}
+
+#config_sons_inicio {
+    top: 20%;
+    left: 50%;
+    bottom: 17%;
+    padding: 2%;
+    float: right;
+    width: 500px;
+    height: 500px;
+    font-size: 30px;
+    text-align: center;
+    position: absolute;
+    margin-left: -250px;
+    background-size: 50px 50px;
+    image-rendering: pixelated;
+    background-color: rgba(0, 0, 0, .6);
+    background-image: url("../source/images/background/setas.png");
+}
+
+#controle_som {
+    background-color: rgba(0, 0, 0, .7);
 }
 
 @font-face {
@@ -1562,7 +1585,8 @@ h3#qtdPulos {
     background-color: rgb(211, 15, 15);
 }
 
-#excluirdados {
+#excluirdados,
+.botao_sons {
     right: 4%;
     width: 300px;
     height: 50px;
@@ -1576,6 +1600,12 @@ h3#qtdPulos {
     transition: .2s transform, .1s background-color, .1s border;
 }
 
+.botao_sons {
+    left: 2%;
+    bottom: 2%;
+    width: 150px;
+}
+
 .iconlixeira,
 .icontrofeu {
     float: left;
@@ -1585,7 +1615,8 @@ h3#qtdPulos {
     image-rendering: pixelated;
 }
 
-#excluirdados:hover {
+#excluirdados:hover,
+.botao_sons:hover {
     transform: scale(1.1);
     border: solid 2px rgb(56, 54, 54);
     background-color: rgb(136, 136, 136);
@@ -1748,6 +1779,7 @@ img#trofeu {
     align-items: center;
     background-color: rgb(6, 114, 100);
     box-shadow: inset 0px 0px 150px black;
+    animation: pulsa_fundo 20s infinite;
 }
 
 #cabecalho_carrega_jogo {
@@ -1987,11 +2019,12 @@ img#trofeu {
     text-shadow: 1px 1px black;
 }
 
-#fps_counter:hover{
+#fps_counter:hover {
     color: yellow;
 }
 
-.faixa_menu {
+.faixa_menu,
+.faixa_parallax_carregamento {
     z-index: 10;
     width: 100%;
     height: 100px;
@@ -2001,7 +2034,13 @@ img#trofeu {
     box-shadow: 0px 0px 5px black;
 }
 
-.fx_cima {
+.faixa_parallax_carregamento {
+    height: 160px;
+    z-index: -1;
+}
+
+.fx_cima,
+.fx_cima_carregamento {
     top: 0px;
     overflow: hidden;
 }

@@ -687,14 +687,26 @@
     }
 }
 
-@keyframes animar_moeda {
-    from {
-        background-position: 0 0;
+@keyframes pulsa_fundo {
+
+    0% {
+        background-color: rgb(6, 114, 100);
     }
 
-    to {
-        background-position: -460px 0;
+
+    20% {
+        background-color: rgb(7, 68, 60);
     }
 
-    /* 4 frames × 115px */
+    50% {
+        background-color: rgb(20, 151, 134);
+    }
+
+    75% {
+        background-color: rgb(13, 102, 90);
+    }
+
+    100% {
+        background-color: rgb(6, 114, 100);
+    }
 }

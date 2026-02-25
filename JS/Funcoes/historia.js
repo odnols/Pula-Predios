@@ -5,20 +5,14 @@ function historia(texto_especial, requisicao_auto) {
     tela_historia = 1
 
     get_element("historia_jogo").style.display = "block"
-
     carrega_idioma(1)
 
     let avancar_hist = get_element("avancar_hist")
     let avancar_hist_block = get_element("avancar_hist_block")
 
-    let textos = ["Recebendo transmissão . . .", "Olá testador!", "Parabéns, você foi selecionado para nossos testes super secretos!", "Estamos criando um veículo anormal e você ajudará a fazer parte da história!", "Tudo o que precisa fazer é pilotar! fácil não?", "Iremos começar os testes em daqui a pouco", "Esperamos por você"]
-
-    if (idioma == "en")
-        textos = ["Receiving broadcast . . .", "Hello tester!", "Congratulations, you have been selected for our super secret tests!", "We are developing a vehicle, and you will help to be part of the story!", "All you need to do is drive! it's easy not to?", "We will start testing soon", "We are waiting for you"]
-
-    if (indice_historia > textos.length - 1) {
+    if (indice_historia > translations["historia.textos"].length - 1) {
         $("#historia_jogo").fadeOut()
-        return 0
+        return
     } else {
         avancar_hist[0].style.display = "none"
 
@@ -26,16 +20,15 @@ function historia(texto_especial, requisicao_auto) {
             avancar_hist_block[0].style.display = "block"
 
         // Executa o efeito de escrita na tela
-        let el = get_element("texto_historia")
-
-        if (!requisicao_auto || !texto_especial)
-            el.innerHTML = ""
+        const el = get_element("texto_historia")
 
         if (!requisicao_auto && !texto_especial)
-            showtext(el, textos[indice_historia], 0)
+            showtext(el, translations["historia.textos"][indice_historia], 0)
 
         if (requisicao_auto) {
             if (indice_historia > 0 && indice_historia != 4) {
+                console.log("aq")
+
                 avancar_hist_block[0].style.display = "none"
                 $(".avancar_hist").fadeIn()
             }
@@ -86,12 +79,7 @@ function confirma_hist() {
     aguarda_confirmacao = true
     get_element("escolhas_hist").style.display = "none"
 
-    let confirmacoes = ["Excelente!"]
-
-    if (idioma == "en")
-        confirmacoes = ["Great!"]
-
-    historia(confirmacoes[indice_decisoes], null)
+    historia(translations["historia.excelente"], null)
 }
 
 function nega_hist() {
@@ -99,10 +87,5 @@ function nega_hist() {
     aguarda_confirmacao = true
     get_element("escolhas_hist").style.display = "none"
 
-    let negacoes = ["Negar não é uma opção."]
-
-    if (idioma == "en")
-        negacoes = ["Denying is not an option."]
-
-    historia(negacoes[indice_decisoes], null)
+    historia(translations["historia.negar_opcao"], null)
 }

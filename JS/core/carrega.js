@@ -3,16 +3,16 @@ var confirma_carregamento = 0, dispositivo = window.screen.width, indice = 0
 function carrega_jogo(requisicao_auto) {
 
     // Ativa o botão de mod para dispositivos móveis
-    if (dispositivo < 1366)
-        $("#botoes_acessibilidade").fadeIn()
+    if (dispositivo < 1366) $("#botoes_acessibilidade").fadeIn()
 
-    verifica = localStorage.getItem("pul4Pr3dios-iniciaLoucura_1.2")
+    const verifica = localStorage.getItem("pul4Pr3dios-iniciaLoucura_1.2")
 
-    if (requisicao_auto == 0 && verifica == null) {
-        get_element("primeiro_logon").style.display = "block"
+    if (verifica == null && !requisicao_auto) {
+        $("#carrega_jogo").show()
+        $("#primeiro_logon").show()
 
         idioma = carrega_idioma()
-        return 0
+        return
 
     } else {
 
@@ -30,10 +30,8 @@ function carrega_jogo(requisicao_auto) {
             $("#button_animacoes_cell").fadeOut()
         }
 
-        let carregar_departamentos = [sincronizaQualidadeGrafica(), main(), aleatorizaProp(), carrega_idioma(1)]
-        const texto_feedback = ["carregando.cache", "carregando.combustivel", "carregando.animando", "carregando.props", "carregando.conquistas", "carregando.traduzindo", "carregando.sons"]
-
-        let date1 = new Date(), carregar_tudo = true
+        const carregar_departamentos = [sincronizaQualidadeGrafica(), main(), aleatorizaProp(), carrega_idioma(1)], date1 = new Date()
+        let carregar_tudo = true
         data_atual = date1.toLocaleDateString('pt-BR')
 
         // Verifica quando foi a última sessão
@@ -47,7 +45,7 @@ function carrega_jogo(requisicao_auto) {
             let indice = 0
 
             carregar_departaments = setInterval(() => {
-                get_element("texto_carregamento").innerHTML = translations[texto_feedback[indice]]
+                get_element("texto_carregamento").innerHTML = translations["carregando.etapas"][indice]
 
                 indice++
 

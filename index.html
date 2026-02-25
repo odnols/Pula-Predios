@@ -54,6 +54,23 @@
     <div id="carrega_jogo">
 
         <div id="cabecalho_carrega_jogo">
+            <section class="faixa_parallax_carregamento fx_cima_carregamento">
+                <div class="text_parallax">
+                    <h2 style="--i:1.3"><span>Pula</span><span>Pula</span><span>Pula
+                        </span><span>Pula</span><span>Pula</span><span>Pula
+                        </span><span>Pula</span><span>Pula</span><span>Pula</span></h2>
+                    <h2 style="--i:0.5"><span>Pula</span><span>Pula</span><span>Pula
+                        </span><span>Pula</span><span>Pula</span><span>Pula
+                        </span><span>Pula</span><span>Pula</span><span>Pula</span></h2>
+                    <h2 style="--i:1.1"><span>Pula</span><span>Pula</span><span>Pula
+                        </span><span>Pula</span><span>Pula</span><span>Pula
+                        </span><span>Pula</span><span>Pula</span><span>Pula</span></h2>
+                    <h2 style="--i:0.7"><span>Pula</span><span>Pula</span><span>Pula
+                        </span><span>Pula Pula</span><span>Pula</span><span>Pula
+                        </span><span>Pula</span><span>Pula</span><span>Pula</span></h2>
+                </div>
+            </section>
+
             <h1>Pula Prédios</h1>
             <hr style="width: 50%">
 
@@ -61,8 +78,58 @@
                 <button onclick="carrega_jogo(1)" id="button_inicia_game" data-i18n="botao.iniciar"></button>
 
                 <div id="idioma_config_inicio">
+                    <h2 data-i18n="tela.idioma_atual"></h2><br><br>
+
                     <button class="button_opcoes_inicio" onclick="define_idioma('en-us')">English</button><br><br>
                     <button class="button_opcoes_inicio" onclick="define_idioma('pt-br')">Português</button>
+                </div>
+            </div>
+
+            <div class="botao_sons" onclick="quadro_configura_sons()">
+                <img src="source/images/icons/som.png" class="iconlixeira">
+
+                <span data-i18n="menu.sons"></span>
+            </div>
+
+            <div id="config_sons_inicio">
+                <span class="fecha_janela" onclick="quadro_configura_sons()">X</span> <br>
+
+                <div class="opcao_som">
+                    <h3 style="float: left"><label for="volume_musica" data-i18n="botao.musicas"></label></h3>
+                    <input class="control_volume" type="range" min="0" max="100" id="volume_musica" oninput="alteraVolume(this.value, 1)" onchange="alteraVolume(this.value, 1, 1)">
+                </div>
+
+                <div class="opcao_som">
+                    <h3 style="float: left"><label for="volume_efeitos" data-i18n="botao.efeitos"></label></h3>
+                    <input class="control_volume" type="range" min="0" max="100" value="carrega_sons(2)" id="volume_efeitos" oninput="alteraVolume(this.value, 2)" onchange="alteraVolume(this.value, 2, 1)">
+                </div>
+
+                <div class="opcao_som">
+                    <h3 style="float: left"><label for="volume_memes">Memes</label></h3>
+                    <input class="control_volume" type="range" min="0" max="100" value="carrega_sons(3)" id="volume_memes" oninput="alteraVolume(this.value, 3)" onchange="alteraVolume(this.value, 3, 1)">
+                </div>
+
+                <br>
+                <h4 class="texto">
+                    <center data-i18n="menu.sons"></center>
+                    <button id="status_volume_som" class="button_opcoes" onclick="alteraEstadoSom()"></button>
+                </h4>
+
+                <div>
+                    <select id="seleciona_tema" onchange="verifica_selecionado('seleciona_tema')">
+                        <option value="main_1">Tema 1</option>
+                        <option value="main_2">Tema 2</option>
+                        <option value="main_3">Tema 3</option>
+                        <option value="main_4">Tema 4</option>
+                        <option value="random">Random</option>
+                    </select>
+
+                    <select id="seleciona_ocioso" onchange="verifica_selecionado('seleciona_ocioso')">
+                        <option value="ocioso_1">Ocioso 1</option>
+                        <option value="ocioso_2">Ocioso 2</option>
+                        <option value="ocioso_3">Ocioso 3</option>
+                        <option value="random">Random</option>
+                    </select>
                 </div>
             </div>
 
@@ -314,21 +381,21 @@
         <hr style="width: 50%">
 
         <div id="tutoriais_1">
-            <h3 class="opcao_tutorial" data-i18n="tutorial.historia" onclick="exibeTutorial(15)"></h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="tutorial.como_jogar" onclick="exibeTutorial(1)"></h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="loja.modificadores" onclick="exibeTutorial(2)"></h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="loja.bonus" onclick="exibeTutorial(14)"></h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="tutorial.inimigos" onclick="exibeTutorial(3)"></h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="geral.eventos" onclick="exibeTutorial(4)"></h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="geral.dificuldade" onclick="exibeTutorial(8)"></h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="geral.conquistas" onclick="exibeTutorial(13)"></h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="tutorial.moedas" onclick="exibeTutorial(5)"></h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="geral.loja" onclick="exibeTutorial(6)"></h3><br><br>
-            <h3 class="opcao_tutorial" onclick="exibeTutorial(12)">Upgrades</h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="tutorial.atalhos" onclick="exibeTutorial(7)"></h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="geral.opcoes" onclick="exibeTutorial(9)"></h3><br><br>
-            <h3 class="opcao_tutorial" href="#" onclick="exibeTutorial(10)">Experimental</h3><br><br>
-            <h3 class="opcao_tutorial" href="#" onclick="exibeTutorial(11)">Feedbacks</h3>
+            <h3 class="opcao_tutorial" data-i18n="tutorial.historia" onclick="exibeTutorial('historia')"></h3><br><br>
+            <h3 class="opcao_tutorial" data-i18n="tutorial.como_jogar" onclick="exibeTutorial('como_jogar')"></h3><br><br>
+            <h3 class="opcao_tutorial" data-i18n="loja.modificadores" onclick="exibeTutorial('modificadores')"></h3><br><br>
+            <h3 class="opcao_tutorial" data-i18n="loja.bonus" onclick="exibeTutorial('bonus')"></h3><br><br>
+            <h3 class="opcao_tutorial" data-i18n="tutorial.inimigos" onclick="exibeTutorial('inimigos')"></h3><br><br>
+            <h3 class="opcao_tutorial" data-i18n="geral.eventos" onclick="exibeTutorial('eventos')"></h3><br><br>
+            <h3 class="opcao_tutorial" data-i18n="geral.dificuldade" onclick="exibeTutorial('dificuldade')"></h3><br><br>
+            <h3 class="opcao_tutorial" data-i18n="geral.conquistas" onclick="exibeTutorial('conquistas')"></h3><br><br>
+            <h3 class="opcao_tutorial" data-i18n="tutorial.moedas" onclick="exibeTutorial('moedas')"></h3><br><br>
+            <h3 class="opcao_tutorial" data-i18n="geral.loja" onclick="exibeTutorial('loja')"></h3><br><br>
+            <h3 class="opcao_tutorial" onclick="exibeTutorial('upgrades')">Upgrades</h3><br><br>
+            <h3 class="opcao_tutorial" data-i18n="tutorial.atalhos" onclick="exibeTutorial('atalhos')"></h3><br><br>
+            <h3 class="opcao_tutorial" data-i18n="geral.opcoes" onclick="exibeTutorial('opcoes')"></h3><br><br>
+            <h3 class="opcao_tutorial" href="#" onclick="exibeTutorial('experimental')">Experimental</h3><br><br>
+            <h3 class="opcao_tutorial" href="#" onclick="exibeTutorial('feedbacks')">Feedbacks</h3>
         </div>
 
         <div id="tutoriais_2">
@@ -533,17 +600,12 @@
 
         <div id="config_grafc">
             <div class="itens_configs">
-                <h4 class="texto"><button id="status_tema_atual" class="button_opcoes"
-                        onclick="alteraRelogio()"></button> : <span data-i18n="botao.definir_tempo"></span></h4>
+                <h4 class="texto"><button id="status_tema_atual" class="button_opcoes" onclick="alteraRelogio()"></button> : <span data-i18n="botao.definir_tempo"></span></h4>
 
-                <h4 class="texto" id="button_animacoes_cell"><button id="status_animacoes_block"
-                        class="button_opcoes_block"><span data-i18n="menu.desativado"></span></button> : <span
-                        data-i18n="botao.animacoes"></span></h4>
-                <h4 class="texto" id="button_animacoes_pc"><button id="status_animacoes" class="button_opcoes"
-                        onclick="alteraQualidadeGrafica()"></button> : <span data-i18n="botao.animacoes"></span></h4>
+                <h4 class="texto" id="button_animacoes_cell"><button id="status_animacoes_block" class="button_opcoes_block"><span data-i18n="menu.desativado"></span></button> : <span data-i18n="botao.animacoes"></span></h4>
+                <h4 class="texto" id="button_animacoes_pc"><button id="status_animacoes" class="button_opcoes" onclick="alteraQualidadeGrafica()"></button> : <span data-i18n="botao.animacoes"></span></h4>
 
-                <h4 class="texto"><button id="status_parallax" class="button_opcoes"
-                        onclick="alteraParallax()"></button> : <span data-i18n="botao.parallax"></span></h4>
+                <h4 class="texto"><button id="status_parallax" class="button_opcoes" onclick="alteraParallax()"></button> : <span data-i18n="botao.parallax"></span></h4>
             </div>
         </div>
 
@@ -670,9 +732,9 @@
     <!-- Usado para notificar o jogador sobre eventos -->
     <div id="notificacoes"></div>
 
-    <p id="fps_counter" onMouseOver="toolTip_trad('perfil.contador_fps')" onmouseout="toolTip()"></p>
-    <div id="flag_api" onMouseOver="toolTip_trad('perfil.status')" onmouseout="toolTip()"></div>
-    <img id="perfil_user" src='source/images/icons/perfil.png' onMouseOver="toolTip_trad('perfil.vincular')" onmouseout="toolTip()" style="width: 25px" onclick="checa_user()">
+    <p class="icons_main" id="fps_counter" onMouseOver="toolTip_trad('perfil.contador_fps')" onmouseout="toolTip()"></p>
+    <div class="icons_main" id="flag_api" onMouseOver="toolTip_trad('perfil.status')" onmouseout="toolTip()"></div>
+    <img class="icons_main" id="perfil_user" src='source/images/icons/perfil.png' onMouseOver="toolTip_trad('perfil.vincular')" onmouseout="toolTip()" style="width: 25px" onclick="checa_user()">
 
     <div id="barra_topo">
 
