@@ -27,11 +27,13 @@ function alteraEstadoSom() {
         }
 
         get_element("status_volume_som").innerHTML = translations["botao.desativado"]
+        get_element("status_volume_som_2").innerHTML = translations["botao.desativado"]
 
     } else {
 
         jogo.estadoSom = 1
         get_element("status_volume_som").innerHTML = translations["botao.ativado"]
+        get_element("status_volume_som_2").innerHTML = translations["botao.ativado"]
 
         if (Math.round(2 * Math.random()) > 1)
             executaSons("faixa_musicas", "musicas", "intro_2.ogg", 1)
@@ -43,10 +45,13 @@ function alteraEstadoSom() {
 }
 
 function sincronizaEfeitosSom() {
-    if (jogo.estadoSom == 1)
+    if (jogo.estadoSom == 1) {
         get_element("status_volume_som").innerHTML = translations["botao.ativado"]
-    else
+        get_element("status_volume_som_2").innerHTML = translations["botao.ativado"]
+    } else {
         get_element("status_volume_som").innerHTML = translations["botao.desativado"]
+        get_element("status_volume_som_2").innerHTML = translations["botao.desativado"]
+    }
 }
 
 function alteraEstadoEstatistica() {
