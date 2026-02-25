@@ -516,14 +516,14 @@
         top: 0px;
         height: 0px;
         box-shadow: 0px 0px 0px black;
-        background-color: yellow;
+        background-color: rgb(3, 73, 64);
     }
 
     to {
         top: 0px;
         height: 100%;
         box-shadow: 0px 0px 15px black;
-        background-color: yellow;
+        background-color: rgb(3, 73, 64);
     }
 }
 
@@ -532,14 +532,14 @@
         bottom: 0px;
         height: 100%;
         box-shadow: 0px 0px 0px black;
-        background-color: yellow;
+        background-color: rgb(3, 73, 64);
     }
 
     to {
         bottom: 0px;
         height: 0%;
         box-shadow: 0px 0px 15px black;
-        background-color: yellow;
+        background-color: rgb(3, 73, 64);
     }
 }
 
@@ -685,4 +685,16 @@
     100% {
         filter: hue-rotate(360deg);
     }
+}
+
+@keyframes animar_moeda {
+    from {
+        background-position: 0 0;
+    }
+
+    to {
+        background-position: -460px 0;
+    }
+
+    /* 4 frames × 115px */
 }

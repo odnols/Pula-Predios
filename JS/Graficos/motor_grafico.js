@@ -173,13 +173,14 @@ function voltaAnimacao() {
 }
 
 function animaMoeda() {
+
     if (jogo.qualidadeGrafica != 0 && dispositivo >= 1366) {
         tID = setTimeout(() => {
 
-            sprites = [0, 912, 798, 684, 570, 456, 342, 228, 114]
+            sprites = [0, -9, -18, -27, -36, -45, -54, -63]
             opcoes.posicao = ajusta_posicao_sprites(0, sprites)
 
-            get_element("moeda_img").style.backgroundPosition = `${opcoes.posicao}px 0px`
+            get_element("moeda_img").style.backgroundPosition = `${opcoes.posicao}px -1px`
 
             if (opcoes.posicao == 0) {
                 setTimeout(() => {

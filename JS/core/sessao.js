@@ -5,7 +5,7 @@ function checa_user() {
     if (!usuario.token)
         create_user()
     else
-        alert(`Use este token com o Alonsal: ${usuario.token}`)
+        alert(`${translations["perfil.token"]} ${usuario.token}`)
 }
 
 function create_user() {
@@ -15,12 +15,12 @@ function create_user() {
         .then(retorno => {
 
             if (retorno.status == 404)
-                return alert("Houve um erro com a APISAL")
+                return alert(translations["perfil.erro_api"])
 
             usuario.token = retorno.token
             localStorage.setItem("pul4Pr3dios-token_user", usuario.token)
 
-            alert(`Use este token com o Alonsal: ${retorno.token}`)
+            alert(`${translations["perfil.token"]} ${retorno.token}`)
         })
         .catch(err => console.log(err))
 }

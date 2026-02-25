@@ -430,40 +430,16 @@ function MsgPerdeu(causa) {
             labelTexto.texto = translations["partida.novo_recorde"].replace("auto_repl", jogador.partida_pontuacao)
         else {
 
-            executaSomPerca(causa)
+            executaSomPerca(eventos.inicia_evento)
+            const texto_escolhido = 1 + Math.round(7 * Math.random())
 
-            texto_escolhido = 1 + Math.round(7 * Math.random())
-
-            if (idioma == "pt") {
-                var perdaNormal = ["Faliceu D:", "Teve uma batida ali!", "Capotou o Prédio", "Já era!", "Bateu as Fundações ;)", "Xama o XhamuUuUu", "Quebrou meu prédio véi!", "Errooouuuuuu", "Não consegue né"]
-
-                var perdaAgua = ["Afundou!", "Prédios não nadam!", "Fecha as Janelaaas!", "Explorando os corais", "Com água até a Antena", "Afundando em 15 nós", "Olha os Peixinhos!", "Sirigueijo?", "Tá chovendo aí?"]
-
-                var perdaCidade = ["Ninguém Sobrevive!", "Prédio a Rodo!", "Poluindo a Visão desde 1987", "É um pássaro?!", "40 prédios p/ metro²!", "Me Tira Daqui!", "Pulga! Digo, Prédio!", "Abaixo da Poluição", "E Cinzou!"]
-
-                var perdaLava = ["Derreteu as fundações", "Só para aquecer!", "Não era mentira :)", "Nós avisamos!", "Para o centro da terra!", "Destinos turísticos quentes!", "FACA QUENTE vs PRÉDIO", "O que houve aqui?", "Temperaturas Extremas"]
-            } else {
-                var perdaNormal = ["Died D:", "There was an accident there!", "Flipped the Building", "It's over!", "Hit the Foundations ;)", "Call the ambulance!", "Broke my building!", "Misseeeeeeeed", "It was not this time"]
-
-                var perdaAgua = ["Sank!", "Buildings do not swim!", "Close the windoooows!", "Exploring the corals", "With water up to the antenna", "Sinking at 15 knots", "Look at the Goldfish!", "Mr. Krabs?", "It's raining there?"]
-
-                var perdaCidade = ["Nobody Survives!", "Millions of Buildings!", "Polluting the vision since 1987", "It is a bird?!", "40 buildings per meter²²!", "Take me out of here!", "Flea! I mean, Building!", "Below Pollution", "And ashes!"]
-
-                var perdaLava = ["Melted the foundations", "Just to warm up!", "It wasn't a lie :)", "We warn!", "To the center of the earth!", "Hot tourist destinations!", "HOT KNIFE vs BUILDING", "What happened here?", "Extreme Temperatures"]
-            }
-
-            if (causa == null && jogador.partida_pontuacao >= 0)
-                labelTexto.texto = perdaNormal[texto_escolhido]
-            else if (causa == 3) // Lava
-                labelTexto.texto = perdaLava[texto_escolhido]
-            else if (causa == 1) // Água
-                labelTexto.texto = perdaAgua[texto_escolhido]
-            else if (causa == 0) // Centro da Cidade
-                labelTexto.texto = perdaCidade[texto_escolhido]
-            else if (jogador.partida_pontuacao >= 0)
-                labelTexto.texto = "Como assim!?!"
+            // Exibindo o texto de morte no fundo do mapa conforme o ocorrido
+            if (eventos.inicia_evento === null && jogador.partida_pontuacao >= 0)
+                labelTexto.texto = translations["morte.frase_normal"][texto_escolhido]
+            else if (jogador.partida_pontuacao < 0)
+                labelTexto.texto = translations["conquista.negativado"]
             else
-                labelTexto.texto = "Vergonha da pofissón!"
+                labelTexto.texto = translations[`morte.frase_${eventos.id_eventos[eventos.inicia_evento]}`][texto_escolhido]
         }
     }
 }
@@ -766,8 +742,6 @@ function status_confirmacao(valor, requisicao_auto, objeto) {
             confirma_compra(categoria, item, valor)
             menus.janelaConfirma = 0
         } else {
-
-            executaSons("faixa_efeitos2", "efeitos", "hat.ogg", 2)
             apagaDados(valor)
             menus.janelaConfirma = 0
         }
@@ -1104,6 +1078,13 @@ function redireciona_notificacao(valor) {
         clearInterval(puxa_proxima_notificacao)
 
     notificacao(valor, 1)
+}
+
+function exibicao_conquistas() {
+
+    executaSons2("faixa_efeitos2", "efeitos", "hat.ogg", 2)
+
+
 }
 
 function tempo_notificacao() {

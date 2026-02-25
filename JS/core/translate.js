@@ -42,16 +42,6 @@ function carrega_idioma(caso) {
     loadLanguage(idioma)
 }
 
-function toolTip_trad(categoria, alvo, loja) {
-
-    const id_mod = ["flutuante", "de_aco", "lunar", "mais_tempo", "mais_vezes"]
-    const id_bonus = ["garimpeiro", "vento_estocado"]
-
-    if (!loja) {
-        if (!categoria)
-            toolTip(`${translations[`principal.${id_mod[alvo]}`]}`)
-        else if (categoria)
-            toolTip(`${translations[`bonus.${id_bonus[alvo]}`]}`)
-    } else
-        toolTip(translations["botao.abrir_loja"])
+function toolTip_trad(chave) {
+    toolTip(translations[chave])
 }
