@@ -18,8 +18,7 @@ var labelTexto = {
         canvas: null,
         ctx: null,
         altura: null,
-        largura: null,
-        posicao: 913
+        largura: null
     },
 
     menus = {

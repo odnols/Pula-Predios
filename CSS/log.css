@@ -1,9 +1,8 @@
 body {
-    background-image: url("../source/images/background/log.png");
     overflow-x: hidden;
+    touch-action: manipulation; /* Desativa o zoom com duplo clique */
     animation: fundo_log 100s infinite;
-    touch-action: manipulation;
-    /* Desativa o zoom com duplo clique */
+    background-image: url("../source/images/background/log.png");
 }
 
 @font-face {
@@ -25,69 +24,68 @@ body {
 }
 
 #img_log {
-    z-index: 0;
     top: 0px;
+    z-index: 0;
     width: 1366px;
     height: 149px;
-    box-shadow: 0px 0px 15px black;
+    box-shadow: 0px 0px 0px rgba(0, 0, 0, .6);
 }
 
 h2#log_text {
-    font-family: "Minecraftia";
-    position: absolute;
-    z-index: 2;
-    color: white;
     left: 2%;
     top: 90px;
-    text-shadow: 2px 2px grey;
+    z-index: 2;
+    color: white;
+    position: absolute;
+    font-family: "Minecraftia";
+    text-shadow: 2px 2px 0px rgba(128, 128, 128, .5);
 }
 
 #novidades_log {
     width: 50%;
-    box-shadow: 0px 1px 2px black;
     border: solid 2px white;
+    box-shadow: 0px 1px 0px rgba(0, 0, 0, .6);
 }
 
 .destaques {
     color: white;
-    font-family: "Minecraftia";
-    text-shadow: 1px 1px 3px black;
-    text-align: center;
     font-size: 30px;
+    text-align: center;
+    font-family: "Minecraftia";
+    text-shadow: 1px 1px 0px rgba(0, 0, 0, .6);
 }
 
 .categoria_log {
+    font-size: 17px;
     padding-left: 22%;
     padding-right: 20%;
-    font-size: 17px;
 }
 
 #centraliza {
-    width: 80%;
     left: 10%;
+    width: 80%;
     position: absolute;
 }
 
 #log_imbutido {
-    display: none;
     z-index: 8;
+    display: none;
     position: fixed;
 }
 
 .fechador_log {
-    display: none;
-    font-family: "Minecraftia";
-    padding: 15px;
-    z-index: 8;
     top: 24%;
     right: 2px;
+    z-index: 8;
+    color: white;
+    height: 40px;
+    padding: 15px;
+    display: none;
     position: fixed;
     min-width: 220px;
-    height: 40px;
-    color: black;
-    color: white;
-    background-color: rgba(0, 0, 0, .6);
+    font-family: "Minecraftia";
     transition: box-shadow .5s;
+    background-color: rgba(0, 0, 0, .6);
 }
 
 .fechador_log:hover {
@@ -95,11 +93,11 @@ h2#log_text {
 }
 
 #rodape_log {
-    background-color: rgba(0, 0, 0, .6);
-    box-shadow: 0px 0px 15px black;
-    text-align: center;
+    width: 100%;
     color: white;
     padding-top: 5px;
+    text-align: center;
     font-family: "Minecraftia";
-    width: 100%;
+    box-shadow: 0px 0px 15px black;
+    background-color: rgba(0, 0, 0, .6);
 }

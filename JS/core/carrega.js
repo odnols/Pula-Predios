@@ -26,6 +26,8 @@ function carrega_jogo(requisicao_auto) {
 
         if (dispositivo >= 1366) {
             animaMoeda()
+            anima_mod_flutua()
+
             $("#button_animacoes_pc").fadeIn()
             $("#button_animacoes_cell").fadeOut()
         }

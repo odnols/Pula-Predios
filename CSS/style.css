@@ -329,7 +329,8 @@ button {
     position: absolute;
 }
 
-#moeda_img {
+#moeda_img,
+#mod_0 {
     width: 9px;
     height: 9px;
     float: right;
@@ -343,6 +344,16 @@ button {
     background-repeat: no-repeat;
     background-position: 0px -1px;
     background-image: url('../source/images/icons/moeda.png');
+}
+
+#mod_0 {
+    width: 26px;
+    height: 26px;
+    scale: calc(1.2);
+    margin-right: 4px;
+    background-size: auto 27px;
+    background-image: url('../source/images/store/mods/Flutua.png');
+    border: 0px;
 }
 
 #notifica_moeda {
@@ -1749,6 +1760,7 @@ img#trofeu {
 .texto_notificacoes_trad {
     width: 350px;
     padding-top: 5%;
+    overflow: hidden;
     text-align: center;
 }
 
@@ -2083,6 +2095,16 @@ section {
 
 #frase_idioma_atual {
     display: inline-block;
-    animation: pixelWave 2s steps(4) infinite;
     will-change: transform;
+    animation: pixelWave 2s steps(4) infinite;
+}
+
+#tipo_conquista {
+    font-weight: bolder;
+}
+
+#tipo_conquista,
+#nome_conquista {
+    color: white;
+    filter: drop-shadow(2px 2px 0px rgba(0, 0, 0, .5));
 }

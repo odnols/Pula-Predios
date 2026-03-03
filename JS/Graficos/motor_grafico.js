@@ -1,4 +1,4 @@
-var anim_indices = [0, 0, 0, 0, 0, 0], anim_estrela = 0, anim_luzes_naveg = 0
+var anim_indices = [0, 0, 0, 0, 0, 0, 0], anim_estrela = 0, anim_luzes_naveg = 0
 
 function Cenario(astro) {
 
@@ -177,17 +177,37 @@ function animaMoeda() {
     if (jogo.qualidadeGrafica != 0 && dispositivo >= 1366) {
         tID = setTimeout(() => {
 
-            sprites = [0, -9, -18, -27, -36, -45, -54, -63]
-            opcoes.posicao = ajusta_posicao_sprites(0, sprites)
+            const sprites = [0, -9, -18, -27, -36, -45, -54, -63]
+            const posicao = ajusta_posicao_sprites(0, sprites)
 
-            get_element("moeda_img").style.backgroundPosition = `${opcoes.posicao}px -1px`
+            get_element("moeda_img").style.backgroundPosition = `${posicao}px -1px`
 
-            if (opcoes.posicao == 0) {
+            if (posicao == 0) {
                 setTimeout(() => {
                     animaMoeda()
                 }, 1000)
             } else
                 animaMoeda()
+        }, 100)
+    }
+}
+
+function anima_mod_flutua() {
+
+    if (jogo.qualidadeGrafica != 0 && dispositivo >= 1366) {
+        tFL = setTimeout(() => {
+
+            const sprites = [0, -26, -52, -78, -104]
+            const posicao = ajusta_posicao_sprites(6, sprites)
+
+            get_element("mod_0").style.backgroundPosition = `${posicao}px -1px`
+
+            if (posicao == 0) {
+                setTimeout(() => {
+                    anima_mod_flutua()
+                }, 50)
+            } else
+                anima_mod_flutua()
         }, 100)
     }
 }
@@ -295,10 +315,10 @@ function animaLuzesGuia(caso) {
 
 function ajusta_posicao_sprites(elemento, array_sprites) {
 
-    let sprites_animados = ["/moeda/", spriteAdereco_bandeira, spriteAdereco_fogo, spriteAdereco_roda, spriteAdereco_combustao, spriteAdereco_aco]
+    const sprites_animados = ["/moeda/", spriteAdereco_bandeira, spriteAdereco_fogo, spriteAdereco_roda, spriteAdereco_combustao, spriteAdereco_aco, "/flutua/"]
     indice = anim_indices[elemento]
 
-    if (anim_indices[elemento] < array_sprites.length - 1)
+    if (anim_indices[elemento] < (array_sprites.length - 1))
         indice++
     else
         indice = 0
@@ -311,6 +331,8 @@ function ajusta_posicao_sprites(elemento, array_sprites) {
 
     if (elemento == 0)
         return array_sprites[indice]
+
+    return array_sprites[indice]
 }
 
 function verifica_animacoes(condicao) {

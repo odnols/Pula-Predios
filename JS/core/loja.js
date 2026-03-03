@@ -73,7 +73,7 @@ function carrega_vendas_loja(caso) {
             get_element("mod_direita_principal").innerHTML += `<img class='restaura_modificador' onMouseOver="toolTip('${translations['mod.lunar']}')" onmouseout="toolTip()" src='source/images/store/mods/lunar.png' onclick='altera_modificador(100)'>`
 
         const descricao = ["mod.mais_tempo", "mod.mais_vezes", "mod.de_aco"]
-        const nomeImagem = ["relogio.gif", "jump_boost.png", "aco.png"]
+        const nomeImagem = ["mais_tempo.png", "mais_vezes.png", "aco.png"]
 
         get_element("placeholder_loja").innerHTML = ""
 
@@ -102,7 +102,7 @@ function carrega_vendas_loja(caso) {
         }
     } else if (caso == "Bonus") { // Bônus
 
-        const nomeImagem = ["pisao2x.png", "garimpeiro.png", "vento_estocado.png"]
+        const nomeImagem = ["dobro.png", "garimpeiro.png", "vento_estocado.png"]
         const id_bonus = ["dobro", "garimpeiro", "vento_estocado"]
 
         get_element("categoria_teaser").innerHTML = translations["loja.adquira_bonus"]
@@ -253,6 +253,7 @@ function confirma_compra(categoria, item, confirmacao) {
 
                 localStorage.setItem("pul4Pr3dios-modEmUso", jogador.mod_em_uso)
             } else {
+                executaSons("faixa_efeitos1", "efeitos", "hat.ogg", 2)
                 exibe_teaser(translations["loja.item_ja_adquirido"], "cyan")
                 pisca_loja("0, 255, 255, .2")
             }
