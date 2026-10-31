@@ -261,6 +261,18 @@ function carrega_dados() {
     else
         jogo.qualidadeGrafica = parseInt(qualidadeGraficos)
 
+    chuvaAtiva = localStorage.getItem("pul4Pr3dios-chuvaAtiva")
+    if (chuvaAtiva == null)
+        jogo.chuvaAtiva = 1
+    else
+        jogo.chuvaAtiva = parseInt(chuvaAtiva)
+
+    claroesChuva = localStorage.getItem("pul4Pr3dios-claroesChuva")
+    if (claroesChuva == null)
+        jogo.claroesChuva = 1
+    else
+        jogo.claroesChuva = parseInt(claroesChuva)
+
     // Sincroniza a configuração para a Dificuldade do jogo
     dificuldadeJogo = localStorage.getItem("pul4Pr3dios-dificuldadeJogo")
     if (dificuldadeJogo == null)
@@ -584,6 +596,7 @@ function reseta() {
 
     eventos.evento = null
     eventos.inicia_evento = null
+    eventos.transicoes_liquido_pendentes = []
 
     if (jogador.mods_comprados[0] == 1)
         jogador.timer_mod = 10

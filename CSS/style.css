@@ -334,10 +334,10 @@ button {
     width: 9px;
     height: 9px;
     float: right;
-    margin-top: 5px;
-    margin-left: 40px;
     scale: calc(3);
+    margin-top: 5px;
     overflow: hidden;
+    margin-left: 40px;
     position: relative;
     background-size: auto 10px;
     image-rendering: pixelated;

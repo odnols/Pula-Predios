@@ -34,6 +34,8 @@
     <script src="js/core/controles.js"></script>
     <script src="js/graficos/desenha.js"></script>
     <script src="js/graficos/desenhaChao.js"></script>
+    <script src="js/graficos/desenhaFundo.js"></script>
+    <script src="js/funcoes/efeitosClimaticos.js"></script>
     <script src="js/core/engine.js"></script>
     <script src="js/funcoes/eventos.js"></script>
     <script src="js/funcoes/historia.js"></script>
@@ -101,12 +103,12 @@
 
                 <div class="opcao_som">
                     <h3 style="float: left"><label for="volume_efeitos" data-i18n="botao.efeitos"></label></h3>
-                    <input class="control_volume" type="range" min="0" max="100" value="carrega_sons(2)" id="volume_efeitos" oninput="alteraVolume(this.value, 2)" onchange="alteraVolume(this.value, 2, 1)">
+                    <input class="control_volume" type="range" min="0" max="100" id="volume_efeitos" oninput="alteraVolume(this.value, 2)" onchange="alteraVolume(this.value, 2, 1)">
                 </div>
 
                 <div class="opcao_som">
                     <h3 style="float: left"><label for="volume_memes">Memes</label></h3>
-                    <input class="control_volume" type="range" min="0" max="100" value="carrega_sons(3)" id="volume_memes" oninput="alteraVolume(this.value, 3)" onchange="alteraVolume(this.value, 3, 1)">
+                    <input class="control_volume" type="range" min="0" max="100" id="volume_memes" oninput="alteraVolume(this.value, 3)" onchange="alteraVolume(this.value, 3, 1)">
                 </div>
 
                 <br>
@@ -588,6 +590,10 @@
                 <h4 class="texto" id="button_animacoes_cell"><button id="status_animacoes_block" class="button_opcoes_block"><span data-i18n="menu.desativado"></span></button> : <span data-i18n="botao.animacoes"></span></h4>
                 <h4 class="texto" id="button_animacoes_pc"><button id="status_animacoes" class="button_opcoes" onclick="alteraQualidadeGrafica()"></button> : <span data-i18n="botao.animacoes"></span></h4>
 
+                <h4 class="texto"><button id="status_chuva" class="button_opcoes" onclick="altera_chuva()"></button> : <span data-i18n="botao.chuva"></span></h4>
+
+                <h4 class="texto"><button id="status_claroes_chuva" class="button_opcoes" onclick="altera_claroes_chuva()"></button> : <span data-i18n="botao.claroes_chuva"></span></h4>
+
                 <h4 class="texto"><button id="status_parallax" class="button_opcoes" onclick="alteraParallax()"></button> : <span data-i18n="botao.parallax"></span></h4>
             </div>
         </div>
@@ -633,14 +639,14 @@
 
                 <div class="opcao_som">
                     <h3 style="float: left"><label for="volume_efeitos" data-i18n="botao.efeitos"></label></h3>
-                    <input class="control_volume" type="range" min="0" max="100" value="carrega_sons(2)"
+                    <input class="control_volume" type="range" min="0" max="100"
                         id="volume_efeitos" oninput="alteraVolume(this.value, 2)"
                         onchange="alteraVolume(this.value, 2, 1)">
                 </div>
 
                 <div class="opcao_som">
                     <h3 style="float: left"><label for="volume_memes">Memes</label></h3>
-                    <input class="control_volume" type="range" min="0" max="100" value="carrega_sons(3)"
+                    <input class="control_volume" type="range" min="0" max="100"
                         id="volume_memes" oninput="alteraVolume(this.value, 3)"
                         onchange="alteraVolume(this.value, 3, 1)">
                 </div>

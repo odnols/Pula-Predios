@@ -16,6 +16,14 @@ function Cenario(astro) {
     lista_sprites.img_lava = new Image()
     lista_sprites.img_areia = new Image()
     lista_sprites.img_astros = new Image()
+    lista_sprites.img_transicoes_dia = new Image()
+    lista_sprites.img_transita_areia1 = new Image()
+    lista_sprites.img_transita_areia2 = new Image()
+    lista_sprites.img_transita_areia1_noite = new Image()
+    lista_sprites.img_transita_areia2_noite = new Image()
+    lista_sprites.img_transita_grama_areia_dia = new Image()
+    lista_sprites.img_transita_grama_areia_noite = new Image()
+    lista_sprites.img_transicoes_noite = new Image()
 
     lista_sprites.img_adereco_aco = new Image()
     lista_sprites.img_adereco_fogo = new Image()
@@ -23,7 +31,6 @@ function Cenario(astro) {
     lista_sprites.img_adereco_bandeira = new Image()
     lista_sprites.img_adereco_combustao = new Image()
 
-    lista_sprites.img_mascara_estrela = new Image()
     lista_sprites.img_luzes_navegacao = new Image()
 
     lista_sprites.img_jogador.src = "source/images/sprites/jogador/jogador_dia.png"
@@ -35,6 +42,14 @@ function Cenario(astro) {
     lista_sprites.img_areia.src = `source/images/sprites/praia/areia_dia.png`
     lista_sprites.img_ceu.src = `source/images/sprites/${tema_ativo}/ceu.png`
     lista_sprites.img_sombra.src = `source/images/sprites/${tema_ativo}/sombra.png`
+    lista_sprites.img_transicoes_dia.src = "source/images/sprites/Transições/transicoes.png"
+    lista_sprites.img_transita_areia1.src = "source/images/Sprites/Transições/transita_areia1.png"
+    lista_sprites.img_transita_areia2.src = "source/images/Sprites/Transições/transita_areia2.png"
+    lista_sprites.img_transita_areia1_noite.src = "source/images/Sprites/Transições/transita_areia1_noite.png"
+    lista_sprites.img_transita_areia2_noite.src = "source/images/Sprites/Transições/transita_areia2_noite.png"
+    lista_sprites.img_transita_grama_areia_dia.src = "source/images/sprites/Transições/grama_areia_dia.png"
+    lista_sprites.img_transita_grama_areia_noite.src = "source/images/sprites/Transições/grama_areia_noite.png"
+    lista_sprites.img_transicoes_noite.src = "source/images/sprites/Transições/mascara_transitacoes_noite.png"
 
     // Sprites animados usados no jogador
     lista_sprites.img_adereco_aco.src = "source/images/sprites/jogador/aderecos/aco.png"
@@ -43,7 +58,6 @@ function Cenario(astro) {
     lista_sprites.img_adereco_bandeira.src = "source/images/sprites/jogador/aderecos/bandeira.png"
     lista_sprites.img_adereco_combustao.src = "source/images/sprites/jogador/aderecos/combustao.png"
 
-    lista_sprites.img_mascara_estrela.src = "source/images/sprites/cidade/mascara_estrelas.png"
     lista_sprites.img_luzes_navegacao.src = "source/images/sprites/cidade/luzes_de_navegacao.png"
 
     // Define qual será o astro mostrado no céu ao carregar o game
@@ -113,7 +127,8 @@ function transitador(elemento, posicao_x, posicao_y) {
 
         get_element(elemento).style.opacity = ambiente.opacidade_noite
 
-        ctxi.globalAlpha = ambiente.opacidade_noite
+        const opacidade_anterior = ctxi.globalAlpha
+        ctxi.globalAlpha = opacidade_anterior * ambiente.opacidade_noite
 
         ctxi.fillStyle = pat
 
@@ -125,7 +140,7 @@ function transitador(elemento, posicao_x, posicao_y) {
             ctxi.closePath()
         }
 
-        ctxi.globalAlpha = 1
+        ctxi.globalAlpha = opacidade_anterior
 
         ctxi.beginPath()
         ctxi.rect(0, 0, 0, 0)
@@ -142,22 +157,15 @@ function inverte_tempo() {
         ambiente.libera_transitador = 1
         ambiente.opacidade_noite = 1
 
-        if (typeof tEst != "undefined")
-            clearTimeout(tEst)
-
         // Verifica se as luzes de navegação estão ativas com o avião voando
         if (typeof tLuzN == "undefined" && ambiente.objeto_voador[3] == 1 && dispositivo >= 1366)
             animaLuzesGuia(1)
-
-        animaEstrelas()
     } else { // Dia
         ambiente.astro[2] = 0
         ambiente.tema = 1
         ambiente.libera_transitador = 0
         ambiente.opacidade_noite = 0
 
-        if (typeof tEst != "undefined")
-            clearTimeout(tEst)
     }
 
     alteraRelogio()
@@ -275,17 +283,6 @@ function limpa_ferrugem() {
         if (anim_indices[5] != 6)
             limpa_ferrugem()
     }, 80)
-}
-
-function animaEstrelas() {
-    let posicoes = [0, 568]
-
-    tEst = setTimeout(() => {
-        let indice = Math.round((posicoes.length - 1) * Math.random())
-        spriteMascara_estrelas.y = posicoes[indice]
-
-        animaEstrelas()
-    }, 1000)
 }
 
 function animaLuzesGuia(caso) {

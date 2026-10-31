@@ -7,6 +7,8 @@ function sincronizaBotoesConfigs(valor) {
     sincronizaDificuldade()
     sincronizaOciosidade()
     sincronizaQualidadeGrafica()
+    sincronizaChuva()
+    sincronizaClaroesChuva()
     sincronizaRelogio()
 }
 
@@ -120,10 +122,6 @@ function sincronizaRelogio() {
         ambiente.opacidade_noite = 0.0
         ambiente.libera_transitador = 0
 
-        // Desliga a animação das estrelas
-        if (typeof tEst != "undefined")
-            clearInterval(tEst)
-
         get_element("status_tema_atual").innerHTML = translations["botao.sempre_dia"]
 
     } else if (ambiente.tema == 2) { // Sempre Noite
@@ -131,10 +129,6 @@ function sincronizaRelogio() {
         ambiente.opacidade_noite = 1
         ambiente.libera_transitador = 1
 
-        if (typeof tEst != "undefined")
-            clearInterval(tEst)
-
-        animaEstrelas()
         get_element("status_tema_atual").innerHTML = translations["botao.sempre_noite"]
 
     } else

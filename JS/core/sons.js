@@ -28,6 +28,7 @@ function executaSons(elemento, localizacao, nomeSom, tipo) {
             volume_interno = localStorage.getItem("pul4Pr3dios-volMemes")
 
         let audio = get_element(elemento)
+        configura_proxima_musica(audio, elemento)
         audio.volume = volume_interno / 100
 
         audio.src = `source/songs/${localizacao}/${nomeSom}`
@@ -46,10 +47,33 @@ function executaSons2(elemento, localizacao, nomeSom, tipo) {
             volume_interno = localStorage.getItem("pul4Pr3dios-volMemes")
 
         let audio = get_element(elemento)
+        configura_proxima_musica(audio, elemento)
         audio.volume = volume_interno / 100
 
         audio.src = `source/songs/${localizacao}/${nomeSom}`
         audio.play()
+    }
+}
+
+function configura_proxima_musica(audio, elemento) {
+    if (elemento != "faixa_musicas") return
+
+    audio.onended = function () {
+        const arquivo_atual = (audio.currentSrc || audio.src).split("/").pop()
+        const faixa_atual = arquivo_atual.match(/^(main_[1-4]|ocioso_[1-3])\.ogg$/i)
+        if (!faixa_atual || !jogo.estadoSom) return
+
+        let faixas
+        if (jogo.status == estados.jogando && faixa_atual[1].startsWith("main_"))
+            faixas = ["main_1.ogg", "main_2.ogg", "main_3.ogg", "main_4.ogg"]
+        else if (jogo.status == estados.ocioso && faixa_atual[1].startsWith("ocioso_"))
+            faixas = ["ocioso_1.ogg", "ocioso_2.ogg", "ocioso_3.ogg"]
+        else
+            return
+
+        const opcoes_proxima = faixas.filter(faixa => faixa != arquivo_atual)
+        const proxima = opcoes_proxima[Math.floor(Math.random() * opcoes_proxima.length)]
+        executaSons2("faixa_musicas", "musicas", proxima, 1)
     }
 }
 
@@ -59,11 +83,14 @@ function alteraVolume(volume, entidade, auto) {
     if (jogo.estadoOcioso)
         impedeOcioso()
 
+    volume = Math.max(0, Math.min(100, Number(volume)))
+
     let audio
 
     if (entidade == 1) {       // Músicas
         audio = get_element("faixa_musicas")
         localStorage.setItem("pul4Pr3dios-volMusica", volume)
+        sincroniza_controles_volume(volume, "volume_musica")
 
         if (auto != null)
             // Verifica se há músicas sendo encerradas
@@ -78,6 +105,7 @@ function alteraVolume(volume, entidade, auto) {
     } else if (entidade == 2) { // Efeitos
         audio = get_element("faixa_efeitos1")
         localStorage.setItem("pul4Pr3dios-volEfeito", volume)
+        sincroniza_controles_volume(volume, "volume_efeitos")
 
         let audio2 = get_element("faixa_efeitos2")
         audio2.volume = volume / 100
@@ -96,6 +124,7 @@ function alteraVolume(volume, entidade, auto) {
     } else if (entidade == 3) { // Memes
         audio = get_element("faixa_memes1")
         localStorage.setItem("pul4Pr3dios-volMemes", volume)
+        sincroniza_controles_volume(volume, "volume_memes")
 
         let audio2 = get_element("faixa_memes2")
         audio2.volume = volume / 100
@@ -112,15 +141,21 @@ function alteraVolume(volume, entidade, auto) {
     audio.volume = volume / 100
 }
 
+function sincroniza_controles_volume(volume, id) {
+    document.querySelectorAll(`[id="${id}"]`).forEach(controle => {
+        controle.value = volume
+    })
+}
+
 // Executada automaticamente quando a página carrega, ela ajusta o volume para o valor salvo
 function carrega_volume(volume, entidade) {
-
-    if (entidade == 1)
-        get_element("volume_musica").value = volume
-    else if (entidade == 2)
-        get_element("volume_efeitos").value = volume
-    else
-        get_element("volume_memes").value = volume
+    const valor = Number(volume)
+    if (!Number.isFinite(valor)) {
+        console.warn("Valor de volume salvo inválido; será usado o volume padrão de 50%.")
+        volume = 50
+    } else {
+        volume = Math.max(0, Math.min(100, valor))
+    }
 
     alteraVolume(volume, entidade)
 }

@@ -390,6 +390,7 @@ function cancela_evento() {
 
     eventos.evento = null
     eventos.inicia_evento = null
+    eventos.transicoes_liquido_pendentes = []
     chao.muda_chao = [0, 0, 0]
 
 }
@@ -1165,7 +1166,7 @@ function acelera_predio() {
         volta_velocidade = setInterval(() => {
 
             if (jogo.velocidade < 10)
-                jogo.velocidade++
+                jogo.velocidade += 0.5
             else {
                 jogo.velocidade = 10
                 clearInterval(volta_velocidade)
@@ -1218,4 +1219,14 @@ function altera_chao_referencia(valor_esperado) {
         else// Destravando o chao
             chao.altera_referencia = 0
     }, 10)
+}
+
+function arco(x) {
+
+    const A = 100;   // altura do arco
+    const h = 533;   // centro do intervalo
+    const w = 833;   // meia largura
+    const k = 0;     // base vertical
+
+    return ((A * Math.cos((x - h) * Math.PI / w) + k) * -1) + 150;
 }

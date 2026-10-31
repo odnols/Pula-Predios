@@ -1,3 +1,12 @@
+const aparencias_jogador = [
+    { sprite: spriteJogador_Vermelho, transicao: "jogador1_noite" },
+    { sprite: spriteJogador_Branco, transicao: "jogador2_noite" },
+    { sprite: spriteJogador_Amarelo, transicao: "jogador3_noite" },
+    { sprite: spriteJogador_Azul, transicao: "jogador4_noite" },
+    { sprite: spriteJogador_Roxo, transicao: "jogador5_noite" },
+    { sprite: spriteJogador_Verde, transicao: "jogador6_noite" }
+]
+
 // Variáveis Globais
 var labelTexto = {
     texto: "",
@@ -44,7 +53,16 @@ var labelTexto = {
         tema: 0, // Define será dinamico, sempre dia ou sempre noite
         opacidade_noite: 0.0,
         nuvem_camada: [0, 0, 0, 0],
-        astro: [-250, 400, 0, 0, 0], // 0 (Localização), 1 (Altura), 2 (Astro), 3 (Transições), 4 (Controle)
+        nuvem_densidade: 0.12,
+        opacidade_nuvens: [0.3, 0.3, 0.3, 0.3, 0.3],
+        opacidade_alvo_nuvens: [0.3, 0.3, 0.3, 0.3, 0.3],
+        opacidade_alvo_nuvens_chuva: [0.86, 0.86, 0.86, 0.86, 0.86],
+        nuvem_proxima_variacao_opacidade: 0,
+        nuvens_extra: [],
+        nuvem_proximo_spawn: 0,
+        nuvem_ultima_atualizacao: 0,
+        estrelas: [],
+        astro: [-400, 0, 0, 0, 0], // 0 (Localização), 1 (Altura), 2 (Astro), 3 (Transições), 4 (Controle)
         objeto_voador: [0, 0, 0, 0], // 0 (Velocidade), 1 (Posição), 2 (Altura), 3 (Objeto)
 
         atualiza: function () {
@@ -69,20 +87,20 @@ var labelTexto = {
             Cenario(this.astro[2])
 
             if (this.tema == 0) { // Tema dinâmico
+
                 // Velocidade do astro
                 this.astro[0] += .5
             }
 
-            if (jogo.velocidade > 5)
-                velocidade_interna = jogo.velocidade
-            else
-                velocidade_interna = 5
+            if (jogo.velocidade > 5) velocidade_interna = jogo.velocidade
+            else velocidade_interna = 5
 
             this.predios -= jogo.velocidade * 0.2
             this.nuvem_camada[0] -= velocidade_interna * 0.03
             this.nuvem_camada[1] -= velocidade_interna * 0.04
             this.nuvem_camada[2] -= velocidade_interna * 0.05
             this.nuvem_camada[3] -= velocidade_interna * 0.06
+            this.atualiza_nuvens()
 
             // Controla a posição no eixo X do objeto voador
             if (this.objeto_voador[3] != 0 && this.objeto_voador[3] != 3)
@@ -121,27 +139,19 @@ var labelTexto = {
             }
 
             if (this.astro[0] > 1366) {
-                this.astro[0] = -250 // X
-                this.astro[1] = 400  // Y
+                this.astro[0] = -400 // X
 
                 // Inverte entre Sol e Lua, Sol = 0, Lua = 1
-                if (this.astro[2] == 0)
-                    this.astro[2] = 1
-                else
-                    this.astro[2] = 0
+                if (this.astro[2] == 0) this.astro[2] = 1
+                else this.astro[2] = 0
             }
 
+            // Altura do astro
+            this.astro[1] = arco(this.astro[0])
+
             // Faz a animação de Subida suave dos Astros
-            if (this.astro[0] < 341)
-                this.astro[1] -= .2
-            else if (this.astro[0] > 341 && this.astro[0] < 550)
-                this.astro[1] -= .1
 
-            if (this.astro[0] > 920)
-                this.astro[1] += .2
-            else if (this.astro[0] > 650 && this.astro[0] < 920) {
-                this.astro[1] += .1
-
+            if (this.astro[0] > 650 && this.astro[0] < 920) {
                 if (this.astro[3] == 0 && this.astro[0] > 900 && this.astro[2] == 1) {
 
                     if (jogo.qualidadeGrafica == 2)
@@ -161,16 +171,16 @@ var labelTexto = {
                     transita_tempo(1) // Anoitecer
                     aleatorizaProp()
                 }
-            } else
-                if (this.astro[3] == 1)
-                    this.astro[3] = 0
+            } else if (this.astro[3] == 1) {
+                this.astro[3] = 0
+            }
 
             if (this.predios <= -opcoes.largura)
-                this.predios = 0
+                this.predios += opcoes.largura
 
             for (let i = 0; i < this.nuvem_camada.length; i++)
                 if (this.nuvem_camada[i] <= -opcoes.largura)
-                    this.nuvem_camada[i] = 0
+                    this.nuvem_camada[i] += opcoes.largura
         },
 
         biomas: function () {
@@ -185,6 +195,178 @@ var labelTexto = {
                 localStorage.setItem("pul4Pr3dios-jogo_bioma", jogo.bioma)
                 ambiente.biomas()
             }, tempo)
+        },
+
+        atualiza_nuvens: function () {
+            const agora = Date.now()
+            const delta = this.nuvem_ultima_atualizacao
+                ? Math.min(agora - this.nuvem_ultima_atualizacao, 100)
+                : 0
+            const intensidade_chuva = typeof chuva != "undefined" && chuva.ativa
+                ? Math.max(0, Math.min(1, chuva.intensidade))
+                : 0
+            const densidade_alvo = 0.12 + intensidade_chuva * 0.88
+            const progresso_densidade = Math.min(delta / 2200, 1)
+            this.nuvem_densidade += (densidade_alvo - this.nuvem_densidade) * progresso_densidade
+            this.nuvem_ultima_atualizacao = agora
+
+            if (agora >= this.nuvem_proxima_variacao_opacidade) {
+                for (let i = 0; i < this.opacidade_alvo_nuvens.length; i++) {
+                    this.opacidade_alvo_nuvens[i] = 0.3 + Math.random() * 0.6
+                    this.opacidade_alvo_nuvens_chuva[i] = 0.86 + Math.random() * 0.04
+                }
+
+                this.nuvem_proxima_variacao_opacidade = agora + (
+                    intensidade_chuva > 0
+                        ? 5000 + Math.random() * 5000
+                        : 8000 + Math.random() * 18000
+                )
+            }
+
+            const proporcao_chuva = Math.max(0, Math.min(1, (this.nuvem_densidade - 0.12) / 0.88))
+            const progresso_opacidade = Math.min(delta / 2500, 1)
+            for (let i = 0; i < this.opacidade_nuvens.length; i++) {
+                const opacidade_alvo = this.opacidade_alvo_nuvens[i]
+                    + (this.opacidade_alvo_nuvens_chuva[i] - this.opacidade_alvo_nuvens[i]) * proporcao_chuva
+                this.opacidade_nuvens[i] += (opacidade_alvo - this.opacidade_nuvens[i]) * progresso_opacidade
+            }
+
+            const quantidade_alvo = Math.ceil(intensidade_chuva * 8)
+            const nuvens_ativas = this.nuvens_extra.filter(nuvem => !nuvem.removendo)
+
+            for (const nuvem of nuvens_ativas.slice(quantidade_alvo))
+                nuvem.removendo = true
+
+            if (nuvens_ativas.length < quantidade_alvo && agora >= this.nuvem_proximo_spawn) {
+                const largura_fonte = 220 + Math.random() * 260
+                this.nuvens_extra.push({
+                    x: Math.random() * opcoes.largura,
+                    y: 35 + Math.random() * 300,
+                    sx: Math.random() * (500 - largura_fonte),
+                    largura_fonte,
+                    largura: largura_fonte * (0.7 + Math.random() * 0.3),
+                    altura: 135 * (0.7 + Math.random() * 0.3),
+                    velocidade: 0.015 + Math.random() * 0.02,
+                    opacidade: 0,
+                    removendo: false
+                })
+                this.nuvem_proximo_spawn = agora + 2200 + Math.random() * 2800
+            }
+
+            this.nuvens_extra = this.nuvens_extra.filter(nuvem => {
+                const alvo_opacidade = nuvem.removendo ? 0 : 0.72 + intensidade_chuva * 0.18
+                const progresso_opacidade = Math.min(delta / 700, 1)
+                nuvem.opacidade += (alvo_opacidade - nuvem.opacidade) * progresso_opacidade
+                nuvem.x -= velocidade_interna * nuvem.velocidade
+
+                if (nuvem.x + nuvem.largura < 0)
+                    nuvem.x = opcoes.largura
+
+                return !nuvem.removendo || nuvem.opacidade > 0.01
+            })
+        },
+
+        desenha_camada_nuvem: function (sprite, camada, deslocamento_x, altura, sprite_noite, deslocamento_x_noite, deslocamento_y_noite, opacidade) {
+            if (opacidade <= 0.01) return
+
+            const x = this.nuvem_camada[camada] + deslocamento_x
+            const ctx = opcoes.ctx
+
+            ctx.save()
+            ctx.globalAlpha *= opacidade
+            sprite.desenha(x, altura)
+            sprite.desenha(x + opcoes.largura, altura)
+
+            transitador(sprite_noite, x + deslocamento_x_noite, altura + deslocamento_y_noite)
+            transitador(sprite_noite, x + deslocamento_x_noite + opcoes.largura, altura + deslocamento_y_noite)
+            ctx.restore()
+        },
+
+        desenha_nuvens_extra: function () {
+            const imagem_dia = lista_sprites.img_cenario
+            const imagem_noite = get_element("nuvens1_2_noite")
+            const ctx = opcoes.ctx
+            const opacidade_noite = this.libera_transitador ? this.opacidade_noite : 0
+
+            if (!imagem_dia || !imagem_dia.complete || !imagem_dia.naturalWidth) return
+
+            for (const nuvem of this.nuvens_extra) {
+                const largura = nuvem.largura
+                const altura = nuvem.altura
+                const x = nuvem.x
+                const y = nuvem.y
+
+                ctx.save()
+                ctx.globalAlpha *= nuvem.opacidade * (1 - opacidade_noite)
+                ctx.drawImage(imagem_dia, 720 + nuvem.sx, 522, nuvem.largura_fonte, 135, x, y, largura, altura)
+                ctx.restore()
+
+                if (opacidade_noite > 0 && imagem_noite && imagem_noite.complete && imagem_noite.naturalWidth) {
+                    ctx.save()
+                    ctx.globalAlpha *= nuvem.opacidade * opacidade_noite
+                    ctx.drawImage(imagem_noite, nuvem.sx, 0, nuvem.largura_fonte, 135, x, y, largura, altura)
+                    ctx.restore()
+                }
+            }
+        },
+
+        prepara_estrelas: function () {
+            if (this.estrelas.length) return
+
+            let semente = 42719
+            const aleatorio = () => {
+                semente = (semente * 16807) % 2147483647
+                return (semente - 1) / 2147483646
+            }
+
+            this.estrelas = Array.from({ length: 180 }, () => ({
+                x: Math.round(aleatorio() * opcoes.largura),
+                y: Math.round(12 + aleatorio() * 410),
+                tamanho: aleatorio() < 0.88 ? 1 : 2,
+                fase: aleatorio() * Math.PI * 2,
+                fase_secundaria: aleatorio() * Math.PI * 2,
+                velocidade: 0.3 + aleatorio() * 0.65,
+                neon: aleatorio() < 0.12,
+                cor: aleatorio() < 0.75 ? "#c5e5ff" : "#f4f7ff"
+            }))
+        },
+
+        desenha_estrelas: function () {
+            const opacidade_noite = this.libera_transitador ? this.opacidade_noite : 0
+            if (opacidade_noite <= 0.01) return
+
+            this.prepara_estrelas()
+            const ctx = opcoes.ctx
+            const alfa_anterior = ctx.globalAlpha
+            const tempo = Date.now() / 1000
+
+            ctx.save()
+            for (const estrela of this.estrelas) {
+                const onda_lenta = (Math.sin(tempo * estrela.velocidade + estrela.fase) + 1) / 2
+                const cintilacao = (Math.sin(tempo * estrela.velocidade * 0.37 + estrela.fase_secundaria) + 1) / 2
+                const pulso = onda_lenta * 0.78 + cintilacao * 0.22
+                const brilho = 0.24 + 0.52 * pulso
+                const alfa = alfa_anterior * opacidade_noite * brilho
+
+                ctx.fillStyle = estrela.cor
+                if (estrela.neon && pulso > 0.58) {
+                    ctx.globalAlpha = alfa * 0.16
+                    ctx.fillRect(estrela.x - 1, estrela.y, 1, 1)
+                    ctx.fillRect(estrela.x + estrela.tamanho, estrela.y, 1, 1)
+                    ctx.fillRect(estrela.x, estrela.y - 1, 1, 1)
+                    ctx.fillRect(estrela.x, estrela.y + estrela.tamanho, 1, 1)
+                }
+
+                ctx.globalAlpha = alfa
+                ctx.fillRect(estrela.x, estrela.y, estrela.tamanho, estrela.tamanho)
+
+                if (estrela.neon && estrela.tamanho == 2 && pulso > 0.9) {
+                    ctx.globalAlpha = alfa * 0.28
+                    ctx.fillRect(estrela.x - 1, estrela.y + 1, 1, 1)
+                    ctx.fillRect(estrela.x + 2, estrela.y, 1, 1)
+                }
+            }
+            ctx.restore()
         },
 
         desenha: function () {
@@ -202,23 +384,9 @@ var labelTexto = {
                 transitador("disco_voador_noite", this.objeto_voador[1], this.objeto_voador[2] - 2)
             }
 
-            spriteNuvens.desenha(this.nuvem_camada[0], 280)
-            spriteNuvens.desenha(this.nuvem_camada[0] + opcoes.largura, 280)
-
-            transitador("nuvens1_noite", this.nuvem_camada[0], 280)
-            transitador("nuvens1_noite", this.nuvem_camada[0] + opcoes.largura, 280)
-
-            spriteNuvensSup2.desenha(this.nuvem_camada[2] + 10, 100)
-            spriteNuvensSup2.desenha(this.nuvem_camada[2] + 10 + opcoes.largura, 100)
-
-            transitador("nuvens2_2_noite", this.nuvem_camada[2] + 60, 108)
-            transitador("nuvens2_2_noite", this.nuvem_camada[2] + 60 + opcoes.largura, 108)
-
-            spriteNuvensSup.desenha(this.nuvem_camada[3] + 90, 50)
-            spriteNuvensSup.desenha(this.nuvem_camada[3] + 90 + opcoes.largura, 50)
-
-            transitador("nuvens1_2_noite", this.nuvem_camada[3] + 90, 50)
-            transitador("nuvens1_2_noite", this.nuvem_camada[3] + 90 + opcoes.largura, 50)
+            this.desenha_camada_nuvem(spriteNuvens, 0, 0, 280, "nuvens1_noite", 0, 0, this.opacidade_nuvens[0])
+            this.desenha_camada_nuvem(spriteNuvensSup2, 2, 10, 100, "nuvens2_2_noite", 50, 8, this.opacidade_nuvens[1])
+            this.desenha_camada_nuvem(spriteNuvensSup, 3, 90, 50, "nuvens1_2_noite", 0, 0, this.opacidade_nuvens[2])
 
             if (this.objeto_voador[3] == 1) { // Avião
                 spriteAviao.desenha(this.objeto_voador[1], this.objeto_voador[2])
@@ -231,59 +399,12 @@ var labelTexto = {
                 transitador("dirigivel_noite", this.objeto_voador[1] - 120, this.objeto_voador[2] - 45)
             }
 
-            spriteNuvensSup.desenha(this.nuvem_camada[2] + 500, 150)
-            spriteNuvensSup.desenha(this.nuvem_camada[2] + 500 + opcoes.largura, 150)
-
-            transitador("nuvens1_2_noite", this.nuvem_camada[2] + 500, 150)
-            transitador("nuvens1_2_noite", this.nuvem_camada[2] + 500 + opcoes.largura, 150)
-
-            spriteNuvens2.desenha(this.nuvem_camada[1], 330)
-            spriteNuvens2.desenha(this.nuvem_camada[1] + opcoes.largura, 330)
-
-            transitador("nuvens2_noite", this.nuvem_camada[1], 330)
-            transitador("nuvens2_noite", this.nuvem_camada[1] + opcoes.largura, 330)
+            this.desenha_camada_nuvem(spriteNuvensSup, 2, 500, 150, "nuvens1_2_noite", 0, 0, this.opacidade_nuvens[3])
+            this.desenha_camada_nuvem(spriteNuvens2, 1, 0, 330, "nuvens2_noite", 0, 0, this.opacidade_nuvens[4])
+            this.desenha_nuvens_extra()
 
             spriteCidade.desenha(this.predios, 257)
             spriteCidade.desenha(this.predios + opcoes.largura, 257)
-        }
-    },
-
-    background_predios = {
-        predios: 0,
-        montanhas: [0, 0],
-
-        atualiza: function () {
-            this.predios -= jogo.velocidade * 0.2
-            this.montanhas[0] -= jogo.velocidade * 0.22
-            this.montanhas[1] -= jogo.velocidade * 0.1
-
-            if (this.predios <= -opcoes.largura)
-                this.predios = 0
-
-            for (let i = 0; i < this.montanhas.length; i++)
-                if (this.montanhas[i] <= -opcoes.largura)
-                    this.montanhas[i] = 0
-        },
-
-        desenha: function () {
-
-            spriteMontanhas.desenha(this.montanhas[1], 480)
-            spriteMontanhas.desenha(this.montanhas[1] + opcoes.largura, 480)
-
-            transitador("montanhas_noite", this.montanhas[1], 483)
-            transitador("montanhas_noite", this.montanhas[1] + opcoes.largura, 483)
-
-            spriteCidade.desenha(this.predios, 257)
-            spriteCidade.desenha(this.predios + opcoes.largura, 257)
-
-            transitador("cidade_noite", this.predios, 195)
-            transitador("cidade_noite", this.predios + opcoes.largura, 195)
-
-            spriteMontanhas.desenha(this.montanhas[0], 510)
-            spriteMontanhas.desenha(this.montanhas[0] + opcoes.largura, 510)
-
-            transitador("montanhas_noite", this.montanhas[0], 513)
-            transitador("montanhas_noite", this.montanhas[0] + opcoes.largura, 513)
         }
     },
 
@@ -292,9 +413,7 @@ var labelTexto = {
             spriteCeu.desenha(0, 0)
 
             transitador("ceu_noite", 0, 0)
-
-            if (ambiente.astro[2] == 1 && ambiente.astro[0] < 1200)
-                spriteMascara_estrelas.desenha(0, 0)
+            ambiente.desenha_estrelas()
         }
     },
 
@@ -320,29 +439,26 @@ var labelTexto = {
             //  Chão do Fundo
             if (this.xb <= -opcoes.largura) {
                 insere_piso(this.pisos_b, 3)
-                this.xb = 0
+                this.xb += opcoes.largura
+                if (this.pisos_b.length > 2)
+                    this.pisos_b.shift()
             }
 
             //  Chão do Meio
             if (this.xc <= -opcoes.largura) {
                 insere_piso(this.pisos_c, 2)
-                this.xc = 0
+                this.xc += opcoes.largura
+                if (this.pisos_c.length > 2)
+                    this.pisos_c.shift()
             }
 
             //  Chão da Frente
             if (this.xf <= -opcoes.largura) {
                 insere_piso(this.pisos_f, 1)
-                this.xf = 0
+                this.xf += opcoes.largura
+                if (this.pisos_f.length > 2)
+                    this.pisos_f.shift()
             }
-
-            if (this.pisos_b.length > 2)
-                this.pisos_b.shift()
-
-            if (this.pisos_c.length > 2)
-                this.pisos_c.shift()
-
-            if (this.pisos_f.length > 2)
-                this.pisos_f.shift()
         },
 
         desenha_b: function () {
@@ -363,6 +479,7 @@ var labelTexto = {
         quantia_pixels: 0,
         inicia_evento: null,
         ultimo_evento: null,
+        transicoes_liquido_pendentes: [],
         termina_evento: null,
         iniciando_evento: null,
         penultimo_evento: null,
@@ -441,8 +558,22 @@ var labelTexto = {
 
                     eventos.eventos()
                 } else {
+                    const evento_anterior = this.ultimo_evento
                     this.penultimo_evento = this.ultimo_evento
                     this.ultimo_evento = this.inicia_evento
+
+                    if ((evento_anterior == 1 && this.inicia_evento == 3)
+                        || (evento_anterior == 3 && this.inicia_evento == 1)) {
+                        this.transicoes_liquido_pendentes.push({
+                            origem: evento_anterior == 1 ? "agua" : "lava",
+                            destino: this.inicia_evento == 1 ? "agua" : "lava",
+                            camadas: {
+                                cidade: true,
+                                montanha_fundo: true,
+                                montanha_frente: true
+                            }
+                        })
+                    }
 
                     if (this.inicia_evento == 0) {       // Evento da Cidade
                         ajusta_cores(0, 1)
@@ -552,6 +683,8 @@ var labelTexto = {
         estatisticasNerds: 0,
         notificaConquista: 1,
         qualidadeGrafica: 1,
+        chuvaAtiva: 1,
+        claroesChuva: 1,
         parallax: 0,
 
         operador: function () {
@@ -946,24 +1079,11 @@ var labelTexto = {
             if (this.mod_em_uso == 0 && this.mod == 1)
                 spriteAdereco_combustao.desenha(this.x - 2, this.y + 145)
 
-            if (this.skin == 0) {
-                spriteJogador_Vermelho.desenha(this.x, this.y + 15)
-                transitador("jogador1_noite", this.x, this.y + 15)
-            } else if (this.skin == 1) {
-                spriteJogador_Branco.desenha(this.x, this.y + 15)
-                transitador("jogador2_noite", this.x, this.y + 15)
-            } else if (this.skin == 2) {
-                spriteJogador_Amarelo.desenha(this.x, this.y + 15)
-                transitador("jogador3_noite", this.x, this.y + 15)
-            } else if (this.skin == 3) {
-                spriteJogador_Azul.desenha(this.x, this.y + 15)
-                transitador("jogador4_noite", this.x, this.y + 15)
-            } else if (this.skin == 4) {
-                spriteJogador_Roxo.desenha(this.x, this.y + 15)
-                transitador("jogador5_noite", this.x, this.y + 15)
-            } else if (this.skin == 5) {
-                spriteJogador_Verde.desenha(this.x, this.y + 15)
-                transitador("jogador6_noite", this.x, this.y + 15)
+            const aparencia = aparencias_jogador[this.skin]
+
+            if (aparencia) {
+                aparencia.sprite.desenha(this.x, this.y + 15)
+                transitador(aparencia.transicao, this.x, this.y + 15)
             } else {
                 spriteJogador_Padrao.desenha(this.x, this.y + 17)
                 transitador("jogador7_noite", this.x, this.y + 15)
@@ -1191,6 +1311,8 @@ function main() {
     opcoes.ctx = opcoes.canvas.getContext("2d")
     document.body.appendChild(opcoes.canvas)
 
+    inicia_efeitos_climaticos()
+
     filtro.addEventListener("mousedown", clique)
     filtro2.addEventListener("mousedown", clique)
     document.addEventListener("keypress", clique)
@@ -1254,7 +1376,11 @@ function desenha() {
 
     propsfrente.desenha()
     background_ceu.desenha()
+    if (chuva.raio_atras_nuvens)
+        desenha_raio()
     ambiente.desenha()
+    if (!chuva.raio_atras_nuvens)
+        desenha_raio()
     background_predios.desenha()
 
     propsfundo.desenha()
@@ -1334,4 +1460,5 @@ function desenha() {
     }
 
     propsfrente.desenha()
+    desenha_chuva()
 }

@@ -11,6 +11,47 @@ function Carrega_sprite(alvo, x, y, Largura, Altura) {
     }
 }
 
+function desenha_sprite_transicao(nome, preset, x, y, espelhar_horizontal = false) {
+    const ctx = opcoes.ctx
+    const noite_ativa = typeof ambiente != "undefined"
+        && ambiente.libera_transitador
+        && ambiente.astro
+        && ambiente.astro[2] === 1
+    const opacidade_noite = !noite_ativa
+        ? 0
+        : Math.max(0, Math.min(1, ambiente.opacidade_noite))
+    const imagem_dia = lista_sprites[preset.imagem_dia || `img_${nome}`]
+    const imagem_noite = lista_sprites[preset.imagem_noite || "img_transicoes_noite"]
+    const manter_base_diurna = nome.startsWith("transita_cidade") || nome.startsWith("transita_montanha")
+
+    if (espelhar_horizontal) {
+        ctx.save()
+        ctx.translate(x + preset.sprite.Largura, y)
+        ctx.scale(-1, 1)
+        x = 0
+        y = 0
+    }
+
+    if (imagem_dia && imagem_dia.complete && imagem_dia.naturalWidth
+        && (manter_base_diurna || opacidade_noite < 1)) {
+        ctx.save()
+        if (!manter_base_diurna)
+            ctx.globalAlpha *= 1 - opacidade_noite
+        preset.sprite.desenha(x, y)
+        ctx.restore()
+    }
+
+    if (preset.sprite_noite && imagem_noite && imagem_noite.complete && imagem_noite.naturalWidth && opacidade_noite > 0) {
+        ctx.save()
+        ctx.globalAlpha *= opacidade_noite
+        preset.sprite_noite.desenha(x, y)
+        ctx.restore()
+    }
+
+    if (espelhar_horizontal)
+        ctx.restore()
+}
+
 var spriteCidade = new Carrega_sprite('img_cenario', 0, 0, 1366, 337),
 
     spriteMontanhas = new Carrega_sprite('img_cenario', 0, 340, 1366, 116),
@@ -79,9 +120,28 @@ var spriteCidade = new Carrega_sprite('img_cenario', 0, 0, 1366, 337),
     spriteAdereco_roda = new Carrega_sprite('img_adereco_roda', 0, 0, 59, 24),
     spriteAdereco_bandeira = new Carrega_sprite('img_adereco_bandeira', 0, 0, 17, 14),
     spriteAdereco_combustao = new Carrega_sprite('img_adereco_combustao', 0, 0, 63, 73),
-    spriteMascara_estrelas = new Carrega_sprite('img_mascara_estrela', 0, 0, 1366, 561),
     spriteLuzes_navegacao = new Carrega_sprite('img_luzes_navegacao', 0, 0, 133, 90),
 
-    spriteAreia = new Carrega_sprite('img_areia', 0, 0, 1366, 46)
+    spriteAreia = new Carrega_sprite('img_areia', 0, 0, 1366, 46),
+
+    spriteTransitaCidade1 = new Carrega_sprite('img_transicoes_dia', 0, 34, 1366, 253),
+    spriteTransitaCidade2 = new Carrega_sprite('img_transicoes_dia', 0, 457, 1366, 235),
+    spriteTransitaMontanha1 = new Carrega_sprite('img_transicoes_dia', 0, 290, 1366, 117),
+    spriteTransitaMontanha2 = new Carrega_sprite('img_transicoes_dia', 0, 695, 1366, 117),
+    spriteTransitaChao1 = new Carrega_sprite('img_transicoes_dia', 0, 407, 1366, 46),
+    spriteTransitaChao2 = new Carrega_sprite('img_transicoes_dia', 0, 812, 1366, 46),
+    spriteTransitaAreia1 = new Carrega_sprite('img_transita_areia1', 0, 0, 1366, 46),
+    spriteTransitaAreia2 = new Carrega_sprite('img_transita_areia2', 0, 0, 1366, 46),
+
+    spriteTransitaCidade1_noite = new Carrega_sprite('img_transicoes_noite', 0, 34, 1366, 253),
+    spriteTransitaCidade2_noite = new Carrega_sprite('img_transicoes_noite', 0, 457, 1366, 235),
+    spriteTransitaMontanha1_noite = new Carrega_sprite('img_transicoes_noite', 0, 290, 1366, 117),
+    spriteTransitaMontanha2_noite = new Carrega_sprite('img_transicoes_noite', 0, 695, 1366, 117),
+    spriteTransitaChao1_noite = new Carrega_sprite('img_transicoes_noite', 0, 407, 1366, 46),
+    spriteTransitaChao2_noite = new Carrega_sprite('img_transicoes_noite', 0, 812, 1366, 46),
+    spriteTransitaAreia1_noite = new Carrega_sprite('img_transita_areia1_noite', 0, 0, 1366, 46),
+    spriteTransitaAreia2_noite = new Carrega_sprite('img_transita_areia2_noite', 0, 0, 1366, 46),
+    spriteTransitaGramaAreiaDia = new Carrega_sprite('img_transita_grama_areia_dia', 0, 0, 1366, 46),
+    spriteTransitaGramaAreiaNoite = new Carrega_sprite('img_transita_grama_areia_noite', 0, 0, 1366, 46)
 
 spriteAdereco_aco.x = 329
