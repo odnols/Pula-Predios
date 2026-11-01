@@ -4,6 +4,7 @@ function sincronizaBotoesConfigs(valor) {
     sincronizaEstatisticasNerds()
     sincronizaEstatisticaMorte(valor)
     sincronizaNotificacoesConquistas()
+    sincronizaCardMusica()
     sincronizaDificuldade()
     sincronizaOciosidade()
     sincronizaQualidadeGrafica()
@@ -21,6 +22,7 @@ function alteraEstadoSom() {
 
     if (jogo.estadoSom) {
         jogo.estadoSom = 0
+        fecha_card_musica()
 
         // Pausa todos os sons que possam estar sendo executados no momento
         for (let i = 0; i < canais_de_audio.length; i++) {
@@ -176,6 +178,35 @@ function sincronizaNotificacoesConquistas() {
         get_element("status_conquistas_notifc").innerHTML = translations["botao.desativado"]
     else
         get_element("status_conquistas_notifc").innerHTML = translations["botao.ativado"]
+}
+
+function alteraCardMusica() {
+    executaSons2("faixa_efeitos1", "efeitos", "hat.ogg", 2)
+
+    jogo.exibeCardMusica = jogo.exibeCardMusica ? 0 : 1
+    localStorage.setItem("pul4Pr3dios-exibeCardMusica", jogo.exibeCardMusica)
+    sincronizaCardMusica()
+
+    if (!jogo.exibeCardMusica)
+        fecha_card_musica()
+}
+
+function sincronizaCardMusica() {
+    get_element("status_card_musica").innerHTML = jogo.exibeCardMusica
+        ? translations["botao.ativado"]
+        : translations["botao.desativado"]
+    get_element("duracao_card_musica").value = jogo.duracaoCardMusica
+    get_element("valor_duracao_card_musica").textContent = `${jogo.duracaoCardMusica}s`
+}
+
+function alteraDuracaoCardMusica(valor) {
+    const duracao = Number(valor)
+    jogo.duracaoCardMusica = String(valor).trim() !== "" && Number.isFinite(duracao)
+        ? Math.max(1, Math.min(15, Math.floor(duracao)))
+        : 5
+
+    localStorage.setItem("pul4Pr3dios-duracaoCardMusica", jogo.duracaoCardMusica)
+    sincronizaCardMusica()
 }
 
 function alteraQualidadeGrafica() {

@@ -130,8 +130,8 @@ function desenha_piso(caso) {
             desenha_sprite_transicao(
                 "transita_grama_areia_dia",
                 chao_alvo,
-                piso.x == 1 ? pos_x_base : pos_x_base + 1366,
-                piso.y,
+                (piso.x == 1 ? pos_x_base : pos_x_base + 1366) + chao_alvo.x,
+                piso.y + chao_alvo.y,
                 piso.espelhar_horizontal
             )
             continue

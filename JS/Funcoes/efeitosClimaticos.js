@@ -3,6 +3,7 @@ const chuva = {
     gotas: [],
     intensidade: 0,
     intensidade_maxima: 0,
+    tipo: null,
     perfil: null,
     inicio: 0,
     temporizador: null,
@@ -81,6 +82,7 @@ const chuva = {
         this.proximo_trovao = 0
         this.raio = null
         this.opacidade_clarao = 0
+        this.tipo = null
         this.atualiza_audio_chuva()
     },
 
@@ -88,27 +90,43 @@ const chuva = {
         if (!jogo.chuvaAtiva) return
         if (this.encerrando) return
 
+        const escolha_variante = Math.random()
+        const variante = escolha_variante < 0.55
+            ? { tipo: "chuva", intensidade: [0.45, 0.7], gotas: 180 }
+            : escolha_variante < 0.82
+                ? { tipo: "torrencial", intensidade: [0.72, 0.92], gotas: 320 }
+                : { tipo: "temporal", intensidade: [0.88, 1], gotas: 440 }
+
+        this.tipo = variante.tipo
         this.perfil = Math.random() < 0.5 ? "aumentando" : "diminuindo"
-        this.intensidade_maxima = 0.55 + Math.random() * 0.45
+        this.intensidade_maxima = variante.intensidade[0]
+            + Math.random() * (variante.intensidade[1] - variante.intensidade[0])
         this.intensidade = this.perfil == "aumentando" ? 0.08 : this.intensidade_maxima
         this.inicio = Date.now()
         this.ativa = true
         this.encerrando = false
         this.proximo_trovao = this.inicio + 5000 + Math.random() * 10000
 
-        this.gotas = Array.from({ length: 140 }, () => this.cria_gota())
+        this.gotas = Array.from({ length: variante.gotas }, () => this.cria_gota())
         this.duracao_ms = 35000 + Math.random() * 25000
 
         this.duracao = setTimeout(() => {
             this.ativa = false
             this.gotas = []
             this.intensidade = 0
+            this.tipo = null
             this.agenda()
         }, this.duracao_ms)
     },
 
     dispara_trovao: function (agora) {
-        this.proximo_trovao = agora + 7000 + Math.random() * 12000
+        const intervalo_trovao = this.tipo == "temporal"
+            ? [1800, 3800]
+            : this.tipo == "torrencial"
+                ? [4500, 8500]
+                : [7000, 19000]
+        this.proximo_trovao = agora + intervalo_trovao[0]
+            + Math.random() * (intervalo_trovao[1] - intervalo_trovao[0])
 
         this.cria_raio(agora)
 
@@ -178,7 +196,12 @@ const chuva = {
         const indice_tipo = variacoes.indexOf(tipo)
         const raios = [cria_tracado(inicio_x, indice_tipo)]
 
-        if (Math.random() < 0.3) {
+        const chance_raio_adicional = this.tipo == "temporal"
+            ? 0.85
+            : this.tipo == "torrencial"
+                ? 0.55
+                : 0.3
+        if (Math.random() < chance_raio_adicional) {
             const deslocamento = (Math.random() - 0.5) * largura * 0.07
             const inicio_segundo_raio = Math.max(0, Math.min(largura, inicio_x + deslocamento))
             let tipo_segundo_raio = Math.floor(Math.random() * variacoes.length)
@@ -192,7 +215,8 @@ const chuva = {
         this.raio = raios
         this.inicio_raio = agora
         this.raio_atras_nuvens = Math.random() < 0.35
-        this.repite_raio = Math.random() < 0.3
+        const chance_repeticao = this.tipo == "temporal" ? 0.7 : 0.3
+        this.repite_raio = Math.random() < chance_repeticao
         this.duracao_raio_ms = this.repite_raio ? 650 : 450
     },
 
@@ -524,6 +548,7 @@ const chuva = {
                 this.proximo_trovao = 0
                 this.raio = null
                 this.opacidade_clarao = 0
+                this.tipo = null
             }
         }
 

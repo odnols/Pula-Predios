@@ -143,6 +143,8 @@
     "botao.exibicao": "Exibição",
     "botao.log": "Ver log de alterações",
     "botao.recarregar_jogo": "Recarregar o jogo",
+    "botao.card_musica": "Exibir card da música",
+    "botao.duracao_card_musica": "Duração do card (segundos)",
     "historia.ligando_motores": "Ligando os motores",
     "historia.textos": [
         "Recebendo transmissão . . .",

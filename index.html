@@ -21,10 +21,11 @@
 
     <script src="js/funcoes/operacionais.js"></script>
     <script src="js/core/translate.js"></script>
+    <script src="js/presets/musics.js"></script>
 
     <script src="js/graficos/sprite.js"></script>
     <script src="js/graficos/motor_grafico.js"></script>
-    <script src="js/graficos/presets.js"></script>
+    <script src="js/presets/sprites.js"></script>
 
     <script src="js/core/sessao.js"></script>
     <script src="js/core/dados.js"></script>
@@ -97,18 +98,27 @@
                 <span class="fecha_janela" onclick="quadro_configura_sons()">X</span> <br>
 
                 <div class="opcao_som">
-                    <h3 style="float: left"><label for="volume_musica" data-i18n="botao.musicas"></label></h3>
-                    <input class="control_volume" type="range" min="0" max="100" id="volume_musica" oninput="alteraVolume(this.value, 1)" onchange="alteraVolume(this.value, 1, 1)">
+                    <h3><label for="volume_musica_inicio" data-i18n="botao.musicas"></label></h3>
+                    <input class="control_volume" type="range" min="0" max="100" id="volume_musica_inicio" data-volume-entity="1"
+                        oninput="atualiza_valor_volume(this); alteraVolume(this.value, 1)"
+                        onchange="alteraVolume(this.value, 1, 1)">
+                    <output class="valor_volume" for="volume_musica_inicio">50%</output>
                 </div>
 
                 <div class="opcao_som">
-                    <h3 style="float: left"><label for="volume_efeitos" data-i18n="botao.efeitos"></label></h3>
-                    <input class="control_volume" type="range" min="0" max="100" id="volume_efeitos" oninput="alteraVolume(this.value, 2)" onchange="alteraVolume(this.value, 2, 1)">
+                    <h3><label for="volume_efeitos_inicio" data-i18n="botao.efeitos"></label></h3>
+                    <input class="control_volume" type="range" min="0" max="100" id="volume_efeitos_inicio" data-volume-entity="2"
+                        oninput="atualiza_valor_volume(this); alteraVolume(this.value, 2)"
+                        onchange="alteraVolume(this.value, 2, 1)">
+                    <output class="valor_volume" for="volume_efeitos_inicio">50%</output>
                 </div>
 
                 <div class="opcao_som">
-                    <h3 style="float: left"><label for="volume_memes">Memes</label></h3>
-                    <input class="control_volume" type="range" min="0" max="100" id="volume_memes" oninput="alteraVolume(this.value, 3)" onchange="alteraVolume(this.value, 3, 1)">
+                    <h3><label for="volume_memes_inicio">Memes</label></h3>
+                    <input class="control_volume" type="range" min="0" max="100" id="volume_memes_inicio" data-volume-entity="3"
+                        oninput="atualiza_valor_volume(this); alteraVolume(this.value, 3)"
+                        onchange="alteraVolume(this.value, 3, 1)">
+                    <output class="valor_volume" for="volume_memes_inicio">50%</output>
                 </div>
 
                 <br>
@@ -242,6 +252,14 @@
         <audio id="faixa_efeitos1"></audio>
         <audio id="faixa_efeitos2"></audio>
         <audio id="faixa_efeitos3"></audio>
+    </div>
+
+    <div id="card_musica" class="card_musica" aria-live="polite" aria-hidden="true">
+        <span class="card_musica_icone" aria-hidden="true">♫</span>
+        <div>
+            <span id="nome_musica_atual" class="card_musica_nome"></span>
+            <span id="artista_musica_atual" class="card_musica_artista"></span>
+        </div>
     </div>
 
     <div id="conquistas">
@@ -632,32 +650,34 @@
             <div id="controle_som">
 
                 <div class="opcao_som">
-                    <h3 style="float: left"><label for="volume_musica" data-i18n="botao.musicas"></label></h3>
-                    <input class="control_volume" type="range" min="0" max="100" id="volume_musica"
-                        oninput="alteraVolume(this.value, 1)" onchange="alteraVolume(this.value, 1, 1)">
+                    <h3><label for="volume_musica" data-i18n="botao.musicas"></label></h3>
+                    <input class="control_volume" type="range" min="0" max="100" id="volume_musica" data-volume-entity="1"
+                        oninput="atualiza_valor_volume(this); alteraVolume(this.value, 1)"
+                        onchange="alteraVolume(this.value, 1, 1)">
+                    <output class="valor_volume" for="volume_musica">50%</output>
                 </div>
 
                 <div class="opcao_som">
-                    <h3 style="float: left"><label for="volume_efeitos" data-i18n="botao.efeitos"></label></h3>
-                    <input class="control_volume" type="range" min="0" max="100"
-                        id="volume_efeitos" oninput="alteraVolume(this.value, 2)"
+                    <h3><label for="volume_efeitos" data-i18n="botao.efeitos"></label></h3>
+                    <input class="control_volume" type="range" min="0" max="100" id="volume_efeitos" data-volume-entity="2"
+                        oninput="atualiza_valor_volume(this); alteraVolume(this.value, 2)"
                         onchange="alteraVolume(this.value, 2, 1)">
+                    <output class="valor_volume" for="volume_efeitos">50%</output>
                 </div>
 
                 <div class="opcao_som">
-                    <h3 style="float: left"><label for="volume_memes">Memes</label></h3>
-                    <input class="control_volume" type="range" min="0" max="100"
-                        id="volume_memes" oninput="alteraVolume(this.value, 3)"
+                    <h3><label for="volume_memes">Memes</label></h3>
+                    <input class="control_volume" type="range" min="0" max="100" id="volume_memes" data-volume-entity="3"
+                        oninput="atualiza_valor_volume(this); alteraVolume(this.value, 3)"
                         onchange="alteraVolume(this.value, 3, 1)">
+                    <output class="valor_volume" for="volume_memes">50%</output>
                 </div>
 
-                <br>
-                <h4 class="texto">
-                    <center data-i18n="menu.sons"></center>
-                    <button id="status_volume_som" class="button_opcoes" onclick="alteraEstadoSom()"></button>
+                <h4 class="texto estado_som">
+                    <button id="status_volume_som" class="button_opcoes" onclick="alteraEstadoSom()"></button> : <span data-i18n="menu.sons"></span>
                 </h4>
 
-                <div>
+                <div class="selecao_musicas">
                     <select id="seleciona_tema" onchange="verifica_selecionado('seleciona_tema')">
                         <option value="main_1">Tema 1</option>
                         <option value="main_2">Tema 2</option>
@@ -674,6 +694,15 @@
                     </select>
                 </div>
 
+                <h4 class="texto estado_som"><button id="status_card_musica" class="button_opcoes"
+                        onclick="alteraCardMusica()"></button> : <span data-i18n="botao.card_musica"></span></h4>
+
+                <div class="opcao_som config_duracao_card_musica">
+                    <h3><label for="duracao_card_musica" data-i18n="botao.duracao_card_musica">Duração do card (segundos)</label></h3>
+                    <input id="duracao_card_musica" class="control_volume" type="range" min="5" max="15" step="1" value="7"
+                        oninput="alteraDuracaoCardMusica(this.value)">
+                    <output id="valor_duracao_card_musica" class="valor_volume" for="duracao_card_musica">5s</output>
+                </div>
             </div>
         </div>
     </div>

@@ -62,6 +62,13 @@ var labelTexto = {
         nuvem_proximo_spawn: 0,
         nuvem_ultima_atualizacao: 0,
         estrelas: [],
+        estrelas_rotacao: 0,
+        estrelas_astro_x: null,
+        estrelas_cadentes: [],
+        estrelas_cadentes_noite: false,
+        estrelas_cadentes_proximo_evento: 0,
+        estrelas_cadentes_ultima_atualizacao: 0,
+        estrelas_cadentes_frequencia_noite: 0,
         astro: [-400, 0, 0, 0, 0], // 0 (Localização), 1 (Altura), 2 (Astro), 3 (Transições), 4 (Controle)
         objeto_voador: [0, 0, 0, 0], // 0 (Velocidade), 1 (Posição), 2 (Altura), 3 (Objeto)
 
@@ -231,7 +238,8 @@ var labelTexto = {
                 this.opacidade_nuvens[i] += (opacidade_alvo - this.opacidade_nuvens[i]) * progresso_opacidade
             }
 
-            const quantidade_alvo = Math.ceil(intensidade_chuva * 8)
+            const nuvens_por_intensidade = this.astro[2] == 0 ? 16 : 8
+            const quantidade_alvo = Math.ceil(intensidade_chuva * nuvens_por_intensidade)
             const nuvens_ativas = this.nuvens_extra.filter(nuvem => !nuvem.removendo)
 
             for (const nuvem of nuvens_ativas.slice(quantidade_alvo))
@@ -319,9 +327,11 @@ var labelTexto = {
                 return (semente - 1) / 2147483646
             }
 
-            this.estrelas = Array.from({ length: 180 }, () => ({
-                x: Math.round(aleatorio() * opcoes.largura),
-                y: Math.round(12 + aleatorio() * 410),
+            const largura = opcoes.canvas.width
+            const altura = opcoes.canvas.height
+            this.estrelas = Array.from({ length: 180 }, (_, i) => ({
+                x: Math.round(aleatorio() * largura),
+                y: Math.round((i + aleatorio()) / 180 * altura),
                 tamanho: aleatorio() < 0.88 ? 1 : 2,
                 fase: aleatorio() * Math.PI * 2,
                 fase_secundaria: aleatorio() * Math.PI * 2,
@@ -332,41 +342,190 @@ var labelTexto = {
         },
 
         desenha_estrelas: function () {
-            const opacidade_noite = this.libera_transitador ? this.opacidade_noite : 0
-            if (opacidade_noite <= 0.01) return
-
+            const opacidade_noite = this.libera_transitador
+                ? Math.max(0, Math.min(1, this.opacidade_noite))
+                : 0
             this.prepara_estrelas()
             const ctx = opcoes.ctx
             const alfa_anterior = ctx.globalAlpha
             const tempo = Date.now() / 1000
+            const agora = Date.now()
+            const largura = opcoes.canvas.width
+            const altura = opcoes.canvas.height
+            const astro_x = this.astro[0]
+            const animacoes_ativas = jogo.qualidadeGrafica != 0
+
+            if (!animacoes_ativas || this.astro[2] != 1 || opacidade_noite <= 0.01) {
+                this.estrelas_cadentes = []
+                this.estrelas_cadentes_noite = false
+                this.estrelas_cadentes_proximo_evento = 0
+                this.estrelas_cadentes_ultima_atualizacao = agora
+                this.estrelas_cadentes_frequencia_noite = 0
+            } else {
+                if (!this.estrelas_cadentes_noite) {
+                    this.estrelas_cadentes_noite = true
+                    const atividade_noite = Math.random()
+                    this.estrelas_cadentes_frequencia_noite = atividade_noite < 0.25
+                        ? 0
+                        : atividade_noite < 0.55
+                            ? 1
+                            : 2
+                    this.estrelas_cadentes_proximo_evento = agora + 3000 + Math.random() * 7000
+                }
+
+                if (this.estrelas_cadentes_frequencia_noite > 0
+                    && agora >= this.estrelas_cadentes_proximo_evento) {
+                    const chance_evento = this.estrelas_cadentes_frequencia_noite == 2 ? 0.8 : 0.35
+                    if (Math.random() < chance_evento) {
+                        const quantidade = this.estrelas_cadentes_frequencia_noite == 2
+                            ? 2 + Math.floor(Math.random() * 5)
+                            : 1 + Math.floor(Math.random() * 2)
+                        for (let i = 0; i < quantidade; i++) {
+                            const velocidade_x = 700 + Math.random() * 600
+                            const comprimento = 55 + Math.floor(Math.random() * 66)
+                            const distancia_horizontal = largura + comprimento * 2
+                            const angulo = -0.08 + Math.random() * 0.5
+                            const velocidade_y = velocidade_x * Math.tan(angulo)
+                            const y_final = Math.random() * altura
+                            const x = largura + comprimento
+                            this.estrelas_cadentes.push({
+                                x,
+                                y: y_final - Math.tan(angulo) * distancia_horizontal,
+                                velocidade_x: -velocidade_x,
+                                velocidade_y,
+                                atraso: i * (100 + Math.random() * 220),
+                                tempo: 0,
+                                duracao: distancia_horizontal / velocidade_x * 1000,
+                                comprimento,
+                                angulo
+                            })
+                        }
+                    }
+
+                    this.estrelas_cadentes_proximo_evento = agora + (
+                        this.estrelas_cadentes_frequencia_noite == 2
+                            ? 3500 + Math.random() * 8000
+                            : 14000 + Math.random() * 22000
+                    )
+                }
+            }
+
+            if (opacidade_noite === 0) {
+                this.estrelas_rotacao = 0
+                this.estrelas_astro_x = astro_x
+            } else if (this.estrelas_astro_x !== null) {
+                let deslocamento_astro = astro_x - this.estrelas_astro_x
+                if (deslocamento_astro < 0)
+                    deslocamento_astro += 1366 + 400
+
+                if (jogo.qualidadeGrafica != 0)
+                    this.estrelas_rotacao += deslocamento_astro * Math.PI / (1366 * 36)
+
+                this.estrelas_astro_x = astro_x
+            } else {
+                this.estrelas_astro_x = astro_x
+            }
+            if (opacidade_noite <= 0.01) return
+            const rotacao = this.estrelas_rotacao
+            const cosseno = Math.cos(rotacao)
+            const seno = Math.sin(rotacao)
+            const centro_x = largura / 2
+            const eixo_y = -altura * 0.7
+            const espelha = (posicao, limite) => {
+                const periodo = limite * 2
+                const normalizada = ((posicao % periodo) + periodo) % periodo
+                return normalizada <= limite ? normalizada : periodo - normalizada
+            }
 
             ctx.save()
             for (const estrela of this.estrelas) {
-                const onda_lenta = (Math.sin(tempo * estrela.velocidade + estrela.fase) + 1) / 2
-                const cintilacao = (Math.sin(tempo * estrela.velocidade * 0.37 + estrela.fase_secundaria) + 1) / 2
-                const pulso = onda_lenta * 0.78 + cintilacao * 0.22
+                const distancia_x = estrela.x - centro_x
+                const distancia_y = estrela.y - eixo_y
+                const x = espelha(
+                    centro_x + distancia_x * cosseno - distancia_y * seno,
+                    largura
+                )
+                const y = espelha(
+                    eixo_y + distancia_x * seno + distancia_y * cosseno,
+                    altura
+                )
+                const onda_lenta = animacoes_ativas
+                    ? (Math.sin(tempo * estrela.velocidade + estrela.fase) + 1) / 2
+                    : 0.5
+                const cintilacao = animacoes_ativas
+                    ? (Math.sin(tempo * estrela.velocidade * 0.37 + estrela.fase_secundaria) + 1) / 2
+                    : 0.5
+                const pulso = animacoes_ativas ? onda_lenta * 0.78 + cintilacao * 0.22 : 0.5
                 const brilho = 0.24 + 0.52 * pulso
                 const alfa = alfa_anterior * opacidade_noite * brilho
 
                 ctx.fillStyle = estrela.cor
                 if (estrela.neon && pulso > 0.58) {
                     ctx.globalAlpha = alfa * 0.16
-                    ctx.fillRect(estrela.x - 1, estrela.y, 1, 1)
-                    ctx.fillRect(estrela.x + estrela.tamanho, estrela.y, 1, 1)
-                    ctx.fillRect(estrela.x, estrela.y - 1, 1, 1)
-                    ctx.fillRect(estrela.x, estrela.y + estrela.tamanho, 1, 1)
+                    ctx.fillRect(x - 1, y, 1, 1)
+                    ctx.fillRect(x + estrela.tamanho, y, 1, 1)
+                    ctx.fillRect(x, y - 1, 1, 1)
+                    ctx.fillRect(x, y + estrela.tamanho, 1, 1)
                 }
 
                 ctx.globalAlpha = alfa
-                ctx.fillRect(estrela.x, estrela.y, estrela.tamanho, estrela.tamanho)
+                ctx.fillRect(x, y, estrela.tamanho, estrela.tamanho)
 
                 if (estrela.neon && estrela.tamanho == 2 && pulso > 0.9) {
                     ctx.globalAlpha = alfa * 0.28
-                    ctx.fillRect(estrela.x - 1, estrela.y + 1, 1, 1)
-                    ctx.fillRect(estrela.x + 2, estrela.y, 1, 1)
+                    ctx.fillRect(x - 1, y + 1, 1, 1)
+                    ctx.fillRect(x + 2, y, 1, 1)
                 }
             }
             ctx.restore()
+
+            if (!animacoes_ativas || this.astro[2] != 1 || opacidade_noite <= 0.01) return
+
+            const delta = this.estrelas_cadentes_ultima_atualizacao
+                ? Math.min(agora - this.estrelas_cadentes_ultima_atualizacao, 50)
+                : 0
+            this.estrelas_cadentes_ultima_atualizacao = agora
+            this.estrelas_cadentes = this.estrelas_cadentes.filter(estrela => {
+                if (estrela.atras > 0) {
+                    estrela.atras -= delta
+                    return true
+                }
+
+                estrela.tempo += delta
+                if (estrela.tempo >= estrela.duracao) return false
+
+                const progresso = estrela.tempo / estrela.duracao
+                const x = estrela.x + estrela.velocidade_x * estrela.tempo / 1000
+                const y = estrela.y + estrela.velocidade_y * estrela.tempo / 1000
+                const comprimento = estrela.comprimento
+                const velocidade = Math.hypot(estrela.velocidade_x, estrela.velocidade_y)
+                const direcao_x = estrela.velocidade_x / velocidade
+                const direcao_y = estrela.velocidade_y / velocidade
+                const alfa = alfa_anterior * opacidade_noite * 0.68
+                    * Math.min(1, (1 - progresso) * 2.5)
+
+                ctx.save()
+                for (let pixel = comprimento; pixel > 0; pixel -= 2) {
+                    const pixel_y = y - direcao_y * pixel
+                    const proximidade_solo = Math.max(0, Math.min(1, (pixel_y / altura - 0.55) / 0.45))
+                    const aquecimento = proximidade_solo * 0.3
+                    const vermelho = Math.round(197 + (255 - 197) * aquecimento)
+                    const verde = Math.round(229 + (239 - 229) * aquecimento)
+                    const azul = Math.round(255 + (190 - 255) * aquecimento)
+                    ctx.globalAlpha = alfa * (0.12 + 0.72 * (1 - pixel / comprimento))
+                    ctx.fillStyle = `rgb(${vermelho}, ${verde}, ${azul})`
+                    ctx.fillRect(
+                        Math.round(x - direcao_x * pixel),
+                        Math.round(pixel_y),
+                        2,
+                        2
+                    )
+                }
+                ctx.fillStyle = y / altura > 0.65 ? "#fff7dc" : "#ffffff"
+                ctx.fillRect(Math.round(x), Math.round(y), 2, 2)
+                ctx.restore()
+                return true
+            })
         },
 
         desenha: function () {
@@ -413,6 +572,15 @@ var labelTexto = {
             spriteCeu.desenha(0, 0)
 
             transitador("ceu_noite", 0, 0)
+
+            if (ambiente.astro[2] == 0 && chuva.ativa) {
+                const opacidade = 0.04 + Math.min(chuva.intensidade, 1) * 0.14
+                opcoes.ctx.save()
+                opcoes.ctx.fillStyle = `rgba(20, 30, 45, ${opacidade})`
+                opcoes.ctx.fillRect(0, 0, opcoes.canvas.width, opcoes.canvas.height)
+                opcoes.ctx.restore()
+            }
+
             ambiente.desenha_estrelas()
         }
     },
@@ -682,6 +850,8 @@ var labelTexto = {
         converte_barra: 0,
         estatisticasNerds: 0,
         notificaConquista: 1,
+        exibeCardMusica: 1,
+        duracaoCardMusica: 5,
         qualidadeGrafica: 1,
         chuvaAtiva: 1,
         claroesChuva: 1,

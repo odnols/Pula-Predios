@@ -732,3 +732,13 @@
         transform: translateY(0px);
     }
 }
+
+@keyframes icone_musica_flutua {
+    from {
+        transform: translateY(-4px);
+    }
+
+    to {
+        transform: translateY(4px);
+    }
+}

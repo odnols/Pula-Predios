@@ -1,4 +1,6 @@
 // Escolhe o som que irá tocar ao iniciar, morrer e pegar moedas
+let temporizador_card_musica
+
 function escolhe_som(ocasiao, evento) {
 
     if (ocasiao == 1) // Inicio
@@ -33,6 +35,8 @@ function executaSons(elemento, localizacao, nomeSom, tipo) {
 
         audio.src = `source/songs/${localizacao}/${nomeSom}`
         audio.play()
+        if (elemento == "faixa_musicas")
+            exibe_card_musica(nomeSom)
     }
 }
 
@@ -52,7 +56,34 @@ function executaSons2(elemento, localizacao, nomeSom, tipo) {
 
         audio.src = `source/songs/${localizacao}/${nomeSom}`
         audio.play()
+        if (elemento == "faixa_musicas")
+            exibe_card_musica(nomeSom)
     }
+}
+
+function exibe_card_musica(nomeSom) {
+    const preset = presets_musicas[nomeSom]
+    if (!preset || !jogo.exibeCardMusica) {
+        fecha_card_musica()
+        return
+    }
+
+    const card = document.getElementById("card_musica")
+    get_element("nome_musica_atual").textContent = preset.nome
+    get_element("artista_musica_atual").textContent = preset.artista
+
+    clearTimeout(temporizador_card_musica)
+    card.classList.add("visivel")
+    card.setAttribute("aria-hidden", "false")
+
+    temporizador_card_musica = setTimeout(fecha_card_musica, jogo.duracaoCardMusica * 1000)
+}
+
+function fecha_card_musica() {
+    clearTimeout(temporizador_card_musica)
+    const card = document.getElementById("card_musica")
+    card.classList.remove("visivel")
+    card.setAttribute("aria-hidden", "true")
 }
 
 function configura_proxima_musica(audio, elemento) {
@@ -142,9 +173,15 @@ function alteraVolume(volume, entidade, auto) {
 }
 
 function sincroniza_controles_volume(volume, id) {
-    document.querySelectorAll(`[id="${id}"]`).forEach(controle => {
+    const entidade = { volume_musica: 1, volume_efeitos: 2, volume_memes: 3 }[id]
+    document.querySelectorAll(`[data-volume-entity="${entidade}"]`).forEach(controle => {
         controle.value = volume
+        atualiza_valor_volume(controle)
     })
+}
+
+function atualiza_valor_volume(controle) {
+    controle.parentElement.querySelector(".valor_volume").textContent = `${controle.value}%`
 }
 
 // Executada automaticamente quando a página carrega, ela ajusta o volume para o valor salvo
@@ -173,6 +210,9 @@ function desliga_som(entidade, tipo) {
 
     let pausa_som = get_element(entidade)
     let salva_volume = volume_interno
+
+    if (entidade == "faixa_musicas")
+        fecha_card_musica()
 
     regulador_som = setInterval(() => {
         if (volume_interno > 0.1) {
@@ -208,6 +248,9 @@ function desliga_som2(entidade, tipo) {
     let pausa_som = get_element(entidade)
     let salva_volume = volume_interno
 
+    if (entidade == "faixa_musicas")
+        fecha_card_musica()
+
     regulador_som2 = setInterval(() => {
         if (volume_interno > 0.1) {
 
@@ -241,6 +284,9 @@ function desliga_som3(entidade, tipo) {
 
     let pausa_som = get_element(entidade)
     let salva_volume = volume_interno
+
+    if (entidade == "faixa_musicas")
+        fecha_card_musica()
 
     regulador_som3 = setInterval(() => {
         if (volume_interno > 0.1) {

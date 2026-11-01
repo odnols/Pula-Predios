@@ -143,6 +143,8 @@
     "botao.exibicao": "Display",
     "botao.log": "View the changelog",
     "botao.recarregar_jogo": "Reload the game",
+    "botao.card_musica": "Show music card",
+    "botao.duracao_card_musica": "Card duration (seconds)",
     "historia.ligando_motores": "Starting the engines",
     "historia.textos": [
         "Receiving broadcast . . .",

@@ -120,12 +120,14 @@ function transitador(elemento, posicao_x, posicao_y) {
     // Verifica se está de noite para executar a função
     if (ambiente.libera_transitador) {
 
-        let img = get_element(elemento)
+        const sprite = typeof elemento == "string" ? null : elemento
+        let img = sprite ? lista_sprites[sprite.alvo] : get_element(elemento)
         let canvas = get_element("canvas")
         let ctxi = canvas.getContext("2d")
         let pat = ctxi.createPattern(img, 'repeat')
 
-        get_element(elemento).style.opacity = ambiente.opacidade_noite
+        if (!sprite)
+            img.style.opacity = ambiente.opacidade_noite
 
         const opacidade_anterior = ctxi.globalAlpha
         ctxi.globalAlpha = opacidade_anterior * ambiente.opacidade_noite
@@ -135,7 +137,10 @@ function transitador(elemento, posicao_x, posicao_y) {
         // Verifica se a Opacidade está correta e exibe na tela
         if (ambiente.opacidade_noite >= 0.0 && ambiente.opacidade_noite <= 1.0) {
             ctxi.beginPath()
-            ctxi.drawImage(img, posicao_x, posicao_y)
+            if (sprite)
+                ctxi.drawImage(img, sprite.x, sprite.y, sprite.Largura, sprite.Altura, posicao_x, posicao_y, sprite.Largura, sprite.Altura)
+            else
+                ctxi.drawImage(img, posicao_x, posicao_y)
             ctxi.fill()
             ctxi.closePath()
         }

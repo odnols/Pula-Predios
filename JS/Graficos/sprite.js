@@ -1,6 +1,7 @@
 const lista_sprites = {}
 
 function Carrega_sprite(alvo, x, y, Largura, Altura) {
+    this.alvo = alvo
     this.x = x
     this.y = y
     this.Largura = Largura
@@ -41,12 +42,8 @@ function desenha_sprite_transicao(nome, preset, x, y, espelhar_horizontal = fals
         ctx.restore()
     }
 
-    if (preset.sprite_noite && imagem_noite && imagem_noite.complete && imagem_noite.naturalWidth && opacidade_noite > 0) {
-        ctx.save()
-        ctx.globalAlpha *= opacidade_noite
-        preset.sprite_noite.desenha(x, y)
-        ctx.restore()
-    }
+    if (preset.sprite_noite && imagem_noite && imagem_noite.complete && imagem_noite.naturalWidth && opacidade_noite > 0)
+        transitador(preset.sprite_noite, x, y)
 
     if (espelhar_horizontal)
         ctx.restore()

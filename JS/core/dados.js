@@ -255,6 +255,15 @@ function carrega_dados() {
     else
         jogo.notificaConquista = parseInt(notificacoesConquistas)
 
+    const exibeCardMusica = localStorage.getItem("pul4Pr3dios-exibeCardMusica")
+    jogo.exibeCardMusica = exibeCardMusica == null ? 1 : parseInt(exibeCardMusica)
+
+    const duracaoCardMusicaSalva = localStorage.getItem("pul4Pr3dios-duracaoCardMusica")
+    const duracaoCardMusica = Number(duracaoCardMusicaSalva)
+    jogo.duracaoCardMusica = duracaoCardMusicaSalva != null && Number.isFinite(duracaoCardMusica)
+        ? Math.max(5, Math.min(15, Math.floor(duracaoCardMusica)))
+        : 7
+
     qualidadeGraficos = localStorage.getItem("pul4Pr3dios-qualidadeGrafica")
     if (qualidadeGraficos == null)
         jogo.qualidadeGrafica = 1
