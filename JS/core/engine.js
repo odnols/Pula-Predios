@@ -1309,8 +1309,15 @@ var labelTexto = {
             this.velocidade += jogo.gravidade
             this.y += this.velocidade
 
+            const liquido_atual = get_liquido_sob_jogador()
+
             // Descendo na água ou lava
-            if (get_liquido_sob_jogador()) {
+            if (liquido_atual) {
+                if (!this.mergulhou && this.y + this.altura >= chao.y && jogo.status != estados.ocioso) {
+                    this.mergulhou = true
+                    gera_impacto_jogador(liquido_atual)
+                }
+
                 if (this.mod_em_uso == 1 && this.y >= 433)
                     jogo.gravidade = .3
 
@@ -1318,6 +1325,7 @@ var labelTexto = {
                     jogador.chao_referencia = 650
                 // altera_chao_referencia(650) // Afunda o chão (em água / lava)
             } else if (this.mod_em_uso != 100) {
+                this.mergulhou = false
                 const progresso_saida = jogo.status == estados.ocioso
                     ? null
                     : get_progresso_saida_liquido()
@@ -1642,12 +1650,13 @@ var labelTexto = {
                     if ((jogador.mod == 1 || jogador.timer_mod < 1) && jogador.qtdMods > 0 && (jogo.status == estados.jogando || jogo.status == estados.tutorial)) {
 
                         if (obs.altura > 40 && obs.altura < 51) {
-                            pisao_neles()
+                            pisao_neles(obs.altura)
 
                             this.objetos.splice(i, 1)
                             tam--
                             i--
                         } else {
+                            gera_impacto_jogador("solido")
 
                             //  Subtrai pontos caso o jogador Bata em alguma construção
                             this.objetos.splice(i, 1)
@@ -1674,8 +1683,9 @@ var labelTexto = {
                         }
                     } else if (jogo.status == estados.jogando || jogo.status == estados.tutorial) {
                         if (obs.altura > 40 && obs.altura < 51)
-                            pisao_neles()
+                            pisao_neles(obs.altura)
                         else {
+                            gera_impacto_jogador("solido")
                             jogo.perdeu(0)
 
                             jogador.partida_predios_atropelados++
@@ -1859,13 +1869,15 @@ function desenha() {
 
     // Verifica se o jogador está ocioso e se a opção está ativa
     if (jogo.status == estados.jogar) {
-        if (!jogo.estadoOcioso && jogo.ociosidade && !jogo.ociosidadePausada && confirma_carregamento && !menus.estado_loja && !menus.estado_log) {
+        const historia_ativa = tela_historia && indice_historia < translations["historia.textos"].length
+
+        if (!jogo.estadoOcioso && jogo.ociosidade && !jogo.ociosidadePausada && confirma_carregamento && !menus.estado_loja && !menus.estado_log && !historia_ativa) {
 
             jogo.estadoOcioso = 1
             jogo.depuracao({ tls: "depuracao.ociosidade_iniciando", replace: jogo.tempoOcioso, color: "green" })
 
             contagemOcioso = setTimeout(() => {
-                if (jogo.status != estados.jogar || !jogo.ociosidade || jogo.ociosidadePausada || !confirma_carregamento || menus.estado_loja || menus.estado_log) {
+                if (jogo.status != estados.jogar || !jogo.ociosidade || jogo.ociosidadePausada ||                 !confirma_carregamento || menus.estado_loja || menus.estado_log || (tela_historia && indice_historia < translations["historia.textos"].length)) {
                     jogo.estadoOcioso = 0
                     contagemOcioso = null
                     return

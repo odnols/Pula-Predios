@@ -116,7 +116,10 @@ let canvas_sombra_jogador = null
 function desenha_sombra_jogador() {
     const areas = get_areas_lava()
     const x = jogador.x - 48
-    const y = 1000 - jogador.y
+    // Abaixo do nível do chão (afundando em água/lava) a sombra desce junto com o pé do jogador
+    const y_no_chao = chao.y - jogador.altura
+    const afundamento = Math.max(0, jogador.y - y_no_chao)
+    const y = 1000 - jogador.y + 2 * afundamento
 
     if (!areas.length) {
         spriteSombraJogador.desenha(x, y)
@@ -159,6 +162,97 @@ function get_progresso_saida_liquido() {
     return Math.max(0, Math.min(1, progresso))
 }
 
+const cores_impacto = {
+    agua: ["#31d8ff", "#13a8e8", "#b7f6ff", "#2270d4"],
+    lava: ["#ff4a12", "#ff8c1a", "#ffd45a", "#d52d0b"],
+    solido: ["#d9d9d9", "#a8a8a8", "#7d7d7d", "#c9b79c"]
+}
+
+let particulas_impacto = []
+let atualizacao_impacto = 0
+
+// tipo: "solido" (prédio/pisão) ou "agua"/"lava" (mergulho)
+function gera_impacto_jogador(tipo, altura_pisao) {
+    const cores = cores_impacto[tipo]
+    if (!cores) return
+
+    const liquido = tipo !== "solido"
+    const centro_x = jogador.x + jogador.largura / 2
+    const quantidade = liquido ? 36 : 28
+    const superficie = chao.y + 15
+
+    for (let i = 0; i < quantidade; i++) {
+        const lado = i % 2 ? 1 : -1
+        const base = {
+            liquido,
+            cor: cores[Math.floor(Math.random() * cores.length)],
+            tamanho: 2 + Math.floor(Math.random() * 4),
+            vida: 1,
+            pousada: false
+        }
+
+        if (liquido) {
+            // Esguicho de baixo para cima, para os dois lados do jogador
+            particulas_impacto.push({
+                ...base,
+                x: centro_x + lado * (jogador.largura / 2 + Math.random() * 10),
+                y: superficie,
+                velocidade_x: lado * (0.8 + Math.random() * 3.2) * (lado > 0 ? 2.2 : 1),
+                velocidade_y: -(4 + Math.random() * 7),
+                gravidade: 0.3 + Math.random() * 0.15,
+                superficie
+            })
+        } else {
+            // Fragmentos ao redor do jogador que caem até o chão
+            particulas_impacto.push({
+                ...base,
+                x: centro_x + (Math.random() - 0.5) * (jogador.largura + 30),
+                y: altura_pisao ? chao.y - altura_pisao + Math.random() * altura_pisao : jogador.y + Math.random() * jogador.altura,
+                velocidade_x: lado * (0.5 + Math.random() * 3.5) * (lado > 0 ? 2.2 : 1),
+                velocidade_y: -(1 + Math.random() * 5),
+                gravidade: 0.35 + Math.random() * 0.2,
+                superficie: chao.y + 5 + Math.random() * 12
+            })
+        }
+    }
+}
+
+function desenha_impacto_jogador() {
+    const agora = performance.now()
+    const delta = Math.min((agora - atualizacao_impacto) / (1000 / 60), 3)
+    atualizacao_impacto = agora
+
+    if (!particulas_impacto.length) return
+
+    opcoes.ctx.save()
+    particulas_impacto = particulas_impacto.filter((particula) => {
+        if (particula.pousada) {
+            particula.x -= jogo.velocidade * delta
+            particula.vida -= delta * 0.02
+        } else {
+            particula.x += particula.velocidade_x * delta - jogo.velocidade * delta
+            particula.y += particula.velocidade_y * delta
+            particula.velocidade_y += particula.gravidade * delta
+
+            if (particula.velocidade_y > 0 && particula.y >= particula.superficie) {
+                if (particula.liquido)
+                    return false
+
+                particula.y = particula.superficie
+                particula.pousada = true
+            }
+        }
+
+        if (particula.vida <= 0 || particula.x < -10) return false
+
+        opcoes.ctx.globalAlpha = Math.min(1, particula.vida)
+        opcoes.ctx.fillStyle = particula.cor
+        opcoes.ctx.fillRect(Math.round(particula.x), Math.round(particula.y), particula.tamanho, particula.tamanho)
+        return true
+    })
+    opcoes.ctx.restore()
+}
+
 function prepara_chao_pos_morte(tipo_liquido) {
     if (tipo_liquido !== "agua" && tipo_liquido !== "lava")
         return
@@ -183,17 +277,30 @@ function prepara_chao_pos_morte(tipo_liquido) {
     chao.efeito_explosao_liquido = {
         atualizacao: agora,
         deslocamento_chao: chao.xc,
-        particulas: Array.from({ length: quantidade }, () => ({
-            x: Math.random() * largura_total,
-            y: y + 15 + Math.random() * 12,
-            velocidade_x: (Math.random() - 0.5) * 5,
-            velocidade_y: -2 - Math.random() * 6,
-            gravidade: 0.16 + Math.random() * 0.16,
-            tamanho: 2 + Math.floor(Math.random() * 4),
-            vida: 0.65 + Math.random() * 0.35,
-            duracao: 700 + Math.random() * 650,
-            cor: cores[Math.floor(Math.random() * cores.length)]
-        }))
+        particulas: Array.from({ length: quantidade }, () => {
+            const particula = {
+                x: Math.random() * largura_total,
+                y: y + 15 + Math.random() * 12,
+                velocidade_x: (Math.random() - 0.5) * 5,
+                velocidade_y: -2 - Math.random() * 6,
+                gravidade: 0.16 + Math.random() * 0.16,
+                tamanho: 2 + Math.floor(Math.random() * 4),
+                vida: 0.65 + Math.random() * 0.35,
+                duracao: 700 + Math.random() * 650,
+                cor: cores[Math.floor(Math.random() * cores.length)]
+            }
+
+            // Partículas fora da tela já "estavam no ar": avança uma idade aleatória da trajetória
+            if (particula.x > opcoes.canvas.width) {
+                const frames_de_vida = particula.vida * particula.duracao / (1000 / 60)
+                const t = Math.random() * frames_de_vida * 0.9
+                particula.y += particula.velocidade_y * t + 0.5 * particula.gravidade * t * t
+                particula.velocidade_y += particula.gravidade * t
+                particula.vida -= t * (1000 / 60) / particula.duracao
+            }
+
+            return particula
+        })
     }
 }
 

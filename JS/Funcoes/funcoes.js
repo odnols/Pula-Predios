@@ -269,11 +269,12 @@ function novidadesLoja(indice) {
     }, 2000)
 }
 
-function pisao_neles() {
+function pisao_neles(altura_pisao) {
 
     let moeda_ev
 
     //  Efeito de Pisão
+    gera_impacto_jogador("solido", altura_pisao)
     jogador.qtdPulos++
     jogador.pula()
 

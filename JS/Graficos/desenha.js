@@ -34,6 +34,8 @@ function desenha_chao_frente() {
     for (let i = 0; i < valor.length; i++)
         desenha_sombra(valor[i], chao.y + 20)
 
+    desenha_impacto_jogador()
+
     if (jogo.status != estados.perdeu)
         if (jogador.chao_referencia != 650)
             desenha_sombra_jogador()

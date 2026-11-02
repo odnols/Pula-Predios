@@ -16,7 +16,10 @@ function applyTranslations() {
     })
 
     sincronizaBotoesConfigs(menus.estatistica_morte)
-    sincronizaConquistas()
+    // As estatísticas só existem depois de carrega_dados(), que também sincroniza as conquistas
+    if (typeof hist_distancia !== "undefined")
+        sincronizaConquistas()
+
     processaConquistasPendentesTraducao()
 }
 
