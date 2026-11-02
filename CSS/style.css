@@ -442,7 +442,7 @@ button {
 }
 
 #moeda_img,
-#mod_0 {
+#mod_flutuante {
     width: 9px;
     height: 9px;
     float: right;
@@ -458,7 +458,7 @@ button {
     background-image: url('../source/images/icons/moeda.png');
 }
 
-#mod_0 {
+#mod_flutuante {
     width: 26px;
     height: 26px;
     scale: calc(1.2);
@@ -2109,6 +2109,25 @@ img#trofeu {
 
 .card_musica.visivel .card_musica_icone {
     animation: icone_musica_flutua .7s ease-in-out infinite alternate;
+}
+
+#status_modo_card_musica_ocioso{
+    width: 150px !important;
+}
+
+.card_musica.modo_ocioso {
+    transition: opacity .25s ease, transform .25s ease,     visibility .25s, background .6s ease, border-color .6s ease, box-shadow .6s ease, top .6s ease;
+}
+
+.card_musica.modo_ocioso.esmaecido {
+        top: 1%;    background: rgba(18, 18, 18, 0.123);
+    border-color: rgba(255, 255, 255, .06);
+    border-left-color: rgba(49, 121, 103, .35);
+    box-shadow: none;
+}
+
+.card_musica.modo_ocioso.esvanecido .card_musica_progresso {
+    display: none;
 }
 
 @media (prefers-reduced-motion: reduce) {

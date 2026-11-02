@@ -281,7 +281,7 @@ function pisao_neles(altura_pisao) {
     jogador.partida_pisoes_pontuados++
     alteraValorEstatisticaPartida("quantidade_pisoes_partida", jogador.partida_pisoes_pontuados)
 
-    if (eventos.inicia_evento == 0)
+    if (eventos.inicia_evento == "cidade")
         if (jogo.dificuldade == 1)
             moeda_ev = 5
         else if (jogo.dificuldade == 2)
@@ -316,10 +316,10 @@ function pisao_neles(altura_pisao) {
     } else {
 
         bambam = Math.round(1 * Math.random())
-        if (bambam == 0 && eventos.evento == 2)
+        if (bambam == 0 && eventos.evento == "parque")
             executaSons("faixa_efeitos1", "efeitos", "batida.ogg", 2)
         else
-            executaSons("faixa_memes1", "memes", "bambam.ogg", 3)
+            executaSons("faixa_memes1", "memes", "bambam_1.ogg", 3)
     }
 
     // Jogador bateu em um pisão
@@ -348,21 +348,21 @@ function mostra_moedas(valor) {
 function finaliza_evento() {
 
     if (jogo.status == estados.jogando)
-        jogo.notifica({ tls: `evento.saindo_${eventos.id_eventos[eventos.inicia_evento]}`, color: "white" })
+        jogo.notifica({ tls: `evento.saindo_${eventos.inicia_evento}`, color: "white" })
 
     jogo.depuracao({ tls: "depuracao.evento_finalizado", color: "red" })
 
     // Selva de Concreto
-    if (eventos.evento == 0 && eventos.contador_tempo_evento >= 30 && jogo.dificuldade == 3) conquista("selva_concreto", 0)
+    if (eventos.evento == "cidade" && eventos.contador_tempo_evento >= 30 && jogo.dificuldade == 3) conquista("selva_concreto", 0)
 
-    if (eventos.evento == 1 && jogador.bonus_vezes_usados[1] > 0) {
+    if (eventos.evento == "agua" && jogador.bonus_vezes_usados[1] > 0) {
         ganha = 10 + Math.round(20 * Math.random())
 
         mostra_moedas(ganha)
     }
 
     if (eventos.evento == 2 && jogo.status == estados.jogando)
-        executaSons("faixa_memes2", "memes", "bambam2.ogg", 3)
+        executaSons("faixa_memes2", "memes", "bambam_4.ogg", 3)
 
     clearTimeout(eventos.tempo_evento)
     clearTimeout(eventos.ativa_evento)
@@ -455,7 +455,7 @@ function MsgPerdeu(causa) {
             } else {
                 const tipo_frase = eventos.evento_morte === null
                     ? "normal"
-                    : eventos.id_eventos[eventos.evento_morte]
+                    : eventos.evento_morte
                 const frases_evento = translations[`morte.frase_${tipo_frase}`]
                 const frases_morte = Array.isArray(frases_evento) && frases_evento.length > 0
                     ? frases_evento
@@ -1344,7 +1344,7 @@ function verifica_selecionado(local) {
 
 function altera_chao_referencia(valor_esperado) {
 
-    if (eventos.evento != 1 && eventos.evento != 3) return
+    if (eventos.evento != "agua" && eventos.evento != "lava") return
 
     chao.altera_referencia = 1
 

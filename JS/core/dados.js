@@ -245,6 +245,9 @@ function carrega_dados() {
     else
         jogo.claroesChuva = parseInt(claroesChuva)
 
+    const fumacaLiquidos = localStorage.getItem("pul4Pr3dios-fumacaLiquidos")
+    jogo.fumacaLiquidos = fumacaLiquidos == null ? 1 : parseInt(fumacaLiquidos)
+
     // Sincroniza a configuração para a Dificuldade do jogo
     dificuldadeJogo = localStorage.getItem("pul4Pr3dios-dificuldadeJogo")
     if (dificuldadeJogo == null)
@@ -297,46 +300,37 @@ function carrega_dados() {
     }
 
     loja_modsComprados = localStorage.getItem("pul4Pr3dios-modsComprados")
-    if (loja_modsComprados == null)
-        jogador.mods_comprados = [0, 0, 0, 0]
-    else {
-        // Recolhendo os valores e convertendo para um array utilizável
-        let indices = loja_modsComprados.split(",")
-
-        for (let i = 0; i < 4; i++) {
-            indices[i]
-
-            if (indices[i] != 1)
-                indices[i] = 0
-
-            jogador.mods_comprados[i] = parseInt(indices[i])
-        }
+    jogador.mods_comprados = { mais_tempo: 0, mais_vezes: 0, de_aco: 0, lunar: 0 }
+    if (loja_modsComprados != null) {
+        const valores = loja_modsComprados.split(",")
+        ids_modificadores_comprados.forEach((id, indice) => {
+            jogador.mods_comprados[id] = valores[indice] == 1 ? 1 : 0
+        })
     }
 
     // Sincronizando o mod que está ativo no momento
-    jogador.mod_em_uso = localStorage.getItem("pul4Pr3dios-modEmUso")
-    if (jogador.mod_em_uso == null)
-        jogador.mod_em_uso = 0
-    else
-        jogador.mod_em_uso = parseInt(jogador.mod_em_uso)
+    const modificador_salvo = localStorage.getItem("pul4Pr3dios-modEmUso")
+    // Converte os IDs numéricos gravados por versões anteriores.
+    const modificadores_anteriores = {
+        0: modificadores.flutuante,
+        1: modificadores.de_aco,
+        100: modificadores.lunar
+    }
+    jogador.mod_em_uso = modificadores_anteriores[modificador_salvo]
+        || (ids_modificadores_principais.includes(modificador_salvo) ? modificador_salvo : null)
+        || modificadores.flutuante
 
     // Sincroniza a quantidade de usos dos modificadores
     loja_modsCompradosUsados = localStorage.getItem("pul4Pr3dios-modsCompradosUsados")
-    if (loja_modsCompradosUsados == null)
-        jogador.mods_vezes_usados = [0, 0, 0, 0]
-    else {
-        // Recolhendo os valores e convertendo para um array utilizável
-        let indices = loja_modsCompradosUsados.split(",")
-
-        for (let i = 0; i < 4; i++) {
-            let valor = indices[i]
-
-            if (jogador.mods_comprados[i] == 1 && valor == 0)
+    jogador.mods_vezes_usados = { mais_tempo: 0, mais_vezes: 0, de_aco: 0, lunar: 0 }
+    if (loja_modsCompradosUsados != null) {
+        const valores = loja_modsCompradosUsados.split(",")
+        ids_modificadores_comprados.forEach((id, indice) => {
+            let valor = parseInt(valores[indice])
+            if (jogador.mods_comprados[id] == 1 && valor == 0)
                 valor = 5
-
-            if (jogador.mods_vezes_usados[i] == 0)
-                jogador.mods_vezes_usados[i] = parseInt(valor)
-        }
+            jogador.mods_vezes_usados[id] = Number.isFinite(valor) ? valor : 0
+        })
     }
 
     sincronizaModificadoresComprados(1)
@@ -579,12 +573,12 @@ function reseta() {
     eventos.inicia_evento = null
     eventos.transicoes_liquido_pendentes = []
 
-    if (jogador.mods_comprados[0] == 1)
+    if (jogador.mods_comprados[modificadores.mais_tempo] == 1)
         jogador.timer_mod = 10
     else
         jogador.timer_mod = 5
 
-    eventos.qtd_eventos = [8, 8, 8, 8]
+    eventos.qtd_eventos = { cidade: 8, agua: 8, parque: 8, lava: 8 }
     eventos.quantia_pixels_interno = 0
     get_element("completa_timer").style.width = "0px"
 

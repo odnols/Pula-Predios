@@ -259,17 +259,17 @@
     <!-- Itens comprados na loja -->
     <div id="icones_aquisicoes">
         <div id="icon_modificadores">
-            <img class="mods_icon mod_principal" id="mod_0" onMouseOver="toolTip_trad('principal.flutuante')"
+            <img class="mods_icon mod_principal" id="mod_flutuante" onMouseOver="toolTip_trad('principal.flutuante')"
                 onmouseout="toolTip()">
-            <img class="mods_icon mod_principal" id="mod_3" src="source/images/store/mods/aco.png"
+            <img class="mods_icon mod_principal" id="mod_de_aco" src="source/images/store/mods/aco.png"
                 onMouseOver="toolTip_trad('principal.de_aco')" onmouseout="toolTip()">
-            <img class="mods_icon mod_principal" id="mod_4" src="source/images/store/mods/lunar.png"
+            <img class="mods_icon mod_principal" id="mod_lunar" src="source/images/store/mods/lunar.png"
                 onMouseOver="toolTip_trad('principal.lunar')" onmouseout="toolTip()">
             <br>
 
-            <img class="mods_icon" id="mod_1" src="source/images/store/mods/mais_tempo.png"
+            <img class="mods_icon" id="mod_mais_tempo" src="source/images/store/mods/mais_tempo.png"
                 onMouseOver="toolTip_trad('principal.mais_tempo')" onmouseout="toolTip()">
-            <img class="mods_icon" id="mod_2" src="source/images/store/mods/mais_vezes.png"
+            <img class="mods_icon" id="mod_mais_vezes" src="source/images/store/mods/mais_vezes.png"
                 onMouseOver="toolTip_trad('principal.mais_vezes')" onmouseout="toolTip()">
         </div>
 
@@ -606,24 +606,27 @@
 
         <div id="config_grafc">
             <div class="itens_configs">
-                <h4 class="texto"><button id="status_tema_atual" class="button_opcoes"
+                <h4 class="texto" data-tooltip-i18n="dica.definir_tempo"><button id="status_tema_atual" class="button_opcoes"
                         onclick="alteraRelogio()"></button> : <span data-i18n="botao.definir_tempo"></span></h4>
 
-                <h4 class="texto" id="button_animacoes_cell"><button id="status_animacoes_block"
+                <h4 class="texto" id="button_animacoes_cell" data-tooltip-i18n="dica.animacoes"><button id="status_animacoes_block"
                         class="button_opcoes_block"><span data-i18n="menu.desativado"></span></button> : <span
                         data-i18n="botao.animacoes"></span></h4>
-                <h4 class="texto" id="button_animacoes_pc"><button id="status_animacoes" class="button_opcoes"
+                <h4 class="texto" id="button_animacoes_pc" data-tooltip-i18n="dica.animacoes"><button id="status_animacoes" class="button_opcoes"
                         onclick="alteraQualidadeGrafica()"></button> : <span data-i18n="botao.animacoes"></span></h4>
 
-                <h4 class="texto"><button id="status_chuva" class="button_opcoes" onclick="altera_chuva()"></button> :
+                <h4 class="texto" data-tooltip-i18n="dica.chuva"><button id="status_chuva" class="button_opcoes" onclick="altera_chuva()"></button> :
                     <span data-i18n="botao.chuva"></span>
                 </h4>
 
-                <h4 class="texto"><button id="status_claroes_chuva" class="button_opcoes"
+                <h4 class="texto" data-tooltip-i18n="dica.claroes_chuva"><button id="status_claroes_chuva" class="button_opcoes"
                         onclick="altera_claroes_chuva()"></button> : <span data-i18n="botao.claroes_chuva"></span></h4>
 
-                <h4 class="texto"><button id="status_parallax" class="button_opcoes"
+                <h4 class="texto" data-tooltip-i18n="dica.parallax"><button id="status_parallax" class="button_opcoes"
                         onclick="alteraParallax()"></button> : <span data-i18n="botao.parallax"></span></h4>
+
+                <h4 class="texto" data-tooltip-i18n="dica.fumaca_liquidos"><button id="status_fumaca_liquidos" class="button_opcoes"
+                        onclick="altera_fumaca_liquidos()"></button> : <span data-i18n="botao.fumaca_liquidos">Fumaça de lava e água</span></h4>
             </div>
         </div>
 
@@ -637,25 +640,25 @@
 
         <div id="config_gerais">
             <div class="itens_configs">
-                <h4 class="texto"><button id="status_dificuldade" class="button_opcoes"
+                <h4 class="texto" data-tooltip-i18n="dica.dificuldade"><button id="status_dificuldade" class="button_opcoes"
                         onclick="alteraDificuldade()"></button> : <span data-i18n="geral.dificuldade"></span></h4>
 
-                <h4 class="texto"><button id="status_tela_estatisti" class="button_opcoes"
+                <h4 class="texto" data-tooltip-i18n="dica.stats_morte"><button id="status_tela_estatisti" class="button_opcoes"
                         onclick="alteraEstadoEstatistica()"></button> : <span data-i18n="botao.stats_morte"></span>
                 </h4>
 
-                <h4 class="texto"><button id="status_estatisticas_nerds" class="button_opcoes"
+                <h4 class="texto" data-tooltip-i18n="dica.stats_nerds"><button id="status_estatisticas_nerds" class="button_opcoes"
                         onclick="alteraEstatisticasNerds()"></button> : <span data-i18n="botao.stats_nerds"></span>
                 </h4>
 
-                <h4 class="texto"><button id="status_conquistas_notifc" class="button_opcoes"
+                <h4 class="texto" data-tooltip-i18n="dica.notics_conquistas"><button id="status_conquistas_notifc" class="button_opcoes"
                         onclick="alteraNotificacoesConquistas()"></button> : <span
                         data-i18n="botao.notics_conquistas"></span></h4>
 
-                <h4 class="texto"><button id="status_modo_ocioso" class="button_opcoes"
+                <h4 class="texto" data-tooltip-i18n="dica.modo_ocioso"><button id="status_modo_ocioso" class="button_opcoes"
                         onclick="alteraEstadoOcioso()"></button> : <span data-i18n="botao.modo_ocioso"></span></h4>
 
-                <div class="opcao_som config_tempo_modo_ocioso">
+                <div class="opcao_som config_tempo_modo_ocioso" data-tooltip-i18n="dica.tempo_modo_ocioso">
                     <h3><label for="tempo_modo_ocioso" data-i18n="botao.tempo_modo_ocioso">Tempo para iniciar o modo
                             ocioso (segundos)</label></h3>
                     <input id="tempo_modo_ocioso" class="control_volume" type="range" min="5" max="30" step="1"
@@ -670,7 +673,7 @@
                 onclick="quadro_configura_sons()">X</button>
             <div id="controle_som">
                 <div class="controles_volume_som">
-                    <div class="opcao_som">
+                    <div class="opcao_som" data-tooltip-i18n="dica.volume_musica">
                         <h3><label for="volume_musica" data-i18n="botao.musicas"></label></h3>
                         <input class="control_volume" type="range" min="0" max="100" id="volume_musica"
                             data-volume-entity="1" oninput="atualiza_valor_volume(this); alteraVolume(this.value, 1)"
@@ -678,7 +681,7 @@
                         <output class="valor_volume" for="volume_musica">30%</output>
                     </div>
 
-                    <div class="opcao_som">
+                    <div class="opcao_som" data-tooltip-i18n="dica.volume_efeitos">
                         <h3><label for="volume_efeitos" data-i18n="botao.efeitos"></label></h3>
                         <input class="control_volume" type="range" min="0" max="100" id="volume_efeitos"
                             data-volume-entity="2" oninput="atualiza_valor_volume(this); alteraVolume(this.value, 2)"
@@ -686,7 +689,7 @@
                         <output class="valor_volume" for="volume_efeitos">50%</output>
                     </div>
 
-                    <div class="opcao_som">
+                    <div class="opcao_som" data-tooltip-i18n="dica.volume_memes">
                         <h3><label for="volume_memes">Memes</label></h3>
                         <input class="control_volume" type="range" min="0" max="100" id="volume_memes"
                             data-volume-entity="3" oninput="atualiza_valor_volume(this); alteraVolume(this.value, 3)"
@@ -696,13 +699,13 @@
                 </div>
 
                 <div class="preferencias_musica">
-                    <h4 class="texto estado_som">
+                    <h4 class="texto estado_som" data-tooltip-i18n="dica.estado_som">
                         <button id="status_volume_som" class="button_opcoes" onclick="alteraEstadoSom()"></button>
                         <span data-i18n="menu.sons"></span>
                     </h4>
 
                     <div class="selecao_musicas">
-                        <label class="selecao_musica_linha">
+                        <label class="selecao_musica_linha" data-tooltip-i18n="dica.tema_principal">
                             <select id="seleciona_tema" onchange="verifica_selecionado('seleciona_tema')">
                                 <option value="main_1">Tema 1</option>
                                 <option value="main_2">Tema 2</option>
@@ -714,7 +717,7 @@
                             <span data-i18n="botao.tema_principal">: Tema principal</span>
                         </label>
 
-                        <label class="selecao_musica_linha">
+                        <label class="selecao_musica_linha" data-tooltip-i18n="dica.tema_ocioso">
                             <select id="seleciona_ocioso" onchange="verifica_selecionado('seleciona_ocioso')">
                                 <option value="ocioso_1">Ocioso 1</option>
                                 <option value="ocioso_2">Ocioso 2</option>
@@ -729,12 +732,18 @@
                 </div>
 
                 <div class="preferencias_card_musica">
-                    <h4 class="texto estado_som">
+                    <h4 class="texto estado_som" data-tooltip-i18n="dica.card_musica">
                         <button id="status_card_musica" class="button_opcoes" onclick="alteraCardMusica()"></button>
                         <span data-i18n="botao.card_musica"></span>
                     </h4>
 
-                    <div class="opcao_som config_duracao_card_musica">
+                    <h4 class="texto estado_som" data-tooltip-i18n="dica.card_musica_modo_ocioso">
+                        <button id="status_modo_card_musica_ocioso" class="button_opcoes"
+                            onclick="alteraModoCardMusicaOcioso()"></button>
+                        <span data-i18n="botao.card_musica_modo_ocioso">Card no modo ocioso</span>
+                    </h4>
+
+                    <div class="opcao_som config_duracao_card_musica" data-tooltip-i18n="dica.duracao_card_musica">
                         <h3><label for="duracao_card_musica" data-i18n="botao.duracao_card_musica">Duração do card
                                 (segundos)</label></h3>
                         <input id="duracao_card_musica" class="control_volume" type="range" min="5" max="15" step="1"

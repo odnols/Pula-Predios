@@ -4,13 +4,13 @@ const presets_musicas = {
     "main_3.ogg": { nome: "Chemical Train", artista: "Admiral James T." },
     "main_4.ogg": { nome: "Swinging Priest", artista: "Admiral James T." },
     "main_5.ogg": { nome: "Big Boss", artista: "Admiral James T." },
-    "main_old.ogg": { nome: "Tema antigo", artista: "Não informado" },
+    "main_old.ogg": { nome: "The Ragtime Dance", artista: "Scott Joplin" },
     "ocioso_1.ogg": { nome: "Dakota", artista: "Admiral James T." },
     "ocioso_2.ogg": { nome: "New World", artista: "Admiral James T." },
     "ocioso_3.ogg": { nome: "Trailerpark", artista: "Admiral James T." },
     "ocioso_4.ogg": { nome: "Cricket Post", artista: "Admiral James T." },
     "ocioso_5.ogg": { nome: "Low Down", artista: "Admiral James T." },
-    "ocioso_old.ogg": { nome: "Ocioso antigo", artista: "Não informado" }
+    "ocioso_old.ogg": { nome: "Piano Concerto No. 21", artista: "Wolfgang Amadeus Mozart" }
 }
 
 const faixas_aleatorias_musica = {

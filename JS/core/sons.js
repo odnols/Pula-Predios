@@ -1,6 +1,8 @@
 // Escolhe o som que irá tocar ao iniciar, morrer e pegar moedas
 let temporizador_card_musica
 let animacao_progresso_card_musica
+let atualizacao_card_musica
+let audio_card_musica
 
 function get_volume_som(tipo) {
     const chave = tipo == 2
@@ -67,6 +69,10 @@ function carrega_configuracoes_som() {
     jogo.duracaoCardMusica = duracaoCardMusicaSalva != null && Number.isFinite(duracaoCardMusica)
         ? Math.max(5, Math.min(15, Math.floor(duracaoCardMusica)))
         : 7
+    const modoCardMusicaOcioso = localStorage.getItem("pul4Pr3dios-modoCardMusicaOcioso")
+    jogo.modoCardMusicaOcioso = ["esvanecido", "temporizado"].includes(modoCardMusicaOcioso)
+        ? modoCardMusicaOcioso
+        : "esvanecido"
     get_element("duracao_card_musica").value = jogo.duracaoCardMusica
     get_element("valor_duracao_card_musica").textContent = `${jogo.duracaoCardMusica}s`
 
@@ -120,6 +126,20 @@ function executaSons(elemento, localizacao, nomeSom, tipo) {
     }
 }
 
+const sons_entrada_eventos = {
+    cidade: ["entrada_cidade_1.ogg", "entrada_cidade_2.ogg"],
+    agua: ["entrada_agua_1.ogg", "entrada_agua_2.ogg", "entrada_agua_3.ogg"],
+    lava: ["entrada_lava_1.ogg", "entrada_lava_2.ogg"],
+    parque: ["entrada_parque_1.ogg"]
+}
+
+function toca_som_entrada_evento(evento) {
+    const sons = sons_entrada_eventos[evento]
+    if (!sons || !sons.length) return
+
+    executaSons("faixa_efeitos3", "eventos", sons[Math.floor(Math.random() * sons.length)], 3)
+}
+
 function executaSons2(elemento, localizacao, nomeSom, tipo) {
     const volume_interno = get_volume_som(tipo)
     if (jogo.estadoSom != 0 && volume_interno > 0) {
@@ -146,10 +166,47 @@ function exibe_card_musica(nomeSom) {
     get_element("nome_musica_atual").textContent = preset.nome
     get_element("artista_musica_atual").textContent = preset.artista
 
-    clearTimeout(temporizador_card_musica)
+    fecha_card_musica()
     if (animacao_progresso_card_musica)
         animacao_progresso_card_musica.cancel()
 
+    if (jogo.status == estados.ocioso) {
+        const audio = get_element("faixa_musicas")
+        card.classList.add("modo_ocioso", jogo.modoCardMusicaOcioso)
+
+        atualizacao_card_musica = () => {
+            if (jogo.status != estados.ocioso || audio !== audio_card_musica) {
+                fecha_card_musica()
+                return
+            }
+
+            const modo = jogo.modoCardMusicaOcioso
+            card.classList.toggle("esvanecido", modo == "esvanecido")
+            card.classList.toggle("temporizado", modo == "temporizado")
+            card.classList.toggle("esmaecido", modo == "esvanecido" && audio.currentTime >= 5)
+
+            const fim_proximo = Number.isFinite(audio.duration) && audio.currentTime >= audio.duration - 5
+            const tempo_esgotado = modo == "temporizado" && audio.currentTime >= jogo.duracaoCardMusica
+
+            if (fim_proximo || tempo_esgotado)
+                fecha_card_musica()
+        }
+        audio_card_musica = audio
+        audio.addEventListener("timeupdate", atualizacao_card_musica)
+
+        if (jogo.modoCardMusicaOcioso == "temporizado") {
+            animacao_progresso_card_musica = get_element("progresso_card_musica").animate(
+                [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
+                { duration: jogo.duracaoCardMusica * 1000, easing: "linear", fill: "forwards" }
+            )
+        }
+
+        card.classList.add("visivel")
+        card.setAttribute("aria-hidden", "false")
+        return
+    }
+
+    card.classList.remove("modo_ocioso", "esvanecido", "temporizado", "esmaecido")
     const duracao = jogo.duracaoCardMusica * 1000
     const progresso = get_element("progresso_card_musica")
     animacao_progresso_card_musica = progresso.animate(
@@ -165,6 +222,11 @@ function exibe_card_musica(nomeSom) {
 
 function fecha_card_musica() {
     clearTimeout(temporizador_card_musica)
+    if (audio_card_musica && atualizacao_card_musica)
+        audio_card_musica.removeEventListener("timeupdate", atualizacao_card_musica)
+    audio_card_musica = null
+    atualizacao_card_musica = null
+
     if (animacao_progresso_card_musica) {
         animacao_progresso_card_musica.cancel()
         animacao_progresso_card_musica = null
@@ -172,6 +234,7 @@ function fecha_card_musica() {
 
     const card = document.getElementById("card_musica")
     card.classList.remove("visivel")
+    card.classList.remove("modo_ocioso", "esvanecido", "temporizado", "esmaecido")
     card.setAttribute("aria-hidden", "true")
 }
 

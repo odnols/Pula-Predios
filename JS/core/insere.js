@@ -11,7 +11,7 @@ function insere_propsfundo() {
 
     let altura_media = 15, variacao = 35
 
-    if (eventos.evento == 0) {     // Área Densa
+    if (eventos.evento == "cidade") {
         altura_media = 40
         variacao = 50
     }
@@ -43,14 +43,19 @@ function insere_obj() {
     // Água ou Lava
     if (chao.pisos_c[1]?.type == 1 || chao.pisos_c[2]?.type == 1) return
 
+    // Mesmo durante eventos de água ou lava, o piso terrestre visível e o próximo comportam obstáculos
+    const pisos_terrestres = Boolean(get_tipo_piso_terrestre(chao.pisos_c[1]) && get_tipo_piso_terrestre(chao.pisos_c[2]))
+    const evento_liquido = eventos.evento == "agua" || eventos.evento == "lava"
+
     let altura_media = 40, variacao = 40
 
-    if (eventos.evento == 0) {     // Área Densa
+
+    if (eventos.evento == "cidade") {
         altura_media = 50
         variacao = 65
     }
 
-    if (eventos.evento == 2) { // Parque
+    if (eventos.evento == "parque") {
         altura_media = 15
         variacao = 35
     }
@@ -60,7 +65,12 @@ function insere_obj() {
     if (jogo.status != estados.jogando)
         altura_objeto = 20 + Math.round(30 * Math.random())
 
-    if (jogo.status == estados.jogando && (eventos.inicia_evento == 0 || eventos.inicia_evento == 2 || eventos.evento == null)) {
+    // No modo ocioso, ocasionalmente surge um prédio que o jogador pula sozinho
+    const obstaculo_pulavel = jogo.status == estados.ocioso && jogo.velocidade >= 8 && Math.random() < .05
+    if (obstaculo_pulavel)
+        altura_objeto = 62 + Math.round(18 * Math.random())
+
+    if (jogo.status == estados.jogando && (eventos.inicia_evento == "cidade" || eventos.inicia_evento == "parque" || eventos.evento == null)) {
         obstaculos.objetos.push({
             x: opcoes.largura,
             y: chao.y + 20,
@@ -68,13 +78,15 @@ function insere_obj() {
             altura: altura_objeto,
             nome: escolhe_objeto(altura_objeto, 2)
         })
-    } else if (eventos.evento == 0 || eventos.evento == 2 || eventos.evento == null && jogo.status != estados.tutorial) { // Diferente do Evento de Água ou lava
+    } else if (eventos.evento == "cidade" || eventos.evento == "parque" || eventos.evento == null && jogo.status != estados.tutorial
+        || evento_liquido && pisos_terrestres && jogo.status != estados.tutorial) {
         obstaculos.objetos.push({
             x: opcoes.largura,
             y: chao.y + 20,
-            largura: 10,
+            largura: obstaculo_pulavel ? 46 : 10,
             altura: altura_objeto,
-            nome: escolhe_objeto(altura_objeto, 2)
+            nome: escolhe_objeto(altura_objeto, 2),
+            pulo_ocioso: obstaculo_pulavel
         })
     }
 
@@ -85,6 +97,10 @@ function insere_obj() {
         obstaculos.tempoInsere = 40 + Math.round(20 * Math.random())
     else
         obstaculos.tempoInsere = 10 + Math.round(40 * Math.random())
+
+    // Mantém a área ao redor do prédio livre durante o pulo
+    if (obstaculo_pulavel)
+        obstaculos.tempoInsere = 70
 
     if (jogo.status == estados.jogando)
         obstaculos.qtdObjetos++
@@ -121,7 +137,7 @@ function insere_propsfrente() {
         nome: escolhe_objeto(altura_objeto, 1)
     })
 
-    if (eventos.evento == 0 || eventos.evento == 2) {
+    if (eventos.evento == "cidade" || eventos.evento == "parque") {
         if (jogo.velocidade < 30)
             propsfrente.tempoInsere = 30
         else
@@ -160,9 +176,9 @@ function escolhe_objeto(altura, local) {
         else
             return predios_baixos[0]
 
-    // Local = 1 (frente) && evento = 2 (parque) || evento = 0 (densidade)
-    if (local == 1 && eventos.evento == 2) return props[6]
-    if (local == 1 && eventos.evento == 0) return props[5]
+    // Local = 1 (frente) && evento = parque || evento = cidade
+    if (local == 1 && eventos.evento == "parque") return props[6]
+    if (local == 1 && eventos.evento == "cidade") return props[5]
 
     if (altura > 40 && altura < 51)
         if (local == 2) // Parque

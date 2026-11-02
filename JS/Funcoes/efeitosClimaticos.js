@@ -642,6 +642,17 @@ function sincronizaClaroesChuva() {
     get_element("status_claroes_chuva").innerHTML = translations[status]
 }
 
+function altera_fumaca_liquidos() {
+    jogo.fumacaLiquidos = jogo.fumacaLiquidos ? 0 : 1
+    localStorage.setItem("pul4Pr3dios-fumacaLiquidos", jogo.fumacaLiquidos)
+    sincronizaFumacaLiquidos()
+}
+
+function sincronizaFumacaLiquidos() {
+    const status = jogo.fumacaLiquidos ? "botao.ativado" : "botao.desativado"
+    get_element("status_fumaca_liquidos").innerHTML = translations[status]
+}
+
 function desenha_raio() {
     chuva.desenha_raio()
 }

@@ -89,7 +89,7 @@ function botoes(tecla) {
                     location.reload()
                     break
                 // case 50:
-                //     eventos.evento = 2
+                //     eventos.evento = "parque"
                 // break
                 // case 49:
                 //     if(jogo.velocidade > 0)
@@ -171,7 +171,7 @@ function clique(evento) {
                     // jogo.operador()
                 } else if (button == 3)
                     // ação para o botão direito 
-                    if ((jogador.timer_mod == 5 && !jogador.mods_comprados[1]) || jogador.timer_mod == 10)
+                    if ((jogador.timer_mod == 5 && !jogador.mods_comprados[modificadores.mais_vezes]) || jogador.timer_mod == 10)
                         jogador.modificador()
 
                 botoes(600)

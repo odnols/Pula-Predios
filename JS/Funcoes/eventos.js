@@ -22,22 +22,22 @@ function ajusta_cores(ajustadeira, funcao) {
 
     if (funcao == 1) { // Barra de Eventos
         switch (ajustadeira) {
-            case 0:
+            case "cidade":
                 get_element("temporizador").style.color = "#9a01c0"
                 get_element("barra_loading").style.animation = "brilha_bloco 1s"
                 get_element("completa_timer").style.backgroundColor = "rgba(154, 1, 192, .8)"
                 break
-            case 1:
+            case "agua":
                 get_element("temporizador").style.color = "Cyan"
                 get_element("barra_loading").style.animation = "brilha_bloco2 1s"
                 get_element("completa_timer").style.backgroundColor = "rgba(0, 255, 255, .8)"
                 break
-            case 2:
+            case "parque":
                 get_element("temporizador").style.color = "#14e11e"
                 get_element("barra_loading").style.animation = "brilha_bloco3 1s"
                 get_element("completa_timer").style.backgroundColor = "rgba(20, 225, 30, .8)"
                 break
-            case 3:
+            case "lava":
                 get_element("temporizador").style.color = "#ff3300"
                 get_element("barra_loading").style.animation = "brilha_bloco4 1s"
                 get_element("completa_timer").style.backgroundColor = "rgba(204, 51, 0, .8)"
@@ -77,7 +77,7 @@ function ajusta_cores(ajustadeira, funcao) {
 
 function pisca_barra() {
 
-    get_element("barra_loading").style.animation = `pisca_barra${eventos.inicia_evento} .5s`
+    get_element("barra_loading").style.animation = `pisca_barra_${eventos.inicia_evento} .5s`
 
     crono = setTimeout(() => {
         get_element("barra_loading").style.animation = "none"
@@ -105,7 +105,7 @@ function preenche_barra() {
             if (jogo.status == estados.jogando)
                 jogador.partida_tempo_em_eventos++
 
-            if (eventos.contador_tempo_interno == 2 && (eventos.evento == 1 || eventos.evento == 3))
+            if (eventos.contador_tempo_interno == 2 && (eventos.evento == "agua" || eventos.evento == "lava"))
                 chao.libera_volta_chao = [1, 1, 1] // Alterar o chão para grama novamente
         } else {
             clearInterval(cronometro)

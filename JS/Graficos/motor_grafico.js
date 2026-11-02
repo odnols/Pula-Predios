@@ -220,7 +220,7 @@ function anima_mod_flutua() {
             const sprites = [0, -26, -52, -78, -104]
             const posicao = ajusta_posicao_sprites(6, sprites)
 
-            get_element("mod_0").style.backgroundPosition = `${posicao}px -1px`
+            get_element("mod_flutuante").style.backgroundPosition = `${posicao}px -1px`
 
             if (posicao == 0) {
                 tFL = setTimeout(() => {

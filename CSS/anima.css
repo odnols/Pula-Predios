@@ -301,7 +301,7 @@
     }
 }
 
-@keyframes pisca_barra0 {
+@keyframes pisca_barra_cidade {
     0% {
         background-color: rgba(0, 0, 0, .7);
     }
@@ -315,7 +315,7 @@
     }
 }
 
-@keyframes pisca_barra1 {
+@keyframes pisca_barra_agua {
     0% {
         background-color: rgba(0, 0, 0, .7);
     }
@@ -329,7 +329,7 @@
     }
 }
 
-@keyframes pisca_barra2 {
+@keyframes pisca_barra_parque {
     0% {
         background-color: rgba(0, 0, 0, .7);
     }
@@ -343,7 +343,7 @@
     }
 }
 
-@keyframes pisca_barra3 {
+@keyframes pisca_barra_lava {
     0% {
         background-color: rgba(0, 0, 0, .7);
     }

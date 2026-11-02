@@ -7,6 +7,31 @@ const aparencias_jogador = [
     { sprite: spriteJogador_Verde, transicao: "jogador6_noite" }
 ]
 
+var modificadores = {
+    flutuante: "flutuante",
+    de_aco: "de_aco",
+    lunar: "lunar",
+    mais_tempo: "mais_tempo",
+    mais_vezes: "mais_vezes"
+}
+var ids_modificadores_comprados = [
+    modificadores.mais_tempo,
+    modificadores.mais_vezes,
+    modificadores.de_aco,
+    modificadores.lunar
+]
+var ids_modificadores_principais = [
+    modificadores.flutuante,
+    modificadores.de_aco,
+    modificadores.lunar
+]
+
+function serializa_modificadores_comprados(modificadores_comprados) {
+    return ids_modificadores_comprados
+        .map(id => modificadores_comprados[id])
+        .join(",")
+}
+
 function get_causa_morte_piso_visivel() {
     const liquido = get_liquido_sob_jogador()
     if (liquido === "agua") return 1
@@ -890,7 +915,7 @@ var labelTexto = {
         iniciando_evento: null,
         timer_inicio_evento: null,
         penultimo_evento: null,
-        qtd_eventos: [10, 10, 10, 10],
+        qtd_eventos: { cidade: 10, agua: 10, parque: 10, lava: 10 },
         quantia_pixels_interno: 0,
 
         tempo_evento: 0,
@@ -900,7 +925,7 @@ var labelTexto = {
         contador_tempo_evento_b: 0,
         contador_tempo_interno: 0,
 
-        id_eventos: ["cidade", "agua", "parque", "lava"],
+        tipos_eventos: ["cidade", "agua", "parque", "lava"],
 
         relogio_eventos: function () {
             //  Define o tempo que o próximo evento demorará para começar
@@ -937,10 +962,11 @@ var labelTexto = {
         eventos: function () {
             // Determina qual será o próximo evento aleatoriamente
             // Tempo aleatório que ficará ativo o evento
-            // this.inicia_evento = 1
-            this.inicia_evento = Math.round(3 * Math.random())
+            this.inicia_evento = this.tipos_eventos[
+                Math.round((this.tipos_eventos.length - 1) * Math.random())
+            ]
 
-            jogo.depuracao({ tls: "partida.comecando_evento", replace: translations[`evento.${this.id_eventos[this.inicia_evento]}`], color: "purple" })
+            jogo.depuracao({ tls: "partida.comecando_evento", replace: translations[`evento.${this.inicia_evento}`], color: "purple" })
 
             if (this.dificuldade != 0 && this.dificuldade != 3)
                 this.contador_tempo_evento = 15 + Math.round(15 * Math.random())
@@ -957,12 +983,12 @@ var labelTexto = {
             if (jogo.status == estados.jogando)
                 executaSons("faixa_efeitos1", "efeitos", "orb.ogg", 2)
 
-            if (this.qtd_eventos[this.inicia_evento] == 0 || this.inicia_evento == this.ultimo_evento || this.inicia_evento == this.penultimo_evento && (this.dificuldade == 0 && (this.inicia_evento == 1 || this.inicia_evento == 3))) {
+            if (this.qtd_eventos[this.inicia_evento] == 0 || this.inicia_evento == this.ultimo_evento || this.inicia_evento == this.penultimo_evento && (this.dificuldade == 0 && (this.inicia_evento == "agua" || this.inicia_evento == "lava"))) {
                 jogo.depuracao({ tls: "evento.pulado", color: "red" })
 
                 eventos.eventos()
             } else {
-                if (this.timer_mod < this.tempoMod && (this.inicia_evento == 1 || this.inicia_evento == 3)) {
+                if (this.timer_mod < this.tempoMod && (this.inicia_evento == "agua" || this.inicia_evento == "lava")) {
                     jogo.depuracao({ tls: "evento.pulado", color: "red" })
 
                     eventos.eventos()
@@ -971,11 +997,11 @@ var labelTexto = {
                     this.penultimo_evento = this.ultimo_evento
                     this.ultimo_evento = this.inicia_evento
 
-                    if ((evento_anterior == 1 && this.inicia_evento == 3)
-                        || (evento_anterior == 3 && this.inicia_evento == 1)) {
+                    if ((evento_anterior == "agua" && this.inicia_evento == "lava")
+                        || (evento_anterior == "lava" && this.inicia_evento == "agua")) {
                         this.transicoes_liquido_pendentes.push({
-                            origem: evento_anterior == 1 ? "agua" : "lava",
-                            destino: this.inicia_evento == 1 ? "agua" : "lava",
+                            origem: evento_anterior,
+                            destino: this.inicia_evento,
                             camadas: {
                                 cidade: true,
                                 montanha_fundo: true,
@@ -984,44 +1010,42 @@ var labelTexto = {
                         })
                     }
 
-                    if (this.inicia_evento == 0) {       // Evento da Cidade
-                        ajusta_cores(0, 1)
-                        this.qtd_eventos[0]--
+                    if (this.inicia_evento == "cidade") {
+                        ajusta_cores("cidade", 1)
+                        this.qtd_eventos.cidade--
 
                         if (jogo.status == estados.jogando)
                             jogador.partida_evento_cidade++
 
-                    } else if (this.inicia_evento == 1) { // Evento da Água
+                    } else if (this.inicia_evento == "agua") {
                         this.contador_tempo_evento = 12
                         this.iniciando_evento = 3
-                        ajusta_cores(1, 1)
-                        this.qtd_eventos[1]--
+                        ajusta_cores("agua", 1)
+                        this.qtd_eventos.agua--
 
                         if (jogo.status == estados.jogando)
                             jogador.partida_evento_agua++
 
-                    } else if (this.inicia_evento == 3) { // Evento da Lava
+                    } else if (this.inicia_evento == "lava") {
                         this.contador_tempo_evento = 12
                         this.iniciando_evento = 3
-                        ajusta_cores(3, 1)
-                        this.qtd_eventos[3]--
+                        ajusta_cores("lava", 1)
+                        this.qtd_eventos.lava--
 
                         if (jogo.status == estados.jogando)
                             jogador.partida_evento_lava++
 
-                    } else {                             // Evento do Parque
+                    } else {
                         this.contador_tempo_evento = 10 + Math.round(15 * Math.random())
-                        ajusta_cores(2, 1)
-                        this.qtd_eventos[2]--
+                        ajusta_cores("parque", 1)
+                        this.qtd_eventos.parque--
 
                         if (jogo.status == estados.jogando)
                             jogador.partida_evento_parque++
 
                         parque_event = setTimeout(() => {
-                            if (jogo.status == estados.jogando) {
+                            if (jogo.status == estados.jogando)
                                 jogo.notifica({ tls: "partida.parque", color: "#14e11e" })
-                                executaSons("faixa_efeitos3", "memes", "parque.ogg", 3)
-                            }
                         }, 3000)
                     }
 
@@ -1037,11 +1061,13 @@ var labelTexto = {
 
                     get_element("cronometro").innerHTML = this.contador_tempo_evento
 
-                    if (this.inicia_evento == 1 || this.inicia_evento == 3)
+                    if (this.inicia_evento == "agua" || this.inicia_evento == "lava")
                         preenche_barra()
 
-                    if (jogo.status == estados.jogando)
-                        jogo.notifica({ tls: `evento.entrando_${this.id_eventos[this.inicia_evento]}`, color: "white" })
+                    if (jogo.status == estados.jogando) {
+                        jogo.notifica({ tls: `evento.entrando_${this.inicia_evento}`, color: "white" })
+                        toca_som_entrada_evento(this.inicia_evento)
+                    }
 
                     this.timer_inicio_evento = setTimeout(() => {
                         this.timer_inicio_evento = null
@@ -1050,11 +1076,11 @@ var labelTexto = {
 
                         eventos.evento = eventos.inicia_evento
 
-                        if (eventos.inicia_evento == 0 || eventos.inicia_evento == 2) {
+                        if (eventos.inicia_evento == "cidade" || eventos.inicia_evento == "parque") {
                             preenche_barra()
                         }
 
-                        if (eventos.evento == 1 || eventos.evento == 3)
+                        if (eventos.evento == "agua" || eventos.evento == "lava")
                             eventos.contador_tempo_evento_b = 9
                         else
                             eventos.contador_tempo_evento_b = eventos.contador_tempo_evento
@@ -1099,9 +1125,11 @@ var labelTexto = {
         notificaConquista: 1,
         exibeCardMusica: 1,
         duracaoCardMusica: 5,
+        modoCardMusicaOcioso: "esvanecido",
         qualidadeGrafica: 1,
         chuvaAtiva: 1,
         claroesChuva: 1,
+        fumacaLiquidos: 1,
         parallax: 0,
 
         operador: function () {
@@ -1293,9 +1321,9 @@ var labelTexto = {
         skin_anterior: 0,
         tempoMod: 5,
         skins_compradas: [0, 0, 0, 0, 0, 0, 0, 1],
-        mod_em_uso: 0, // 0 - Flutua, 1 - De Aço, 100 - Gravidade Lunar
-        mods_comprados: [0, 0, 0, 0],
-        mods_vezes_usados: [0, 0, 0, 0],
+        mod_em_uso: modificadores.flutuante,
+        mods_comprados: { mais_tempo: 0, mais_vezes: 0, de_aco: 0, lunar: 0 },
+        mods_vezes_usados: { mais_tempo: 0, mais_vezes: 0, de_aco: 0, lunar: 0 },
 
         bonus_comprados: [0, 0, 0],
         bonus_vezes_usados: [0, 0, 0],
@@ -1315,16 +1343,17 @@ var labelTexto = {
             if (liquido_atual) {
                 if (!this.mergulhou && this.y + this.altura >= chao.y && jogo.status != estados.ocioso) {
                     this.mergulhou = true
-                    gera_impacto_jogador(liquido_atual)
+                    if (this.mod_em_uso != modificadores.flutuante || this.mod != 1)
+                        gera_impacto_jogador(liquido_atual)
                 }
 
-                if (this.mod_em_uso == 1 && this.y >= 433)
+                if (this.mod_em_uso == modificadores.de_aco && this.y >= 433)
                     jogo.gravidade = .3
 
-                if (jogo.status != estados.ocioso && this.mod_em_uso != 100 && !chao.altera_referencia)
+                if (jogo.status != estados.ocioso && this.mod_em_uso != modificadores.lunar && !chao.altera_referencia)
                     jogador.chao_referencia = 650
                 // altera_chao_referencia(650) // Afunda o chão (em água / lava)
-            } else if (this.mod_em_uso != 100) {
+            } else if (this.mod_em_uso != modificadores.lunar) {
                 this.mergulhou = false
                 const progresso_saida = jogo.status == estados.ocioso
                     ? null
@@ -1336,7 +1365,7 @@ var labelTexto = {
                 jogo.gravidade = 1.6
             }
 
-            if (this.mod_em_uso == 0 && this.mod == 1)
+            if (this.mod_em_uso == modificadores.flutuante && this.mod == 1)
                 this.y -= this.velocidade
 
             if (jogo.status != estados.perdeu) {
@@ -1356,12 +1385,13 @@ var labelTexto = {
         pula: function () {
             if (canvas_pausado) return
 
-            if (this.qtdPulos > 0 && (this.mod_em_uso == 100 || this.mod != 1)) {
+            if (this.qtdPulos > 0 && (this.mod_em_uso == modificadores.lunar || this.mod != 1)) {
                 this.pula_effect = 1 + Math.round(2 * Math.random())
-                executaSons2("faixa_efeitos2", "efeitos", `pulo${this.pula_effect}.ogg`, 2)
+
+                executaSons2("faixa_efeitos2", "efeitos", `pulo_${this.pula_effect}.ogg`, 2)
 
                 // A força lunar só vale enquanto o modificador estiver ativo
-                const lunar_ativo = this.mod_em_uso == 100 && this.mod == 1
+                const lunar_ativo = this.mod_em_uso == modificadores.lunar && this.mod == 1
                 this.forcaDoPulo = lunar_ativo ? 18 : 23.6
                 this.velocidade = -this.forcaDoPulo
                 this.qtdPulos--
@@ -1377,6 +1407,18 @@ var labelTexto = {
             if (this.qtdPulos == 0) conquista("pulo_esgotado", 0)
         },
 
+        // Pulo automático do modo ocioso: não consome pulos nem altera estatísticas
+        pula_ocioso: function () {
+            const no_chao = this.velocidade == 0 && this.y >= this.chao_referencia - this.altura - 1
+            if (canvas_pausado || !no_chao || this.mod == 1) return false
+
+            this.pula_effect = 1 + Math.round(2 * Math.random())
+
+            this.forcaDoPulo = 23.6
+            this.velocidade = -this.forcaDoPulo
+            return true
+        },
+
         modificador: function () {
             if (canvas_pausado) return
 
@@ -1389,14 +1431,14 @@ var labelTexto = {
                 this.qtdMods--
                 get_element("qtdMods").innerHTML = this.qtdMods
 
-                if (this.qtdMods == 0 && this.mod_em_uso == 0) {
+                if (this.qtdMods == 0 && this.mod_em_uso == modificadores.flutuante) {
                     get_element("qtdMods").style.color = "red"
 
                     conquista("milhas_aereas", 0) // Clube de milhas aéreas
                 }
 
                 // Modificador de Gravidade Lunar
-                if (this.mod_em_uso == 100) {
+                if (this.mod_em_uso == modificadores.lunar) {
 
                     conquista("baixa_gravidade", 0)
                     jogo.gravidade = 0.6
@@ -1405,7 +1447,7 @@ var labelTexto = {
                 }
 
                 // Decide qual será o modificador que será usado
-                if (this.mod_em_uso == 0) { // Flutuando
+                if (this.mod_em_uso == modificadores.flutuante) {
                     executaSons("faixa_efeitos3", "efeitos", "flutua.ogg", 2)
 
                     // Animação de fogo embaixo do prédio
@@ -1418,17 +1460,17 @@ var labelTexto = {
                 }
 
                 // De Aço
-                if (this.mod_em_uso == 1)
+                if (this.mod_em_uso == modificadores.de_aco)
                     enferruja()
 
-                if (this.mod_em_uso != 100) {
+                if (this.mod_em_uso != modificadores.lunar) {
                     modificador_timer = setTimeout(() => {
                         jogador.mod = 1    // Flutua
                         clearTimeout(modificador_timer)
                     }, 200)
                 }
 
-                if (this.mod_em_uso == 1) {    // Modificador: De Aço
+                if (this.mod_em_uso == modificadores.de_aco) {
                     modificador_timer_som = setInterval(() => {
                         if (jogador.y >= 432) {
                             executaSons2("faixa_efeitos3", "efeitos", "bigorna.ogg", 2)
@@ -1450,11 +1492,11 @@ var labelTexto = {
                 if (jogador.timer_mod > 0 && jogador.mod == 1) {
                     jogador.timer_mod--
 
-                    if (jogador.mod_em_uso == 0)
+                    if (jogador.mod_em_uso == modificadores.flutuante)
                         jogador.flutua()
 
                     // Verifica se o modificador é de flutuação e conta o tempo
-                    if (jogador.mod_em_uso == 0)
+                    if (jogador.mod_em_uso == modificadores.flutuante)
                         jogador.partida_tempo_flutuando++
 
                     if ((jogador.partida_tempo_flutuando + parseInt(localStorage.getItem("pul4Pr3dios-tempoFlutuando"))) >= 500)
@@ -1491,7 +1533,7 @@ var labelTexto = {
             get_element("qtdMods").style.display = "none"
 
             // Restaura a skin ao escolhido anteriormente depois do modificador
-            if (jogador.mod_em_uso == 1) {
+            if (jogador.mod_em_uso == modificadores.de_aco) {
                 anim_indices[5] = 0
                 limpa_ferrugem()
             }
@@ -1514,7 +1556,7 @@ var labelTexto = {
         desenha: function () {
 
             // Desenha o fogo embaixo do prédio ao flutuar
-            if (this.mod_em_uso == 0 && this.mod == 1)
+            if (this.mod_em_uso == modificadores.flutuante && this.mod == 1)
                 spriteAdereco_combustao.desenha(this.x - 2, this.y + 145)
 
             const aparencia = aparencias_jogador[this.skin]
@@ -1623,7 +1665,7 @@ var labelTexto = {
 
         atualiza: function () {
 
-            if (jogador.mod == 1 && jogador.mod_em_uso == 100 && jogador.y >= 432 && chao.pisos_c[2]?.type == 1)
+            if (jogador.mod == 1 && jogador.mod_em_uso == modificadores.lunar && jogador.y >= 432 && chao.pisos_c[2]?.type == 1)
                 jogador.pula()
 
             if (
@@ -1646,6 +1688,13 @@ var labelTexto = {
 
                 obs.x -= jogo.velocidade
 
+                if (obs.pulo_ocioso && !obs.pulou && jogo.status == estados.ocioso) {
+                    const distancia = obs.x - (jogador.x + jogador.largura)
+
+                    if (distancia > 0 && distancia <= jogo.velocidade * 7 && jogador.pula_ocioso())
+                        obs.pulou = true
+                }
+
                 if (jogador.x < obs.x + obs.largura && jogador.x + jogador.largura >= obs.x && jogador.y + jogador.altura >= chao.y - obs.altura && obs.altura > 40) {
                     if ((jogador.mod == 1 || jogador.timer_mod < 1) && jogador.qtdMods > 0 && (jogo.status == estados.jogando || jogo.status == estados.tutorial)) {
 
@@ -1665,7 +1714,7 @@ var labelTexto = {
                             jogador.contador_mortes++
 
                             if ((jogo.status == estados.jogando || jogo.status == estados.tutorial) && obs.altura > 60) {
-                                if (jogador.mod_em_uso != 1) {
+                                if (jogador.mod_em_uso != modificadores.de_aco) {
                                     jogo.notifica({ tls: "partida.nao_atropele", color: "red" })
                                     soma_pontuacao(-2)
                                 } else {
@@ -1877,7 +1926,7 @@ function desenha() {
             jogo.depuracao({ tls: "depuracao.ociosidade_iniciando", replace: jogo.tempoOcioso, color: "green" })
 
             contagemOcioso = setTimeout(() => {
-                if (jogo.status != estados.jogar || !jogo.ociosidade || jogo.ociosidadePausada ||                 !confirma_carregamento || menus.estado_loja || menus.estado_log || (tela_historia && indice_historia < translations["historia.textos"].length)) {
+                if (jogo.status != estados.jogar || !jogo.ociosidade || jogo.ociosidadePausada || !confirma_carregamento || menus.estado_loja || menus.estado_log || (tela_historia && indice_historia < translations["historia.textos"].length)) {
                     jogo.estadoOcioso = 0
                     contagemOcioso = null
                     return
@@ -1898,7 +1947,7 @@ function desenha() {
             eventos.seguraEventoOcioso = 1
 
             eventos.relogio_eventos()
-            eventos.qtd_eventos = [99, 99, 99, 99]
+            eventos.qtd_eventos = { cidade: 99, agua: 99, parque: 99, lava: 99 }
 
             if (jogo.velocidade == 0 && dispositivo >= 1366)
                 acelera_predio()

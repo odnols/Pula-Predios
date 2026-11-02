@@ -360,7 +360,7 @@ function insere_piso(array, local) {
     const y = get_y_piso(local)
     const tipo_destino = jogo.bioma == 0 ? "grama" : "areia"
     const nome_piso_destino = tipo_destino == "grama" ? "chao_noite" : "areia_noite"
-    const piso_padrao = (eventos.evento !== 1 && eventos.evento !== 3) || (local == 2 && jogo.status == estados.ocioso)
+    const piso_padrao = (eventos.evento !== "agua" && eventos.evento !== "lava") || (local == 2 && jogo.status == estados.ocioso)
     let tipo_anterior = null
 
     if (piso_padrao) {
@@ -393,7 +393,7 @@ function insere_piso(array, local) {
     // Impede que lava e água aparecam no piso do jogador, no modo ocioso
     if (local == 2 && jogo.status == estados.ocioso) return
 
-    if (eventos.evento == 1) {
+    if (eventos.evento == "agua") {
         array.push({
             nome: 'agua_noite',
             type: 1,
@@ -405,7 +405,7 @@ function insere_piso(array, local) {
         })
     }
 
-    if (eventos.evento == 3) {
+    if (eventos.evento == "lava") {
         array.push({
             nome: 'lava',
             type: 1,

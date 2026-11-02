@@ -6,6 +6,8 @@ var background_predios = {
     ultima_atualizacao_nevoa: 0,
     fumaca: [],
     ultima_fumaca: 0,
+    quadro_fumaca: 0,
+    fumaca_atualizada: -1,
     ilhas_por_camada: {
         montanha_fundo: null,
         cidade: null
@@ -50,9 +52,9 @@ var background_predios = {
 
         let destino = transicao_programada
             ? transicao_programada.destino
-            : eventos.evento == 3
+            : eventos.evento == "lava"
                 ? (jogo.bioma == 1 ? "lava" : "terra")
-                : (eventos.evento == 1 || jogo.bioma == 1 ? "agua" : "terra")
+                : (eventos.evento == "agua" || jogo.bioma == 1 ? "agua" : "terra")
 
         let transicao_ilha = null
         if (ilha?.fase == "entrada") {
@@ -268,6 +270,7 @@ var background_predios = {
     },
 
     atualiza: function () {
+        this.quadro_fumaca++
         this.montanhas[1] -= jogo.velocidade * 0.15 // Montanhas fundo
         this.predios -= jogo.velocidade * 0.2
         this.montanhas[0] -= jogo.velocidade * 0.25 // Montanhas frente
@@ -324,7 +327,7 @@ var background_predios = {
     },
 
     atualiza_fumaca_liquidos: function (camadas) {
-        if (jogo.qualidadeGrafica == 0) {
+        if (jogo.qualidadeGrafica == 0 || !jogo.fumacaLiquidos) {
             this.fumaca = []
             this.ultima_fumaca = 0
             return
@@ -332,10 +335,15 @@ var background_predios = {
 
         const ctx = opcoes.ctx
         const agora = Date.now()
-        const delta = this.ultima_fumaca
+        // Na morte o fundo é desenhado duas vezes no mesmo quadro: só a primeira chamada avança a fumaça
+        const avanca = this.fumaca_atualizada !== this.quadro_fumaca
+        this.fumaca_atualizada = this.quadro_fumaca
+        const delta = this.ultima_fumaca && avanca
             ? Math.min(agora - this.ultima_fumaca, 100)
             : 0
-        this.ultima_fumaca = agora
+        if (avanca)
+            this.ultima_fumaca = agora
+        const velocidade_quadro = avanca ? jogo.velocidade : 0
 
         // Da camada mais distante para a mais próxima, terminando no piso de fundo
         const ordem = ["montanha_fundo", "cidade", "montanha_frente", "piso_fundo"]
@@ -387,7 +395,7 @@ var background_predios = {
             // Fora da tela à direita, só acompanha a rolagem até entrar
             const aguardando = particula.x > opcoes.canvas.width
             if (aguardando) {
-                particula.x -= jogo.velocidade * particula.fator
+                particula.x -= velocidade_quadro * particula.fator
                 return true
             }
 
@@ -395,7 +403,7 @@ var background_predios = {
             const vida = particula.idade / particula.duracao
             if (vida >= 1) return false
 
-            particula.x += particula.deriva * delta - jogo.velocidade * particula.fator
+            particula.x += particula.deriva * delta - velocidade_quadro * particula.fator
             particula.y -= particula.velocidade_y * delta
 
             const tamanho = Math.round(particula.tamanho * (1 + vida * 0.8))

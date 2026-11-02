@@ -11,6 +11,7 @@ function sincronizaBotoesConfigs(valor) {
     sincronizaQualidadeGrafica()
     sincronizaChuva()
     sincronizaClaroesChuva()
+    sincronizaFumacaLiquidos()
     sincronizaRelogio()
 }
 
@@ -188,8 +189,26 @@ function sincronizaCardMusica() {
     get_element("status_card_musica").innerHTML = jogo.exibeCardMusica
         ? translations["botao.ativado"]
         : translations["botao.desativado"]
+    const textos_modo_card = { esvanecido: "Esvaneio", temporizado: "Temporizado" }
+    get_element("status_modo_card_musica_ocioso").innerHTML =
+        translations[`botao.card_musica_${jogo.modoCardMusicaOcioso}`] || textos_modo_card[jogo.modoCardMusicaOcioso]
     get_element("duracao_card_musica").value = jogo.duracaoCardMusica
     get_element("valor_duracao_card_musica").textContent = `${jogo.duracaoCardMusica}s`
+}
+
+function alteraModoCardMusicaOcioso() {
+    executaSons2("faixa_efeitos1", "efeitos", "hat.ogg", 2)
+
+    jogo.modoCardMusicaOcioso = jogo.modoCardMusicaOcioso == "esvanecido"
+        ? "temporizado"
+        : "esvanecido"
+    localStorage.setItem("pul4Pr3dios-modoCardMusicaOcioso", jogo.modoCardMusicaOcioso)
+    if (jogo.status == estados.ocioso) {
+        const card = get_element("card_musica")
+        card.classList.remove("esvanecido", "temporizado")
+        card.classList.add(jogo.modoCardMusicaOcioso)
+    }
+    sincronizaCardMusica()
 }
 
 function alteraDuracaoCardMusica(valor) {
@@ -368,52 +387,52 @@ function alteraTempoOcioso(valor) {
 function sincronizaModificadoresComprados(requisicao_auto) {
 
     // Modificadores ativos ( + Tempo )
-    if (jogador.mods_comprados[0] == 1) {
-        get_element("mod_1").style.display = "block"
+    if (jogador.mods_comprados[modificadores.mais_tempo] == 1) {
+        get_element("mod_mais_tempo").style.display = "block"
 
         jogador.tempoMod = 10
     } else {
-        get_element("mod_1").style.display = "none"
+        get_element("mod_mais_tempo").style.display = "none"
         jogador.tempoMod = 5
         jogador.timer_mod = 5
-        jogador.mods_comprados[0] = 0
+        jogador.mods_comprados[modificadores.mais_tempo] = 0
     }
 
     // Quantidade de Modificadores ativos por partida ( + Vezes )
-    if (jogador.mods_comprados[1] == 1)
-        get_element("mod_2").style.display = "block"
+    if (jogador.mods_comprados[modificadores.mais_vezes] == 1)
+        get_element("mod_mais_vezes").style.display = "block"
     else
-        get_element("mod_2").style.display = "none"
+        get_element("mod_mais_vezes").style.display = "none"
 
     // Modificador: Flutua
-    if (jogador.mod_em_uso == 0)
-        get_element("mod_0").style.display = "block"
+    if (jogador.mod_em_uso == modificadores.flutuante)
+        get_element("mod_flutuante").style.display = "block"
     else
-        get_element("mod_0").style.display = "none"
+        get_element("mod_flutuante").style.display = "none"
 
     // Modificador: De Aço
-    if (jogador.mod_em_uso == 1)
-        get_element("mod_3").style.display = "block"
+    if (jogador.mod_em_uso == modificadores.de_aco)
+        get_element("mod_de_aco").style.display = "block"
     else
-        get_element("mod_3").style.display = "none"
+        get_element("mod_de_aco").style.display = "none"
 
     // Modificador: Lunar
-    if (jogador.mod_em_uso == 100)
-        get_element("mod_4").style.display = "block"
+    if (jogador.mod_em_uso == modificadores.lunar)
+        get_element("mod_lunar").style.display = "block"
     else
-        get_element("mod_4").style.display = "none"
+        get_element("mod_lunar").style.display = "none"
 
-    localStorage.setItem("pul4Pr3dios-modsComprados", jogador.mods_comprados)
+    localStorage.setItem("pul4Pr3dios-modsComprados", serializa_modificadores_comprados(jogador.mods_comprados))
 
     if (requisicao_auto == 0)
-        localStorage.setItem("pul4Pr3dios-modsCompradosUsados", jogador.mods_vezes_usados)
+        localStorage.setItem("pul4Pr3dios-modsCompradosUsados", serializa_modificadores_comprados(jogador.mods_vezes_usados))
 
     sincronizaQtdModificadores()
 }
 
 function sincronizaQtdModificadores() {
 
-    if (jogador.mods_comprados[1] == 0) {
+    if (jogador.mods_comprados[modificadores.mais_vezes] == 0) {
         if (jogo.dificuldade == 0 || jogo.dificuldade == 1) // Fácil
             jogador.qtdMods = 5
         else if (jogo.dificuldade == 2) // Díficil
@@ -429,7 +448,7 @@ function sincronizaQtdModificadores() {
             jogador.qtdMods = 6
     }
 
-    if (jogador.mods_comprados[0] == 1)
+    if (jogador.mods_comprados[modificadores.mais_tempo] == 1)
         jogador.timer_mod = 10
 
     get_element("qtdMods").innerHTML = jogador.qtdMods
@@ -438,47 +457,53 @@ function sincronizaQtdModificadores() {
 
 function sincronizaVezesModificadoresComprados() {
 
-    for (let i = 0; i < 2; i++) {
-        if (jogador.mods_vezes_usados[i] > 0)
-            jogador.mods_vezes_usados[i]--
+    for (const id of [modificadores.mais_tempo, modificadores.mais_vezes]) {
+        if (jogador.mods_vezes_usados[id] > 0)
+            jogador.mods_vezes_usados[id]--
 
-        if (jogador.mods_vezes_usados[i] == 0)
-            jogador.mods_comprados[i] = 0
+        if (jogador.mods_vezes_usados[id] == 0)
+            jogador.mods_comprados[id] = 0
     }
 
     // Subtrai a qtd de usos caso o modificador esteja ativo
-    if (jogador.mods_vezes_usados[2] > 0 && jogador.mod_em_uso == 1) {
-        jogador.mods_comprados[2] = 1
-        jogador.mods_vezes_usados[2]--
+    if (jogador.mods_vezes_usados[modificadores.de_aco] > 0 && jogador.mod_em_uso == modificadores.de_aco) {
+        jogador.mods_comprados[modificadores.de_aco] = 1
+        jogador.mods_vezes_usados[modificadores.de_aco]--
     }
 
-    if (jogador.mods_vezes_usados[3] > 0 && jogador.mod_em_uso == 100) {
-        jogador.mods_comprados[3] = 1
-        jogador.mods_vezes_usados[3]--
+    if (jogador.mods_vezes_usados[modificadores.lunar] > 0 && jogador.mod_em_uso == modificadores.lunar) {
+        jogador.mods_comprados[modificadores.lunar] = 1
+        jogador.mods_vezes_usados[modificadores.lunar]--
     }
 
     // Esgota o uso dos modificadores principais comprados
-    if (jogador.mods_vezes_usados[2] == 0 && jogador.mod_em_uso == 1) {
-        jogador.mods_comprados[2] = 0
-        jogador.mod_em_uso = 0
+    if (jogador.mods_vezes_usados[modificadores.de_aco] == 0 && jogador.mod_em_uso == modificadores.de_aco) {
+        jogador.mods_comprados[modificadores.de_aco] = 0
+        jogador.mod_em_uso = modificadores.flutuante
     }
 
-    if (jogador.mods_vezes_usados[3] == 0 && jogador.mod_em_uso == 100) {
-        jogador.mods_comprados[3] = 0
-        jogador.mod_em_uso = 0
+    if (jogador.mods_vezes_usados[modificadores.lunar] == 0 && jogador.mod_em_uso == modificadores.lunar) {
+        jogador.mods_comprados[modificadores.lunar] = 0
+        jogador.mod_em_uso = modificadores.flutuante
     }
 
-    if (jogador.mods_vezes_usados[0] == 0 || jogador.mods_vezes_usados[1] == 0 || jogador.mods_vezes_usados[2] == 0)
+    if (jogador.mods_vezes_usados[modificadores.mais_tempo] == 0
+        || jogador.mods_vezes_usados[modificadores.mais_vezes] == 0
+        || jogador.mods_vezes_usados[modificadores.de_aco] == 0)
         sincronizaModificadoresComprados(0)
 
     if (jogo.estatisticasNerds) {
         jogo.depuracao({ tls: "modificador.ativo_momento", replace: jogador.mod_em_uso, color: "orange" })
-        jogo.depuracao({ tls: "modificador.em_partidas", replace: jogador.mods_vezes_usados, color: "orange" })
+        jogo.depuracao({
+            tls: "modificador.em_partidas",
+            replace: ids_modificadores_comprados.map(id => jogador.mods_vezes_usados[id]).join(", "),
+            color: "orange"
+        })
     }
 
     localStorage.setItem("pul4Pr3dios-modEmUso", jogador.mod_em_uso)
-    localStorage.setItem("pul4Pr3dios-modsComprados", jogador.mods_comprados)
-    localStorage.setItem("pul4Pr3dios-modsCompradosUsados", jogador.mods_vezes_usados)
+    localStorage.setItem("pul4Pr3dios-modsComprados", serializa_modificadores_comprados(jogador.mods_comprados))
+    localStorage.setItem("pul4Pr3dios-modsCompradosUsados", serializa_modificadores_comprados(jogador.mods_vezes_usados))
 }
 
 function sincroniza_bonus(requisicao_auto) {
