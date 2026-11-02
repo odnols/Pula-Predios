@@ -1,5 +1,80 @@
 // Escolhe o som que irá tocar ao iniciar, morrer e pegar moedas
 let temporizador_card_musica
+let animacao_progresso_card_musica
+
+function get_volume_som(tipo) {
+    const chave = tipo == 2
+        ? "pul4Pr3dios-volEfeito"
+        : tipo == 3
+            ? "pul4Pr3dios-volMemes"
+            : "pul4Pr3dios-volMusica"
+    const volume_padrao = tipo == 1 ? 30 : 50
+    const volume_salvo = localStorage.getItem(chave)
+    const volume = volume_salvo == null ? volume_padrao : Number(volume_salvo)
+    return Number.isFinite(volume) ? Math.max(0, Math.min(100, volume)) : volume_padrao
+}
+
+function pausa_canais_som(tipo) {
+    const canais = tipo == 1
+        ? ["faixa_musicas"]
+        : tipo == 2
+            ? ["faixa_ambiente", "faixa_pisoes", "faixa_efeitos1", "faixa_efeitos2", "faixa_efeitos3", "faixa_conquistas"]
+            : ["faixa_memes1", "faixa_memes2", "faixa_memes3"]
+
+    for (const canal of canais)
+        get_element(canal).pause()
+
+    if (tipo == 1)
+        fecha_card_musica()
+}
+
+function carrega_configuracoes_som() {
+    const preferencias = [
+        ["pul4Pr3dios-volMusica", 1, 30],
+        ["pul4Pr3dios-volEfeito", 2, 50],
+        ["pul4Pr3dios-volMemes", 3, 50]
+    ]
+
+    for (const [chave, entidade, volume_padrao] of preferencias) {
+        const volume = localStorage.getItem(chave)
+        if (volume == null)
+            localStorage.setItem(chave, volume_padrao)
+        carrega_volume(volume == null ? volume_padrao : volume, entidade)
+    }
+
+    const somAtivo = localStorage.getItem("pul4Pr3dios-efeitosSom")
+    jogo.estadoSom = somAtivo == null ? 1 : parseInt(somAtivo)
+
+    if (!jogo.estadoSom) {
+        pausa_canais_som(1)
+        pausa_canais_som(2)
+        pausa_canais_som(3)
+    }
+
+    const musicaTema = localStorage.getItem("pul4Pr3dios-temaMusica")
+    jogo.musica_tema = musicaTema ? `${musicaTema}.ogg` : "random"
+    get_element("seleciona_tema").value = jogo.musica_tema.replace(".ogg", "")
+
+    const musicaTemaOcioso = localStorage.getItem("pul4Pr3dios-temaOcioso")
+    jogo.musica_tema_ocioso = musicaTemaOcioso ? `${musicaTemaOcioso}.ogg` : "random"
+    get_element("seleciona_ocioso").value = jogo.musica_tema_ocioso.replace(".ogg", "")
+
+    const exibeCardMusica = localStorage.getItem("pul4Pr3dios-exibeCardMusica")
+    jogo.exibeCardMusica = exibeCardMusica == null ? 1 : parseInt(exibeCardMusica)
+
+    const duracaoCardMusicaSalva = localStorage.getItem("pul4Pr3dios-duracaoCardMusica")
+    const duracaoCardMusica = Number(duracaoCardMusicaSalva)
+    jogo.duracaoCardMusica = duracaoCardMusicaSalva != null && Number.isFinite(duracaoCardMusica)
+        ? Math.max(5, Math.min(15, Math.floor(duracaoCardMusica)))
+        : 7
+    get_element("duracao_card_musica").value = jogo.duracaoCardMusica
+    get_element("valor_duracao_card_musica").textContent = `${jogo.duracaoCardMusica}s`
+
+    if (translations["botao.ativado"] && typeof sincronizaEfeitosSom === "function")
+        sincronizaEfeitosSom()
+    if (translations["botao.ativado"] && typeof sincronizaCardMusica === "function")
+        sincronizaCardMusica()
+}
 
 function escolhe_som(ocasiao, evento) {
 
@@ -19,43 +94,42 @@ function escolhe_som(ocasiao, evento) {
     return nome
 }
 
+function reproduz_audio(audio) {
+    const tentativa = audio.play()
+
+    if (tentativa && typeof tentativa.catch === "function") {
+        tentativa.catch(erro => {
+            if (erro.name !== "NotAllowedError" && erro.name !== "AbortError")
+                console.error("Falha ao reproduzir áudio.", erro)
+        })
+    }
+}
+
 function executaSons(elemento, localizacao, nomeSom, tipo) {
-    if (jogo.estadoSom != 0) { // Verifica se a reprodução de sons não está desativada
-
-        let volume_interno = localStorage.getItem("pul4Pr3dios-volMusica")
-
-        if (tipo == 2)  // Efeitos
-            volume_interno = localStorage.getItem("pul4Pr3dios-volEfeito")
-        else if (tipo == 3) // Memes
-            volume_interno = localStorage.getItem("pul4Pr3dios-volMemes")
+    const volume_interno = get_volume_som(tipo)
+    if (jogo.estadoSom != 0 && volume_interno > 0) {
 
         let audio = get_element(elemento)
         configura_proxima_musica(audio, elemento)
         audio.volume = volume_interno / 100
 
         audio.src = `source/songs/${localizacao}/${nomeSom}`
-        audio.play()
+        reproduz_audio(audio)
         if (elemento == "faixa_musicas")
             exibe_card_musica(nomeSom)
     }
 }
 
 function executaSons2(elemento, localizacao, nomeSom, tipo) {
-    if (jogo.estadoSom != 0) { // Verifica se a reprodução de sons não está desativada
-
-        let volume_interno = localStorage.getItem("pul4Pr3dios-volMusica")
-
-        if (tipo == 2)  // Efeitos
-            volume_interno = localStorage.getItem("pul4Pr3dios-volEfeito")
-        else if (tipo == 3) // Memes
-            volume_interno = localStorage.getItem("pul4Pr3dios-volMemes")
+    const volume_interno = get_volume_som(tipo)
+    if (jogo.estadoSom != 0 && volume_interno > 0) {
 
         let audio = get_element(elemento)
         configura_proxima_musica(audio, elemento)
         audio.volume = volume_interno / 100
 
         audio.src = `source/songs/${localizacao}/${nomeSom}`
-        audio.play()
+        reproduz_audio(audio)
         if (elemento == "faixa_musicas")
             exibe_card_musica(nomeSom)
     }
@@ -63,7 +137,7 @@ function executaSons2(elemento, localizacao, nomeSom, tipo) {
 
 function exibe_card_musica(nomeSom) {
     const preset = presets_musicas[nomeSom]
-    if (!preset || !jogo.exibeCardMusica) {
+    if (!preset || !jogo.exibeCardMusica || get_volume_som(1) == 0) {
         fecha_card_musica()
         return
     }
@@ -73,14 +147,29 @@ function exibe_card_musica(nomeSom) {
     get_element("artista_musica_atual").textContent = preset.artista
 
     clearTimeout(temporizador_card_musica)
+    if (animacao_progresso_card_musica)
+        animacao_progresso_card_musica.cancel()
+
+    const duracao = jogo.duracaoCardMusica * 1000
+    const progresso = get_element("progresso_card_musica")
+    animacao_progresso_card_musica = progresso.animate(
+        [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
+        { duration: duracao, easing: "linear", fill: "forwards" }
+    )
+
     card.classList.add("visivel")
     card.setAttribute("aria-hidden", "false")
 
-    temporizador_card_musica = setTimeout(fecha_card_musica, jogo.duracaoCardMusica * 1000)
+    temporizador_card_musica = setTimeout(fecha_card_musica, duracao)
 }
 
 function fecha_card_musica() {
     clearTimeout(temporizador_card_musica)
+    if (animacao_progresso_card_musica) {
+        animacao_progresso_card_musica.cancel()
+        animacao_progresso_card_musica = null
+    }
+
     const card = document.getElementById("card_musica")
     card.classList.remove("visivel")
     card.setAttribute("aria-hidden", "true")
@@ -91,19 +180,19 @@ function configura_proxima_musica(audio, elemento) {
 
     audio.onended = function () {
         const arquivo_atual = (audio.currentSrc || audio.src).split("/").pop()
-        const faixa_atual = arquivo_atual.match(/^(main_[1-4]|ocioso_[1-3])\.ogg$/i)
+        const faixa_atual = arquivo_atual.match(/^(main_\d+|ocioso_\d+)\.ogg$/i)
         if (!faixa_atual || !jogo.estadoSom) return
 
-        let faixas
+        let tipo_musica
         if (jogo.status == estados.jogando && faixa_atual[1].startsWith("main_"))
-            faixas = ["main_1.ogg", "main_2.ogg", "main_3.ogg", "main_4.ogg"]
+            tipo_musica = "main"
         else if (jogo.status == estados.ocioso && faixa_atual[1].startsWith("ocioso_"))
-            faixas = ["ocioso_1.ogg", "ocioso_2.ogg", "ocioso_3.ogg"]
+            tipo_musica = "ocioso"
         else
             return
 
-        const opcoes_proxima = faixas.filter(faixa => faixa != arquivo_atual)
-        const proxima = opcoes_proxima[Math.floor(Math.random() * opcoes_proxima.length)]
+        const proxima = escolhe_musica_aleatoria(tipo_musica, arquivo_atual)
+        if (!proxima) return
         executaSons2("faixa_musicas", "musicas", proxima, 1)
     }
 }
@@ -123,6 +212,9 @@ function alteraVolume(volume, entidade, auto) {
         localStorage.setItem("pul4Pr3dios-volMusica", volume)
         sincroniza_controles_volume(volume, "volume_musica")
 
+        if (volume == 0)
+            pausa_canais_som(1)
+
         if (auto != null)
             // Verifica se há músicas sendo encerradas
             verificaDesligamentos()
@@ -138,6 +230,9 @@ function alteraVolume(volume, entidade, auto) {
         localStorage.setItem("pul4Pr3dios-volEfeito", volume)
         sincroniza_controles_volume(volume, "volume_efeitos")
 
+        if (volume == 0)
+            pausa_canais_som(2)
+
         let audio2 = get_element("faixa_efeitos2")
         audio2.volume = volume / 100
 
@@ -150,6 +245,9 @@ function alteraVolume(volume, entidade, auto) {
         let pisoes = get_element("faixa_pisoes")
         pisoes.volume = volume / 100
 
+        let conquistas = get_element("faixa_conquistas")
+        conquistas.volume = volume / 100
+
         if (auto != null)
             executaSons("faixa_efeitos1", "efeitos", "pop.ogg", 2)
     } else if (entidade == 3) { // Memes
@@ -157,8 +255,14 @@ function alteraVolume(volume, entidade, auto) {
         localStorage.setItem("pul4Pr3dios-volMemes", volume)
         sincroniza_controles_volume(volume, "volume_memes")
 
+        if (volume == 0)
+            pausa_canais_som(3)
+
         let audio2 = get_element("faixa_memes2")
         audio2.volume = volume / 100
+
+        let audio3 = get_element("faixa_memes3")
+        audio3.volume = volume / 100
 
         if (auto != null) {
 
@@ -187,9 +291,10 @@ function atualiza_valor_volume(controle) {
 // Executada automaticamente quando a página carrega, ela ajusta o volume para o valor salvo
 function carrega_volume(volume, entidade) {
     const valor = Number(volume)
+    const volume_padrao = entidade == 1 ? 30 : 50
     if (!Number.isFinite(valor)) {
-        console.warn("Valor de volume salvo inválido; será usado o volume padrão de 50%.")
-        volume = 50
+        console.warn(`Valor de volume salvo inválido; será usado o volume padrão de ${volume_padrao}%.`)
+        volume = volume_padrao
     } else {
         volume = Math.max(0, Math.min(100, valor))
     }
@@ -323,34 +428,24 @@ function verificaDesligamentos() {
 
 function executaSomPerca(causa) {
 
-    if (jogador.partida_pontuacao >= 0) {
-        if (causa == 1)
-            nome = "morte_agua.ogg"
-        else if (causa == 3)
-            nome = "morte_lava.ogg"
-        else {
-            nome = escolhe_som(2, 0)
+    if (causa == 1)
+        nome = "morte_agua.ogg"
+    else if (causa == 3)
+        nome = "morte_lava.ogg"
+    else if (jogador.partida_pontuacao >= 0) {
+        nome = escolhe_som(2, 0)
 
-            if (nome == "morreu_8.ogg")
-                nome = "morreu_7.ogg"
+        if (nome == "morreu_8.ogg")
+            nome = "morreu_7.ogg"
 
-            if (nome == "morreu_13.ogg")
-                nome = "morreu_12.ogg"
+        if (nome == "morreu_13.ogg")
+            nome = "morreu_12.ogg"
 
-        }
     } else
         nome = "morreu_8.ogg"
 
-    if (jogador.partida_pontuacao >= 300)
+    if (causa != 1 && causa != 3 && jogador.partida_pontuacao >= 300)
         nome = "morreu_13.ogg"
 
     executaSons("faixa_memes1", "final", nome, 3) // Usado para o Som de meme ao morrer
-}
-
-function executaSomCarrega() {
-
-    let lista_entradas = ["bambam3", "daciolo", "jailson_3", "jailson_4", "parque2"]
-    i = Math.round((lista_entradas.length - 1) * Math.random())
-
-    executaSons("faixa_memes1", "memes", `${lista_entradas[i]}.ogg`, 3)
 }

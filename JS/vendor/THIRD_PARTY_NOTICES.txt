@@ -1,0 +1,2 @@
+p5.js v0.10.2 is distributed under LGPL-2.1. See LICENSE-LGPL-2.1.txt.
+p5.sound v0.3.11 is distributed under MIT. See LICENSE-MIT-p5.sound.txt.

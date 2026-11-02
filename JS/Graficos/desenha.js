@@ -36,10 +36,8 @@ function desenha_chao_frente() {
 
     if (jogo.status != estados.perdeu)
         if (jogador.chao_referencia != 650)
-            if (chao.pisos_c[0]?.type < 2 || eventos.evento != 3)
+            if (get_liquido_sob_jogador() !== "lava")
                 spriteSombraJogador.desenha(jogador.x - 48, 1000 - jogador.y)
-            else if (jogador.y >= 500)
-                spriteSombraJogador.desenha(jogador.x - 48, jogador.y + 135)
 }
 
 function desenha_objeto(objeto) {

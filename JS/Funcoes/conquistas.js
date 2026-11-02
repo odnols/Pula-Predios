@@ -1,4 +1,13 @@
 let lista_conquistas_ganhas = {}, fila_conquistas = []
+let temporizador_fila_conquistas = null
+let temporizador_fecha_conquista = null
+let temporizador_oculta_conquista = null
+let temporizador_libera_conquista = null
+let temporizador_expande_conquista = null
+let animacao_progresso_conquista = null
+let temporizador_glitch_conquista = null
+const conquistas_pendentes_traducao = new Set()
+const caracteres_glitch_conquista = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&*+-=?"
 
 const conquistas_secretas = [
     "passaro",
@@ -43,21 +52,74 @@ const id_conquistas = [
     "dinheirama"
 ]
 
-function conquista(conquista, modo) {
+function limpa_glitch_conquista() {
+    clearInterval(temporizador_glitch_conquista)
+    temporizador_glitch_conquista = null
+}
 
-    if (!lista_conquistas_ganhas[conquista] || modo == 1) {
+function mostra_nome_conquista_secreta(nome) {
+    limpa_glitch_conquista()
+    const nome_marcado = Array.from(nome, (caractere) => {
+        const caractere_escapado = caractere.replace(/[&<>"']/g, (valor) => ({
+            "&": "&amp;",
+            "<": "&lt;",
+            ">": "&gt;",
+            '"': "&quot;",
+            "'": "&#39;"
+        })[valor])
+        return /\s/u.test(caractere)
+            ? caractere_escapado
+            : `<span class="caractere-conquista-secreta" data-original="${caractere_escapado}">${caractere_escapado}</span>`
+    }).join("")
+
+    toolTip(`<span class="nome-conquista-secreta">${nome_marcado}</span>`)
+    temporizador_glitch_conquista = setInterval(() => {
+        const caracteres = Array.from(
+            document.querySelectorAll("#ToolTip .caractere-conquista-secreta")
+        )
+        if (!caracteres.length) return
+
+        const quantidade_alterada = Math.max(
+            1,
+            Math.ceil(caracteres.length * (0.15 + Math.random() * 0.25))
+        )
+        const indices_alterados = new Set()
+        while (indices_alterados.size < quantidade_alterada)
+            indices_alterados.add(Math.floor(Math.random() * caracteres.length))
+
+        caracteres.forEach((caractere, indice) => {
+            caractere.textContent = indices_alterados.has(indice)
+                ? caracteres_glitch_conquista[Math.floor(Math.random() * caracteres_glitch_conquista.length)]
+                : caractere.dataset.original
+        })
+    }, 80)
+}
+
+function conquista(conquista, modo) {
+    const veio_da_fila = modo === 1
+
+    if (!id_conquistas.includes(conquista)) return
+
+    if (!lista_conquistas_ganhas[conquista] || veio_da_fila) {
+        if (
+            !translations[`conquista.${conquista}`] ||
+            !translations["conquista.obtida"] ||
+            !translations["conquista.secreta"]
+        ) {
+            conquistas_pendentes_traducao.add(conquista)
+            return
+        }
+
+        conquistas_pendentes_traducao.delete(conquista)
         lista_conquistas_ganhas[conquista] = 1
 
         jogo.depuracao({ tls: "depuracao.conquista_solicitada" })
 
-        // Remove a primeira posição do array
-        if (modo) fila_conquistas.shift()
+        if (veio_da_fila && fila_conquistas[0] === conquista)
+            fila_conquistas.shift()
 
-        // Trava a animação da conquista
         if (menus.estado_conquista != 1 && lista_conquistas_ganhas[conquista] < 2) {
-
-            // Colhendo os frutos
-            if (conquista == "colhendo_frutos") {
+            if (conquista == "frutos") {
                 notificacao(0, 0)
                 mostra_moedas(Math.round(25 * Math.random()))
             }
@@ -65,104 +127,161 @@ function conquista(conquista, modo) {
             jogo.depuracao({ tls: "depuracao.processando_conquista", replace: translations[`conquista.${conquista}`] })
             lista_conquistas_ganhas[conquista] = 2
 
-            // Verifica se a notificação das conquistas está ativa para exibir-las
             if (jogo.notificaConquista) {
-
                 let tempo_conquista = 3000
                 menus.estado_conquista = 1
-                get_element("nome_conquista").innerHTML = translations[`conquista.${conquista}`]
+                get_element("nome_conquista").textContent = translations[`conquista.${conquista}`]
 
-                // Atualizando o nome da conquista para exibição
-                get_element("conquistas").style.display = "block"
-                get_element("conquistas").style.animation = "conquista_obtida 2s"
-                get_element("texto_conquista").style.display = "block"
+                const aviso = get_element("conquistas")
+                clearTimeout(temporizador_fecha_conquista)
+                clearTimeout(temporizador_oculta_conquista)
+                clearTimeout(temporizador_libera_conquista)
+                clearTimeout(temporizador_expande_conquista)
+                temporizador_oculta_conquista = null
+                if (animacao_progresso_conquista) {
+                    animacao_progresso_conquista.cancel()
+                    animacao_progresso_conquista = null
+                }
+                aviso.classList.remove("visivel", "expandido")
+                aviso.style.display = "flex"
+                aviso.setAttribute("aria-hidden", "false")
+                requestAnimationFrame(() => {
+                    aviso.classList.add("visivel")
+                    temporizador_expande_conquista = setTimeout(() => {
+                        aviso.classList.add("expandido")
+                        temporizador_expande_conquista = null
+                    }, 350)
+                })
 
-                // Verifica se a conquista é secreta ou não
                 if (conquistas_secretas.includes(conquista)) {
-                    get_element("tipo_conquista").innerHTML = translations["conquista.secreta"]
+                    get_element("tipo_conquista").textContent = translations["conquista.secreta"]
                     executaSons("faixa_conquistas", "efeitos", "conquista_secreta.ogg", 2)
                     tempo_conquista = 9000
                 } else {
-                    get_element("tipo_conquista").innerHTML = translations["conquista.obtida"]
+                    get_element("tipo_conquista").textContent = translations["conquista.obtida"]
                     executaSons("faixa_conquistas", "efeitos", "conquista.ogg", 2)
                 }
 
-                fecha_conquista = setTimeout(() => {
-                    get_element("conquistas").style.animation = "fecha_conquista 2s"
-                    get_element("texto_conquista").style.animation = "esconde_texto 1s"
+                tempo_conquista = Math.max(5000, tempo_conquista)
+                animacao_progresso_conquista = get_element("barra_progresso_conquista").animate(
+                    [{ transform: "scaleX(0)" }, { transform: "scaleX(1)" }],
+                    { duration: tempo_conquista, easing: "linear", fill: "forwards" }
+                )
 
-                    setTimeout(() => {
-                        get_element("texto_conquista").style.display = "none"
-                    }, 1000)
-
-                    setTimeout(() => {
-                        get_element("conquistas").style.display = "none"
-                    }, 1900)
-
-                    clearTimeout(fecha_conquista)
+                temporizador_fecha_conquista = setTimeout(() => {
+                    aviso.classList.remove("visivel", "expandido")
+                    temporizador_oculta_conquista = setTimeout(() => {
+                        aviso.style.display = "none"
+                        aviso.setAttribute("aria-hidden", "true")
+                        temporizador_oculta_conquista = null
+                        if (animacao_progresso_conquista) {
+                            animacao_progresso_conquista.cancel()
+                            animacao_progresso_conquista = null
+                        }
+                    }, 450)
+                    temporizador_fecha_conquista = null
                 }, tempo_conquista)
 
-                // Libera para a próxima chamada
-                solta_conquista = setTimeout(() => {
+                temporizador_libera_conquista = setTimeout(() => {
                     menus.estado_conquista = 0
-                    clearTimeout(solta_conquista)
+                    temporizador_libera_conquista = null
                 }, tempo_conquista + 2000)
-
-                get_element("conquistas").style.animation = ""
-                get_element("texto_conquista").style.animation = ""
             }
 
             sincronizaQuadroConquistas()
 
-            // Verifica se a lista de conquistas esgotou, e termina o intervalo de requisição
-            if (fila_conquistas.length == 0 && modo)
-                if (typeof puxa_proxima != 'undefined')
-                    clearInterval(puxa_proxima)
+            if (fila_conquistas.length == 0)
+                para_fila_conquistas()
         } else {
-            if (fila_conquistas.length > 0)
-                clearInterval(puxa_proxima)
-
-            jogo.depuracao({ tls: "depuracao.conquista_fila", replace: translations[`conquista.${conquista}`] })
-            fila_conquistas.push(conquista)
-
-            puxa_proxima = setInterval(() => {
-                if (menus.estado_conquista == 0)
-                    redireciona_conquista(fila_conquistas[0])
-            }, 1000)
+            if (!fila_conquistas.includes(conquista)) {
+                jogo.depuracao({ tls: "depuracao.conquista_fila", replace: translations[`conquista.${conquista}`] })
+                fila_conquistas.push(conquista)
+            }
+            inicia_fila_conquistas()
         }
 
-        // Salvando no banco a lista de conquistas ganhas
         localStorage.setItem("pul4Pr3dios-lista_conquistas_ganhas", JSON.stringify(lista_conquistas_ganhas))
     }
 
     sincronizaEstatisticasConquistas()
 }
 
+function ocultaAvisoConquista() {
+    clearTimeout(temporizador_fecha_conquista)
+    clearTimeout(temporizador_oculta_conquista)
+    clearTimeout(temporizador_libera_conquista)
+    clearTimeout(temporizador_expande_conquista)
+    temporizador_fecha_conquista = null
+    temporizador_libera_conquista = null
+    temporizador_expande_conquista = null
+    menus.estado_conquista = 0
+
+    const aviso = get_element("conquistas")
+    aviso.classList.remove("visivel", "expandido")
+    temporizador_oculta_conquista = setTimeout(() => {
+        aviso.style.display = "none"
+        aviso.setAttribute("aria-hidden", "true")
+        temporizador_oculta_conquista = null
+        if (animacao_progresso_conquista) {
+            animacao_progresso_conquista.cancel()
+            animacao_progresso_conquista = null
+        }
+    }, 450)
+}
+
+function inicia_fila_conquistas() {
+    if (temporizador_fila_conquistas !== null) return
+
+    temporizador_fila_conquistas = setInterval(() => {
+        if (menus.estado_conquista == 0 && fila_conquistas.length > 0)
+            redireciona_conquista(fila_conquistas[0])
+    }, 1000)
+}
+
+function para_fila_conquistas() {
+    if (temporizador_fila_conquistas === null) return
+
+    clearInterval(temporizador_fila_conquistas)
+    temporizador_fila_conquistas = null
+}
+
 function redireciona_conquista(valor) {
-
-    if (fila_conquistas.length == 0)
-        clearInterval(puxa_proxima)
-
-    conquista(valor, 1)
+    if (fila_conquistas[0] === valor)
+        conquista(valor, 1)
 }
 
 function sincronizaQuadroConquistas() {
 
     sincronizaEstatisticasConquistas()
-    get_element("placeholder_conquista").innerHTML = ""
+    const placeholder = get_element("placeholder_conquista")
+    const fragmento = document.createDocumentFragment()
 
     for (let i = 0; i < id_conquistas.length; i++) {
+        const id = id_conquistas[i]
+        const obtida = Boolean(lista_conquistas_ganhas[id])
+        const imagem = obtida ? i : conquistas_secretas.includes(id) ? "secreta" : i
+        const elemento = document.createElement("img")
+        const nome = translations[`conquista.${id}`]
+        const descricao = translations[`conquista.descricao.${id}`]
 
-        let imagem = i
-        let classe = "img_conquista_obtida"
-
-        if (!lista_conquistas_ganhas[id_conquistas[i]]) {
-            imagem = conquistas_secretas.includes(id_conquistas[i]) ? "secreta" : i
-            classe = "img_conquista"
+        elemento.className = obtida ? "img_conquista_obtida" : "img_conquista"
+        elemento.src = `source/images/achievements/${imagem}.jpg`
+        elemento.alt = nome
+        if (conquistas_secretas.includes(id) && !obtida) {
+            elemento.addEventListener("mouseover", () => mostra_nome_conquista_secreta(nome))
+            elemento.addEventListener("mouseout", () => {
+                limpa_glitch_conquista()
+                toolTip()
+            })
+        } else {
+            elemento.addEventListener("mouseover", () => troca_descricao(nome, descricao, 1))
+            elemento.addEventListener("mouseout", () => troca_descricao(0, 0, 0))
         }
-
-        get_element("placeholder_conquista").innerHTML += `<img onMouseOver="troca_descricao('${translations[`conquista.${id_conquistas[i]}`]}', '${translations[`conquista.descricao.${id_conquistas[i]}`]}', 1)" onmouseout='troca_descricao(0, 0, 0)' class='${classe}' src="source/images/achievements/${imagem}.jpg"></div>`
+        fragmento.appendChild(elemento)
     }
+
+    placeholder.innerHTML = ""
+    placeholder.appendChild(fragmento)
 }
 
 function sincronizaEstatisticasConquistas() {
@@ -170,7 +289,7 @@ function sincronizaEstatisticasConquistas() {
     let obtidas = 0
 
     for (let x = 0; x < id_conquistas.length; x++) {
-        if (lista_conquistas_ganhas[id_conquistas[x]] || lista_conquistas_ganhas[id_conquistas[x]] == 2)
+        if (lista_conquistas_ganhas[id_conquistas[x]])
             obtidas++
     }
 
@@ -210,4 +329,12 @@ function sincronizaConquistas() {
 
     // Colhendo os Frutos
     if (lista_conquistas_ganhas["comprador_compulsivo"] && lista_conquistas_ganhas["pisoes"]) conquista("frutos", 0)
+}
+
+function processaConquistasPendentesTraducao() {
+    const pendentes = [...conquistas_pendentes_traducao]
+    conquistas_pendentes_traducao.clear()
+
+    for (const id of pendentes)
+        conquista(id, 0)
 }

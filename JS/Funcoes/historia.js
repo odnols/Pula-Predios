@@ -1,4 +1,5 @@
 var tela_historia = 0, indice_historia = 0, indice_decisoes = 0, aguarda_confirmacao = false
+let temporizador_inicio_historia = null
 
 function historia(texto_especial, requisicao_auto) {
 
@@ -53,12 +54,17 @@ function historia(texto_especial, requisicao_auto) {
         if (texto_especial != null)
             showtext(el, texto_especial, 0)
 
-        setTimeout(() => {
-            if (indice_historia == 0) {
-                indice_historia = 1
-                historia(null, null)
-            }
-        }, 3000)
+        clearTimeout(temporizador_inicio_historia)
+        temporizador_inicio_historia = null
+        if (indice_historia == 0) {
+            temporizador_inicio_historia = setTimeout(() => {
+                temporizador_inicio_historia = null
+                if (indice_historia == 0) {
+                    indice_historia = 1
+                    historia(null, null)
+                }
+            }, 3000)
+        }
     }
 }
 
@@ -69,7 +75,10 @@ function avanca_hist() {
 }
 
 function pular_hist() {
-    indice_historia += 5
+    clearTimeout(temporizador_inicio_historia)
+    temporizador_inicio_historia = null
+    cancela_texto()
+    indice_historia = translations["historia.textos"].length
     historia()
 }
 

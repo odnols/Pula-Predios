@@ -64,13 +64,6 @@ function botoes(tecla) {
                 case 49: // 1
                     inverte_tempo()
                     break
-                case 112: // p
-                case 80: // P
-                    if (jogo.velocidade == 0)
-                        acelera_predio()
-                    else
-                        freia_predio()
-                    break
                 case 122: // z
                 case 90:  // Z
                     if (!menus.estado_loja) {
@@ -248,6 +241,16 @@ function clique(evento) {
 // Detectar tecla ESC
 document.onkeydown = function (evt) {
     evt = evt || window.event
+    const tecla_pausa = evt.key
+        ? evt.key.toLowerCase() === "p"
+        : evt.keyCode === 80
+
+    if (tecla_pausa && !evt.repeat) {
+        alterna_pausa_canvas()
+        evt.preventDefault()
+        return
+    }
+
     let isEscape = false
 
     if ("key" in evt)

@@ -5,6 +5,8 @@ const chuva = {
     intensidade_maxima: 0,
     tipo: null,
     perfil: null,
+    proxima_variante: null,
+    inicio_previsto: 0,
     inicio: 0,
     temporizador: null,
     duracao: null,
@@ -32,12 +34,26 @@ const chuva = {
     duracao_raio_ms: 0,
     raio_atras_nuvens: false,
 
+    cria_variante: function () {
+        const escolha = Math.random()
+        const variante = escolha < 0.55
+            ? { tipo: "chuva", intensidade: [0.45, 0.7], gotas: 180 }
+            : escolha < 0.82
+                ? { tipo: "torrencial", intensidade: [0.72, 0.92], gotas: 320 }
+                : { tipo: "temporal", intensidade: [0.88, 1], gotas: 440 }
+        variante.intensidade_maxima = variante.intensidade[0]
+            + Math.random() * (variante.intensidade[1] - variante.intensidade[0])
+        return variante
+    },
+
     agenda: function () {
         if (!jogo.chuvaAtiva) return
 
         clearTimeout(this.temporizador)
         const intervalo = 120000 + Math.random() * 120000
         const segundos = Math.ceil(intervalo / 1000)
+        this.proxima_variante = this.cria_variante()
+        this.inicio_previsto = Date.now() + intervalo
 
         jogo.depuracao({ tls: "partida.proxima_chuva", replace: segundos, color: "purple" })
 
@@ -64,6 +80,8 @@ const chuva = {
     para: function () {
         clearTimeout(this.temporizador)
         this.temporizador = null
+        this.proxima_variante = null
+        this.inicio_previsto = 0
 
         if (this.ativa) {
             clearTimeout(this.duracao)
@@ -90,17 +108,14 @@ const chuva = {
         if (!jogo.chuvaAtiva) return
         if (this.encerrando) return
 
-        const escolha_variante = Math.random()
-        const variante = escolha_variante < 0.55
-            ? { tipo: "chuva", intensidade: [0.45, 0.7], gotas: 180 }
-            : escolha_variante < 0.82
-                ? { tipo: "torrencial", intensidade: [0.72, 0.92], gotas: 320 }
-                : { tipo: "temporal", intensidade: [0.88, 1], gotas: 440 }
+        const variante = this.proxima_variante || this.cria_variante()
+        this.proxima_variante = null
+        this.inicio_previsto = 0
 
         this.tipo = variante.tipo
         this.perfil = Math.random() < 0.5 ? "aumentando" : "diminuindo"
-        this.intensidade_maxima = variante.intensidade[0]
-            + Math.random() * (variante.intensidade[1] - variante.intensidade[0])
+        this.intensidade_maxima = variante.intensidade_maxima
+            ?? variante.intensidade[0] + Math.random() * (variante.intensidade[1] - variante.intensidade[0])
         this.intensidade = this.perfil == "aumentando" ? 0.08 : this.intensidade_maxima
         this.inicio = Date.now()
         this.ativa = true
@@ -109,6 +124,14 @@ const chuva = {
 
         this.gotas = Array.from({ length: variante.gotas }, () => this.cria_gota())
         this.duracao_ms = 35000 + Math.random() * 25000
+        jogo.depuracao({
+            tls: "partida.chuva_iniciada",
+            replace: [
+                Math.ceil(this.duracao_ms / 1000),
+                translations[`partida.estilo_chuva.${this.tipo}`]
+            ],
+            color: "purple"
+        })
 
         this.duracao = setTimeout(() => {
             this.ativa = false
@@ -366,7 +389,8 @@ const chuva = {
         const contexto = this.contexto_audio
         if (!contexto || contexto.state !== "running") return
 
-        const tocando = this.ativa && jogo.estadoSom && (jogo.chuvaAtiva || this.encerrando)
+        const tocando = this.ativa && jogo.estadoSom && get_volume_som(2) > 0
+            && (jogo.chuvaAtiva || this.encerrando)
         if (!tocando) {
             if (!this.ganho_chuva || this.audio_chuva_encerrando) return
 
@@ -395,7 +419,7 @@ const chuva = {
         const agora_ms = Date.now()
         if (agora_ms - this.ultima_atualizacao_audio_chuva < 100) return
 
-        const volume_efeitos = Number(localStorage.getItem("pul4Pr3dios-volEfeito") || 50) / 100
+        const volume_efeitos = get_volume_som(2) / 100
         const volume_alvo = Math.max(0.0001, 0.18 * volume_efeitos * this.intensidade)
         if (Math.abs(volume_alvo - this.ganho_chuva_agendado) < 0.008) return
 
@@ -405,10 +429,11 @@ const chuva = {
     },
 
     toca_trovao: function (volume_relativo, variacao) {
-        if (!jogo.estadoSom || !jogo.chuvaAtiva) return
+        if (!jogo.estadoSom || !jogo.chuvaAtiva || get_volume_som(2) == 0) return
 
         this.prepara_audio().then(contexto => {
-            if (!jogo.estadoSom || !jogo.chuvaAtiva || !contexto || contexto.state !== "running") return
+            if (!jogo.estadoSom || !jogo.chuvaAtiva || get_volume_som(2) == 0
+                || !contexto || contexto.state !== "running") return
 
             const duracao = variacao.duracao
             const buffer = contexto.createBuffer(1, contexto.sampleRate * duracao, contexto.sampleRate)
@@ -423,7 +448,7 @@ const chuva = {
             const fonte = contexto.createBufferSource()
             const filtro = contexto.createBiquadFilter()
             const volume = contexto.createGain()
-            const volume_efeitos = Number(localStorage.getItem("pul4Pr3dios-volEfeito") || 50) / 100
+            const volume_efeitos = get_volume_som(2) / 100
             const agora = contexto.currentTime
             const compressor = contexto.createDynamicsCompressor()
 

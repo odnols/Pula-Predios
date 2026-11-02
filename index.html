@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <link rel="shortcut icon" href="source/images/icons/icone.png">
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/p5.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/0.10.2/addons/p5.sound.min.js"></script>
+    <script src="js/vendor/p5.min.js"></script>
+    <script src="js/vendor/p5.sound.min.js"></script>
 
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="css/log.css">
@@ -17,7 +17,8 @@
     <link rel="stylesheet" type="text/css" href="css/responsividade.css">
 
     <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        crossorigin="anonymous">
 
     <script src="js/funcoes/operacionais.js"></script>
     <script src="js/core/translate.js"></script>
@@ -92,40 +93,6 @@
                 <img src="source/images/icons/som.png" class="iconlixeira">
 
                 <span data-i18n="menu.sons"></span>
-            </div>
-
-            <div id="config_sons_inicio">
-                <span class="fecha_janela" onclick="quadro_configura_sons()">X</span> <br>
-
-                <div class="opcao_som">
-                    <h3><label for="volume_musica_inicio" data-i18n="botao.musicas"></label></h3>
-                    <input class="control_volume" type="range" min="0" max="100" id="volume_musica_inicio" data-volume-entity="1"
-                        oninput="atualiza_valor_volume(this); alteraVolume(this.value, 1)"
-                        onchange="alteraVolume(this.value, 1, 1)">
-                    <output class="valor_volume" for="volume_musica_inicio">50%</output>
-                </div>
-
-                <div class="opcao_som">
-                    <h3><label for="volume_efeitos_inicio" data-i18n="botao.efeitos"></label></h3>
-                    <input class="control_volume" type="range" min="0" max="100" id="volume_efeitos_inicio" data-volume-entity="2"
-                        oninput="atualiza_valor_volume(this); alteraVolume(this.value, 2)"
-                        onchange="alteraVolume(this.value, 2, 1)">
-                    <output class="valor_volume" for="volume_efeitos_inicio">50%</output>
-                </div>
-
-                <div class="opcao_som">
-                    <h3><label for="volume_memes_inicio">Memes</label></h3>
-                    <input class="control_volume" type="range" min="0" max="100" id="volume_memes_inicio" data-volume-entity="3"
-                        oninput="atualiza_valor_volume(this); alteraVolume(this.value, 3)"
-                        onchange="alteraVolume(this.value, 3, 1)">
-                    <output class="valor_volume" for="volume_memes_inicio">50%</output>
-                </div>
-
-                <br>
-                <h4 class="texto">
-                    <center data-i18n="menu.sons"></center>
-                    <button id="status_volume_som_2" class="button_opcoes" onclick="alteraEstadoSom()"></button>
-                </h4>
             </div>
 
             <h4 style="position: absolute; right: 2%; bottom: 2%" data-i18n="menu.versao"></h4>
@@ -255,27 +222,36 @@
     </div>
 
     <div id="card_musica" class="card_musica" aria-live="polite" aria-hidden="true">
-        <span class="card_musica_icone" aria-hidden="true">♫</span>
+        <span class="card_musica_icone" aria-hidden="true">
+            <img src="source/images/icons/musica.png" alt="">
+        </span>
         <div>
             <span id="nome_musica_atual" class="card_musica_nome"></span>
             <span id="artista_musica_atual" class="card_musica_artista"></span>
         </div>
+        <span class="card_musica_progresso" aria-hidden="true">
+            <span id="progresso_card_musica"></span>
+        </span>
     </div>
 
-    <div id="conquistas">
+    <div id="conquistas" aria-live="polite" aria-hidden="true">
         <img id="trofeu" src="source/images/icons/trofeu.png">
 
         <div id="texto_conquista">
             <h3 id="tipo_conquista"></h3>
             <h5 id="nome_conquista"></h5>
         </div>
+        <span class="progresso_conquista" aria-hidden="true">
+            <span id="barra_progresso_conquista"></span>
+        </span>
     </div>
 
-    <div id="quadro_notificacoes" onmouseover="pausa_tempo_notificacao()" onmouseout="tempo_notificacao()">
+    <div id="quadro_notificacoes" aria-live="polite" aria-hidden="true" onmouseover="pausa_tempo_notificacao()"
+        onmouseout="tempo_notificacao()">
         <h4 class="texto_notificacoes_trad"></h4>
-        <div id="barra_notificacao">
-            <div id="status_barra_notificacoes"></div>
-        </div>
+        <span id="barra_notificacao" aria-hidden="true">
+            <span id="status_barra_notificacoes"></span>
+        </span>
     </div>
 
     <canvas id="canvas" width="1366" height="625"></canvas>
@@ -283,19 +259,27 @@
     <!-- Itens comprados na loja -->
     <div id="icones_aquisicoes">
         <div id="icon_modificadores">
-            <img class="mods_icon mod_principal" id="mod_0" onMouseOver="toolTip_trad('principal.flutuante')" onmouseout="toolTip()">
-            <img class="mods_icon mod_principal" id="mod_3" src="source/images/store/mods/aco.png" onMouseOver="toolTip_trad('principal.de_aco')" onmouseout="toolTip()">
-            <img class="mods_icon mod_principal" id="mod_4" src="source/images/store/mods/lunar.png" onMouseOver="toolTip_trad('principal.lunar')" onmouseout="toolTip()">
+            <img class="mods_icon mod_principal" id="mod_0" onMouseOver="toolTip_trad('principal.flutuante')"
+                onmouseout="toolTip()">
+            <img class="mods_icon mod_principal" id="mod_3" src="source/images/store/mods/aco.png"
+                onMouseOver="toolTip_trad('principal.de_aco')" onmouseout="toolTip()">
+            <img class="mods_icon mod_principal" id="mod_4" src="source/images/store/mods/lunar.png"
+                onMouseOver="toolTip_trad('principal.lunar')" onmouseout="toolTip()">
             <br>
 
-            <img class="mods_icon" id="mod_1" src="source/images/store/mods/mais_tempo.png" onMouseOver="toolTip_trad('principal.mais_tempo')" onmouseout="toolTip()">
-            <img class="mods_icon" id="mod_2" src="source/images/store/mods/mais_vezes.png" onMouseOver="toolTip_trad('principal.mais_vezes')" onmouseout="toolTip()">
+            <img class="mods_icon" id="mod_1" src="source/images/store/mods/mais_tempo.png"
+                onMouseOver="toolTip_trad('principal.mais_tempo')" onmouseout="toolTip()">
+            <img class="mods_icon" id="mod_2" src="source/images/store/mods/mais_vezes.png"
+                onMouseOver="toolTip_trad('principal.mais_vezes')" onmouseout="toolTip()">
         </div>
 
         <div id="icon_bonus">
-            <img class="bonus_icon" id="bonus_1" src="source/images/store/bonus/dobro.png" onMouseOver="toolTip('2x$')" onmouseout="toolTip()">
-            <img class="bonus_icon" id="bonus_2" src="source/images/store/bonus/garimpeiro.png" onMouseOver="toolTip_trad('bonus.garimpeiro')" onmouseout="toolTip()">
-            <img class="bonus_icon" id="bonus_3" src="source/images/store/bonus/vento_estocado.png" onMouseOver="toolTip_trad('bonus.vento_estocado')" onmouseout="toolTip()">
+            <img class="bonus_icon" id="bonus_1" src="source/images/store/bonus/dobro.png" onMouseOver="toolTip('2x$')"
+                onmouseout="toolTip()">
+            <img class="bonus_icon" id="bonus_2" src="source/images/store/bonus/garimpeiro.png"
+                onMouseOver="toolTip_trad('bonus.garimpeiro')" onmouseout="toolTip()">
+            <img class="bonus_icon" id="bonus_3" src="source/images/store/bonus/vento_estocado.png"
+                onMouseOver="toolTip_trad('bonus.vento_estocado')" onmouseout="toolTip()">
         </div>
     </div>
 
@@ -318,22 +302,28 @@
         <center id="estatisticas_morte">
             <h1 class="fimdejogo" data-i18n="menu.fim_de_jogo"></h1>
 
-            <h3><span data-i18n="menu.causa_perda"></span>: <a class="estat" id="causa_perca" style="color: red">??</a></h3>
+            <h3><span data-i18n="menu.causa_perda"></span>: <a class="estat" id="causa_perca" style="color: red">??</a>
+            </h3>
 
             <div id="stats_dead">
                 <p class="texto _estatistic_dead">
                     <span data-i18n="stats.resumo"></span> \\//<br><br>
                     <span data-i18n="stats.pontuacao"></span>: <a class="estat" id="pontuacao_partida">0</a><br>
                     <span data-i18n="stats.tempo_correndo"></span>: <a class="estat" id="tempo_jogado_partida">0</a><br>
-                    <span data-i18n="stats.distancia"></span>: <a class="estat" id="distancia_percorrida_partida">0</a><br><br>
+                    <span data-i18n="stats.distancia"></span>: <a class="estat"
+                        id="distancia_percorrida_partida">0</a><br><br>
 
                     <span data-i18n="stats.pulos"></span>: <a class="estat" id="quantidade_pulos_partida">0</a><br>
-                    <span data-i18n="stats.mods_utilizados"></span>: <a class="estat" id="quantidade_modificadores_partida">0</a><br><br>
+                    <span data-i18n="stats.mods_utilizados"></span>: <a class="estat"
+                        id="quantidade_modificadores_partida">0</a><br><br>
 
-                    <span data-i18n="stats.moedas_coletadas"></span>: <a class="estat" id="moedas_coletadas_partida">0</a><br>
-                    <span data-i18n="stats.pisoes"></span>: <a class="estat" id="quantidade_pisoes_partida">0</a><br><br>
+                    <span data-i18n="stats.moedas_coletadas"></span>: <a class="estat"
+                        id="moedas_coletadas_partida">0</a><br>
+                    <span data-i18n="stats.pisoes"></span>: <a class="estat"
+                        id="quantidade_pisoes_partida">0</a><br><br>
 
-                    <span data-i18n="stats.predios_atropelados"></span>: <a class="estat" id="quantidade_predios_partida">0</a><br>
+                    <span data-i18n="stats.predios_atropelados"></span>: <a class="estat"
+                        id="quantidade_predios_partida">0</a><br>
                 </p>
             </div>
 
@@ -351,6 +341,11 @@
                     Lava: <a class="estat" id="quantidade_lava_partida">0</a><br>
                 </p>
             </div>
+
+            <p id="novo_recorde_morte" aria-live="polite" aria-hidden="true">
+                <span id="mensagem_morte_texto"></span>
+                <span id="recorde_atual_morte"></span>
+            </p>
         </center>
     </div>
 
@@ -385,12 +380,15 @@
 
         <div id="tutoriais_1">
             <h3 class="opcao_tutorial" data-i18n="tutorial.historia" onclick="exibeTutorial('historia')"></h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="tutorial.como_jogar" onclick="exibeTutorial('como_jogar')"></h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="loja.modificadores" onclick="exibeTutorial('modificadores')"></h3><br><br>
+            <h3 class="opcao_tutorial" data-i18n="tutorial.como_jogar" onclick="exibeTutorial('como_jogar')"></h3>
+            <br><br>
+            <h3 class="opcao_tutorial" data-i18n="loja.modificadores" onclick="exibeTutorial('modificadores')"></h3>
+            <br><br>
             <h3 class="opcao_tutorial" data-i18n="loja.bonus" onclick="exibeTutorial('bonus')"></h3><br><br>
             <h3 class="opcao_tutorial" data-i18n="tutorial.inimigos" onclick="exibeTutorial('inimigos')"></h3><br><br>
             <h3 class="opcao_tutorial" data-i18n="geral.eventos" onclick="exibeTutorial('eventos')"></h3><br><br>
-            <h3 class="opcao_tutorial" data-i18n="geral.dificuldade" onclick="exibeTutorial('dificuldade')"></h3><br><br>
+            <h3 class="opcao_tutorial" data-i18n="geral.dificuldade" onclick="exibeTutorial('dificuldade')"></h3>
+            <br><br>
             <h3 class="opcao_tutorial" data-i18n="geral.conquistas" onclick="exibeTutorial('conquistas')"></h3><br><br>
             <h3 class="opcao_tutorial" data-i18n="tutorial.moedas" onclick="exibeTutorial('moedas')"></h3><br><br>
             <h3 class="opcao_tutorial" data-i18n="geral.loja" onclick="exibeTutorial('loja')"></h3><br><br>
@@ -549,12 +547,15 @@
                     <span data-i18n="stats.moedas_gastas"></span>: <a class="estat" id="moedas_gastas">0</a><br><br>
 
                     <span data-i18n="stats.skins_compradas"></span>: <a class="estat" id="tt_skins_compradas">0</a><br>
-                    <span data-i18n="stats.mods_comprados"></span>: <a class="estat" id="tt_modificadores_comprados">0</a><br>
-                    <span data-i18n="stats.bonus_comprados"></span>: <a class="estat" id="tt_bonus_comprados">0</a><br><br>
+                    <span data-i18n="stats.mods_comprados"></span>: <a class="estat"
+                        id="tt_modificadores_comprados">0</a><br>
+                    <span data-i18n="stats.bonus_comprados"></span>: <a class="estat"
+                        id="tt_bonus_comprados">0</a><br><br>
 
                     <span data-i18n="geral.conquistas"></span>: <a class="estat" id="conquistas_obtidas"></a><br><br>
                     <span data-i18n="stats.pontos_obtidos"></span>: <a class="estat" id="quantidade_pontos">0</a><br>
-                    <span data-i18n="stats.melhor_partida"></span>: <a class="estat" id="recorde">0</a> <span data-i18n="stats.pontos"></span><br>
+                    <span data-i18n="stats.melhor_partida"></span>: <a class="estat" id="recorde">0</a> <span
+                        data-i18n="stats.pontos"></span><br>
                 </p>
             </div>
 
@@ -562,11 +563,13 @@
                 <div class="campo_stats" id="quadro_confirma_exclusao">
                     <h2 data-i18n="stats.texto_excluir"></h2><br>
 
-                    <button data-i18n="botao.nao" class="botao_confirma cancela_compra" onclick="status_confirmacao(0, 0, 'Exclui')"></button>
-                    <button data-i18n="botao.sim" class="botao_confirma confirmar_compra" onclick="status_confirmacao(1, 0, 'Exclui')"></button>
+                    <button data-i18n="botao.nao" class="botao_confirma cancela_compra"
+                        onclick="status_confirmacao(0, 0, 'Exclui')"></button>
+                    <button data-i18n="botao.sim" class="botao_confirma confirmar_compra"
+                        onclick="status_confirmacao(1, 0, 'Exclui')"></button>
                 </div>
             </div>
-            
+
             <div class="campo_stats">
                 <p class="texto _estatistic_dead">
                     <span data-i18n="geral.eventos"></span> \\//<br><br>
@@ -603,16 +606,24 @@
 
         <div id="config_grafc">
             <div class="itens_configs">
-                <h4 class="texto"><button id="status_tema_atual" class="button_opcoes" onclick="alteraRelogio()"></button> : <span data-i18n="botao.definir_tempo"></span></h4>
+                <h4 class="texto"><button id="status_tema_atual" class="button_opcoes"
+                        onclick="alteraRelogio()"></button> : <span data-i18n="botao.definir_tempo"></span></h4>
 
-                <h4 class="texto" id="button_animacoes_cell"><button id="status_animacoes_block" class="button_opcoes_block"><span data-i18n="menu.desativado"></span></button> : <span data-i18n="botao.animacoes"></span></h4>
-                <h4 class="texto" id="button_animacoes_pc"><button id="status_animacoes" class="button_opcoes" onclick="alteraQualidadeGrafica()"></button> : <span data-i18n="botao.animacoes"></span></h4>
+                <h4 class="texto" id="button_animacoes_cell"><button id="status_animacoes_block"
+                        class="button_opcoes_block"><span data-i18n="menu.desativado"></span></button> : <span
+                        data-i18n="botao.animacoes"></span></h4>
+                <h4 class="texto" id="button_animacoes_pc"><button id="status_animacoes" class="button_opcoes"
+                        onclick="alteraQualidadeGrafica()"></button> : <span data-i18n="botao.animacoes"></span></h4>
 
-                <h4 class="texto"><button id="status_chuva" class="button_opcoes" onclick="altera_chuva()"></button> : <span data-i18n="botao.chuva"></span></h4>
+                <h4 class="texto"><button id="status_chuva" class="button_opcoes" onclick="altera_chuva()"></button> :
+                    <span data-i18n="botao.chuva"></span>
+                </h4>
 
-                <h4 class="texto"><button id="status_claroes_chuva" class="button_opcoes" onclick="altera_claroes_chuva()"></button> : <span data-i18n="botao.claroes_chuva"></span></h4>
+                <h4 class="texto"><button id="status_claroes_chuva" class="button_opcoes"
+                        onclick="altera_claroes_chuva()"></button> : <span data-i18n="botao.claroes_chuva"></span></h4>
 
-                <h4 class="texto"><button id="status_parallax" class="button_opcoes" onclick="alteraParallax()"></button> : <span data-i18n="botao.parallax"></span></h4>
+                <h4 class="texto"><button id="status_parallax" class="button_opcoes"
+                        onclick="alteraParallax()"></button> : <span data-i18n="botao.parallax"></span></h4>
             </div>
         </div>
 
@@ -643,65 +654,94 @@
 
                 <h4 class="texto"><button id="status_modo_ocioso" class="button_opcoes"
                         onclick="alteraEstadoOcioso()"></button> : <span data-i18n="botao.modo_ocioso"></span></h4>
+
+                <div class="opcao_som config_tempo_modo_ocioso">
+                    <h3><label for="tempo_modo_ocioso" data-i18n="botao.tempo_modo_ocioso">Tempo para iniciar o modo
+                            ocioso (segundos)</label></h3>
+                    <input id="tempo_modo_ocioso" class="control_volume" type="range" min="5" max="30" step="1"
+                        value="10" oninput="alteraTempoOcioso(this.value)">
+                    <output id="valor_tempo_modo_ocioso" class="valor_volume" for="tempo_modo_ocioso">10s</output>
+                </div>
             </div>
         </div>
 
         <div id="config_sons">
+            <button type="button" class="fecha_sons_inicio" aria-label="Fechar configurações de som"
+                onclick="quadro_configura_sons()">X</button>
             <div id="controle_som">
+                <div class="controles_volume_som">
+                    <div class="opcao_som">
+                        <h3><label for="volume_musica" data-i18n="botao.musicas"></label></h3>
+                        <input class="control_volume" type="range" min="0" max="100" id="volume_musica"
+                            data-volume-entity="1" oninput="atualiza_valor_volume(this); alteraVolume(this.value, 1)"
+                            onchange="alteraVolume(this.value, 1, 1)">
+                        <output class="valor_volume" for="volume_musica">30%</output>
+                    </div>
 
-                <div class="opcao_som">
-                    <h3><label for="volume_musica" data-i18n="botao.musicas"></label></h3>
-                    <input class="control_volume" type="range" min="0" max="100" id="volume_musica" data-volume-entity="1"
-                        oninput="atualiza_valor_volume(this); alteraVolume(this.value, 1)"
-                        onchange="alteraVolume(this.value, 1, 1)">
-                    <output class="valor_volume" for="volume_musica">50%</output>
+                    <div class="opcao_som">
+                        <h3><label for="volume_efeitos" data-i18n="botao.efeitos"></label></h3>
+                        <input class="control_volume" type="range" min="0" max="100" id="volume_efeitos"
+                            data-volume-entity="2" oninput="atualiza_valor_volume(this); alteraVolume(this.value, 2)"
+                            onchange="alteraVolume(this.value, 2, 1)">
+                        <output class="valor_volume" for="volume_efeitos">50%</output>
+                    </div>
+
+                    <div class="opcao_som">
+                        <h3><label for="volume_memes">Memes</label></h3>
+                        <input class="control_volume" type="range" min="0" max="100" id="volume_memes"
+                            data-volume-entity="3" oninput="atualiza_valor_volume(this); alteraVolume(this.value, 3)"
+                            onchange="alteraVolume(this.value, 3, 1)">
+                        <output class="valor_volume" for="volume_memes">50%</output>
+                    </div>
                 </div>
 
-                <div class="opcao_som">
-                    <h3><label for="volume_efeitos" data-i18n="botao.efeitos"></label></h3>
-                    <input class="control_volume" type="range" min="0" max="100" id="volume_efeitos" data-volume-entity="2"
-                        oninput="atualiza_valor_volume(this); alteraVolume(this.value, 2)"
-                        onchange="alteraVolume(this.value, 2, 1)">
-                    <output class="valor_volume" for="volume_efeitos">50%</output>
+                <div class="preferencias_musica">
+                    <h4 class="texto estado_som">
+                        <button id="status_volume_som" class="button_opcoes" onclick="alteraEstadoSom()"></button>
+                        <span data-i18n="menu.sons"></span>
+                    </h4>
+
+                    <div class="selecao_musicas">
+                        <label class="selecao_musica_linha">
+                            <select id="seleciona_tema" onchange="verifica_selecionado('seleciona_tema')">
+                                <option value="main_1">Tema 1</option>
+                                <option value="main_2">Tema 2</option>
+                                <option value="main_3">Tema 3</option>
+                                <option value="main_4">Tema 4</option>
+                                <option value="main_5">Tema 5</option>
+                                <option value="random" data-i18n="botao.tema_aleatorio">Aleatório</option>
+                            </select>
+                            <span data-i18n="botao.tema_principal">: Tema principal</span>
+                        </label>
+
+                        <label class="selecao_musica_linha">
+                            <select id="seleciona_ocioso" onchange="verifica_selecionado('seleciona_ocioso')">
+                                <option value="ocioso_1">Ocioso 1</option>
+                                <option value="ocioso_2">Ocioso 2</option>
+                                <option value="ocioso_3">Ocioso 3</option>
+                                <option value="ocioso_4">Ocioso 4</option>
+                                <option value="ocioso_5">Ocioso 5</option>
+                                <option value="random" data-i18n="botao.aleatorio">Aleatório</option>
+                            </select>
+                            <span data-i18n="botao.tema_ocioso">: Tema ocioso</span>
+                        </label>
+                    </div>
                 </div>
 
-                <div class="opcao_som">
-                    <h3><label for="volume_memes">Memes</label></h3>
-                    <input class="control_volume" type="range" min="0" max="100" id="volume_memes" data-volume-entity="3"
-                        oninput="atualiza_valor_volume(this); alteraVolume(this.value, 3)"
-                        onchange="alteraVolume(this.value, 3, 1)">
-                    <output class="valor_volume" for="volume_memes">50%</output>
-                </div>
+                <div class="preferencias_card_musica">
+                    <h4 class="texto estado_som">
+                        <button id="status_card_musica" class="button_opcoes" onclick="alteraCardMusica()"></button>
+                        <span data-i18n="botao.card_musica"></span>
+                    </h4>
 
-                <h4 class="texto estado_som">
-                    <button id="status_volume_som" class="button_opcoes" onclick="alteraEstadoSom()"></button> : <span data-i18n="menu.sons"></span>
-                </h4>
-
-                <div class="selecao_musicas">
-                    <select id="seleciona_tema" onchange="verifica_selecionado('seleciona_tema')">
-                        <option value="main_1">Tema 1</option>
-                        <option value="main_2">Tema 2</option>
-                        <option value="main_3">Tema 3</option>
-                        <option value="main_4">Tema 4</option>
-                        <option value="random">Random</option>
-                    </select>
-
-                    <select id="seleciona_ocioso" onchange="verifica_selecionado('seleciona_ocioso')">
-                        <option value="ocioso_1">Ocioso 1</option>
-                        <option value="ocioso_2">Ocioso 2</option>
-                        <option value="ocioso_3">Ocioso 3</option>
-                        <option value="random">Random</option>
-                    </select>
-                </div>
-
-                <h4 class="texto estado_som"><button id="status_card_musica" class="button_opcoes"
-                        onclick="alteraCardMusica()"></button> : <span data-i18n="botao.card_musica"></span></h4>
-
-                <div class="opcao_som config_duracao_card_musica">
-                    <h3><label for="duracao_card_musica" data-i18n="botao.duracao_card_musica">Duração do card (segundos)</label></h3>
-                    <input id="duracao_card_musica" class="control_volume" type="range" min="5" max="15" step="1" value="7"
-                        oninput="alteraDuracaoCardMusica(this.value)">
-                    <output id="valor_duracao_card_musica" class="valor_volume" for="duracao_card_musica">5s</output>
+                    <div class="opcao_som config_duracao_card_musica">
+                        <h3><label for="duracao_card_musica" data-i18n="botao.duracao_card_musica">Duração do card
+                                (segundos)</label></h3>
+                        <input id="duracao_card_musica" class="control_volume" type="range" min="5" max="15" step="1"
+                            value="7" oninput="alteraDuracaoCardMusica(this.value)">
+                        <output id="valor_duracao_card_musica" class="valor_volume"
+                            for="duracao_card_musica">5s</output>
+                    </div>
                 </div>
             </div>
         </div>
@@ -721,7 +761,8 @@
 
             <div>
                 <button class="button_opcoes_t" data-i18n="geral.opcoes" onclick="botoes(90)"></button>
-                <button class="button_trad" onclick="menu_opcoes(4, 1)"><img class="img_trad" src="source/images/icons/globo.png"></button>
+                <button class="button_trad" onclick="menu_opcoes(4, 1)"><img class="img_trad"
+                        src="source/images/icons/globo.png"></button>
             </div>
         </div>
 
@@ -751,8 +792,9 @@
     <div id="notificacoes"></div>
 
     <p class="icons_main" id="fps_counter" onMouseOver="toolTip_trad('perfil.contador_fps')" onmouseout="toolTip()"></p>
-    <div class="icons_main" id="flag_api" onMouseOver="toolTip_trad('perfil.status')" onmouseout="toolTip()"></div>
-    <img class="icons_main" id="perfil_user" src='source/images/icons/perfil.png' onMouseOver="toolTip_trad('perfil.vincular')" onmouseout="toolTip()" style="width: 25px" onclick="checa_user()">
+    <!-- <div class="icons_main" id="flag_api" onMouseOver="toolTip_trad('perfil.status')" onmouseout="toolTip()"></div> -->
+    <!-- <img class="icons_main" id="perfil_user" src='source/images/icons/perfil.png' -->
+    onMouseOver="toolTip_trad('perfil.vincular')" onmouseout="toolTip()" style="width: 25px" onclick="checa_user()">
 
     <div id="barra_topo">
 
@@ -808,8 +850,10 @@
         </section>
 
         <div class="faixa_menu fx_baixo">
-            <h3 id="log_button" onMouseOver="toolTip_trad('botao.log')" onmouseout="toolTip()" onclick="botoes(76)">Log ( L )</h3>
-            <h3 class="reload_button" data-i18n="botao.recarregar" onMouseOver="toolTip_trad('botao.recarregar_jogo')" onmouseout="toolTip()" onclick="clique(114)"></h3>
+            <h3 id="log_button" onMouseOver="toolTip_trad('botao.log')" onmouseout="toolTip()" onclick="botoes(76)">Log
+                ( L )</h3>
+            <h3 class="reload_button" data-i18n="botao.recarregar" onMouseOver="toolTip_trad('botao.recarregar_jogo')"
+                onmouseout="toolTip()" onclick="clique(114)"></h3>
         </div>
     </div>
 
@@ -821,7 +865,9 @@
     </div>
 
     <!-- Menus da Loja -->
-    <p id="puxador_loja" onclick="abre_loja()" onMouseOver="toolTip_trad('botao.abrir_loja')" onmouseout="toolTip()"><img src="source/images/icons/loja.png" class="icone_puxador_loja"></p>
+    <p id="puxador_loja" onclick="abre_loja()" onMouseOver="toolTip_trad('botao.abrir_loja')" onmouseout="toolTip()">
+        <img src="source/images/icons/loja.png" class="icone_puxador_loja">
+    </p>
 
     <div id="loja"><br>
 
@@ -831,7 +877,8 @@
 
         <div id="quadro_novidades_loja">
             <fieldset id="colore_loja">
-                <img id="sprite_jogador_loja" src="source/images/store/skins/jogador7_noite.png" animation="loja_move_jogador 5s">
+                <img id="sprite_jogador_loja" src="source/images/store/skins/jogador7_noite.png"
+                    animation="loja_move_jogador 5s">
 
                 <div id="text_novidades_loja"></div>
             </fieldset>
@@ -857,8 +904,10 @@
             <div id="quadro_confirma_compra">
                 <h2 data-i18n="botao.confirma_compra"></h2>
 
-                <button data-i18n="botao.nao" class="botao_confirma cancela_compra" onclick="status_confirmacao(0, 0, 'Loja')"></button>
-                <button data-i18n="botao.sim" class="botao_confirma confirmar_compra" onclick="status_confirmacao(1, 0, 'Loja')"></button>
+                <button data-i18n="botao.nao" class="botao_confirma cancela_compra"
+                    onclick="status_confirmacao(0, 0, 'Loja')"></button>
+                <button data-i18n="botao.sim" class="botao_confirma confirmar_compra"
+                    onclick="status_confirmacao(1, 0, 'Loja')"></button>
             </div>
 
             <div id="filtro_alerta_loja"></div>

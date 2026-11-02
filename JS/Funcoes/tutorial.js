@@ -16,6 +16,7 @@ function repete_tutorial() {
 function executa_tutorial(requisicao_auto) {
 
     if (tut_complet == 0) {
+        impedeOcioso()
 
         $("#tutorial_em_jogo").fadeIn()
 
@@ -61,6 +62,7 @@ function avanca_tutorial() {
 }
 
 function pular_tutorial() {
+    cancela_texto()
     $("#tutorial_em_jogo").fadeOut()
     indice_tutorial = 6
 

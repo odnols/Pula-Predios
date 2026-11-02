@@ -99,6 +99,9 @@ function preenche_barra() {
 
             eventos.contador_tempo_interno--
 
+            if (eventos.contador_tempo_interno < eventos.contador_tempo_evento)
+                pisca_barra()
+
             if (jogo.status == estados.jogando)
                 jogador.partida_tempo_em_eventos++
 
@@ -122,7 +125,6 @@ function preenche_barra() {
 
             if (eventos.contador_tempo_interno < eventos.contador_tempo_evento) {
                 get_element("completa_timer").style.width = `${eventos.quantia_pixels_interno}%`
-                pisca_barra()
             }
         } else
             clearInterval(cronometro2)

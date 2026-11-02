@@ -1,4 +1,6 @@
 var fila_notificacoes = [], segura_notificacao = 0
+var preenche_barra_notificacao, gatilho_fecha_notificacao
+let somador = null, pontos_pontuacao_pendentes = 0
 
 function boasVindas() {
 
@@ -23,6 +25,7 @@ function inicia_jogo() {
 
     // Inicia apenas quando a pontuação estiver igualada a zero
     if (jogador.partida_pontuacao == 0) {
+        get_element("canvas").classList.remove("fundo_desfocado_morte")
 
         // Escondendo outras telas que estiverem abertas
         esconde_telas()
@@ -80,7 +83,7 @@ function confirma_inicio_partida() {
 
     if (jogo.tema_ativo != 0) {
         if (jogo.musica_tema.includes("random"))
-            executaSons2("faixa_musicas", "musicas", `main_${(1 + (3 * Math.random())).toFixed(0)}.ogg`, 1)
+            executaSons2("faixa_musicas", "musicas", escolhe_musica_aleatoria("main"), 1)
         else
             executaSons2("faixa_musicas", "musicas", jogo.musica_tema, 1)
     } else
@@ -202,6 +205,8 @@ function abre_loja() {
 
     if (!menus.estado_loja) {
         menus.estado_loja = 1
+        jogo.ociosidadePausada = 1
+        impedeOcioso()
 
         if (menus.sessao_loja_ativa)
             $("#rodape_loja").fadeIn()
@@ -229,6 +234,7 @@ function abre_loja() {
     } else {
         verificaOciosidade(false, 1, 1)
         menus.estado_loja = 0
+        jogo.ociosidadePausada = 0
 
         let fechador_loja = get_element("fechador_loja")
         fechador_loja[0].style.animation = "none"
@@ -359,6 +365,10 @@ function finaliza_evento() {
 
     clearTimeout(eventos.tempo_evento)
     clearTimeout(eventos.ativa_evento)
+    if (eventos.timer_inicio_evento !== null) {
+        clearTimeout(eventos.timer_inicio_evento)
+        eventos.timer_inicio_evento = null
+    }
 
     eventos.evento = null
     eventos.inicia_evento = null
@@ -387,6 +397,10 @@ function cancela_evento() {
 
     clearTimeout(eventos.tempo_evento)
     clearTimeout(eventos.ativa_evento)
+    if (eventos.timer_inicio_evento !== null) {
+        clearTimeout(eventos.timer_inicio_evento)
+        eventos.timer_inicio_evento = null
+    }
 
     eventos.evento = null
     eventos.inicia_evento = null
@@ -416,8 +430,10 @@ function aleatorizaProp() {
 function MsgPerdeu(causa) {
 
     // Filtro e animação
-    if (menus.estatistica_morte)
-        get_element("filtro2").style.display = "block"
+    if (menus.estatistica_morte) {
+        $("#filtro2").stop(true, true).css({ display: "block", opacity: 1 })
+        get_element("canvas").classList.add("fundo_desfocado_morte")
+    }
 
     if (causa != 1)
         if (causa != 3)
@@ -426,21 +442,85 @@ function MsgPerdeu(causa) {
     if (!opcoes.controle && jogo.status == estados.perdeu) {
 
         opcoes.controle = 1
+        executaSomPerca(causa)
 
-        if (jogador.partida_pontuacao > jogador.recorde)
-            labelTexto.texto = translations["partida.novo_recorde"].replace("auto_repl", jogador.partida_pontuacao)
-        else {
+        labelTexto.novoRecorde = jogador.partida_pontuacao > jogador.recorde
 
-            executaSomPerca(eventos.inicia_evento)
-            const texto_escolhido = 1 + Math.round(7 * Math.random())
-
-            // Exibindo o texto de morte no fundo do mapa conforme o ocorrido
-            if (eventos.inicia_evento === null && jogador.partida_pontuacao >= 0)
-                labelTexto.texto = translations["morte.frase_normal"][texto_escolhido]
-            else if (jogador.partida_pontuacao < 0)
+        if (labelTexto.novoRecorde) {
+            labelTexto.texto = ""
+        } else {
+            if (jogador.partida_pontuacao < 0) {
                 labelTexto.texto = translations["conquista.negativado"]
-            else
-                labelTexto.texto = translations[`morte.frase_${eventos.id_eventos[eventos.inicia_evento]}`][texto_escolhido]
+            } else {
+                const tipo_frase = eventos.evento_morte === null
+                    ? "normal"
+                    : eventos.id_eventos[eventos.evento_morte]
+                const frases_evento = translations[`morte.frase_${tipo_frase}`]
+                const frases_morte = Array.isArray(frases_evento) && frases_evento.length > 0
+                    ? frases_evento
+                    : translations["morte.frase_normal"]
+                const indice_frase = Math.floor(Math.random() * frases_morte.length)
+
+                labelTexto.texto = frases_morte[indice_frase]
+            }
+        }
+
+        const mensagem_novo_recorde = get_element("novo_recorde_morte")
+        const texto_morte = get_element("mensagem_morte_texto")
+        const recorde_atual = get_element("recorde_atual_morte")
+        mensagem_novo_recorde.classList.remove("novo-recorde", "sem-recorde")
+        texto_morte.classList.remove("frase-morte-onda")
+        texto_morte.textContent = ""
+        recorde_atual.textContent = ""
+
+        if (menus.estatistica_morte) {
+            if (labelTexto.novoRecorde) {
+                texto_morte.textContent = translations["partida.novo_recorde"].replace("auto_repl", jogador.partida_pontuacao)
+                mensagem_novo_recorde.classList.add("novo-recorde")
+            } else {
+                texto_morte.textContent = labelTexto.texto
+                recorde_atual.textContent = `${translations["partida.recorde_atual"]} ${jogador.recorde}`
+                mensagem_novo_recorde.classList.add("sem-recorde")
+            }
+
+            const frase = texto_morte.textContent
+            const fragmento_frase = document.createDocumentFragment()
+            let indice_letra = 0
+            Array.from(frase).forEach((caractere) => {
+                if (/\s/u.test(caractere)) {
+                    fragmento_frase.appendChild(document.createTextNode(caractere))
+                    return
+                }
+
+                const letra = document.createElement("span")
+                letra.className = "letra-onda-morte"
+                letra.textContent = caractere
+                letra.style.setProperty("--indice-letra", indice_letra++)
+                fragmento_frase.appendChild(letra)
+            })
+            texto_morte.replaceChildren(fragmento_frase)
+            texto_morte.classList.add("frase-morte-onda")
+            mensagem_novo_recorde.classList.add("visivel")
+            mensagem_novo_recorde.setAttribute("aria-hidden", "false")
+
+            if (labelTexto.novoRecorde) {
+                const letras = Array.from(texto_morte.querySelectorAll(".letra-onda-morte"))
+                if (letras.length > 0) {
+                    const x_inicial = letras[0].getBoundingClientRect().left
+                    const x_final = letras[letras.length - 1].getBoundingClientRect().right
+                    const largura_gradiente = x_final - x_inicial
+
+                    letras.forEach((letra) => {
+                        const deslocamento = letra.getBoundingClientRect().left - x_inicial
+                        letra.style.setProperty("--largura-gradiente", `${largura_gradiente}px`)
+                        letra.style.setProperty("--posicao-gradiente-inicial", `${-deslocamento}px`)
+                        letra.style.setProperty("--posicao-gradiente-final", `${-deslocamento - largura_gradiente}px`)
+                    })
+                }
+            }
+        } else {
+            mensagem_novo_recorde.classList.remove("visivel")
+            mensagem_novo_recorde.setAttribute("aria-hidden", "true")
         }
     }
 }
@@ -485,7 +565,7 @@ function estadoOcioso(caso) {
 
         if (jogo.tema_ativo != 0)
             if (jogo.musica_tema_ocioso.includes("random"))
-                executaSons2("faixa_musicas", "musicas", `ocioso_${(1 + (2 * Math.random())).toFixed(0)}.ogg`, 1)
+                executaSons2("faixa_musicas", "musicas", escolhe_musica_aleatoria("ocioso"), 1)
             else
                 executaSons2("faixa_musicas", "musicas", jogo.musica_tema_ocioso, 1)
         else
@@ -516,6 +596,7 @@ function impedeOcioso() {
 
     if (typeof contagemOcioso != "undefined")
         clearTimeout(contagemOcioso)
+    contagemOcioso = null
 }
 
 function verificaOciosidade(caso, local, valor) {
@@ -529,20 +610,13 @@ function verificaOciosidade(caso, local, valor) {
     if (valor != undefined)
         caso = 0
 
-    // Verifica se o modo ocioso está ativo
     if (caso) {
         impedeOcioso()
         cancela_evento()
-
-        jogo.ociosidade = 0
+        jogo.ociosidadePausada = 1
     } else {
         toolTip()
-
-        ociosidade = localStorage.getItem("pul4Pr3dios-ociosidade")
-        if (ociosidade == null)
-            jogo.ociosidade = 0
-        else
-            jogo.ociosidade = parseInt(ociosidade)
+        jogo.ociosidadePausada = 0
     }
 }
 
@@ -763,10 +837,37 @@ function quadro_confirma_exclusao() {
     $("#quadro_confirma_exclusao").fadeIn()
 }
 
-function quadro_configura_sons() {
+let painel_sons_inicio_aberto = false
 
+function quadro_configura_sons() {
+    if (confirma_carregamento) {
+        fecha_config_sons_inicio()
+        return
+    }
+
+    if (painel_sons_inicio_aberto) {
+        fecha_config_sons_inicio()
+        return
+    }
+
+    carrega_configuracoes_som()
     executaSons("faixa_efeitos2", "efeitos", "hat.ogg", 2)
-    $("#config_sons_inicio").fadeToggle()
+
+    const painel = get_element("config_sons")
+    get_element("carrega_jogo").appendChild(painel)
+    painel.classList.add("config_sons_inicio")
+    painel_sons_inicio_aberto = true
+    $("#config_sons").fadeIn()
+}
+
+function fecha_config_sons_inicio() {
+    if (!painel_sons_inicio_aberto) return
+
+    const painel = get_element("config_sons")
+    $("#config_sons").stop(true, true).hide()
+    painel.classList.remove("config_sons_inicio")
+    get_element("configuracoes").appendChild(painel)
+    painel_sons_inicio_aberto = false
 }
 
 function exibe_teaser(mensagem, cor) {
@@ -788,23 +889,44 @@ function exibe_teaser(mensagem, cor) {
 // Soma os valores para a pontuação de forma mais natural
 function soma_pontuacao(somar) {
 
-    let contador = 0
+    if (!Number.isFinite(somar) || somar === 0)
+        return
 
+    if (somador !== null) {
+        pontos_pontuacao_pendentes += somar
+        finaliza_soma_pontuacao()
+        return
+    }
+
+    pontos_pontuacao_pendentes = somar
     somador = setInterval(() => {
-        if (somar > 0) {
-            contador++
-            jogador.partida_pontuacao++
-        } else if (somar < 0) {
-            contador--
-            jogador.partida_pontuacao--
-        }
+        const passo = Math.sign(pontos_pontuacao_pendentes)
+        jogador.partida_pontuacao += passo
+        pontos_pontuacao_pendentes -= passo
 
-        // Atualiza a pontuação em caso de perca antes de completamento
         get_element("pontuacao_partida").innerHTML = jogador.partida_pontuacao
+        alteraValorEstatisticaPartida("pontuacao_partida", jogador.partida_pontuacao)
 
-        if (contador == somar)
+        if (pontos_pontuacao_pendentes === 0) {
             clearInterval(somador)
+            somador = null
+        }
     }, 50)
+}
+
+function finaliza_soma_pontuacao() {
+    if (somador !== null) {
+        clearInterval(somador)
+        somador = null
+    }
+
+    if (pontos_pontuacao_pendentes === 0)
+        return
+
+    jogador.partida_pontuacao += pontos_pontuacao_pendentes
+    pontos_pontuacao_pendentes = 0
+    get_element("pontuacao_partida").innerHTML = jogador.partida_pontuacao
+    alteraValorEstatisticaPartida("pontuacao_partida", jogador.partida_pontuacao)
 }
 
 function reseta_pontuacao() {
@@ -826,6 +948,8 @@ function reseta_pontuacao() {
 
 function limpa_intervalos() {
 
+    finaliza_soma_pontuacao()
+
     if (typeof cronometroTempoPartida != "undefined")
         clearInterval(cronometroTempoPartida)
 
@@ -837,6 +961,11 @@ function limpa_intervalos() {
 
     if (typeof ativa_evento != "undefined")
         clearTimeout(ativa_evento)
+
+    if (eventos.timer_inicio_evento !== null) {
+        clearTimeout(eventos.timer_inicio_evento)
+        eventos.timer_inicio_evento = null
+    }
 
     if (typeof preenche_barra_notificacao != "undefined")
         clearInterval(preenche_barra_notificacao)
@@ -1049,8 +1178,11 @@ function notificacao(item, modo) {
         descricao = get_element("texto_notificacoes_trad")
         descricao[0].innerHTML = translations[`notificacao.${id_notificacoes[item]}`]
 
-        get_element("quadro_notificacoes").style.animation = "abre_notificacao 1s"
-        $("#quadro_notificacoes").fadeIn()
+        const quadro = get_element("quadro_notificacoes")
+        quadro.style.display = "flex"
+        quadro.setAttribute("aria-hidden", "false")
+        quadro.classList.remove("visivel")
+        requestAnimationFrame(() => quadro.classList.add("visivel"))
 
         get_element("status_barra_notificacoes").style.width = "0%"
 
@@ -1094,20 +1226,22 @@ function tempo_notificacao() {
     if (!menus.tamanho_barra_notificacao)
         menus.tamanho_barra_notificacao = 0
 
+    clearInterval(preenche_barra_notificacao)
     preenche_barra_notificacao = setInterval(() => {
         if (menus.tamanho_barra_notificacao >= 100) {
             menus.tamanho_barra_notificacao = 100
+            clearInterval(preenche_barra_notificacao)
 
-            if (menus.tamanho_barra_notificacao < 95)
-                clearInterval(preenche_barra_notificacao)
-
-            get_element("quadro_notificacoes").style.animation = "fecha_notificacao 1s"
+            const quadro = get_element("quadro_notificacoes")
+            quadro.classList.remove("visivel")
+            quadro.setAttribute("aria-hidden", "true")
+            setTimeout(() => {
+                quadro.style.display = "none"
+            }, 350)
 
             gatilho_fecha_notificacao = setTimeout(() => {
                 clearInterval(preenche_barra_notificacao)
                 clearTimeout(gatilho_fecha_notificacao)
-
-                get_element("quadro_notificacoes").style.display = "none"
                 menus.tamanho_barra_notificacao = 0
                 segura_notificacao = 0
 
@@ -1187,7 +1321,8 @@ function verifica_selecionado(local) {
     const faixa = selecao
 
     if (faixa == "random") {
-        selecao = local === "seleciona_tema" ? `main_${(1 + (3 * Math.random())).toFixed(0)}` : `ocioso_${(1 + (2 * Math.random())).toFixed(0)}`
+        const tipo_musica = local === "seleciona_tema" ? "main" : "ocioso"
+        selecao = escolhe_musica_aleatoria(tipo_musica).replace(".ogg", "")
     } else
         if (local === "seleciona_tema") jogo.musica_tema = `${selecao}.ogg`
         else jogo.musica_tema_ocioso = `${selecao}.ogg`

@@ -14,16 +14,17 @@ function Carrega_sprite(alvo, x, y, Largura, Altura) {
 
 function desenha_sprite_transicao(nome, preset, x, y, espelhar_horizontal = false) {
     const ctx = opcoes.ctx
+    x = Math.round(x)
     const noite_ativa = typeof ambiente != "undefined"
         && ambiente.libera_transitador
-        && ambiente.astro
-        && ambiente.astro[2] === 1
     const opacidade_noite = !noite_ativa
         ? 0
         : Math.max(0, Math.min(1, ambiente.opacidade_noite))
     const imagem_dia = lista_sprites[preset.imagem_dia || `img_${nome}`]
     const imagem_noite = lista_sprites[preset.imagem_noite || "img_transicoes_noite"]
-    const manter_base_diurna = nome.startsWith("transita_cidade") || nome.startsWith("transita_montanha")
+    const manter_base_diurna = nome.startsWith("transita_cidade")
+        || nome.startsWith("transita_montanha")
+        || nome.startsWith("transita_ilha")
 
     if (espelhar_horizontal) {
         ctx.save()
@@ -42,8 +43,16 @@ function desenha_sprite_transicao(nome, preset, x, y, espelhar_horizontal = fals
         ctx.restore()
     }
 
-    if (preset.sprite_noite && imagem_noite && imagem_noite.complete && imagem_noite.naturalWidth && opacidade_noite > 0)
-        transitador(preset.sprite_noite, x, y)
+    if (preset.sprite_noite && imagem_noite && imagem_noite.complete && imagem_noite.naturalWidth && opacidade_noite > 0) {
+        if (preset.imagem_noite) {
+            ctx.save()
+            ctx.globalAlpha *= opacidade_noite
+            preset.sprite_noite.desenha(x, y)
+            ctx.restore()
+        } else {
+            transitador(preset.sprite_noite, x, y)
+        }
+    }
 
     if (espelhar_horizontal)
         ctx.restore()
@@ -116,7 +125,7 @@ var spriteCidade = new Carrega_sprite('img_cenario', 0, 0, 1366, 337),
     spriteAdereco_fogo = new Carrega_sprite('img_adereco_fogo', 0, 0, 31, 11),
     spriteAdereco_roda = new Carrega_sprite('img_adereco_roda', 0, 0, 59, 24),
     spriteAdereco_bandeira = new Carrega_sprite('img_adereco_bandeira', 0, 0, 17, 14),
-    spriteAdereco_combustao = new Carrega_sprite('img_adereco_combustao', 0, 0, 63, 73),
+    spriteAdereco_combustao = new Carrega_sprite('img_adereco_combustao', 0, 0, 62, 73),
     spriteLuzes_navegacao = new Carrega_sprite('img_luzes_navegacao', 0, 0, 133, 90),
 
     spriteAreia = new Carrega_sprite('img_areia', 0, 0, 1366, 46),

@@ -7,9 +7,195 @@ const aparencias_jogador = [
     { sprite: spriteJogador_Verde, transicao: "jogador6_noite" }
 ]
 
+function get_causa_morte_piso_visivel() {
+    const liquido = get_liquido_sob_jogador()
+    if (liquido === "agua") return 1
+    if (liquido === "lava") return 3
+    return 0
+}
+
+function pode_morrer_no_liquido() {
+    return jogador.mod == 0 && jogador.timer_mod >= jogador.tempoMod
+}
+
+const temporizadores_nativos = {
+    setTimeout: window.setTimeout.bind(window),
+    setInterval: window.setInterval.bind(window),
+    clearTimeout: window.clearTimeout.bind(window),
+    clearInterval: window.clearInterval.bind(window)
+}
+const frames_nativos = {
+    request: window.requestAnimationFrame.bind(window),
+    cancel: window.cancelAnimationFrame.bind(window)
+}
+const temporizadores_pausaveis = new Map()
+const frames_pausaveis = new Map()
+const data_now_nativo = Date.now.bind(Date)
+let temporizador_id = 0
+let temporizadores_pausados = false
+let pausa_performance_inicio = null
+let pausa_data_acumulada = 0
+
+Date.now = function () {
+    const tempo_pausado = pausa_performance_inicio === null
+        ? 0
+        : performance.now() - pausa_performance_inicio
+    return data_now_nativo() - pausa_data_acumulada - tempo_pausado
+}
+
+function agenda_temporizador_pausavel(temporizador, atraso) {
+    if (temporizadores_pausados || !temporizadores_pausaveis.has(temporizador.id)) return
+
+    temporizador.vencimento = performance.now() + atraso
+    const geracao = ++temporizador.geracao
+    temporizador.id_nativo = temporizadores_nativos.setTimeout(() => {
+        if (geracao !== temporizador.geracao) return
+        temporizador.id_nativo = null
+
+        if (temporizadores_pausados) {
+            temporizador.atraso_restante = 0
+            return
+        }
+
+        const proximo_vencimento = temporizador.vencimento + temporizador.atraso
+        if (!temporizador.intervalo)
+            temporizadores_pausaveis.delete(temporizador.id)
+
+        try {
+            temporizador.callback.apply(window, temporizador.argumentos)
+        } finally {
+            if (temporizador.intervalo && temporizadores_pausaveis.has(temporizador.id))
+                agenda_temporizador_pausavel(
+                    temporizador,
+                    Math.max(0, proximo_vencimento - performance.now())
+                )
+        }
+    }, atraso)
+}
+
+function cria_temporizador_pausavel(callback, atraso, intervalo, argumentos) {
+    if (typeof callback !== "function")
+        return (intervalo ? temporizadores_nativos.setInterval : temporizadores_nativos.setTimeout)(
+            callback,
+            atraso,
+            ...argumentos
+        )
+
+    const temporizador = {
+        id: --temporizador_id,
+        callback,
+        argumentos,
+        intervalo,
+        atraso: Math.max(intervalo ? 1 : 0, Number(atraso) || 0),
+        atraso_restante: Math.max(intervalo ? 1 : 0, Number(atraso) || 0),
+        vencimento: null,
+        id_nativo: null,
+        geracao: 0
+    }
+
+    temporizadores_pausaveis.set(temporizador.id, temporizador)
+    agenda_temporizador_pausavel(temporizador, temporizador.atraso_restante)
+    return temporizador.id
+}
+
+function limpa_temporizador_pausavel(id) {
+    const temporizador = temporizadores_pausaveis.get(id)
+    if (!temporizador) {
+        temporizadores_nativos.clearTimeout(id)
+        temporizadores_nativos.clearInterval(id)
+        return
+    }
+
+    temporizadores_pausaveis.delete(id)
+    temporizador.geracao++
+    if (temporizador.id_nativo !== null)
+        temporizadores_nativos.clearTimeout(temporizador.id_nativo)
+}
+
+window.setTimeout = (callback, atraso, ...argumentos) =>
+    cria_temporizador_pausavel(callback, atraso, false, argumentos)
+window.setInterval = (callback, atraso, ...argumentos) =>
+    cria_temporizador_pausavel(callback, atraso, true, argumentos)
+window.clearTimeout = limpa_temporizador_pausavel
+window.clearInterval = limpa_temporizador_pausavel
+
+function agenda_frame_pausavel(frame) {
+    if (temporizadores_pausados || !frames_pausaveis.has(frame.id)) return
+
+    const geracao = ++frame.geracao
+    frame.id_nativo = frames_nativos.request(tempo => {
+        if (geracao !== frame.geracao) return
+        frame.id_nativo = null
+        if (temporizadores_pausados) return
+
+        frames_pausaveis.delete(frame.id)
+        frame.callback.call(window, tempo)
+    })
+}
+
+window.requestAnimationFrame = callback => {
+    if (typeof callback !== "function")
+        return frames_nativos.request(callback)
+
+    const frame = {
+        id: --temporizador_id,
+        callback,
+        id_nativo: null,
+        geracao: 0
+    }
+
+    frames_pausaveis.set(frame.id, frame)
+    agenda_frame_pausavel(frame)
+    return frame.id
+}
+
+window.cancelAnimationFrame = id => {
+    const frame = frames_pausaveis.get(id)
+    if (!frame) {
+        frames_nativos.cancel(id)
+        return
+    }
+
+    frames_pausaveis.delete(id)
+    frame.geracao++
+    if (frame.id_nativo !== null)
+        frames_nativos.cancel(frame.id_nativo)
+}
+
+function pausa_temporizadores() {
+    temporizadores_pausados = true
+    const agora = performance.now()
+
+    for (const temporizador of temporizadores_pausaveis.values()) {
+        temporizador.atraso_restante = Math.max(0, temporizador.vencimento - agora)
+        temporizador.geracao++
+        if (temporizador.id_nativo !== null) {
+            temporizadores_nativos.clearTimeout(temporizador.id_nativo)
+            temporizador.id_nativo = null
+        }
+    }
+
+    for (const frame of frames_pausaveis.values()) {
+        frame.geracao++
+        if (frame.id_nativo !== null) {
+            frames_nativos.cancel(frame.id_nativo)
+            frame.id_nativo = null
+        }
+    }
+}
+
+function retoma_temporizadores() {
+    temporizadores_pausados = false
+    for (const temporizador of temporizadores_pausaveis.values())
+        agenda_temporizador_pausavel(temporizador, temporizador.atraso_restante)
+    for (const frame of frames_pausaveis.values())
+        agenda_frame_pausavel(frame)
+}
+
 // Variáveis Globais
 var labelTexto = {
     texto: "",
+    novoRecorde: false,
 },
 
     estados = {
@@ -58,6 +244,7 @@ var labelTexto = {
         opacidade_alvo_nuvens: [0.3, 0.3, 0.3, 0.3, 0.3],
         opacidade_alvo_nuvens_chuva: [0.86, 0.86, 0.86, 0.86, 0.86],
         nuvem_proxima_variacao_opacidade: 0,
+        nuvem_quantidade_base: 2,
         nuvens_extra: [],
         nuvem_proximo_spawn: 0,
         nuvem_ultima_atualizacao: 0,
@@ -209,29 +396,54 @@ var labelTexto = {
             const delta = this.nuvem_ultima_atualizacao
                 ? Math.min(agora - this.nuvem_ultima_atualizacao, 100)
                 : 0
-            const intensidade_chuva = typeof chuva != "undefined" && chuva.ativa
-                ? Math.max(0, Math.min(1, chuva.intensidade))
-                : 0
-            const densidade_alvo = 0.12 + intensidade_chuva * 0.88
+            let cobertura_chuva = 0
+            if (typeof chuva != "undefined") {
+                if (chuva.ativa) {
+                    if (chuva.encerrando) {
+                        cobertura_chuva = chuva.intensidade_maxima * Math.max(
+                            0,
+                            1 - (agora - chuva.inicio_encerramento) / chuva.duracao_encerramento_ms
+                        )
+                    } else {
+                        const inicio_fade = chuva.duracao_ms - chuva.duracao_fade_ms
+                        const progresso_fade = Math.max(0, Math.min(
+                            (agora - chuva.inicio - inicio_fade) / chuva.duracao_fade_ms,
+                            1
+                        ))
+                        const curva_fade = progresso_fade * progresso_fade * (3 - 2 * progresso_fade)
+                        cobertura_chuva = chuva.intensidade_maxima * (1 - curva_fade)
+                    }
+                } else if (chuva.proxima_variante && chuva.inicio_previsto) {
+                    const aproximacao = Math.max(0, Math.min(
+                        1,
+                        1 - (chuva.inicio_previsto - agora) / 25000
+                    ))
+                    cobertura_chuva = chuva.proxima_variante.intensidade_maxima * aproximacao
+                }
+            }
+
+            cobertura_chuva = Math.max(0, Math.min(1, cobertura_chuva))
+            const densidade_alvo = 0.12 + cobertura_chuva * 0.88
             const progresso_densidade = Math.min(delta / 2200, 1)
             this.nuvem_densidade += (densidade_alvo - this.nuvem_densidade) * progresso_densidade
             this.nuvem_ultima_atualizacao = agora
 
             if (agora >= this.nuvem_proxima_variacao_opacidade) {
                 for (let i = 0; i < this.opacidade_alvo_nuvens.length; i++) {
-                    this.opacidade_alvo_nuvens[i] = 0.3 + Math.random() * 0.6
+                    this.opacidade_alvo_nuvens[i] = 0.25 + Math.random() * 0.55
                     this.opacidade_alvo_nuvens_chuva[i] = 0.86 + Math.random() * 0.04
                 }
+                this.nuvem_quantidade_base = 1 + Math.floor(Math.random() * 3)
 
                 this.nuvem_proxima_variacao_opacidade = agora + (
-                    intensidade_chuva > 0
+                    cobertura_chuva > 0
                         ? 5000 + Math.random() * 5000
-                        : 8000 + Math.random() * 18000
+                        : 4500 + Math.random() * 9500
                 )
             }
 
             const proporcao_chuva = Math.max(0, Math.min(1, (this.nuvem_densidade - 0.12) / 0.88))
-            const progresso_opacidade = Math.min(delta / 2500, 1)
+            const progresso_opacidade = Math.min(delta / 3200, 1)
             for (let i = 0; i < this.opacidade_nuvens.length; i++) {
                 const opacidade_alvo = this.opacidade_alvo_nuvens[i]
                     + (this.opacidade_alvo_nuvens_chuva[i] - this.opacidade_alvo_nuvens[i]) * proporcao_chuva
@@ -239,7 +451,10 @@ var labelTexto = {
             }
 
             const nuvens_por_intensidade = this.astro[2] == 0 ? 16 : 8
-            const quantidade_alvo = Math.ceil(intensidade_chuva * nuvens_por_intensidade)
+            const quantidade_alvo = cobertura_chuva > 0
+                ? this.nuvem_quantidade_base
+                + Math.ceil(cobertura_chuva * (nuvens_por_intensidade - this.nuvem_quantidade_base))
+                : this.nuvem_quantidade_base
             const nuvens_ativas = this.nuvens_extra.filter(nuvem => !nuvem.removendo)
 
             for (const nuvem of nuvens_ativas.slice(quantidade_alvo))
@@ -247,22 +462,29 @@ var labelTexto = {
 
             if (nuvens_ativas.length < quantidade_alvo && agora >= this.nuvem_proximo_spawn) {
                 const largura_fonte = 220 + Math.random() * 260
+                const velocidade = 0.015 + Math.random() * 0.02
+                const escala_distancia = 1 - (velocidade - 0.015) / 0.02 * 0.4
                 this.nuvens_extra.push({
                     x: Math.random() * opcoes.largura,
                     y: 35 + Math.random() * 300,
                     sx: Math.random() * (500 - largura_fonte),
                     largura_fonte,
-                    largura: largura_fonte * (0.7 + Math.random() * 0.3),
-                    altura: 135 * (0.7 + Math.random() * 0.3),
-                    velocidade: 0.015 + Math.random() * 0.02,
+                    largura: largura_fonte * (0.7 + Math.random() * 0.3) * escala_distancia,
+                    altura: 135 * (0.7 + Math.random() * 0.3) * escala_distancia,
+                    velocidade,
                     opacidade: 0,
-                    removendo: false
+                    removendo: false,
+                    criada_em: agora,
+                    duracao: 35000 + Math.random() * 30000
                 })
                 this.nuvem_proximo_spawn = agora + 2200 + Math.random() * 2800
             }
 
             this.nuvens_extra = this.nuvens_extra.filter(nuvem => {
-                const alvo_opacidade = nuvem.removendo ? 0 : 0.72 + intensidade_chuva * 0.18
+                if (cobertura_chuva < 0.2 && agora - nuvem.criada_em >= nuvem.duracao)
+                    nuvem.removendo = true
+
+                const alvo_opacidade = nuvem.removendo ? 0 : 0.72 + cobertura_chuva * 0.18
                 const progresso_opacidade = Math.min(delta / 700, 1)
                 nuvem.opacidade += (alvo_opacidade - nuvem.opacidade) * progresso_opacidade
                 nuvem.x -= velocidade_interna * nuvem.velocidade
@@ -384,20 +606,19 @@ var labelTexto = {
                             const velocidade_x = 700 + Math.random() * 600
                             const comprimento = 55 + Math.floor(Math.random() * 66)
                             const distancia_horizontal = largura + comprimento * 2
-                            const angulo = -0.08 + Math.random() * 0.5
-                            const velocidade_y = velocidade_x * Math.tan(angulo)
-                            const y_final = Math.random() * altura
+                            const duracao = distancia_horizontal / velocidade_x * 1000
+                            const descida = altura * (0.2 + Math.random() * 0.6)
+                            const velocidade_y = descida / (duracao / 1000)
                             const x = largura + comprimento
                             this.estrelas_cadentes.push({
                                 x,
-                                y: y_final - Math.tan(angulo) * distancia_horizontal,
+                                y: Math.random() * (altura - descida),
                                 velocidade_x: -velocidade_x,
                                 velocidade_y,
-                                atraso: i * (100 + Math.random() * 220),
+                                atraso: i * (1500 + Math.random() * 1500),
                                 tempo: 0,
-                                duracao: distancia_horizontal / velocidade_x * 1000,
-                                comprimento,
-                                angulo
+                                duracao,
+                                comprimento
                             })
                         }
                     }
@@ -486,8 +707,8 @@ var labelTexto = {
                 : 0
             this.estrelas_cadentes_ultima_atualizacao = agora
             this.estrelas_cadentes = this.estrelas_cadentes.filter(estrela => {
-                if (estrela.atras > 0) {
-                    estrela.atras -= delta
+                if (estrela.atraso > 0) {
+                    estrela.atraso -= delta
                     return true
                 }
 
@@ -595,8 +816,10 @@ var labelTexto = {
         pisos_b: [],
         pisos_c: [],
         pisos_f: [],
+        contexto_pisos: {},
 
         altera_referencia: 0,
+        efeito_explosao_liquido: null,
 
         atualiza: function () {
 
@@ -608,7 +831,7 @@ var labelTexto = {
             if (this.xb <= -opcoes.largura) {
                 insere_piso(this.pisos_b, 3)
                 this.xb += opcoes.largura
-                if (this.pisos_b.length > 2)
+                if (this.pisos_b.length > 4)
                     this.pisos_b.shift()
             }
 
@@ -616,7 +839,7 @@ var labelTexto = {
             if (this.xc <= -opcoes.largura) {
                 insere_piso(this.pisos_c, 2)
                 this.xc += opcoes.largura
-                if (this.pisos_c.length > 2)
+                if (this.pisos_c.length > 4)
                     this.pisos_c.shift()
             }
 
@@ -624,7 +847,7 @@ var labelTexto = {
             if (this.xf <= -opcoes.largura) {
                 insere_piso(this.pisos_f, 1)
                 this.xf += opcoes.largura
-                if (this.pisos_f.length > 2)
+                if (this.pisos_f.length > 4)
                     this.pisos_f.shift()
             }
         },
@@ -647,9 +870,11 @@ var labelTexto = {
         quantia_pixels: 0,
         inicia_evento: null,
         ultimo_evento: null,
+        evento_morte: null,
         transicoes_liquido_pendentes: [],
         termina_evento: null,
         iniciando_evento: null,
+        timer_inicio_evento: null,
         penultimo_evento: null,
         qtd_eventos: [10, 10, 10, 10],
         quantia_pixels_interno: 0,
@@ -698,7 +923,9 @@ var labelTexto = {
         eventos: function () {
             // Determina qual será o próximo evento aleatoriamente
             // Tempo aleatório que ficará ativo o evento
+            // this.inicia_evento = 1
             this.inicia_evento = Math.round(3 * Math.random())
+
             jogo.depuracao({ tls: "partida.comecando_evento", replace: translations[`evento.${this.id_eventos[this.inicia_evento]}`], color: "purple" })
 
             if (this.dificuldade != 0 && this.dificuldade != 3)
@@ -802,7 +1029,10 @@ var labelTexto = {
                     if (jogo.status == estados.jogando)
                         jogo.notifica({ tls: `evento.entrando_${this.id_eventos[this.inicia_evento]}`, color: "white" })
 
-                    setTimeout(() => {
+                    this.timer_inicio_evento = setTimeout(() => {
+                        this.timer_inicio_evento = null
+                        if (jogo.status != estados.jogando && jogo.status != estados.ocioso)
+                            return
 
                         eventos.evento = eventos.inicia_evento
 
@@ -833,6 +1063,8 @@ var labelTexto = {
         status: 0,
         estadoSom: 1,
         ociosidade: 1,
+        tempoOcioso: 10,
+        ociosidadePausada: 0,
         estadoOcioso: 0,
         contador_tempo: 0,
 
@@ -845,6 +1077,7 @@ var labelTexto = {
         temas_comprados: [0, 1],
         musica_tema: null,
         musica_tema_ocioso: null,
+        liquido_morte: null,
 
         largura_barra: 0,
         converte_barra: 0,
@@ -891,6 +1124,10 @@ var labelTexto = {
                 desliga_som2("faixa_ambiente", 2)
 
             this.status = estados.perdeu
+            this.liquido_morte = causa == 1 ? "agua" : causa == 3 ? "lava" : null
+            eventos.evento_morte = eventos.timer_inicio_evento !== null
+                ? null
+                : eventos.evento
 
             jogador.contador_mortes++
 
@@ -1059,17 +1296,20 @@ var labelTexto = {
             this.y += this.velocidade
 
             // Descendo na água ou lava
-            if (chao.pisos_c[0]?.type == 1) {
+            if (get_liquido_sob_jogador()) {
                 if (this.mod_em_uso == 1 && this.y >= 433)
                     jogo.gravidade = .3
 
                 if (jogo.status != estados.ocioso && this.mod_em_uso != 100 && !chao.altera_referencia)
                     jogador.chao_referencia = 650
                 // altera_chao_referencia(650) // Afunda o chão (em água / lava)
-            } else if (this.mod_em_uso != 100 && chao.pisos_c[0]?.type == 0) {
-                // if (!chao.altera_referencia)
-                // altera_chao_referencia(555)
-                jogador.chao_referencia = chao.y
+            } else if (this.mod_em_uso != 100) {
+                const progresso_saida = jogo.status == estados.ocioso
+                    ? null
+                    : get_progresso_saida_liquido()
+                jogador.chao_referencia = progresso_saida === null
+                    ? chao.y
+                    : 650 - (650 - chao.y) * progresso_saida
 
                 jogo.gravidade = 1.6
             }
@@ -1092,6 +1332,8 @@ var labelTexto = {
         },
 
         pula: function () {
+            if (canvas_pausado) return
+
             if (this.qtdPulos > 0 && (this.mod_em_uso == 100 || this.mod != 1)) {
                 this.pula_effect = 1 + Math.round(2 * Math.random())
                 executaSons2("faixa_efeitos2", "efeitos", `pulo${this.pula_effect}.ogg`, 2)
@@ -1111,6 +1353,7 @@ var labelTexto = {
         },
 
         modificador: function () {
+            if (canvas_pausado) return
 
             this.liberaMod = 1
 
@@ -1355,20 +1598,18 @@ var labelTexto = {
 
         atualiza: function () {
 
-            if (jogador.mod == 1 && jogador.mod_em_uso == 100 && jogador.y >= 432 && chao.pisos_c[1]?.type == 1)
+            if (jogador.mod == 1 && jogador.mod_em_uso == 100 && jogador.y >= 432 && chao.pisos_c[2]?.type == 1)
                 jogador.pula()
 
-            if (jogador.y >= 432 && chao.pisos_c[0]?.type == 1 && ((jogador.timer_mod == 5 && jogador.mods_comprados[1] == 0) || (jogador.timer_mod == 10 && jogador.mods_comprados[0] == 1) || (jogador.timer_mod == 5 && jogador.mods_comprados[1] == 1)))
-                if (jogo.status == estados.jogando || jogo.status == estados.tutorial) {
-                    if (jogador.mod == 0) {
-                        if (jogador.chao_referencia == 650 || chao.pisos_c[0]?.type == 1)
-                            jogo.perdeu(eventos.inicia_evento)
-                        else
-                            jogo.perdeu(0)
-
-                        jogo.gravidade = .3
-                    }
-                }
+            if (
+                jogador.y >= 432
+                && get_liquido_sob_jogador()
+                && pode_morrer_no_liquido()
+                && (jogo.status == estados.jogando || jogo.status == estados.tutorial)
+            ) {
+                jogo.perdeu(get_causa_morte_piso_visivel())
+                jogo.gravidade = .3
+            }
 
             if (this.tempoInsere == 0)
                 this.insere()
@@ -1418,10 +1659,7 @@ var labelTexto = {
                         if (obs.altura > 40 && obs.altura < 51)
                             pisao_neles()
                         else {
-                            if (jogador.chao_referencia == 650 || chao.pisos_c[0]?.type == 1)
-                                jogo.perdeu(eventos.evento)
-                            else
-                                jogo.perdeu(0)
+                            jogo.perdeu(0)
 
                             jogador.partida_predios_atropelados++
                             alteraValorEstatisticaPartida("quantidade_predios_partida", jogador.partida_predios_atropelados)
@@ -1497,10 +1735,25 @@ function main() {
 const FPS = 95
 const frameTime = 1000 / FPS
 let lastTime = 0
+let canvas_pausado = false
+
+function alterna_pausa_canvas() {
+    if (!canvas_pausado) {
+        canvas_pausado = true
+        pausa_performance_inicio = performance.now()
+        pausa_temporizadores()
+        return
+    }
+
+    pausa_data_acumulada += performance.now() - pausa_performance_inicio
+    pausa_performance_inicio = null
+    canvas_pausado = false
+    retoma_temporizadores()
+}
 
 function roda(time) {
 
-    if (time - lastTime >= frameTime) {
+    if (!canvas_pausado && time - lastTime >= frameTime) {
         atualiza()
         desenha()
         valores()
@@ -1562,15 +1815,7 @@ function desenha() {
         get_element("notifica_moeda").innerHTML = `$${jogador.moedas}`
         $("#notifica_moeda").fadeIn()
 
-        if (ambiente.astro[2] == 0)
-            opcoes.ctx.fillStyle = "rgba(0, 0, 0, .7)"
-        else
-            opcoes.ctx.fillStyle = "rgba(255, 255, 255, .7)"
-
         opcoes.ctx.font = "70px Minecraftia"
-
-        // Resumo da pontuação final do Jogador
-        opcoes.ctx.fillText(labelTexto.texto, opcoes.canvas.width / 2 - opcoes.ctx.measureText(labelTexto.texto).width / 2, opcoes.altura / 1.4 + 40)
 
         background_predios.desenha(0, 400)
 
@@ -1580,11 +1825,6 @@ function desenha() {
             opcoes.ctx.fillStyle = "#fff"
 
         opcoes.ctx.font = "40px Minecraftia"
-        if (jogador.partida_pontuacao < jogador.recorde) {
-
-            const texto_recorde = `${translations["partida.recorde_atual"]} ${jogador.recorde}`
-            opcoes.ctx.fillText(texto_recorde, opcoes.canvas.width / 2 - opcoes.ctx.measureText(texto_recorde).width / 2, opcoes.altura / 1.3 + 50)
-        }
 
         opcoes.ctx.save()
         opcoes.ctx.translate(opcoes.largura / 2, opcoes.altura / 2)
@@ -1602,17 +1842,24 @@ function desenha() {
 
     // Verifica se o jogador está ocioso e se a opção está ativa
     if (jogo.status == estados.jogar) {
-        if (!jogo.estadoOcioso && jogo.ociosidade && confirma_carregamento) {
+        if (!jogo.estadoOcioso && jogo.ociosidade && !jogo.ociosidadePausada && confirma_carregamento && !menus.estado_loja && !menus.estado_log) {
 
             jogo.estadoOcioso = 1
-            jogo.depuracao({ tls: "depuracao.ociosidade_iniciando", color: "green" })
+            jogo.depuracao({ tls: "depuracao.ociosidade_iniciando", replace: jogo.tempoOcioso, color: "green" })
 
             contagemOcioso = setTimeout(() => {
+                if (jogo.status != estados.jogar || !jogo.ociosidade || jogo.ociosidadePausada || !confirma_carregamento || menus.estado_loja || menus.estado_log) {
+                    jogo.estadoOcioso = 0
+                    contagemOcioso = null
+                    return
+                }
+
                 jogo.status = estados.ocioso
 
                 estadoOcioso("auto")
                 clearTimeout(contagemOcioso)
-            }, 10000)
+                contagemOcioso = null
+            }, jogo.tempoOcioso * 1000)
         }
     }
 
@@ -1631,4 +1878,34 @@ function desenha() {
 
     propsfrente.desenha()
     desenha_chuva()
+
+    if (jogo.status == estados.perdeu && !menus.estatistica_morte) {
+        opcoes.ctx.save()
+        opcoes.ctx.font = "70px Minecraftia"
+
+        if (labelTexto.novoRecorde) {
+            const texto_novo_recorde = translations["partida.novo_recorde"].replace("auto_repl", jogador.partida_pontuacao)
+            const x_texto_recorde = opcoes.canvas.width / 2 - opcoes.ctx.measureText(texto_novo_recorde).width / 2
+            const y_texto_recorde = opcoes.altura / 1.4 + 40
+            opcoes.ctx.fillStyle = ambiente.astro[2] == 0 ? "black" : "#fff"
+            opcoes.ctx.fillText(texto_novo_recorde, x_texto_recorde, y_texto_recorde)
+        } else {
+            const x_texto_morte = opcoes.canvas.width / 2 - opcoes.ctx.measureText(labelTexto.texto).width / 2
+            const y_texto_morte = opcoes.altura / 1.4 + 40
+            opcoes.ctx.fillStyle = ambiente.astro[2] == 0
+                ? "rgba(0, 0, 0, .7)"
+                : "rgba(255, 255, 255, .7)"
+            opcoes.ctx.fillText(labelTexto.texto, x_texto_morte, y_texto_morte)
+        }
+
+        if (!labelTexto.novoRecorde && jogador.partida_pontuacao <= jogador.recorde) {
+            const texto_recorde = `${translations["partida.recorde_atual"]} ${jogador.recorde}`
+            opcoes.ctx.font = "40px Minecraftia"
+            const x_texto_recorde = opcoes.canvas.width / 2 - opcoes.ctx.measureText(texto_recorde).width / 2
+            opcoes.ctx.fillStyle = ambiente.astro[2] == 0 ? "black" : "#fff"
+            opcoes.ctx.fillText(texto_recorde, x_texto_recorde, opcoes.altura / 1.3 + 50)
+        }
+
+        opcoes.ctx.restore()
+    }
 }

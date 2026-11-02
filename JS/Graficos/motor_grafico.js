@@ -355,20 +355,24 @@ function verifica_animacoes(condicao) {
         voltaAnimacao()
 }
 
+let temporizador_texto = null
+
+function cancela_texto() {
+    if (temporizador_texto === null) return
+
+    clearInterval(temporizador_texto)
+    temporizador_texto = null
+}
+
 function showtext(el, text, local) {
+    cancela_texto()
 
-    let typer
+    if (local == 0)
+        limpa = get_element("texto_historia")
+    else
+        limpa = get_element("frase_tuto_em_game")
 
-    if (typeof typer != "interval") {
-        clearInterval(typer)
-
-        if (local == 0)
-            limpa = get_element("texto_historia")
-        else
-            limpa = get_element("frase_tuto_em_game")
-
-        limpa.innerHTML = ""
-    }
+    limpa.innerHTML = ""
 
     if (local == 1) {
         tuto = get_element("avancar_tuto")
@@ -377,15 +381,18 @@ function showtext(el, text, local) {
 
     let char = text.split("").reverse()
 
-    typer = setInterval(() => {
+    temporizador_texto = setInterval(() => {
 
         if (!char.length) {
+            clearInterval(temporizador_texto)
+            temporizador_texto = null
+
             if (local == 0)
                 historia(null, 1)
             else
                 executa_tutorial(1, null)
 
-            return clearInterval(typer)
+            return
         }
 
         let next = char.pop()

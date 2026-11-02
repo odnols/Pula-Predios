@@ -28,8 +28,9 @@
 
 	#configuracoes {
 		top: 25%;
-		width: 70%;
-		height: 50%;
+		width: 60%;
+        left: 20%;
+		height: 55%;
 	}
 
 	#opcoes {
@@ -111,6 +112,99 @@
 /* telas com largura entre 0px e 767px  980 Celulares */
 @media only screen and (min-width: 0px) and (max-width: 720px) {
 
+	#config_sons {
+		top: 22%;
+		left: 2%;
+		right: 2%;
+		padding: 8px;
+	}
+
+	#config_sons.config_sons_inicio {
+		top: 50%;
+		left: 50%;
+		right: auto;
+		bottom: auto;
+		width: calc(100vw - 24px);
+		max-height: calc(100vh - 24px);
+		padding: 48px 12px 12px;
+		transform: translate(-50%, -50%);
+	}
+
+	#controle_som {
+		grid-template-columns: minmax(0, 1fr);
+		grid-template-rows: auto;
+		gap: 8px;
+	}
+
+	.controles_volume_som,
+	.preferencias_musica {
+		gap: 4px;
+		padding: 0 2px;
+	}
+
+	.preferencias_card_musica {
+		grid-column: 1;
+		grid-template-columns: minmax(0, 1fr);
+		gap: 4px;
+		padding: 8px 2px 0;
+	}
+
+	.opcao_som {
+		grid-template-columns: minmax(75px, 1fr) minmax(70px, 2fr) 40px;
+		gap: 6px;
+		padding: 0 2px;
+	}
+
+	.opcao_som h3,
+	.valor_volume {
+		font-size: 14px;
+	}
+
+	.estado_som {
+		gap: 6px;
+		margin: 2px 0;
+		font-size: 14px;
+		line-height: 28px;
+	}
+
+	.preferencias_card_musica .estado_som span {
+		white-space: normal;
+	}
+
+	#config_sons .config_duracao_card_musica {
+		grid-template-columns: minmax(0, 1fr) 42px;
+	}
+
+	#config_sons .config_duracao_card_musica h3 {
+		grid-column: 1 / -1;
+	}
+
+	#config_sons .estado_som .button_opcoes {
+		height: 30px;
+		min-height: 30px;
+		padding: 2px 8px;
+	}
+
+	.selecao_musicas {
+		gap: 4px;
+	}
+
+	.selecao_musicas select {
+		height: 30px;
+		padding: 2px;
+		font-size: 13px;
+	}
+
+	.selecao_musica_linha {
+		grid-template-columns: minmax(0, 1fr) minmax(105px, .75fr);
+		gap: 6px;
+	}
+
+	.selecao_musica_linha span {
+		font-size: 12px;
+		white-space: normal;
+	}
+
 	#fimdejogo {
 		font-size: 20px;
 	}
@@ -147,5 +241,41 @@
 
 	#placeholder_conquista {
 		grid-template-columns: auto auto auto auto auto auto;
+	}
+
+	#conquistas {
+		top: 12%;
+		left: 50%;
+		right: auto;
+		bottom: auto;
+		width: 72px;
+		height: 72px;
+		padding: 8px;
+		transform: translate(-50%, calc(-100% - 12px));
+	}
+
+	#conquistas.visivel {
+		transform: translate(-50%, 0);
+	}
+
+	#conquistas.expandido {
+		gap: 12px;
+		width: min(420px, calc(100vw - 24px));
+		height: 84px;
+		padding: 12px 14px;
+	}
+
+	img#trofeu {
+		flex-basis: 48px;
+		width: 48px;
+		height: 48px;
+	}
+
+	#tipo_conquista {
+		font-size: 12px;
+	}
+
+	#nome_conquista {
+		font-size: 14px;
 	}
 }

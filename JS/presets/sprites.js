@@ -230,46 +230,92 @@ const presets = {
         montanha_fundo: { x: 0, y: 480 },
         montanha_frente: { x: 0, y: 510 }
     },
+    'transita_ilha1': {
+        sprite: spriteTransitaMontanha1,
+        sprite_noite: spriteTransitaMontanha1_noite,
+        imagem_dia: 'img_transicoes_dia',
+        x: 0,
+        montanha_fundo: { x: 0, y: 480 }
+    },
+    'transita_ilha2': {
+        sprite: spriteTransitaMontanha2,
+        sprite_noite: spriteTransitaMontanha2_noite,
+        imagem_dia: 'img_transicoes_dia',
+        x: 0,
+        montanha_fundo: { x: 0, y: 480 }
+    },
+    'transita_ilha_cidade1': {
+        sprite: spriteTransitaMontanha1,
+        sprite_noite: spriteTransitaMontanha1_noite,
+        imagem_dia: 'img_transicoes_dia',
+        x: 0,
+        cidade: { x: 0, y: 500 }
+    },
+    'transita_ilha_cidade2': {
+        sprite: spriteTransitaMontanha2,
+        sprite_noite: spriteTransitaMontanha2_noite,
+        imagem_dia: 'img_transicoes_dia',
+        x: 0,
+        cidade: { x: 0, y: 500 }
+    },
     'transita_chao1': {
         sprite: spriteTransitaChao1,
         sprite_noite: spriteTransitaChao1_noite,
         imagem_dia: 'img_transicoes_dia',
         x: 0,
-        y: 0
+        y: 0,
+        chao_frente: { x: 0, y: -15 },
+        chao_meio: { x: 0, y: -15 },
+        chao_fundo: { x: 0, y: -15 }
     },
     'transita_chao2': {
         sprite: spriteTransitaChao2,
         sprite_noite: spriteTransitaChao2_noite,
         imagem_dia: 'img_transicoes_dia',
         x: 0,
-        y: 0
+        y: 0,
+        chao_frente: { x: 0, y: -15 },
+        chao_meio: { x: 0, y: -15 },
+        chao_fundo: { x: 0, y: -15 }
     },
     'transita_areia1': {
         sprite: spriteTransitaAreia1,
         sprite_noite: spriteTransitaAreia1_noite,
         imagem_noite: 'img_transita_areia1_noite',
         x: 0,
-        y: 0
+        y: 0,
+        chao_frente: { x: 0, y: -15 },
+        chao_meio: { x: 0, y: -15 },
+        chao_fundo: { x: 0, y: -15 }
     },
     'transita_areia2': {
         sprite: spriteTransitaAreia2,
         sprite_noite: spriteTransitaAreia2_noite,
         imagem_noite: 'img_transita_areia2_noite',
         x: 0,
-        y: 0
+        y: 0,
+        chao_frente: { x: 0, y: -15 },
+        chao_meio: { x: 0, y: -15 },
+        chao_fundo: { x: 0, y: -15 }
     },
     'transita_grama_areia': {
         sprite: spriteTransitaGramaAreiaDia,
         sprite_noite: spriteTransitaGramaAreiaNoite,
         imagem_noite: 'img_transita_grama_areia_noite',
         x: 0,
-        y: 0
+        y: 0,
+        chao_frente: { x: 0, y: 0 },
+        chao_meio: { x: 0, y: 0 },
+        chao_fundo: { x: 0, y: 0 }
     },
     'transicao_grama_areia': {
         sprite: spriteTransitaGramaAreiaDia,
         sprite_noite: spriteTransitaGramaAreiaNoite,
         imagem_noite: 'img_transita_grama_areia_noite',
         x: 0,
-        y: 0
+        y: 0,
+        chao_frente: { x: 0, y: 0 },
+        chao_meio: { x: 0, y: 0 },
+        chao_fundo: { x: 0, y: 0 }
     }
 }

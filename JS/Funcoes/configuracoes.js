@@ -7,6 +7,7 @@ function sincronizaBotoesConfigs(valor) {
     sincronizaCardMusica()
     sincronizaDificuldade()
     sincronizaOciosidade()
+    sincronizaTempoOcioso()
     sincronizaQualidadeGrafica()
     sincronizaChuva()
     sincronizaClaroesChuva()
@@ -15,29 +16,22 @@ function sincronizaBotoesConfigs(valor) {
 
 function alteraEstadoSom() {
 
-    let canais_de_audio = ["faixa_musicas", "faixa_ambiente", "faixa_conquistas", "faixa_pisoes", "faixa_memes1", "faixa_memes2", "faixa_efeitos1", "faixa_efeitos2", "faixa_efeitos3"]
-
     if (jogo.estadoOcioso)
         impedeOcioso()
 
     if (jogo.estadoSom) {
         jogo.estadoSom = 0
-        fecha_card_musica()
 
-        // Pausa todos os sons que possam estar sendo executados no momento
-        for (let i = 0; i < canais_de_audio.length; i++) {
-            let pausa_som = get_element(canais_de_audio[i])
-            pausa_som.pause()
-        }
+        pausa_canais_som(1)
+        pausa_canais_som(2)
+        pausa_canais_som(3)
 
         get_element("status_volume_som").innerHTML = translations["botao.desativado"]
-        get_element("status_volume_som_2").innerHTML = translations["botao.desativado"]
 
     } else {
 
         jogo.estadoSom = 1
         get_element("status_volume_som").innerHTML = translations["botao.ativado"]
-        get_element("status_volume_som_2").innerHTML = translations["botao.ativado"]
 
         if (Math.round(2 * Math.random()) > 1)
             executaSons("faixa_musicas", "musicas", "intro_2.ogg", 1)
@@ -51,10 +45,8 @@ function alteraEstadoSom() {
 function sincronizaEfeitosSom() {
     if (jogo.estadoSom == 1) {
         get_element("status_volume_som").innerHTML = translations["botao.ativado"]
-        get_element("status_volume_som_2").innerHTML = translations["botao.ativado"]
     } else {
         get_element("status_volume_som").innerHTML = translations["botao.desativado"]
-        get_element("status_volume_som_2").innerHTML = translations["botao.desativado"]
     }
 }
 
@@ -168,6 +160,7 @@ function alteraNotificacoesConquistas() {
     } else {
         jogo.notificaConquista = 0
         get_element("status_conquistas_notifc").innerHTML = translations["botao.desativado"]
+        ocultaAvisoConquista()
     }
 
     localStorage.setItem("pul4Pr3dios-notificaConquistas", jogo.notificaConquista)
@@ -202,8 +195,8 @@ function sincronizaCardMusica() {
 function alteraDuracaoCardMusica(valor) {
     const duracao = Number(valor)
     jogo.duracaoCardMusica = String(valor).trim() !== "" && Number.isFinite(duracao)
-        ? Math.max(1, Math.min(15, Math.floor(duracao)))
-        : 5
+        ? Math.max(5, Math.min(15, Math.floor(duracao)))
+        : 7
 
     localStorage.setItem("pul4Pr3dios-duracaoCardMusica", jogo.duracaoCardMusica)
     sincronizaCardMusica()
@@ -360,6 +353,23 @@ function sincronizaOciosidade() {
         jogo.depuracao({ tls: "depuracao.ocioso_ativo", color: "green" })
     } else
         get_element("status_modo_ocioso").innerHTML = translations["botao.desativado"]
+}
+
+function sincronizaTempoOcioso() {
+    get_element("tempo_modo_ocioso").value = jogo.tempoOcioso
+    get_element("valor_tempo_modo_ocioso").textContent = `${jogo.tempoOcioso}s`
+}
+
+function alteraTempoOcioso(valor) {
+    const tempo = Number(valor)
+    jogo.tempoOcioso = String(valor).trim() !== "" && Number.isFinite(tempo)
+        ? Math.max(5, Math.min(30, Math.floor(tempo)))
+        : 10
+
+    localStorage.setItem("pul4Pr3dios-tempoOcioso", jogo.tempoOcioso)
+    if (jogo.estadoOcioso)
+        impedeOcioso()
+    sincronizaTempoOcioso()
 }
 
 function sincronizaModificadoresComprados(requisicao_auto) {

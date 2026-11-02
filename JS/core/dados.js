@@ -196,33 +196,7 @@ function carrega_dados() {
     else
         hist_lava = parseInt(hist_lava)
 
-    // Sincroniza o Volume da Música
-    volMusica = localStorage.getItem("pul4Pr3dios-volMusica")
-    if (volMusica == null)
-        volMusica = 50
-
-    carrega_volume(volMusica, 1)
-
-    // Sincroniza o Volume dos Efeitos
-    volEfeitos = localStorage.getItem("pul4Pr3dios-volEfeito")
-    if (volEfeitos == null)
-        volEfeitos = 50
-
-    carrega_volume(volEfeitos, 2)
-
-    // Sincroniza o Volume dos Memes
-    volMemes = localStorage.getItem("pul4Pr3dios-volMemes")
-    if (volMemes == null)
-        volMemes = 50
-
-    carrega_volume(volMemes, 3)
-
-    efeitosSom = localStorage.getItem("pul4Pr3dios-efeitosSom")
-    if (efeitosSom == null)
-        efeitosSom = 1
-    else
-        jogo.estadoSom = parseInt(efeitosSom)
-
+    carrega_configuracoes_som()
 
     // Sincroniza animação de morte
     menus.estatistica_morte = localStorage.getItem("pul4Pr3dios-estatisticaMorte")
@@ -255,15 +229,6 @@ function carrega_dados() {
     else
         jogo.notificaConquista = parseInt(notificacoesConquistas)
 
-    const exibeCardMusica = localStorage.getItem("pul4Pr3dios-exibeCardMusica")
-    jogo.exibeCardMusica = exibeCardMusica == null ? 1 : parseInt(exibeCardMusica)
-
-    const duracaoCardMusicaSalva = localStorage.getItem("pul4Pr3dios-duracaoCardMusica")
-    const duracaoCardMusica = Number(duracaoCardMusicaSalva)
-    jogo.duracaoCardMusica = duracaoCardMusicaSalva != null && Number.isFinite(duracaoCardMusica)
-        ? Math.max(5, Math.min(15, Math.floor(duracaoCardMusica)))
-        : 7
-
     qualidadeGraficos = localStorage.getItem("pul4Pr3dios-qualidadeGrafica")
     if (qualidadeGraficos == null)
         jogo.qualidadeGrafica = 1
@@ -292,9 +257,15 @@ function carrega_dados() {
     // Sincroniza a configuração de ociosidade
     ociosidade = localStorage.getItem("pul4Pr3dios-ociosidade")
     if (ociosidade == null)
-        jogo.ociosidade = 0
+        jogo.ociosidade = 1
     else
         jogo.ociosidade = parseInt(ociosidade)
+
+    const tempoOciosoSalvo = localStorage.getItem("pul4Pr3dios-tempoOcioso")
+    const tempoOcioso = Number(tempoOciosoSalvo)
+    jogo.tempoOcioso = tempoOciosoSalvo != null && Number.isFinite(tempoOcioso)
+        ? Math.max(5, Math.min(30, Math.floor(tempoOcioso)))
+        : 10
 
     // Sincroniza a configuração do paralaxe do menu
     parallax = localStorage.getItem("pul4Pr3dios-menu_parallax")
@@ -419,15 +390,6 @@ function carrega_dados() {
 
     sincronizaConquistas()
 
-    // Sincroniza a musica tema principal
-    musicaTema = localStorage.getItem("pul4Pr3dios-temaMusica")
-    jogo.musica_tema = musicaTema ? `${musicaTema}.ogg` : "random"
-    get_element("seleciona_tema").value = jogo.musica_tema.replace(".ogg", "")
-
-    musicaTemaOcioso = localStorage.getItem("pul4Pr3dios-temaOcioso")
-    jogo.musica_tema_ocioso = musicaTemaOcioso ? `${musicaTemaOcioso}.ogg` : "random"
-    get_element("seleciona_ocioso").value = jogo.musica_tema_ocioso.replace(".ogg", "")
-
     temaAtivo = localStorage.getItem("pul4Pr3dios-temaAtivo")
     if (temaAtivo == null)
         jogo.tema_ativo = 1
@@ -508,6 +470,18 @@ function carrega_dados() {
 
 function reseta() {
 
+    prepara_chao_pos_morte(jogo.liquido_morte)
+    jogo.liquido_morte = null
+
+    get_element("canvas").classList.remove("fundo_desfocado_morte")
+    labelTexto.novoRecorde = false
+    const mensagem_novo_recorde = get_element("novo_recorde_morte")
+    mensagem_novo_recorde.classList.remove("visivel", "novo-recorde", "sem-recorde")
+    mensagem_novo_recorde.setAttribute("aria-hidden", "true")
+    const texto_morte = get_element("mensagem_morte_texto")
+    texto_morte.classList.remove("frase-morte-onda")
+    texto_morte.textContent = ""
+    get_element("recorde_atual_morte").textContent = ""
     $("#versao_texto").fadeIn()
     $(".pulos_trad").fadeOut()
     $("#qtdPulos").fadeOut()
@@ -577,9 +551,7 @@ function reseta() {
     sincronizaConquistas()
     encerra_modificador()
 
-    // Encerra a função que soma pontos à partida
-    if (typeof somador != "undefined")
-        clearInterval(somador)
+    finaliza_soma_pontuacao()
 
     reseta_pontuacao()
 
@@ -604,6 +576,7 @@ function reseta() {
     obstaculos.qtdObjetos = 0
 
     eventos.evento = null
+    eventos.evento_morte = null
     eventos.inicia_evento = null
     eventos.transicoes_liquido_pendentes = []
 
@@ -638,17 +611,51 @@ function reseta() {
     clearTimeout(eventos.tempo_evento)
     clearTimeout(eventos.ativa_evento)
 
-    sincroniza_api() // Sincronizando com a API
+    // sincroniza_api() // Sincronizando com a API
 }
 
 function apagaDados(valor) {
 
-    // Apagando todos os dados armazenados em cache no navegador
-
     if (valor) {
         executaSons2("faixa_memes2", "memes", "sumiu.ogg", 1)
 
-        localStorage.clear()
+        const dados_para_apagar = [
+            "recorde",
+            "qtdDistancia",
+            "qtdTempoJogado",
+            "qtdPulos",
+            "qtdPontos",
+            "qtdMods",
+            "tempoFlutuando",
+            "qtdMortes",
+            "qtdPisoes",
+            "moedas",
+            "moedasGastas",
+            "moedasColetadas",
+            "eventosConcluidos",
+            "tempoEventos",
+            "qtdEventoCidade",
+            "qtdEventoParque",
+            "qtdEventoAgua",
+            "qtdEventoLava",
+            "lista_conquistas_ganhas",
+            "skinAtual",
+            "skinsCompradas",
+            "modsComprados",
+            "modsCompradosUsados",
+            "modEmUso",
+            "bonusComprados",
+            "bonusVezesUsados",
+            "temaAtivo",
+            "temasComprados",
+            "tt_skins_compradas",
+            "tt_mods_comprados",
+            "tt_bonus_comprados"
+        ]
+
+        dados_para_apagar.forEach(dado => localStorage.removeItem(`pul4Pr3dios-${dado}`))
+
+        $("#estatisticas").fadeOut()
 
         carrega_dados()
         sincronizaQuadroConquistas()
