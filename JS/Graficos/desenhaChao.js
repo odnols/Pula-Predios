@@ -80,6 +80,66 @@ function get_liquido_sob_jogador() {
     return get_tipo_piso_liquido(piso)
 }
 
+// Áreas (em tela) ocupadas por lava nas camadas do meio e da frente
+function get_areas_lava() {
+    const largura = opcoes.largura
+    const areas = []
+    const camadas = [
+        { pisos: chao.pisos_c, x: chao.xc, desnivel_y: 0 },
+        { pisos: chao.pisos_f, x: chao.xf, desnivel_y: 15 }
+    ]
+
+    camadas.forEach(({ pisos, x, desnivel_y }) => {
+        const indice_atual = pisos.length >= 4 ? 1 : 0
+
+        pisos.forEach((piso, i) => {
+            if (piso?.nome !== "lava") return
+
+            const inicio = Math.round(Math.round(x) + (i - indice_atual) * largura)
+            const transicao_entrada = piso.transicao_entrada === "transita_areia1"
+                || piso.transicao_entrada === "transita_chao1"
+            const possui_transicao_saida = Boolean(get_tipo_piso_saida_liquido(pisos[i + 1]))
+            const x_inicio = inicio + (transicao_entrada ? limites_transicoes_liquido.entrada : 0)
+            const x_fim = inicio + (possui_transicao_saida ? limites_transicoes_liquido.saida : largura)
+            // A camada da frente só cobre a sombra abaixo da superfície da lava
+            const y_inicio = desnivel_y ? piso.y + desnivel_y : 0
+
+            areas.push([x_inicio, y_inicio, x_fim - x_inicio, opcoes.canvas.height - y_inicio])
+        })
+    })
+
+    return areas
+}
+
+let canvas_sombra_jogador = null
+
+function desenha_sombra_jogador() {
+    const areas = get_areas_lava()
+    const x = jogador.x - 48
+    const y = 1000 - jogador.y
+
+    if (!areas.length) {
+        spriteSombraJogador.desenha(x, y)
+        return
+    }
+
+    // Desenha a sombra à parte para remover só as áreas de lava, sem reexibir sobreposições
+    const ctx_principal = opcoes.ctx
+    if (!canvas_sombra_jogador)
+        canvas_sombra_jogador = document.createElement("canvas")
+    canvas_sombra_jogador.width = opcoes.canvas.width
+    canvas_sombra_jogador.height = opcoes.canvas.height
+
+    const ctx_sombra = canvas_sombra_jogador.getContext("2d")
+    opcoes.ctx = ctx_sombra
+    spriteSombraJogador.desenha(x, y)
+    opcoes.ctx = ctx_principal
+
+    ctx_sombra.globalCompositeOperation = "destination-out"
+    areas.forEach(area => ctx_sombra.fillRect(...area))
+    ctx_principal.drawImage(canvas_sombra_jogador, 0, 0)
+}
+
 function get_progresso_saida_liquido() {
     const largura = opcoes.largura
     const centro_jogador = jogador.x + jogador.largura / 2
@@ -117,11 +177,14 @@ function prepara_chao_pos_morte(tipo_liquido) {
         ? ["#31d8ff", "#13a8e8", "#b7f6ff", "#2270d4"]
         : ["#ff4a12", "#ff8c1a", "#ffd45a", "#d52d0b"]
     const agora = performance.now()
+    // A explosão cobre a tela e o próximo bloco, que entra na tela conforme o chão avança
+    const largura_total = opcoes.canvas.width + opcoes.largura
+    const quantidade = Math.round(180 * largura_total / opcoes.canvas.width)
     chao.efeito_explosao_liquido = {
         atualizacao: agora,
         deslocamento_chao: chao.xc,
-        particulas: Array.from({ length: 180 }, () => ({
-            x: Math.random() * opcoes.canvas.width,
+        particulas: Array.from({ length: quantidade }, () => ({
+            x: Math.random() * largura_total,
             y: y + 15 + Math.random() * 12,
             velocidade_x: (Math.random() - 0.5) * 5,
             velocidade_y: -2 - Math.random() * 6,
@@ -151,6 +214,12 @@ function desenha_explosao_liquido() {
     opcoes.ctx.save()
 
     efeito.particulas = efeito.particulas.filter((particula) => {
+        // Partículas dos blocos ainda fora da tela só acompanham o chão até entrarem
+        if (particula.x > opcoes.canvas.width) {
+            particula.x += deslocamento_chao
+            return true
+        }
+
         particula.x += particula.velocidade_x * delta + deslocamento_chao
         particula.y += particula.velocidade_y * delta
         particula.velocidade_y += particula.gravidade * delta

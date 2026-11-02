@@ -589,7 +589,7 @@ function estadoOcioso(caso) {
 // Impede que o jogo entre no modo ocioso
 function impedeOcioso() {
 
-    if (jogo.ociosidade != jogo.estadoOcioso)
+    if (jogo.estadoOcioso)
         jogo.depuracao({ tls: "depuracao.ocioso_desativado", color: "green" })
 
     jogo.estadoOcioso = 0
@@ -931,18 +931,20 @@ function finaliza_soma_pontuacao() {
 
 function reseta_pontuacao() {
 
+    if (typeof zerador != "undefined")
+        clearInterval(zerador)
+
+    // O passo cresce com a pontuação para que o zeramento dure no máximo ~0,4s
     zerador = setInterval(() => {
+        const passo = Math.max(1, Math.ceil(Math.abs(jogador.partida_pontuacao) / 16))
 
         if (jogador.partida_pontuacao > 0)
-            jogador.partida_pontuacao--
+            jogador.partida_pontuacao = Math.max(0, jogador.partida_pontuacao - passo)
+        else if (jogador.partida_pontuacao < 0)
+            jogador.partida_pontuacao = Math.min(0, jogador.partida_pontuacao + passo)
 
-        if (jogador.partida_pontuacao < 0)
-            jogador.partida_pontuacao++
-
-        if (jogador.partida_pontuacao == 0) {
-            jogador.partida_pontuacao = 0
+        if (jogador.partida_pontuacao == 0)
             clearInterval(zerador)
-        }
     }, 25)
 }
 
@@ -1322,6 +1324,9 @@ function verifica_selecionado(local) {
 
     if (faixa == "random") {
         const tipo_musica = local === "seleciona_tema" ? "main" : "ocioso"
+        if (local === "seleciona_tema") jogo.musica_tema = "random"
+        else jogo.musica_tema_ocioso = "random"
+
         selecao = escolhe_musica_aleatoria(tipo_musica).replace(".ogg", "")
     } else
         if (local === "seleciona_tema") jogo.musica_tema = `${selecao}.ogg`

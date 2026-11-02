@@ -207,19 +207,15 @@ function alteraQualidadeGrafica() {
 
     if (jogo.qualidadeGrafica == 0) {
         jogo.qualidadeGrafica = 1
-
         get_element("status_animacoes").innerHTML = translations["botao.aprimorada"]
-        location.reload()
-    } else if (jogo.qualidadeGrafica == 1) {
-        jogo.qualidadeGrafica = 2
-
-        get_element("status_animacoes").innerHTML = translations["botao.fantastica"]
-        location.reload()
     } else {
         jogo.qualidadeGrafica = 0
-
         get_element("status_animacoes").innerHTML = translations["botao.minima"]
+        chuva.para()
     }
+
+    if (jogo.qualidadeGrafica != 0)
+        chuva.agenda()
 
     localStorage.setItem("pul4Pr3dios-qualidadeGrafica", jogo.qualidadeGrafica)
     sincronizaQualidadeGrafica()
@@ -242,10 +238,7 @@ function sincronizaQualidadeGrafica() {
 
         verifica_animacoes(1)
 
-        if (jogo.qualidadeGrafica == 1)
-            get_element("status_animacoes").innerHTML = translations["botao.aprimorada"]
-        else
-            get_element("status_animacoes").innerHTML = translations["botao.fantastica"]
+        get_element("status_animacoes").innerHTML = translations["botao.aprimorada"]
 
         if (jogo.estatisticasNerds)
             jogo.depuracao({ tls: "depuracao.ligando_animacoes" })

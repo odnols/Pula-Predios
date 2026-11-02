@@ -348,8 +348,8 @@ var labelTexto = {
             if (this.astro[0] > 650 && this.astro[0] < 920) {
                 if (this.astro[3] == 0 && this.astro[0] > 900 && this.astro[2] == 1) {
 
-                    if (jogo.qualidadeGrafica == 2)
-                        get_element("filtro").style.animation = "amanhecer 20s"
+                    if (jogo.qualidadeGrafica != 0)
+                        get_element("filtro").style.animation = "amanhecer 20s ease-in-out"
 
                     this.astro[3] = 1
                     transita_tempo(0) // Amanhecer
@@ -358,8 +358,8 @@ var labelTexto = {
 
                 if (this.astro[3] == 0 && this.astro[0] > 900 && this.astro[2] == 0) {
 
-                    if (jogo.qualidadeGrafica == 2)
-                        get_element("filtro").style.animation = "entardecer 20s"
+                    if (jogo.qualidadeGrafica != 0)
+                        get_element("filtro").style.animation = "entardecer 20s ease-in-out"
 
                     this.astro[3] = 1
                     transita_tempo(1) // Anoitecer
@@ -752,7 +752,20 @@ var labelTexto = {
         desenha: function () {
 
             if (this.astro[2] == 0) {
-                spriteSol.desenha(this.astro[0], this.astro[1])
+                // Quanto mais perto do horizonte, mais alaranjado/avermelhado fica o sol
+                const proximidade = jogo.qualidadeGrafica != 0
+                    ? Math.max(0, Math.min(1, (this.astro[1] - 90) / 130))
+                    : 0
+                const suave = proximidade * proximidade * (3 - 2 * proximidade)
+
+                if (suave > 0.01) {
+                    opcoes.ctx.save()
+                    opcoes.ctx.filter = `hue-rotate(${-62 * suave}deg) saturate(${1 + 2.2 * suave}) brightness(${1 - 0.12 * suave})`
+                    spriteSol.desenha(this.astro[0], this.astro[1])
+                    opcoes.ctx.restore()
+                } else
+                    spriteSol.desenha(this.astro[0], this.astro[1])
+
                 spriteSol.globalAlpha = 1
             } else {
                 spriteLua.desenha(this.astro[0], this.astro[1])
@@ -794,8 +807,9 @@ var labelTexto = {
 
             transitador("ceu_noite", 0, 0)
 
-            if (ambiente.astro[2] == 0 && chuva.ativa) {
-                const opacidade = 0.04 + Math.min(chuva.intensidade, 1) * 0.14
+            const nevoa = background_predios.fator_nevoa_chuva_atual
+            if (ambiente.astro[2] == 0 && nevoa > 0.001) {
+                const opacidade = 0.18 * nevoa
                 opcoes.ctx.save()
                 opcoes.ctx.fillStyle = `rgba(20, 30, 45, ${opacidade})`
                 opcoes.ctx.fillRect(0, 0, opcoes.canvas.width, opcoes.canvas.height)
@@ -1338,6 +1352,9 @@ var labelTexto = {
                 this.pula_effect = 1 + Math.round(2 * Math.random())
                 executaSons2("faixa_efeitos2", "efeitos", `pulo${this.pula_effect}.ogg`, 2)
 
+                // A força lunar só vale enquanto o modificador estiver ativo
+                const lunar_ativo = this.mod_em_uso == 100 && this.mod == 1
+                this.forcaDoPulo = lunar_ativo ? 18 : 23.6
                 this.velocidade = -this.forcaDoPulo
                 this.qtdPulos--
                 this.partida_pulos_dados++

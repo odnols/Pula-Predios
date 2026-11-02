@@ -4,6 +4,8 @@ var background_predios = {
     indice_bloco_atual: 1,
     fator_nevoa_chuva_atual: 0,
     ultima_atualizacao_nevoa: 0,
+    fumaca: [],
+    ultima_fumaca: 0,
     ilhas_por_camada: {
         montanha_fundo: null,
         cidade: null
@@ -103,7 +105,9 @@ var background_predios = {
 
         const agora = Date.now()
         const variante = chuva.ativa ? chuva : chuva.proxima_variante
-        if (!variante || !["torrencial", "temporal"].includes(variante.tipo)) return 0
+        const pesos_tipo = { chuva: 0.45, torrencial: 0.8, temporal: 1 }
+        const peso = variante ? pesos_tipo[variante.tipo] : 0
+        if (!peso) return 0
 
         const suave = progresso => {
             const limitado = Math.max(0, Math.min(1, progresso))
@@ -112,15 +116,15 @@ var background_predios = {
 
         if (!chuva.ativa)
             return chuva.inicio_previsto
-                ? suave(1 - (chuva.inicio_previsto - agora) / 25000)
+                ? peso * suave(1 - (chuva.inicio_previsto - agora) / 25000)
                 : 0
 
-        const rampa_entrada = suave((agora - chuva.inicio) / 12000)
+        // A névoa já vem subindo desde antes da chuva começar, então não reinicia a rampa
         const progresso_saida = chuva.encerrando
             ? 1 - (agora - chuva.inicio_encerramento) / chuva.duracao_encerramento_ms
             : (chuva.duracao_ms - chuva.duracao_fade_ms - (agora - chuva.inicio)) / chuva.duracao_fade_ms
 
-        return rampa_entrada * suave(progresso_saida)
+        return peso * suave(progresso_saida)
     },
 
     atualiza_nevoa_chuva: function () {
@@ -128,7 +132,7 @@ var background_predios = {
         const delta = this.ultima_atualizacao_nevoa
             ? Math.min(agora - this.ultima_atualizacao_nevoa, 100)
             : 0
-        const progresso = Math.min(delta / 5000, 1)
+        const progresso = 1 - Math.exp(-delta / 2500)
         const alvo = this.fator_nevoa_chuva()
 
         this.fator_nevoa_chuva_atual += (alvo - this.fator_nevoa_chuva_atual) * progresso
@@ -281,6 +285,134 @@ var background_predios = {
         }
     },
 
+    // Tipo de líquido ("agua", "lava" ou null) da camada na posição x da tela
+    get_liquido_camada_em_x: function (camada, x_camada, x) {
+        const largura = opcoes.largura
+        const posicao = x - x_camada
+        const indice = Math.floor(posicao / largura) + this.indice_bloco_atual
+        const bloco = this.blocos[camada][indice]
+        const liquido = tipo => ["agua", "lava"].includes(tipo) ? tipo : null
+
+        if (bloco === true) return "agua"
+        if (bloco && bloco.tipo === "transicao") {
+            const fracao = (((posicao % largura) + largura) % largura) / largura
+            return liquido(fracao < 0.5 ? bloco.origem : bloco.destino)
+        }
+        return liquido(bloco)
+    },
+
+    // Líquido do piso de fundo (chao.pisos_b) na posição x da tela
+    get_liquido_piso_fundo_em_x: function (x) {
+        const pisos = chao.pisos_b
+        const largura = opcoes.largura
+        const indice_atual = pisos.length >= 4 ? 1 : 0
+        const posicao = x - Math.round(chao.xb)
+        const indice = Math.floor(posicao / largura) + indice_atual
+        const piso = pisos[indice]
+        const liquido = get_tipo_piso_liquido(piso)
+        if (!liquido) return null
+
+        const posicao_no_piso = posicao - (indice - indice_atual) * largura
+        const transicao_entrada = piso.transicao_entrada === "transita_areia1"
+            || piso.transicao_entrada === "transita_chao1"
+        if (transicao_entrada && posicao_no_piso < limites_transicoes_liquido.entrada) return null
+
+        if (get_tipo_piso_saida_liquido(pisos[indice + 1])
+            && posicao_no_piso >= limites_transicoes_liquido.saida) return null
+
+        return liquido
+    },
+
+    atualiza_fumaca_liquidos: function (camadas) {
+        if (jogo.qualidadeGrafica == 0) {
+            this.fumaca = []
+            this.ultima_fumaca = 0
+            return
+        }
+
+        const ctx = opcoes.ctx
+        const agora = Date.now()
+        const delta = this.ultima_fumaca
+            ? Math.min(agora - this.ultima_fumaca, 100)
+            : 0
+        this.ultima_fumaca = agora
+
+        // Da camada mais distante para a mais próxima, terminando no piso de fundo
+        const ordem = ["montanha_fundo", "cidade", "montanha_frente", "piso_fundo"]
+        const por_nome = Object.fromEntries(camadas.map(camada => [camada.nome, camada]))
+        const get_liquido = (nome, x) => nome == "piso_fundo"
+            ? this.get_liquido_piso_fundo_em_x(x)
+            : this.get_liquido_camada_em_x(nome, por_nome[nome].x, x)
+
+        // Também prepara a fumaça no bloco seguinte, fora da tela, para ela já estar pronta ao entrar
+        const largura_busca = opcoes.canvas.width + opcoes.largura
+        const tentativas = delta * 0.09 * largura_busca / opcoes.canvas.width
+        let total = Math.floor(tentativas) + (Math.random() < tentativas % 1 ? 1 : 0)
+        for (; total > 0; total--) {
+            const x = Math.random() * largura_busca
+            const par = Math.floor(Math.random() * 3)
+            const nome_frente = ordem[par + 1]
+            const liquido_frente = get_liquido(nome_frente, x)
+            const liquido_atras = get_liquido(ordem[par], x)
+
+            if (!liquido_frente || !liquido_atras || liquido_frente === liquido_atras) continue
+
+            const piso = nome_frente == "piso_fundo"
+            const particula = {
+                x,
+                y: (piso ? chao.y + 10 : presets.lava_fundo[nome_frente].y) + 2 + Math.random() * 6,
+                fator: piso ? 0.8 : por_nome[nome_frente].fator,
+                velocidade_y: 0.03 + Math.random() * 0.03,
+                deriva: (Math.random() - 0.5) * 0.008,
+                tamanho: 4 + Math.floor(Math.random() * 3),
+                idade: 0,
+                duracao: 2000 + Math.random() * 1600
+            }
+
+            // Fora da tela, já nasce em idade e altura variadas para entrar acima do líquido
+            if (x > opcoes.canvas.width) {
+                particula.idade = Math.random() * particula.duracao * 0.7
+                particula.y -= particula.velocidade_y * particula.idade
+                particula.x += particula.deriva * particula.idade
+            }
+
+            this.fumaca.push(particula)
+        }
+
+        ctx.save()
+        ctx.fillStyle = "rgb(8, 8, 12)"
+
+        // Remove cada partícula individualmente ao expirar ou sair da tela
+        this.fumaca = this.fumaca.filter(particula => {
+            // Fora da tela à direita, só acompanha a rolagem até entrar
+            const aguardando = particula.x > opcoes.canvas.width
+            if (aguardando) {
+                particula.x -= jogo.velocidade * particula.fator
+                return true
+            }
+
+            particula.idade += delta
+            const vida = particula.idade / particula.duracao
+            if (vida >= 1) return false
+
+            particula.x += particula.deriva * delta - jogo.velocidade * particula.fator
+            particula.y -= particula.velocidade_y * delta
+
+            const tamanho = Math.round(particula.tamanho * (1 + vida * 0.8))
+            if (particula.x + tamanho < 0
+                || particula.x > opcoes.canvas.width
+                || particula.y + tamanho < 0
+                || particula.y > opcoes.canvas.height) return false
+
+            const entrada = Math.min(vida / 0.2, 1)
+            ctx.globalAlpha = 0.45 * entrada * (1 - vida)
+            ctx.fillRect(Math.round(particula.x), Math.round(particula.y), tamanho, tamanho)
+            return true
+        })
+
+        ctx.restore()
+    },
+
     desenha: function () {
         this.atualiza_nevoa_chuva()
 
@@ -288,9 +420,9 @@ var background_predios = {
             this.prepara_transicoes_fundo(camada)
 
         const camadas = [
-            { nome: "montanha_fundo", sprite: spriteMontanhas, x: this.montanhas[1], y: 480, sprite_noite: "montanhas_noite", x_noite: 0, y_noite: 3 },
-            { nome: "cidade", sprite: spriteCidade, x: this.predios, y: 257, sprite_noite: "cidade_noite", x_noite: 0, y_noite: -62 },
-            { nome: "montanha_frente", sprite: spriteMontanhas, x: this.montanhas[0], y: 510, sprite_noite: "montanhas_noite", x_noite: 0, y_noite: 3 }
+            { nome: "montanha_fundo", sprite: spriteMontanhas, x: this.montanhas[1], y: 480, sprite_noite: "montanhas_noite", x_noite: 0, y_noite: 3, fator: 0.15 },
+            { nome: "cidade", sprite: spriteCidade, x: this.predios, y: 257, sprite_noite: "cidade_noite", x_noite: 0, y_noite: -62, fator: 0.2 },
+            { nome: "montanha_frente", sprite: spriteMontanhas, x: this.montanhas[0], y: 510, sprite_noite: "montanhas_noite", x_noite: 0, y_noite: 3, fator: 0.25 }
         ]
 
         for (const camada of camadas) {
@@ -307,5 +439,7 @@ var background_predios = {
                 )
             }
         }
+
+        this.atualiza_fumaca_liquidos(camadas)
     }
 }

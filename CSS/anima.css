@@ -1,37 +1,53 @@
 @keyframes entardecer {
-    0% {}
+    0% {
+        background-color: rgba(145, 107, 5, 0);
+    }
+
+    25% {
+        background-color: rgba(145, 107, 5, .06);
+    }
 
     50% {
-        background-color: rgba(145, 107, 5, .2);
+        background-color: rgba(145, 100, 5, .12);
     }
 
-    65% {
-        background-color: rgba(105, 73, 4, .3);
-    }
-
-    90% {
-        background-color: rgba(10, 59, 75, .2);
-    }
-
-    100% {}
-}
-
-@keyframes amanhecer {
-    0% {}
-
-    50% {
-        background-color: rgba(14, 59, 110, .2);
-    }
-
-    65% {
-        background-color: rgba(16, 76, 145, .3);
+    68% {
+        background-color: rgba(105, 73, 20, .16);
     }
 
     85% {
-        background-color: rgba(5, 144, 190, .2);
+        background-color: rgba(30, 62, 75, .1);
     }
 
-    100% {}
+    100% {
+        background-color: rgba(10, 59, 75, 0);
+    }
+}
+
+@keyframes amanhecer {
+    0% {
+        background-color: rgba(14, 59, 110, 0);
+    }
+
+    25% {
+        background-color: rgba(14, 59, 110, .06);
+    }
+
+    50% {
+        background-color: rgba(14, 59, 110, .12);
+    }
+
+    68% {
+        background-color: rgba(16, 76, 145, .16);
+    }
+
+    85% {
+        background-color: rgba(8, 110, 170, .09);
+    }
+
+    100% {
+        background-color: rgba(5, 144, 190, 0);
+    }
 }
 
 @keyframes iniciar {

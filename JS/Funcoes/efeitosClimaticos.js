@@ -47,7 +47,7 @@ const chuva = {
     },
 
     agenda: function () {
-        if (!jogo.chuvaAtiva) return
+        if (!jogo.chuvaAtiva || jogo.qualidadeGrafica == 0) return
 
         clearTimeout(this.temporizador)
         const intervalo = 120000 + Math.random() * 120000
@@ -610,7 +610,7 @@ document.addEventListener("pointerdown", prepara_audio_climatico, true)
 document.addEventListener("keydown", prepara_audio_climatico, true)
 
 function inicia_efeitos_climaticos() {
-    if (jogo.chuvaAtiva)
+    if (jogo.chuvaAtiva && jogo.qualidadeGrafica != 0)
         chuva.agenda()
 }
 
@@ -618,7 +618,7 @@ function altera_chuva() {
     jogo.chuvaAtiva = jogo.chuvaAtiva ? 0 : 1
     localStorage.setItem("pul4Pr3dios-chuvaAtiva", jogo.chuvaAtiva)
 
-    if (jogo.chuvaAtiva)
+    if (jogo.chuvaAtiva && jogo.qualidadeGrafica != 0)
         chuva.agenda()
     else
         chuva.para()

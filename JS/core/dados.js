@@ -230,10 +230,8 @@ function carrega_dados() {
         jogo.notificaConquista = parseInt(notificacoesConquistas)
 
     qualidadeGraficos = localStorage.getItem("pul4Pr3dios-qualidadeGrafica")
-    if (qualidadeGraficos == null)
-        jogo.qualidadeGrafica = 1
-    else
-        jogo.qualidadeGrafica = parseInt(qualidadeGraficos)
+    // O antigo nível 2 (Fantástica) foi unificado com a Aprimorada
+    jogo.qualidadeGrafica = qualidadeGraficos == null || parseInt(qualidadeGraficos) != 0 ? 1 : 0
 
     chuvaAtiva = localStorage.getItem("pul4Pr3dios-chuvaAtiva")
     if (chuvaAtiva == null)
@@ -487,6 +485,7 @@ function reseta() {
     $("#qtdPulos").fadeOut()
 
     jogo.gravidade = 1.6
+    jogador.forcaDoPulo = 23.6
     jogador.velocidade = 0
     jogador.y = 0
 

@@ -68,10 +68,12 @@ function Cenario(astro) {
 
     if (jogo.tema_ativo == 0) {
 
-        const alvos = ["canvas", "icones_aquisicoes", "conquistas", "carrega_jogo", "quadro_notificacoes", "barra_loading", "temporizador", "moedas", "mod", "notificacoes", "menu_inicial"]
+        const alvos = ["canvas", "icones_aquisicoes", "conquistas", "carrega_jogo", "quadro_notificacoes", "barra_loading", "temporizador", "moedas", "mod", "notificacoes",         "menu_inicial"]
 
         for (let i = 0; i < alvos.length; i++)
             get_element(alvos[i]).style.filter = "grayscale(1)"
+
+                document.getElementById("card_musica").style.filter = "grayscale(1)"
     }
 }
 
@@ -182,6 +184,11 @@ function voltaAnimacao() {
         animaBandeira()
         animaRoda()
         animaFogo()
+
+        if (typeof tID != "undefined") clearTimeout(tID)
+        if (typeof tFL != "undefined") clearTimeout(tFL)
+        animaMoeda()
+        anima_mod_flutua()
     }
 }
 
@@ -196,7 +203,7 @@ function animaMoeda() {
             get_element("moeda_img").style.backgroundPosition = `${posicao}px -1px`
 
             if (posicao == 0) {
-                setTimeout(() => {
+                tID = setTimeout(() => {
                     animaMoeda()
                 }, 1000)
             } else
@@ -216,7 +223,7 @@ function anima_mod_flutua() {
             get_element("mod_0").style.backgroundPosition = `${posicao}px -1px`
 
             if (posicao == 0) {
-                setTimeout(() => {
+                tFL = setTimeout(() => {
                     anima_mod_flutua()
                 }, 50)
             } else

@@ -25,6 +25,9 @@ function desenha_sprite_transicao(nome, preset, x, y, espelhar_horizontal = fals
     const manter_base_diurna = nome.startsWith("transita_cidade")
         || nome.startsWith("transita_montanha")
         || nome.startsWith("transita_ilha")
+        || nome.startsWith("transita_chao")
+        || nome.startsWith("transita_areia")
+        || nome.startsWith("transita_grama_areia")
 
     if (espelhar_horizontal) {
         ctx.save()
