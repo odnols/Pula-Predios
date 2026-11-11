@@ -58,7 +58,7 @@ Sprites diurnos e noturnos.
 
 Sprites diurnos muitas vezes são separados, sprites noturnos são todos separados.
 
-Sprites noturnos são renderizados por cima dos sprites noturnos quando há a transição de dia para noite, sendo
+Sprites noturnos são renderizados por cima dos sprites diurnos quando há a transição de dia para noite, sendo
 assim, tudo o que está no sprite diurno, precisa estar no noturno, com uma palheta de cores diferente.
 
 
