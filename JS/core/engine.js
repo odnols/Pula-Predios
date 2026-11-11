@@ -1422,9 +1422,8 @@ var labelTexto = {
         modificador: function () {
             if (canvas_pausado) return
 
-            this.liberaMod = 1
-
-            if ((jogo.status == estados.jogando || jogo.status == estados.tutorial) && this.timer_mod != 0 && this.mod != 1 && this.qtdMods > 0) {
+            if ((jogo.status == estados.jogando || jogo.status == estados.tutorial) && this.timer_mod != 0 && this.mod != 1 && this.qtdMods > 0 && !this.liberaMod) {
+                this.liberaMod = 1
 
                 jogo.depuracao({ tls: "modificador.ativado" })
 
@@ -1487,6 +1486,9 @@ var labelTexto = {
         },
 
         timer: function () {
+            if (this.var_timer_modificador !== null)
+                clearInterval(this.var_timer_modificador)
+
             this.var_timer_modificador = setInterval(() => {
 
                 if (jogador.timer_mod > 0 && jogador.mod == 1) {
@@ -1504,6 +1506,7 @@ var labelTexto = {
                 } else {
                     // Hack life p/ voar infinitamente, comente a linha abaixo \/
                     clearInterval(jogador.var_timer_modificador)
+                    jogador.var_timer_modificador = null
 
                     if (typeof tMf != "undefined")
                         clearInterval(tMf) // Desliga a animação de fogo abaixo do prédio

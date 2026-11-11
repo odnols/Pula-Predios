@@ -167,6 +167,7 @@ function exibe_card_musica(nomeSom) {
     get_element("artista_musica_atual").textContent = preset.artista
 
     fecha_card_musica()
+    card.classList.remove("modo_ocioso", "esvanecido", "temporizado", "esmaecido")
     if (animacao_progresso_card_musica)
         animacao_progresso_card_musica.cancel()
 
@@ -206,7 +207,6 @@ function exibe_card_musica(nomeSom) {
         return
     }
 
-    card.classList.remove("modo_ocioso", "esvanecido", "temporizado", "esmaecido")
     const duracao = jogo.duracaoCardMusica * 1000
     const progresso = get_element("progresso_card_musica")
     animacao_progresso_card_musica = progresso.animate(
@@ -234,7 +234,6 @@ function fecha_card_musica() {
 
     const card = document.getElementById("card_musica")
     card.classList.remove("visivel")
-    card.classList.remove("modo_ocioso", "esvanecido", "temporizado", "esmaecido")
     card.setAttribute("aria-hidden", "true")
 }
 

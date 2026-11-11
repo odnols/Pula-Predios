@@ -1,4 +1,4 @@
-# Pula Prédios
+# Pula Prédios!
 
 Um jogo feito com o Canvas utilizando o Javascript como sua engine principal e recursos do HTML5 e CSS3!
 

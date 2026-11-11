@@ -420,6 +420,7 @@ function encerra_modificador() {
         clearInterval(jogador.var_timer_recarrega)
 
     jogador.mod = 0
+    jogador.liberaMod = 0
     jogo.liberaMod = 0
 }
 
